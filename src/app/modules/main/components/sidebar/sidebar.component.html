@@ -1,0 +1,36 @@
+<mat-nav-list class="navigation-list">
+  <mat-list-item  
+      routerLinkActive="list-item-active" 
+      [routerLink]="'/adm/maintenance'" 
+      [routerLinkActiveOptions]="{ exact: true}">
+      <mat-icon>arrow_drop_down</mat-icon>
+      <span class="navigation-title">Mantenimiento</span>
+  </mat-list-item>
+
+  <mat-list-item  
+      routerLinkActive="list-item-active" 
+      [routerLink]="'/adm/security'" 
+      [routerLinkActiveOptions]="{ exact: true}">
+      <mat-icon>arrow_drop_down</mat-icon>
+      <span class="navigation-title">Seguridad</span>
+  </mat-list-item>
+
+
+  <mat-list-item  class="d-md-none">
+    <mat-icon>arrow_drop_down</mat-icon>
+    <span class="navigation-title">cerrar</span>
+  </mat-list-item>
+
+</mat-nav-list>
+
+<!-- <div class="userContainer">
+  <div class="userOptionsContainer">
+    <div class="maskPhoto">
+      <img src="assets/icons/24_home-alt.svguser-img.svg" alt="" />
+    </div>
+  </div>
+  <div class="userInformationBox">
+    <span>asdsadsasdassasasa</span>
+  </div>
+</div>
+ -->

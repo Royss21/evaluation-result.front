@@ -1,0 +1,62 @@
+
+@import '/src/assets/scss//partials/variables';
+@import '/src/assets/scss//partials/mixin';
+
+
+:host mat-nav-list {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-top: 50px;
+}
+
+:host mat-nav-list {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+:host mat-list-item {
+  height: 5rem ;
+}
+
+.navigation-list{
+
+  .navigation-title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 16px;
+    margin-left: 18px;
+    color: white
+  }
+  
+}
+
+.list-item-active {
+  background: #5366ce !important;
+}
+
+.userContainer {
+  display: flex;
+  align-items: center;
+  font-weight: 100;
+  font-size: 15px;
+  line-height: 16px;
+  padding: 12px;
+
+  .userOptionsContainer {
+    padding-right: 12px;
+    .maskPhoto {
+      border-radius: 100px;
+
+      img {
+        width: 48px;
+        height: 48px;
+      }
+    }
+  }
+
+  @include phone {
+    display: none;
+  }
+}
+
+

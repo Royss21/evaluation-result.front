@@ -1,0 +1,55 @@
+@import '/src/assets/scss/partials/variables';
+@import '/src/assets/scss/partials/mixin';
+
+
+mat-toolbar-row {
+  color: black;
+  height: 72px;
+  z-index: 10;
+}
+
+.boxLogo {
+  width: 150px;
+}
+.containerLogo {
+
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .menu-burger {
+    background: red;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    margin-left: 10px;
+  }
+}
+
+
+.optionsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+
+  @include phone {
+    display: none;
+  }
+}
+
+.userInformationBox {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  font-size: 15px;
+  font-weight: 400;
+  text-align: right;
+  margin-right: 20px;
+  align-self: center;
+  
+  .provider {
+    line-height: normal;
+  }
+}
