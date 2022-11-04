@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-period-list',
   templateUrl: './period-list.component.html',
   styleUrls: ['./period-list.component.scss']
 })
-export class PeriodListComponent implements OnInit {
+export class PeriodListComponent {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ){}
 
-  ngOnInit(): void {
+  public goToNewPeriod(): void {
+    this.router.navigate(['/period/edit']).then(() => {});
   }
 
 }

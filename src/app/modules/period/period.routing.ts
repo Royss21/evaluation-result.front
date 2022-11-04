@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PeriodListComponent } from 'src/app/modules/period/page/period-list/period-list.component';
-import { PeriodNewComponent } from 'src/app/modules/period/page/period-new/period-new.component';
+import { PeriodEditComponent } from 'src/app/modules/period/page/period-edit/period-edit.component';
 import { PeriodComponent } from './period.component';
 
 
@@ -15,12 +15,12 @@ const routes: Routes = [
         component: PeriodListComponent
       },
       {
-        path: 'new',
-        component: PeriodNewComponent
+        path: 'edit',
+        component: PeriodEditComponent
       },
       {
         path: 'edit/:id',
-        component: PeriodNewComponent
+        component: PeriodEditComponent
       },
       {
         path:'',
