@@ -6,30 +6,30 @@ import { MainComponent } from "./main.component";
 import { WelcomComponent } from "./views/welcom/welcom.component";
 
 export const roots: Routes = [
-  { 
-    path: '', 
+  {
+    path: '',
     component: MainComponent,
     children: [
-      { 
+      {
         path:'welcome',
-        component: WelcomComponent  
+        component: WelcomComponent
       },
-      // {
-      //   path:'maintenance',
-      //   loadChildren: () => import('../mantenimiento/mantenimiento.module').then( m => m.MantenimientoModule )
-      // },
+      {
+        path:'period',
+        loadChildren: () => import('../period/period.module').then( m => m.PeriodModule )
+      },
       // {
       //   path:'security',
       //   loadChildren: () => import('../seguridad/seguridad.module').then( m => m.SeguridadModule )
       // },
-      { 
+      {
         path:'',
         redirectTo:'welcome',
         pathMatch: 'full'
       },
-      { 
+      {
         path:'**',
-        component: PageNotFoundComponent  
+        component: PageNotFoundComponent
       },
     ]
   }
