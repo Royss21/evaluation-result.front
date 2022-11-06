@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-lg-6 col-md-12 col-sm-12 col-12 d-flex">
+      <ng-content></ng-content>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12 col-12 ">
+      <mat-form-field class="qore_input-fill" appearance="fill">
+        <input type="text" matInput (keyup)="textoToSearch($event)" placeholder="Buscar...">
+        <img src="./assets/icons/ic_search.svg" alt="icono search" matSuffix />
+      </mat-form-field>
+    </div>
+</div>

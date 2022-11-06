@@ -7,3 +7,47 @@
   Nuevo Periodo
   </button>
 </div>
+<div fxLayout="row">
+  <div>
+      <!-- <app-table
+          classWidthRow="tr-size-60"
+          [behavior]="paginatedBehavior"
+          [observablePaginated]="periodPaginated$"
+          [listColumns]="columnsTable"
+          [templateColumnsContent]="columnContent"
+      >
+          <ng-template
+              #columnContent
+              let-element='element'
+              let-columna='column'>
+              <div [ngSwitch]="column.columnMatch">
+                  <div *ngSwitchCase="'actions'">
+                      <button
+                          mat-mini-fab
+                          color="basic"
+                          matTooltip="Editar"
+                          matTooltipPosition="left"
+                          type="button"
+                          class="mr-2"
+                          (click)="editPeriod(element)">
+                          <mat-icon>edit</mat-icon>
+                      </button>
+                      <button
+                          mat-mini-fab
+                          color="basic"
+                          matTooltip="Eliminar"
+                          matTooltipPosition="left"
+                          type="button"
+                          class="mr-2"
+                          (click)="confirmDeleted(element)">
+                          <mat-icon>delete</mat-icon>
+                      </button>
+                  </div>
+                  <div *ngSwitchDefault>
+                      {{ element[column.columnMatch] }}
+                  </div>
+              </div>
+          </ng-template>
+      </app-table> -->
+  </div>
+</div>

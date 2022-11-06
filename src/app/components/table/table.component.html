@@ -1,0 +1,50 @@
+<!-- <app-buscar-global
+    [emitirTextoBuscar]="eventEmitterBuscar">
+</app-buscar-global> -->
+<!-- <br> -->
+<div class="row">
+    <div class="col-12" >
+        <section tabindex="0" class="contenedor-tabla">
+            <table
+              aria-describedby="tabla general"
+              mat-table
+              matSort
+              class="qore_table qore_table__budget"
+              style="min-width: 800px;"
+              [dataSource]="dataList"
+              (matSortChange)="announceOrderChange($event)"
+            >
+                <ng-container
+                    [matColumnDef]="columna.columnMatch"
+                    *ngFor="let column of listColumns"
+                    >
+                    <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        mat-sort-header
+                        [disabled]="enableColumnSort(column.columnMatch)"
+                    >
+                    {{ columna.columnaTitulo }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container
+                            *ngTemplateOutlet="templateColumnsContent;context:{ element, column }"
+                        ></ng-container>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayColumns;" [class]="classWidthRow"></tr>
+            </table>
+        </section>
+        <br>
+        <mat-paginator
+            class="paginator-qore"
+            showFirstLastButtons
+            [length]="totalQuantity"
+            [pageSize]="5"
+            [pageSizeOptions]="[5, 10, 25, 100]"
+        ></mat-paginator>
+    </div>
+</div>
+

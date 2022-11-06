@@ -64,13 +64,13 @@
           <input
             matInput
             [matDatepicker]="dp"
-            formControlName="dateStart">
+            formControlName="startDate">
           <mat-datepicker-toggle
             [for]="dp"
             matSuffix
           ></mat-datepicker-toggle>
           <mat-datepicker #dp></mat-datepicker>
-          <mat-error *ngIf="controlsForm['dateStart'].hasError('required')">
+          <mat-error *ngIf="controlsForm['startDate'].hasError('required')">
             La fecha inicio es <strong>requerido</strong>.
           </mat-error>
         </mat-form-field>
@@ -89,14 +89,14 @@
           <input
             matInput
             [matDatepicker]="dp2"
-            formControlName="dateEnd"
+            formControlName="endDate"
           >
           <mat-datepicker-toggle
             matSuffix
             [for]="dp2">
           </mat-datepicker-toggle>
           <mat-datepicker #dp2></mat-datepicker>
-          <mat-error *ngIf="controlsForm['dateEnd'].hasError('required')">
+          <mat-error *ngIf="controlsForm['endDate'].hasError('required')">
             La fecha fin es <strong>requerido</strong>.
           </mat-error>
         </mat-form-field>

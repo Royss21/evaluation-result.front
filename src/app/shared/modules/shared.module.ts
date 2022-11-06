@@ -17,6 +17,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,6 +27,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { TableComponent } from '@components/table/table.component';
 
 @NgModule({
   declarations: [],
@@ -55,8 +57,10 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     MatMenuModule,
     MatRippleModule,
     FormsModule,
+    MatFormFieldModule,
     ReactiveFormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    TableComponent
   ],
   exports: [
     MatButtonModule,
@@ -82,8 +86,10 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     MatStepperModule,
     MatMenuModule,
     FormsModule,
+    MatFormFieldModule,
     ReactiveFormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    TableComponent
   ],
   providers: [
     MatDatepickerModule,

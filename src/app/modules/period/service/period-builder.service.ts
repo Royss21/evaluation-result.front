@@ -20,11 +20,11 @@ export class PeriodBuilderService {
           Validators.maxLength(70)
         ]
       ],
-      dateStart: [
+      startDate: [
         (period?.startDate || null),
         [Validators.required]
       ],
-      dateEnd: [
+      endDate: [
         (period?.endDate || null),
         [Validators.required]
       ]

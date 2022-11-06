@@ -1,0 +1,20 @@
+
+
+.contenedor-tabla{
+    max-height: 1200px;
+    overflow: auto;
+
+    table {
+        width: 100%;
+    
+        .mat-column-acciones{
+            width: 20%;
+        }
+
+        th.mat-sort-header-sorted {
+            color: black;
+        }
+    }
+}
+  
+
