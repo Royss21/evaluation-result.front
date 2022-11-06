@@ -1,0 +1,36 @@
+<button
+  mat-icon-button
+  class="close-button"
+  mat-dialog-close (click)="close()"
+>
+  <mat-icon
+    [inline]="true"
+    class="close-icon"
+  >highlight_off
+  </mat-icon>
+</button>
+<mat-dialog-content class="m-0 w-100">
+    <div class="dialog-icon-row">
+        <mat-icon
+          [inline]="true"
+          [ngClass]="data.iconColor"
+        >{{data.icon}}
+        </mat-icon>
+    </div>
+    <div class="dialog-text mb-4">
+        <p style="white-space: pre-wrap;" [ngClass]="{'limited-parraf': data.icon === 'check_circle'}">{{data.text}}</p>
+    </div>
+    <div class="d-flex justify-content-center mb-4">
+        <div class="button-custom-1 color-primary">
+            <button
+              mat-raised-button
+              type="button"
+              color="primary"
+              mat-dialog-close
+              (click)="close()"
+            >
+                {{data.buttonLabelAccept}}
+            </button>
+        </div>
+    </div>
+</mat-dialog-content>

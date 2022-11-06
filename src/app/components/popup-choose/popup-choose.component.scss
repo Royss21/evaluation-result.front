@@ -1,0 +1,33 @@
+.close-button{
+  float: right;
+  top:-16px;
+  right:-16px;
+}
+
+.close-icon {
+  transition: 1s ease-in-out;
+  color: var(--color-primary);
+  font-size: 2rem!important;
+}
+
+.close-icon:hover {
+  transform: rotate(180deg);
+}
+
+.mat-dialog-container{
+  border-radius: 8px;
+}
+
+.dialog-icon-row{
+  width: 100%;
+
+  .mat-icon{
+      text-align: center;
+      font-size: 4rem;
+      line-height: .8;
+  }
+}
+
+.dialog-text{
+  font-size: var(--font-size-4);
+}

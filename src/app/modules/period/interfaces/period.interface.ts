@@ -1,6 +1,6 @@
 export interface IPeriod {
   id: number;
   name: string;
-  dateStart: string;
-  dateEnd: string;
+  startDate: string;
+  endDate: string;
 }

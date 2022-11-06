@@ -1,10 +1,16 @@
-import { Subject } from 'rxjs';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router'
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
+import { ConstantsGeneral } from '@shared/constants';
 import { AppConstants } from '@shared/constants/app.constants';
-import { PeriodService } from '@modules/period/service/period-builder.service';
+import { PeriodService } from '@core/services/period/period.service';
+import { IPeriod } from '@modules/period/interfaces/period.interface';
+import { PeriodBuilderService } from '@modules/period/service/period-builder.service';
+import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
+import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 
 @Component({
   selector: 'app-period-edit',
@@ -23,14 +29,16 @@ export class PeriodEditComponent implements OnInit, OnDestroy {
   constructor(
     private _route: ActivatedRoute,
     private router: Router,
-    private _periodService: PeriodService
+    public _dialog: MatDialog,
+    private _periodService: PeriodService,
+    private _periodBuilderService: PeriodBuilderService
   ) {
     if (this._route.snapshot.params['id']) {
       this.isNew = false;
       this.title = 'Editar periodo';
       //Call WS Get Period by Id
     }
-    this.periodFormGroup = this._periodService.buildPeriodForm();
+    this.periodFormGroup = this._periodBuilderService.buildPeriodForm();
   }
 
   ngOnInit(): void {
@@ -42,7 +50,38 @@ export class PeriodEditComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    //
+    if ( this.periodFormGroup.invalid ) {
+      return;
+    }
+
+    const dialogRef = this._dialog.open(PopupChooseComponent, {
+      data: ConstantsGeneral.chooseData,
+      autoFocus: false,
+      restoreFocus: false
+    });
+
+
+    let body = this.periodFormGroup.getRawValue() as IPeriod;
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this._periodService
+        .create(body)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(() => this.showConfirmMessage());
+      }
+    });
+  }
+
+  showConfirmMessage() {
+    const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
+      data: ConstantsGeneral.confirmCreatePopup,
+      autoFocus: false
+    });
+
+    dialogRefConfirm.afterClosed().subscribe(() => {
+      this.goBack();
+    });
   }
 
   public keypress(event: any): boolean {

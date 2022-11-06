@@ -5,7 +5,7 @@ import { IPeriod } from '../interfaces/period.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 
 @Injectable({ providedIn: 'root' })
-export class PeriodService {
+export class PeriodBuilderService {
 
   constructor(private _fb: FormBuilder) { }
 
@@ -21,11 +21,11 @@ export class PeriodService {
         ]
       ],
       dateStart: [
-        (period?.dateStart || null),
+        (period?.startDate || null),
         [Validators.required]
       ],
       dateEnd: [
-        (period?.dateEnd || null),
+        (period?.endDate || null),
         [Validators.required]
       ]
     });
