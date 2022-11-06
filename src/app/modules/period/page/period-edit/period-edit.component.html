@@ -1,52 +1,128 @@
-<div class="container-box">
-  <div autocomplete="off" class="container-fluid px-0 pt-0 pb-4">
-    <div class="row mb-5" fxFill>
-        <span class="color-primary text-bold p-1">{{title}}</span>
-    </div>
-    <form #form="ngForm" [formGroup]="periodForm" (submit)="save()" autocomplete="off">
-      <div class="row" fxFill fxLayoutGap="10px">
-        <div fxFlex="30">
-          <div class="input-custom-text-outline-2 control-w-75">
-            <mat-label>Nombre de área:</mat-label>
-            <mat-form-field appearance="outline">
-              <input type="text" formControlName="name" autocomplete="off"
-                      maxlength="70" matInput [readonly]="!isNew">
-              <mat-error *ngIf="controlsForm['name'].hasError('required')">El nombre es
-                <strong>requerido</strong>.
-              </mat-error>
-              <mat-error *ngIf="controlsForm['name'].hasError('maxlength')">
-                Se ha excedido el limite de caracteres
-              </mat-error>
-            </mat-form-field>
-            </div>
-        </div>
-        <div fxFlex="70">
-          <div class="input-custom-text-outline-2">
-            <mat-label>Descripción:</mat-label>
-            <mat-form-field appearance="outline">
-              <input type="text" formControlName="description" autocomplete="off"
-                      maxlength="400" matInput>
-              <mat-error *ngIf="controlsForm['description'].hasError('maxlength')">
-                Se ha excedido el limite de caracteres
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
-          <div class="button-custom-1 color-primary mr-3">
-            <button mat-flat-button class="shadow-button" type="submit">
-              <mat-icon>save</mat-icon>
-              Grabar
-            </button>
-          </div>
-          <div class="button-custom-1">
-            <button mat-flat-button class="shadow-button" (click)="goBack()">
-              <mat-icon>not_interested</mat-icon>
-              Cancelar
-            </button>
-          </div>
-      </div>
-    </form>
+<div
+  autocomplete="off"
+  class="container-fluid"
+>
+  <div
+    fxFill
+    class="mb-2"
+  >
+    <h2 class="fw-bold">{{title}}</h2>
   </div>
+  <form
+    class="p-3"
+    #form="ngForm"
+    autocomplete="off"
+    (submit)="save()"
+    [formGroup]="periodFormGroup"
+  >
+    <div
+      class="p-3"
+      fxLayout.md="row"
+      fxLayout.lg="row"
+      fxLayout.xl="row"
+      fxLayout.xs="column"
+      fxLayoutGap="10px"
+    >
+      <div
+        fxFlex.md="40"
+        fxFlex.lg="40"
+        fxFlex.xl="40"
+        fxFlex="100"
+      >
+        <mat-form-field
+          fxFill
+          appearance="outline"
+        >
+          <mat-label>Nombre de periodo:</mat-label>
+          <input
+            type="text"
+            formControlName="name"
+            autocomplete="off"
+            maxlength="70"
+            matInput
+            [readonly]="!isNew"
+            (keypress)="keypress($event)"
+          >
+          <mat-error *ngIf="controlsForm['name'].hasError('required')">
+            El nombre es <strong>requerido</strong>.
+          </mat-error>
+          <mat-error *ngIf="controlsForm['name'].hasError('maxlength')">
+            Se ha excedido el límite de caracteres
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        fxFlex.md="30"
+        fxFlex.lg="30"
+        fxFlex.xl="30"
+        fxFlex="100"
+      >
+        <mat-form-field
+          fxFill
+          appearance="outline"
+        >
+          <mat-label>Fecha inicio</mat-label>
+          <input
+            matInput
+            [matDatepicker]="dp"
+            formControlName="dateStart">
+          <mat-datepicker-toggle
+            [for]="dp"
+            matSuffix
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dp></mat-datepicker>
+          <mat-error *ngIf="controlsForm['dateStart'].hasError('required')">
+            La fecha inicio es <strong>requerido</strong>.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        fxFlex.md="30"
+        fxFlex.lg="30"
+        fxFlex.xl="30"
+        fxFlex="100"
+      >
+        <mat-form-field
+          fxFill
+          appearance="outline"
+        >
+          <mat-label>Fecha fin</mat-label>
+          <input
+            matInput
+            [matDatepicker]="dp2"
+            formControlName="dateEnd"
+          >
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dp2">
+          </mat-datepicker-toggle>
+          <mat-datepicker #dp2></mat-datepicker>
+          <mat-error *ngIf="controlsForm['dateEnd'].hasError('required')">
+            La fecha fin es <strong>requerido</strong>.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      fxLayoutGap="10px"
+    >
+      <button
+        type="submit"
+        color="primary"
+        mat-raised-button
+      >
+        <mat-icon>save</mat-icon>
+        Grabar
+      </button>
+      <button
+        mat-raised-button
+        (click)="goBack()"
+      >
+        <mat-icon>not_interested</mat-icon>
+        Cancelar
+      </button>
+  </div>
+  </form>
 </div>

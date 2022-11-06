@@ -1,10 +1,10 @@
 import { Subject } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 
-import { Period } from 'src/app/shared/models/period/period.model';
-import { CustomValidations } from 'src/app/shared/helpers/custom-validations';
+import { AppConstants } from '@shared/constants/app.constants';
+import { PeriodService } from '@modules/period/service/period-builder.service';
 
 @Component({
   selector: 'app-period-edit',
@@ -18,22 +18,19 @@ export class PeriodEditComponent implements OnInit, OnDestroy {
   isNew = true;
   title = 'Nuevo periodo';
 
-  periodData: Period | undefined;
-  periodForm: FormGroup;
+  periodFormGroup: FormGroup;
 
   constructor(
     private _route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private _periodService: PeriodService
   ) {
-    // this._route.data.subscribe((data: { period: Period }) => {
-    //   this.periodData = data?.period;
-    //   if (data?.period?.id) {
-    //     this.isNew = false;
-    //     this.title = 'Editar periodo';
-    //   }
-    // });
-    this.periodForm = this.buildPeriodForm();
+    if (this._route.snapshot.params['id']) {
+      this.isNew = false;
+      this.title = 'Editar periodo';
+      //Call WS Get Period by Id
+    }
+    this.periodFormGroup = this._periodService.buildPeriodForm();
   }
 
   ngOnInit(): void {
@@ -48,27 +45,18 @@ export class PeriodEditComponent implements OnInit, OnDestroy {
     //
   }
 
-  get controlsForm(): { [key: string]: AbstractControl } {
-    return this.periodForm.controls;
+  public keypress(event: any): boolean {
+    const regex = new RegExp(AppConstants.ExpresionRegular.Text);
+    const key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+    return true;
   }
 
-  private buildPeriodForm(): FormGroup {
-    return this.fb.group({
-      id: [this.periodData?.id || 0],
-      name: [
-        this.periodData?.name || null,
-        [
-          Validators.required,
-          CustomValidations.NotEmpty,
-          Validators.maxLength(70)
-        ]
-      ],
-      description: [
-        (this.periodData?.description || ''),
-        [Validators.maxLength(500)]
-      ],
-      state: [this.periodData?.state === 1]
-    });
+  get controlsForm(): { [key: string]: AbstractControl } {
+    return this.periodFormGroup.controls;
   }
 
   ngOnDestroy(): void {
