@@ -5,5 +5,5 @@ export interface IPaginatedFilter{
     rows: number;
     columnsOrder: string;
     typeOrder: TypeOrderEnum;
-    filterGlobal: string;
+    globalFilter: string;
 }

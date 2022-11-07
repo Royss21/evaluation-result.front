@@ -24,6 +24,8 @@ export class PeriodListComponent {
   columnsTable: IElementRowTable[] =  [
     new ElementRowTable('id','#'),
     new ElementRowTable('name','Nombre'),
+    new ElementRowTable('startDate','Fecha de Inicio'),
+    new ElementRowTable('endDate','Fecha de Fin'),
     new ElementRowTable('actions','Acciones')
   ];
 

@@ -7,12 +7,17 @@ import { PeriodComponent } from './period.component';
 import { SharedModule } from "@shared/modules/shared.module";
 import { PeriodEditComponent } from './page/period-edit/period-edit.component';
 import { PeriodListComponent } from './page/period-list/period-list.component';
+import { TableComponent } from '@components/table/table.component';
+import { SearchGlobalComponent } from '@components/table/search-global/search-global.component';
+
 
 @NgModule({
   declarations: [
     PeriodEditComponent,
     PeriodListComponent,
-    PeriodComponent
+    PeriodComponent,
+    TableComponent,
+    SearchGlobalComponent
   ],
   imports: [
     CommonModule,

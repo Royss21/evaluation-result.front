@@ -7,17 +7,18 @@ import { Component, EventEmitter, Input } from '@angular/core';
 })
 export class SearchGlobalComponent {
 
-  @Input() emitirTextSearch: EventEmitter<string> = new EventEmitter
+  @Input() emiterTextSearch: EventEmitter<string> = new EventEmitter
   textSearch: string = '';
 
   textoToSearch(event : any){
+    console.log(event.target.value)
     const textInput =  event.target.value;
 
     if((event.keyCode >= 43 && event.keyCode <=126) ||
       ([8].includes(event.keyCode))){
         if(textInput.length >= 1  || this.textSearch.length >= 1){
           this.textSearch = event.target.value;
-          this.emitirTextSearch.emit(this.textSearch);
+          this.emiterTextSearch.emit(this.textSearch);
         }
     }
   }

@@ -5,8 +5,8 @@ export class ElementRowTable implements IElementRowTable {
     columnTitle : string;
 
     constructor(colMatch: string, colTitle: string){
-        this.columnMatch = colTitle;
-        this.columnTitle = colMatch;
+        this.columnMatch = colMatch;
+        this.columnTitle = colTitle;
     }
 }
 

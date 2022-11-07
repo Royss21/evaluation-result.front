@@ -27,7 +27,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { TableComponent } from '@components/table/table.component';
 
 @NgModule({
   declarations: [],
@@ -59,8 +58,7 @@ import { TableComponent } from '@components/table/table.component';
     FormsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
-    TableComponent
+    FlexLayoutModule
   ],
   exports: [
     MatButtonModule,
@@ -89,7 +87,6 @@ import { TableComponent } from '@components/table/table.component';
     MatFormFieldModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    TableComponent
   ],
   providers: [
     MatDatepickerModule,

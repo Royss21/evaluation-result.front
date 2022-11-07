@@ -9,7 +9,7 @@
 </div>
 <div fxLayout="row">
   <div>
-      <!-- <app-table
+      <app-table
           classWidthRow="tr-size-60"
           [behavior]="paginatedBehavior"
           [observablePaginated]="periodPaginated$"
@@ -19,7 +19,7 @@
           <ng-template
               #columnContent
               let-element='element'
-              let-columna='column'>
+              let-column='column'>
               <div [ngSwitch]="column.columnMatch">
                   <div *ngSwitchCase="'actions'">
                       <button
@@ -29,7 +29,7 @@
                           matTooltipPosition="left"
                           type="button"
                           class="mr-2"
-                          (click)="editPeriod(element)">
+                          (click)="editPeriod()">
                           <mat-icon>edit</mat-icon>
                       </button>
                       <button
@@ -39,15 +39,21 @@
                           matTooltipPosition="left"
                           type="button"
                           class="mr-2"
-                          (click)="confirmDeleted(element)">
+                          (click)="confirmDeleted()">
                           <mat-icon>delete</mat-icon>
                       </button>
                   </div>
+                  <!-- <div *ngSwitchCase="'endDate'">
+                    {{ element[column.columnMatch].toString("dd/MM") }}
+                  </div>
+                  <div *ngSwitchCase="'startDate'">
+                    {{ element[column.columnMatch] | date }}
+                  </div> -->
                   <div *ngSwitchDefault>
                       {{ element[column.columnMatch] }}
                   </div>
               </div>
           </ng-template>
-      </app-table> -->
+      </app-table>
   </div>
 </div>

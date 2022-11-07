@@ -60,7 +60,7 @@ export class TableComponent implements OnInit, AfterViewInit {
             rows: this.paginator.pageSize,
             columnsOrder: "",
             typeOrder: 0,
-            filterGlobal: this.textSearch
+            globalFilter: this.textSearch
           };
 
           if(!this.sort.active || this.sort.direction === "")
@@ -79,11 +79,12 @@ export class TableComponent implements OnInit, AfterViewInit {
           this.behavior.next(paginatedFilter);
           return this.observablePaginated;
         }),
-        map(({ entity, quantity }: IPaginatedResponse<any>) => {
-          if (!entity)return [];
+        map(({ entities, count }: IPaginatedResponse<any>) => {
+          if (!entities)return [];
 
-          this.totalQuantity = quantity;
-          return entity;
+          this.totalQuantity = count;
+          console.log(entities);
+          return entities;
         }),
       )
       .subscribe(entity =>  {

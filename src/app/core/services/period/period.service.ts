@@ -24,6 +24,7 @@ export class PeriodService {
   }
 
   getPaginated(paginatedFilter: IPaginatedFilter): Observable<IPaginatedResponse<IPeriod>> {
+    console.log('ca:',paginatedFilter)
     const url = `${this.controller}/paging`
     return this._apiService
         .get<IPaginatedResponse<IPeriod>>(`https://localhost:7253/api/${url}`, paginatedFilter);

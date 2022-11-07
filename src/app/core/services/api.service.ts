@@ -14,6 +14,7 @@ export class ApiService {
     ) { }
 
   get<T>(url: string, parametros?: any): Observable<T> {
+    console.log('aca2:', parametros)
     return this._httpClient.get<IResponse<T>>(`${url}`,{
           params: parametros
         })
