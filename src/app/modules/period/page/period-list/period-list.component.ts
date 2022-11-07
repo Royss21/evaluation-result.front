@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
-import { IElementRowTable } from '@components/table/interfaces/table.interface';
-import { ElementRowTable } from '@components/table/models/table.model';
-import { PeriodService } from '@core/services/period/period.service';
+import { Component } from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
+
+import { PeriodService } from '@core/services/period/period.service';
+import { ElementRowTable } from '@components/table/models/table.model';
+import { IElementRowTable } from '@components/table/interfaces/table.interface';
+import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
+import { IPeriod } from '@modules/period/interfaces/period.interface';
 
 @Component({
   selector: 'app-period-list',
@@ -55,8 +57,8 @@ export class PeriodListComponent {
     });
   }
 
-  editPeriod(): void {
-
+  editPeriod(period: IPeriod): void {
+    this.router.navigate([`/period/edit/${period.id}`]).then(() => {});
   }
 
   confirmDeleted(): void {

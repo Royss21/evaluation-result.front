@@ -1,4 +1,12 @@
-<div fxLayout="row" fxLayoutAlign="end center">
+<div
+  fxLayout="row"
+  fxLayoutAlign.xs="center center"
+  fxLayoutAlign.sm="center center"
+  fxLayoutAlign.md="end center"
+  fxLayoutAlign.lg="end center"
+  fxLayoutAlign.xl="end center"
+  class="my-sm-3 my-md-0"
+>
   <button
     mat-raised-button
     color="primary"
@@ -7,53 +15,53 @@
   Nuevo Periodo
   </button>
 </div>
-<div fxLayout="row">
-  <div>
-      <app-table
-          classWidthRow="tr-size-60"
-          [behavior]="paginatedBehavior"
-          [observablePaginated]="periodPaginated$"
-          [listColumns]="columnsTable"
-          [templateColumnsContent]="columnContent"
+<app-table
+  [behavior]="paginatedBehavior"
+  [observablePaginated]="periodPaginated$"
+  [listColumns]="columnsTable"
+  [templateColumnsContent]="columnContent"
+>
+  <ng-template
+    #columnContent
+    let-element='element'
+    let-column='column'
+  >
+    <div [ngSwitch]="column.columnMatch">
+      <div
+        fxLayout="row"
+        fxLayoutGap="10px"
+        *ngSwitchCase="'actions'"
       >
-          <ng-template
-              #columnContent
-              let-element='element'
-              let-column='column'>
-              <div [ngSwitch]="column.columnMatch">
-                  <div *ngSwitchCase="'actions'">
-                      <button
-                          mat-mini-fab
-                          color="basic"
-                          matTooltip="Editar"
-                          matTooltipPosition="left"
-                          type="button"
-                          class="mr-2"
-                          (click)="editPeriod()">
-                          <mat-icon>edit</mat-icon>
-                      </button>
-                      <button
-                          mat-mini-fab
-                          color="basic"
-                          matTooltip="Eliminar"
-                          matTooltipPosition="left"
-                          type="button"
-                          class="mr-2"
-                          (click)="confirmDeleted()">
-                          <mat-icon>delete</mat-icon>
-                      </button>
-                  </div>
-                  <!-- <div *ngSwitchCase="'endDate'">
-                    {{ element[column.columnMatch].toString("dd/MM") }}
-                  </div>
-                  <div *ngSwitchCase="'startDate'">
-                    {{ element[column.columnMatch] | date }}
-                  </div> -->
-                  <div *ngSwitchDefault>
-                      {{ element[column.columnMatch] }}
-                  </div>
-              </div>
-          </ng-template>
-      </app-table>
-  </div>
-</div>
+        <button
+          mat-mini-fab
+          color="primary"
+          matTooltip="Editar"
+          matTooltipPosition="left"
+          type="button"
+          class="mr-2"
+          (click)="editPeriod(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-mini-fab
+          color="warn"
+          matTooltip="Eliminar"
+          matTooltipPosition="left"
+          type="button"
+          class="mr-2"
+          (click)="confirmDeleted()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+        <!--<div *ngSwitchCase="'endDate'">
+          {{ element[column.columnMatch].toString("dd/MM") }}
+        </div>
+        <div *ngSwitchCase="'startDate'">
+          {{ element[column.columnMatch] | date }}
+        </div> -->
+      <div *ngSwitchDefault>
+        {{ element[column.columnMatch] }}
+      </div>
+    </div>
+  </ng-template>
+</app-table>

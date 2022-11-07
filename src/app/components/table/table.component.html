@@ -1,49 +1,52 @@
 <app-search-global
     [emiterTextSearch]="eventEmitterSearch">
-</app-search-global> 
-<br>
-<div class="row">
-    <div class="col-12" >
-        <section tabindex="0" class="table-container">
-            <table
-              aria-describedby="tabla general"
-              mat-table
-              matSort
-              style="width: 100%;"
-              [dataSource]="dataList"
-              (matSortChange)="announceOrderChange($event)"
-            >
-                <ng-container
-                    [matColumnDef]="column.columnMatch"
-                    *ngFor="let column of listColumns"
-                    >
-                    <th
-                        mat-header-cell
-                        *matHeaderCellDef
-                        mat-sort-header
-                        [disabled]="enableColumnSort(column.columnMatch)"
-                    >
-                    {{ column.columnTitle }}
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <ng-container
-                            *ngTemplateOutlet="templateColumnsContent;context:{ element, column }"
-                        ></ng-container>
-                    </td>
-                </ng-container>
+</app-search-global>
+<div class="container-fluid">
+  <div class="content-padding-table">
+    <table
+      aria-describedby="tabla general"
+      mat-table
+      matSort
+      style="width: 100%;"
+      [dataSource]="dataList"
+      (matSortChange)="announceOrderChange($event)"
+    >
+      <ng-container
+        [matColumnDef]="column.columnMatch"
+        *ngFor="let column of listColumns"
+      >
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="fw-bold"
+          [disabled]="enableColumnSort(column.columnMatch)"
+        >
+        {{ column.columnTitle }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="mobile-container">
+            <span class="mobile-label">{{ column.columnTitle }}</span>
+            <ng-container
+              class="mobile-content"
+              *ngTemplateOutlet="templateColumnsContent;context:{ element, column }"
+            ></ng-container>
+          </div>
+        </td>
+      </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayColumns;" [class]="classWidthRow"></tr>
-            </table>
-        </section>
-        <br>
-        <mat-paginator
-            class="paginator-qore"
-            showFirstLastButtons
-            [length]="totalQuantity"
-            [pageSize]="5"
-            [pageSizeOptions]="[5, 10, 25, 100]"
-        ></mat-paginator>
-    </div>
+      <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayColumns;" [class]="classWidthRow"></tr>
+    </table>
+    <br>
+    <mat-paginator
+      class="paginator-qore"
+      showFirstLastButtons
+      [length]="totalQuantity"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      style="background-color: transparent;"
+    ></mat-paginator>
+  </div>
 </div>
 
