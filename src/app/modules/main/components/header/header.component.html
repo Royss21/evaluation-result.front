@@ -2,38 +2,42 @@
 <div class="row">
   <div class="col-12 d-flex">
     <div class="containerLogo">
-
       <div class="containerLogo">
-        <div class="menu-burger" (click)="toggleSideBar()"></div>
+        <mat-icon
+          fontIcon="menu"
+          aria-hidden="false"
+          class="menu-burger"
+          (click)="toggleSideBar()"
+        ></mat-icon>
         <div class="logoBox"></div>
       </div>
     </div>
     <div class="optionsContainer">
-        <div class="userInformationBox">
-          <span>Renato</span>
-        </div>
-        <div class="userOptionsContainer">
-          <div>
-            <button
-              mat-icon-button
-              aria-label="Options"
-              [matMenuTriggerFor]="beforeMenu"
-            >
-              <mat-icon>arrow_drop_down</mat-icon>
+      <div class="userInformationBox">
+        <span>Renato</span>
+      </div>
+      <div class="userOptionsContainer">
+        <div>
+          <button
+            mat-icon-button
+            aria-label="Options"
+            [matMenuTriggerFor]="beforeMenu"
+          >
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu
+            #beforeMenu="matMenu"
+            xPosition="before"
+            class="qore_menu"
+          >
+            <button mat-menu-item>Item 1</button>
+            <button  mat-menu-item class="logout">
+              Cerrar sesión
             </button>
-            <mat-menu
-              #beforeMenu="matMenu"
-              xPosition="before"
-              class="qore_menu"
-            >
-              <button mat-menu-item>Item 1</button>
-              <button  mat-menu-item class="logout">
-                Cerrar sesión
-              </button>
-            </mat-menu>
-          </div>
+          </mat-menu>
         </div>
+      </div>
     </div>
   </div>
 </div>
-      
+

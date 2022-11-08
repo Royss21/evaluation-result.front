@@ -16,15 +16,15 @@
   </button>
 </div>
 <app-table
+  [listColumns]="columnsTable"
   [behavior]="paginatedBehavior"
   [observablePaginated]="periodPaginated$"
-  [listColumns]="columnsTable"
   [templateColumnsContent]="columnContent"
 >
   <ng-template
     #columnContent
-    let-element='element'
     let-column='column'
+    let-element='element'
   >
     <div [ngSwitch]="column.columnMatch">
       <div
@@ -34,12 +34,22 @@
       >
         <button
           mat-mini-fab
+          type="button"
+          color="primary"
+          matTooltipPosition="left"
+          matTooltip="Ver evaluación"
+          (click)="goEvaluation(element.id)"
+        >
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button
+          mat-mini-fab
           color="primary"
           matTooltip="Editar"
           matTooltipPosition="left"
           type="button"
-          class="mr-2"
-          (click)="editPeriod(element)">
+          (click)="editPeriod(element.id)"
+        >
           <mat-icon>edit</mat-icon>
         </button>
         <button
@@ -48,17 +58,17 @@
           matTooltip="Eliminar"
           matTooltipPosition="left"
           type="button"
-          class="mr-2"
-          (click)="confirmDeleted()">
+          (click)="confirmDeleted(element.id)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </div>
-        <!--<div *ngSwitchCase="'endDate'">
-          {{ element[column.columnMatch].toString("dd/MM") }}
-        </div>
-        <div *ngSwitchCase="'startDate'">
-          {{ element[column.columnMatch] | date }}
-        </div> -->
+      <div *ngSwitchCase="'startDate'">
+        {{ element[column.columnMatch] | date: 'mediumDate' }}
+      </div>
+      <div *ngSwitchCase="'endDate'">
+        {{ element[column.columnMatch] | date: 'mediumDate' }}
+      </div>
       <div *ngSwitchDefault>
         {{ element[column.columnMatch] }}
       </div>

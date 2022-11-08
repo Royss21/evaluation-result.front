@@ -21,7 +21,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Input() classWidthRow: string = '';
   @Input() templateColumnsContent: TemplateRef<any>;
   @Input() observablePaginated: Observable<any> = new Observable<any>();
-  @Input() behavior: BehaviorSubject<any>;
+  @Input() behavior: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   eventEmitterSearch: EventEmitter<string> = new EventEmitter<string>();
 
   textSearch: string = '';
@@ -45,23 +45,26 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.listenTableChanges();
   }
 
+  get quantityColumns(): number {
+    return this.listColumns.length
+  }
+
   private listenTableChanges(){
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
     merge(this.sort.sortChange, this.paginator.page, this.eventEmitterSearch)
       .pipe(
         startWith({}),
         switchMap((valor) => {
-
           if(typeof valor === 'string')
             this.textSearch = valor;
 
-          const paginatedFilter :IPaginatedFilter = {
+          const paginatedFilter: IPaginatedFilter = {
             start : (this.paginator.pageIndex + 1),
             rows: this.paginator.pageSize,
             columnsOrder: "",
             typeOrder: 0,
-            globalFilter: this.textSearch
-          };
+            globalFilter: this.textSearch || ''
+          }
 
           if(!this.sort.active || this.sort.direction === "")
           {
@@ -80,10 +83,9 @@ export class TableComponent implements OnInit, AfterViewInit {
           return this.observablePaginated;
         }),
         map(({ entities, count }: IPaginatedResponse<any>) => {
-          if (!entities)return [];
+          if (!entities) return [];
 
           this.totalQuantity = count;
-          console.log(entities);
           return entities;
         }),
       )

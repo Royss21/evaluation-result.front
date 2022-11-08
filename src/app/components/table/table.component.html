@@ -37,6 +37,12 @@
 
       <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayColumns;" [class]="classWidthRow"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="quantityColumns">
+          <div class="text-center">No se encontró registros</div>
+        </td>
+      </tr>
     </table>
     <br>
     <mat-paginator
