@@ -18,6 +18,10 @@ export const roots: Routes = [
         path:'period',
         loadChildren: () => import('../period/period.module').then( m => m.PeriodModule )
       },
+      {
+        path:'evaluation',
+        loadChildren: () => import('../evaluation/evaluation.module').then( m => m.EvaluationModule )
+      },
       // {
       //   path:'security',
       //   loadChildren: () => import('../seguridad/seguridad.module').then( m => m.SeguridadModule )

@@ -58,7 +58,7 @@ export class PeriodListComponent {
   }
 
   public goEvaluation(id: number): void {
-    // this.router.navigate([`/period/edit/${id}`]).then(() => {});
+    this.router.navigate([`/evaluation/edit/${id}`]).then(() => {});
   }
 
   public confirmDeleted(idPeriod: number): void {

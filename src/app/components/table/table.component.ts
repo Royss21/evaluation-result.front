@@ -87,7 +87,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
           this.totalQuantity = count;
           return entities;
-        }),
+        })
       )
       .subscribe(entity =>  {
 
