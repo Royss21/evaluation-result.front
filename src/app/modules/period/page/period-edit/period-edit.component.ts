@@ -21,8 +21,8 @@ export class PeriodEditComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<any>();
 
-  isNew = true;
-  title = 'Nuevo periodo';
+  public isNew = true;
+  public title = 'Nuevo periodo';
 
   periodFormGroup: FormGroup;
 

@@ -1,1 +1,77 @@
-<p>evaluation-edit works!</p>
+<section fxLayout="row">
+  <div
+    fxLayout="column"
+    autocomplete="off"
+  >
+    <h2 class="fw-bold">{{title}}</h2>
+    <form
+      autocomplete="off"
+      [formGroup]="evaluationFormGroup"
+    >
+      <!-- FORM CONFIG NEW PERIOD -->
+      <app-config-new-period formControlName="configPeriodControl"></app-config-new-period>
+      <!-- FORM CONFIG NEW PERIOD -->
+
+      <!-- FORM CONFIG CORP GOALS -->
+      <app-config-corp-goals formControlName="configCorpGoals"></app-config-corp-goals>
+      <!-- FORM CONFIG CORP GOALS -->
+
+      <div>
+        <button
+          color="primary"
+          mat-raised-button
+          (click)="onClick()"
+        >
+          Enviar
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- CARD RESUME -->
+  <div fxLayout="column" style="max-width: 500px; width: 300px;">
+    <mat-card>
+      <mat-card-title class="fs-5 fw-bold">{{controlsPeriodForm?.name || '[Periodo - Periodo]'}}</mat-card-title>
+      <mat-card-subtitle>
+        Desde el {{(controlsPeriodForm?.startDate | date:'shortDate') || '00/00/00'}}
+        hasta el {{(controlsPeriodForm?.endDate | date:'shortDate') || '00/00/00'}}
+      </mat-card-subtitle>
+      <mat-card-content>
+          <div class="mb-3"><span class="fs-8 fw-bolder">Componentes seleccionados</span></div>
+          <section
+            fxLayout="row"
+            fxLayoutAlign="center start"
+            class="resume-container"
+          >
+            <section fxFlex="70">
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px" class="mb-1">
+                <img class="img-resume"  src="../../../../../assets/images/objCorp.png" alt="objetics corp">
+                <span>Objetivos corporativos</span>
+              </div>
+              <div class="mb-2">
+                <span class="text-muted">
+                  Del {{(controlsCorpGoalsForm?.startDate | date:'shortDate') || '00/00/00'}}
+                  al  {{(controlsCorpGoalsForm?.endDate | date:'shortDate') || '00/00/00'}}
+                </span>
+              </div>
+              <div>
+                <span class="text-muted">Peso relativo 40%</span>
+              </div>
+            </section>
+            <section fxFlex="30">
+              <button
+                mat-button
+                color="primary"
+                class="button-change"
+              >
+                Cambiar
+              </button>
+            </section>
+          </section>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+          <button mat-raised-button color="primary">Crear Evaluación</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <!-- END CARD RESUME -->
+</section>

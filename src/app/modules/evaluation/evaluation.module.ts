@@ -7,13 +7,19 @@ import { EvaluationComponent } from './evaluation.component';
 import { SharedModule } from '@shared/modules/shared.module';
 import { EvaluationListComponent } from './pages/evaluation-list/evaluation-list.component';
 import { EvaluationEditComponent } from './pages/evaluation-edit/evaluation-edit.component';
+import { ConfigNewPeriodComponent } from './components/config-new-period/config-new-period.component';
+import { ConfigCorpGoalsComponent } from './components/config-corp-goals/config-corp-goals.component';
+import { ConfigCompetenciesComponent } from './components/config-competencies/config-competencies.component';
 
 
 @NgModule({
   declarations: [
     EvaluationListComponent,
     EvaluationEditComponent,
-    EvaluationComponent
+    EvaluationComponent,
+    ConfigNewPeriodComponent,
+    ConfigCorpGoalsComponent,
+    ConfigCompetenciesComponent
   ],
   imports: [
     CommonModule,
