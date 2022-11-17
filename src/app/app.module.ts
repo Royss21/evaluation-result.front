@@ -24,7 +24,7 @@ import { PopupConfirmComponent } from './components/popup-confirm/popup-confirm.
     AppComponent,
     PageNotFoundComponent,
     PopupChooseComponent,
-    PopupConfirmComponent
+    PopupConfirmComponent,
   ],
   imports: [
     BrowserModule,

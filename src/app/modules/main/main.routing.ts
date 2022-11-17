@@ -11,7 +11,7 @@ export const roots: Routes = [
     component: MainComponent,
     children: [
       {
-        path:'welcome',
+        path:'',
         component: WelcomComponent
       },
       {
@@ -22,13 +22,17 @@ export const roots: Routes = [
         path:'evaluation',
         loadChildren: () => import('../evaluation/evaluation.module').then( m => m.EvaluationModule )
       },
+      {
+        path:'configuration',
+        loadChildren: () => import('../configuration/configuration.module').then( m => m.ConfigurationModule )
+      },
       // {
       //   path:'security',
       //   loadChildren: () => import('../seguridad/seguridad.module').then( m => m.SeguridadModule )
       // },
       {
         path:'',
-        redirectTo:'welcome',
+        redirectTo:'',
         pathMatch: 'full'
       },
       {
