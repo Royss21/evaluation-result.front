@@ -1,1 +1,38 @@
-<p>option works!</p>
+<div fxLayout="row" class="pb-4">
+    <h2 class="fw-bold">Configuraciones</h2>
+</div>
+
+<div
+  fxLayout.xs="column"
+  fxLayout.sm="row wrap"
+  fxLayout.md="row wrap"
+  fxLayout.lg="row wrap"
+  fxLayout.xl="row wrap"
+  fxLayoutAlign.lg="space-center center"
+  fxLayoutAlign.md="space-center center"
+  fxLayoutAlign.sm="space-center center"
+>
+    <app-card-option
+        fxFlex.lg="25%"
+        fxFlex.md="30%"
+        fxFlex.sm="50%"
+        fxFlex.xs="100%" 
+        
+        title="Niveles"
+        pathPage="level"
+        icon="../../../../../assets/images/flow.svg"
+    ></app-card-option>
+
+    <app-card-option
+        fxFlex.lg="25%"
+        fxFlex.md="30%"
+        fxFlex.sm="50%"
+        fxFlex.xs="100%"
+
+        title="Formulas"
+        pathPage="formula"
+        icon="../../../../../assets/images/flow.svg"
+    ></app-card-option>
+</div>
+
+

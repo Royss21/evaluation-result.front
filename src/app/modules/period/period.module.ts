@@ -7,8 +7,7 @@ import { PeriodComponent } from './period.component';
 import { SharedModule } from "@shared/modules/shared.module";
 import { PeriodEditComponent } from './page/period-edit/period-edit.component';
 import { PeriodListComponent } from './page/period-list/period-list.component';
-import { TableComponent } from '@components/table/table.component';
-import { SearchGlobalComponent } from '@components/table/search-global/search-global.component';
+import { ComponentsModule } from '@components/components.module';
 
 
 @NgModule({
@@ -16,14 +15,13 @@ import { SearchGlobalComponent } from '@components/table/search-global/search-gl
     PeriodEditComponent,
     PeriodListComponent,
     PeriodComponent,
-    TableComponent,
-    SearchGlobalComponent
   ],
   imports: [
     CommonModule,
     PeriodRouting,
     SharedModule,
-    RouterModule
+    RouterModule,
+    ComponentsModule
   ]
 })
 export class PeriodModule { }
