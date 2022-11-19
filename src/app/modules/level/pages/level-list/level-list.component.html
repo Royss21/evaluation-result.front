@@ -1,3 +1,8 @@
+<div fxLayout="row" >
+  <h2 class="fw-bold">Listado de Niveles</h2>
+</div>
+
+
 <div
   fxLayout="row"
   fxLayoutAlign.xs="end center"
@@ -11,7 +16,7 @@
     mat-mini-fab
     matTooltip="Crear nuevo nivel"
     color="primary"
-    (click)="createUpdateLevel()"
+    (click)="createLevel()"
   >
     <mat-icon>add</mat-icon>
   </button>
@@ -33,22 +38,21 @@
         fxLayoutGap="10px"
         *ngSwitchCase="'actions'"
       >
-        
         <button
           mat-mini-fab
           color="primary"
-          matTooltip="Editar"
-          matTooltipPosition="left"
           type="button"
+          class="btn-action-xs"
+          (click)="updateLevel(element)"
         >
           <mat-icon>edit</mat-icon>
         </button>
         <button
           mat-mini-fab
           color="warn"
-          matTooltip="Eliminar"
-          matTooltipPosition="left"
           type="button"
+          class="btn-action-xs"
+          (click)="confirmDeleted(element.id)"
         >
           <mat-icon>delete</mat-icon>
         </button>

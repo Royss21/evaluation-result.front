@@ -21,7 +21,7 @@ import { WelcomComponent } from './views/welcom/welcom.component';
     CommonModule,
     RouterModule,
     MainRoutingModule,
-    SharedModule
+    SharedModule,
   ],
   exports: [
     HeaderComponent,

@@ -1,6 +1,5 @@
 export interface ILevel{
+    id?: number;
     name: string;
     description: string;
-    id?: number;
-    createDate: Date
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
+import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { LevelService } from '@core/services/level/level.service';
@@ -28,7 +30,6 @@ export class LevelListComponent implements OnInit {
   paginatedFilterCurrent: IPaginatedFilter;
 
   constructor(
-    private router: Router,
     public _dialog: MatDialog,
     private _levelService: LevelService,
   ){
@@ -57,11 +58,10 @@ export class LevelListComponent implements OnInit {
       });
   }
 
-  
   private abrirModal(level?: ILevel): void {
 
     const modalLevel = this._dialog.open(LevelModalComponent, {
-      width: ConstantsGeneral.md,
+      width: ConstantsGeneral.mdModal,
       disableClose: true,
       data: level
     });
@@ -72,46 +72,33 @@ export class LevelListComponent implements OnInit {
       });
   }
 
-  createUpdateLevel(): void{
+  private delete(id:number): void{
+    this._levelService
+      .delete(id)
+      .subscribe(() => {
+        this.paginatedBehavior.next(this.paginatedFilterCurrent);
+        this._dialog.closeAll();
+      });
+  }
+
+  createLevel(): void{
     this.abrirModal();
   }
 
-  // public editPeriod(id: number): void {
-  //   this.router.navigate([`/period/edit/${id}`]).then(() => {});
-  // }
+  updateLevel(level: ILevel): void{
+    this.abrirModal(level);
+  }
 
-  // public goEvaluation(id: number): void {
-  //   this.router.navigate([`/evaluation/edit/${id}`]).then(() => {});
-  // }
+  confirmDeleted(id: number): void {
+    const dialogRef = this._dialog.open(PopupChooseComponent, {
+      data: ConstantsGeneral.chooseDelete,
+      autoFocus: false,
+    });
 
-  // public confirmDeleted(idPeriod: number): void {
-  //   const dialogRef = this._dialog.open(PopupChooseComponent, {
-  //     data: ConstantsGeneral.chooseData,
-  //     autoFocus: false,
-  //     restoreFocus: false
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result) {
-  //       this._periodService
-  //       .delete(idPeriod)
-  //       .pipe(takeUntil(this.unsubscribe$))
-  //       .subscribe(() => this.showConfirmMessage());
-  //     }
-  //   });
-  // }
-
-  // showConfirmMessage() {
-  //   const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
-  //     data: ConstantsGeneral.chooseDelete,
-  //     autoFocus: false
-  //   });
-
-  //   dialogRefConfirm.afterClosed().subscribe(() => {
-  //     this.callPaginated();
-  //     this._dialog.closeAll();
-  //   });
-  // }
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) this.delete(id);
+    });
+  }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(1);

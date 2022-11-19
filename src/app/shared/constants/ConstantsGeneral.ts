@@ -7,6 +7,11 @@ export  class ConstantsGeneral{
     static lg: '70%';
     static xl: '90%';
 
+    static smModal = '300px';
+    static mdModal = '500px';
+    static lgModal = '800px';
+    static xlModal = '1140px';
+
     static readonly chooseData: IPopupChoose = {
       icon: 'warning_amber',
       iconColor: 'color-danger',

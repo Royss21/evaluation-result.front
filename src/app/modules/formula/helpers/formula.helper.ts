@@ -1,18 +1,19 @@
 import { IElementRowTable } from "@components/table/interfaces/table.interface";
 import { ElementRowTable } from "@components/table/models/table.model";
 
-export class LevelHelper{
+export class FormulaHelper{
     static columnsTable: IElementRowTable[] =  [
       new ElementRowTable('name','Nombre'),
       new ElementRowTable('description','Descripción'),
+      new ElementRowTable('formulaReal','Formula'),
       new ElementRowTable('actions','Acciones'),
     ];
 }
 
-export class LevelText{
+export class FormulaText{
 
-  static modalCreate = 'Crear Nivel';
-  static modalUdpate =  'Editar Nivel';
+  static modalCreate = 'Crear Formula';
+  static modalUdpate =  'Editar Formula';
   //static saveText: 'Desea guardar el nivel?';
   //static saveAndCloseText: 'Desea guardar el nivel y cerrar?';
 } 

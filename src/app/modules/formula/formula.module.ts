@@ -5,7 +5,9 @@ import { RouterModule } from '@angular/router';
 
 import { FormulaComponent } from './formula.component';
 import { FormulaListComponent } from './pages/formula-list/formula-list.component';
-import { FormulaEditComponent } from './pages/formula-edit/formula-edit.component';
+import { FormulaModalComponent } from './components/formula-modal/formula-modal.component';
+import { SharedModule } from '@shared/modules/shared.module';
+import { ComponentsModule } from '@components/components.module';
 
 
 
@@ -13,17 +15,19 @@ import { FormulaEditComponent } from './pages/formula-edit/formula-edit.componen
   declarations: [
     FormulaComponent,
     FormulaListComponent,
-    FormulaEditComponent,
+    FormulaModalComponent,
   ],
   imports: [
     CommonModule,
     FormulaRoutingModule,
-    RouterModule
+    RouterModule,
+    SharedModule,
+    ComponentsModule
   ],
   exports: [
     FormulaComponent,
     FormulaListComponent,
-    FormulaEditComponent,
+    FormulaModalComponent,
   ]
 })
 export class FormulaModule { }
