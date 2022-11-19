@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
+import { IResponse } from '@core/interfaces/response.interface';
 import { ILevel } from '@modules/level/interfaces/level.interface';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';
@@ -12,7 +14,10 @@ export class LevelService {
   
   private controller = 'Level';
   private url = `https://localhost:7253/api/${this.controller}`
-  constructor(private _apiService: ApiService) { }
+  constructor(
+    private _apiService: ApiService,
+    private _httpClient: HttpClient
+    ) { }
 
   getById(id: number): Observable<ILevel> {
     const url = `${this.controller}/${id}`;
@@ -37,8 +42,12 @@ export class LevelService {
         .delete<boolean>(`${this.url}/${id}`);
   }
 
-  getPaginated(paginatedFilter: IPaginatedFilter): Observable<IPaginatedResponse<ILevel>> {
-    return this._apiService
-        .get<IPaginatedResponse<ILevel>>(`${this.url}/paging`, paginatedFilter);
+  getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<ILevel>> {
+    
+
+    //return this._httpClient.get<IPaginatedResponse<ILevel>>(`https://localhost:7253/api/Level/paging?start=1&rows=5&columnsOrder=CreateDate&typeOrder=1&globalFilter=b`)
+    
+     return this._apiService
+         .get<IPaginatedResponse<ILevel>>(`${this.url}/paging`, paginatedFilter);
   }
 }

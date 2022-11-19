@@ -6,16 +6,16 @@ import { SharedModule } from "src/app/shared/modules/shared.module";
 import { ComponentsModule } from '@components/components.module';
 
 
-import { LevelEditComponent } from './pages/level-edit/level-edit.component';
 import { LevelListComponent } from './pages/level-list/level-list.component';
 import { LevelComponent } from './level.component';
+import { LevelModalComponent } from './components/level-modal/level-modal.component';
 
 
 @NgModule({
   declarations: [
-    LevelEditComponent,
     LevelListComponent,
-    LevelComponent
+    LevelComponent,
+    LevelModalComponent
   ],
   imports: [
     CommonModule,

@@ -1,23 +1,25 @@
 <div
   fxLayout="row"
-  fxLayoutAlign.xs="center center"
-  fxLayoutAlign.sm="center center"
+  fxLayoutAlign.xs="end center"
+  fxLayoutAlign.sm="end center"
   fxLayoutAlign.md="end center"
   fxLayoutAlign.lg="end center"
   fxLayoutAlign.xl="end center"
   class="my-sm-3 my-md-0"
 >
   <button
-    mat-raised-button
+    mat-mini-fab
+    matTooltip="Crear nuevo nivel"
     color="primary"
+    (click)="createUpdateLevel()"
   >
-  Nuevo Nivel
+    <mat-icon>add</mat-icon>
   </button>
 </div>
 <app-table
   [listColumns]="columnsTable"
   [behavior]="paginatedBehavior"
-  [observablePaginated]="levelPaginated$"
+  [paginated]="levelPaginated$"
   [templateColumnsContent]="columnContent"
 >
   <ng-template

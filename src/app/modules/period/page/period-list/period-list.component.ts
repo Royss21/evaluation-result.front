@@ -10,6 +10,7 @@ import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
+import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
 
 @Component({
   selector: 'app-period-list',
@@ -23,6 +24,7 @@ export class PeriodListComponent {
   periodPaginated$: Observable<any>;
   paginated$: Observable<any>;
   paginatedBehavior: BehaviorSubject<any>;
+  periodPaginatedBehavior: BehaviorSubject<any>;
   columnsTable: IElementRowTable[];
   paginatedFilterCurrent: IPaginatedFilter;
 
@@ -31,8 +33,9 @@ export class PeriodListComponent {
     public _dialog: MatDialog,
     private _periodService: PeriodService,
   ){
-    this.periodPaginated$ = new Observable<any>();
+    this.periodPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
+    this.periodPaginated$ = this.periodPaginatedBehavior.asObservable();
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = PeriodHelper.columnsTable;
   }
@@ -48,8 +51,11 @@ export class PeriodListComponent {
   private callPaginated() {
     this.paginated$
       .subscribe((paginatedFilter: IPaginatedFilter) => {
-      this.paginatedFilterCurrent = paginatedFilter;
-      this.periodPaginated$ = this._periodService.getPaginated(paginatedFilter);
+        if(paginatedFilter){
+          this.paginatedFilterCurrent = paginatedFilter;
+          this._periodService.getPaginated(paginatedFilter)
+          .subscribe(paginated => this.periodPaginatedBehavior.next(paginated));
+        }
     });
   }
 

@@ -29,4 +29,11 @@ export  class ConstantsGeneral{
       buttonLabelCancel: 'Cancelar',
       buttonLabelAccept: 'Eliminar'
     };
+
+    static readonly modalSize = {
+      small: '300px',
+      medium: '580px',
+      large: '800px',
+      extraLarge: '1140px',
+    };
 }

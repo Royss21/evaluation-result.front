@@ -31,10 +31,12 @@ export class MainComponent implements OnInit {
     this._observer.observe(['(max-width: 767px)']).subscribe((res) => {
       setTimeout(() => {
         if (res.matches) {
-          this.sidenav.mode = 'over';
-          this.sidenav.close();
-          if (this.sideBarOpen) 
-            this.sideBarOpen = false;
+           this.sidenav.mode = 'over';
+           this.sidenav.toggle();
+           //this.sidenav.toggle();
+           //  this.sidenav.close();
+          // if (this.sideBarOpen) 
+          this.sideBarOpen = false;
         } else {
           this.sidenav.mode = 'side';
           if (!this.sidenav.opened)
@@ -58,8 +60,9 @@ export class MainComponent implements OnInit {
   }
 
   private showHideSidebarToggle(){    
-    if (this.sidenav.mode === 'over') 
-      this.sidenav.toggle()
+    if (this.sidenav.mode === 'over') {
+      this.sidenav.toggle();
+    }
     else 
       this.sideBarOpen = !this.sideBarOpen
   }

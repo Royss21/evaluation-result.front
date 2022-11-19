@@ -13,9 +13,10 @@ export class ApiService {
     private _httpClient: HttpClient
     ) { }
 
-  get<T>(url: string, parametros?: any): Observable<T> {
-    return this._httpClient.get<IResponse<T>>(`${url}`,{
-          params: parametros
+  get<T>(url: string, parameters?: any): Observable<T> {
+
+    return this._httpClient.get<IResponse<T>>(`${url}`, {
+          params: parameters
         })
         .pipe(
             filter((p) => p.ok),

@@ -4,9 +4,12 @@ import { Router } from '@angular/router';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { LevelService } from '@core/services/level/level.service';
+import { LevelModalComponent } from '@modules/level/components/level-modal/level-modal.component';
 import { LevelHelper } from '@modules/level/helpers/level.helper';
+import { ILevel } from '@modules/level/interfaces/level.interface';
+import { ConstantsGeneral } from '@shared/constants';
 
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-level-list',
@@ -19,6 +22,7 @@ export class LevelListComponent implements OnInit {
 
   levelPaginated$: Observable<any>;
   paginated$: Observable<any>;
+  levelPaginatedBehavior: BehaviorSubject<any>;
   paginatedBehavior: BehaviorSubject<any>;
   columnsTable: IElementRowTable[];
   paginatedFilterCurrent: IPaginatedFilter;
@@ -28,29 +32,48 @@ export class LevelListComponent implements OnInit {
     public _dialog: MatDialog,
     private _levelService: LevelService,
   ){
-    this.levelPaginated$ = new Observable<any>();
+    this.levelPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
+    this.levelPaginated$ = this.levelPaginatedBehavior.asObservable();
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = LevelHelper.columnsTable;
   }
   ngOnInit(): void {
     
   }
-
-  // public goToNewPeriod(): void {
-  //   this.router.navigate(['/period/edit']).then(() => {});
-  // }
-
+  
   ngAfterContentInit() {
     this.callPaginated();
   }
 
-  private callPaginated() {
+  private callPaginated(): void {
     this.paginated$
       .subscribe((paginatedFilter: IPaginatedFilter) => {
-      this.paginatedFilterCurrent = paginatedFilter;
-      this.levelPaginated$ = this._levelService.getPaginated(paginatedFilter);
+        if(paginatedFilter){
+          this.paginatedFilterCurrent = paginatedFilter;
+          this._levelService.getPaginated(paginatedFilter)
+            .subscribe(paginated => this.levelPaginatedBehavior.next(paginated));
+        }
+      });
+  }
+
+  
+  private abrirModal(level?: ILevel): void {
+
+    const modalLevel = this._dialog.open(LevelModalComponent, {
+      width: ConstantsGeneral.md,
+      disableClose: true,
+      data: level
     });
+
+    modalLevel.afterClosed()
+      .subscribe(() => {
+        this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      });
+  }
+
+  createUpdateLevel(): void{
+    this.abrirModal();
   }
 
   // public editPeriod(id: number): void {

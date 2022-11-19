@@ -1,14 +1,15 @@
 import { MatSort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatPaginator } from '@angular/material/paginator';
-import { BehaviorSubject, map, merge, Observable, startWith, switchMap } from 'rxjs';
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { BehaviorSubject, delay, from, map, merge, Observable, of, startWith, switchMap } from 'rxjs';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 
 import { TableTipeOrder } from './models/table.model';
 import { TypeOrderEnum } from './enums/type-order.enum';
 import { IElementRowTable } from './interfaces/table.interface';
 import { IPaginatedFilter } from './interfaces/paginated-filter.interface';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
+import { IResponse } from '@core/interfaces/response.interface';
 
 @Component({
   selector: 'app-table',
@@ -20,7 +21,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Input() listColumns: IElementRowTable[] = [];
   @Input() classWidthRow: string = '';
   @Input() templateColumnsContent: TemplateRef<any>;
-  @Input() observablePaginated: Observable<any> = new Observable<any>();
+  @Input() paginated: Observable<any> = new Observable<any>();
   @Input() behavior: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   eventEmitterSearch: EventEmitter<string> = new EventEmitter<string>();
 
@@ -45,6 +46,10 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.listenTableChanges();
   }
 
+  ngOnChanges(changes: SimpleChanges): void{
+    
+  }
+
   get quantityColumns(): number {
     return this.listColumns.length
   }
@@ -55,34 +60,45 @@ export class TableComponent implements OnInit, AfterViewInit {
       .pipe(
         startWith({}),
         switchMap((valor) => {
+
           if(typeof valor === 'string')
+          {
+            this.paginator.pageIndex =  this.textSearch != valor ? 0 : this.paginator.pageIndex;
             this.textSearch = valor;
+          }
 
           const paginatedFilter: IPaginatedFilter = {
             start : (this.paginator.pageIndex + 1),
             rows: this.paginator.pageSize,
-            columnsOrder: "",
+            orderColumn: "",
             typeOrder: 0,
             globalFilter: this.textSearch || ''
           }
 
           if(!this.sort.active || this.sort.direction === "")
           {
-            paginatedFilter.columnsOrder = "CreateDate";
+            paginatedFilter.orderColumn = "CreateDate";
             paginatedFilter.typeOrder = TypeOrderEnum.Descendant;
           }
           else
           {
-            paginatedFilter.columnsOrder = this.sort.active;
+            paginatedFilter.orderColumn = this.sort.active;
             paginatedFilter.typeOrder = this.sort.direction === TableTipeOrder.Ascendant
                               ? TypeOrderEnum.Ascendant
                               : TypeOrderEnum.Descendant;
           }
 
           this.behavior.next(paginatedFilter);
-          return this.observablePaginated;
+
+          return this.paginated;
         }),
-        map(({ entities, count }: IPaginatedResponse<any>) => {
+        //map(({ entities, count }: IPaginatedResponse<any>) => {
+        map((paginated: IPaginatedResponse<any>) => {
+
+          if(!paginated)return [];
+
+          const{entities, count} = paginated;
+
           if (!entities) return [];
 
           this.totalQuantity = count;
@@ -90,7 +106,6 @@ export class TableComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe(entity =>  {
-
         if(entity.length > 0){
           const keys =  Object.keys(entity[0]);
           this.columnsNotOrder = this.displayColumns.filter(cm => !keys.includes(cm));
