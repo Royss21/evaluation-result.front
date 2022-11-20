@@ -5,7 +5,7 @@
 <form
     class="p-3"
     autocomplete="off"
-    [formGroup]="formulaFormGroup"
+    [formGroup]="parameterRangeFormGroup"
     (ngSubmit)="confirmSave()"
 >
     <div
@@ -18,26 +18,25 @@
     >
     
         <div
-            fxFlex.xl="50%"    
-            fxFlex.lg="50%"
-            fxFlex.md="50%"
+            fxFlex.xl="100%"    
+            fxFlex.lg="100%"
+            fxFlex.md="100%"
             fxFlex.sm="100%"
-            fxFlex.xs="100%"
-            class="p-1 pb-0 pt-0" 
+            fxFlex.xs="100%" 
         >
             <mat-form-field
                 fxFill
                 appearance="outline"
             >
-            <mat-label>Nombre</mat-label>
-            <input
-                name="name"
-                formControlName="name"
-                type="text"
-                autocomplete="off"
-                maxlength="100"
-                matInput
-            >
+                <mat-label>Nombre</mat-label>
+                <input
+                    name="name"
+                    formControlName="name"
+                    type="text"
+                    autocomplete="off"
+                    maxlength="100"
+                    matInput
+                >
                 <mat-error *ngIf="controlsForm['name'].hasError('required')">
                     El nombre es <strong>requerido</strong>.
                 </mat-error>
@@ -47,12 +46,11 @@
             </mat-form-field>
         </div>
         <div
-            fxFlex.xl="50%"    
-            fxFlex.lg="50%"
-            fxFlex.md="50%"
+            fxFlex.xl="100%"    
+            fxFlex.lg="100%"
+            fxFlex.md="100%"
             fxFlex.sm="100%"
             fxFlex.xs="100%" 
-            class="p-1 pb-0 pt-0" 
         >
             <mat-form-field
                 fxFill
@@ -63,58 +61,11 @@
                     formControlName="description"
                     matInput
                     cdkTextareaAutosize
+                    maxlength="200"
                     #autosize="cdkTextareaAutosize"
                     cdkAutosizeMinRows="1"
                     cdkAutosizeMaxRows="5"
                 ></textarea>
-            </mat-form-field>
-        </div>
-        <div
-            fxFlex.xl="100%"    
-            fxFlex.lg="100%"
-            fxFlex.md="100%"
-            fxFlex.sm="100%"
-            fxFlex.xs="100%"
-            class="p-1 pb-0"
-        >
-          <p>Parametros para configurar:</p>
-          <ul>
-            <li>ssss</li>
-            <li>ssss</li>
-            <li>ssss</li>
-          </ul>
-          
-        </div>
-        <div
-            fxFlex.xl="100%"    
-            fxFlex.lg="100%"
-            fxFlex.md="100%"
-            fxFlex.sm="100%"
-            fxFlex.xs="100%"
-            class="p-1 pb-0 pt-0" 
-        >
-            <div matBadge="4" matBadgeOverlap="false" style="font-size:11px">Nota: Solo puede usar la sentencia SI() y la condicional Y()</div>
-            <mat-form-field
-                fxFill
-                appearance="outline"
-            >
-            <mat-label>Formula</mat-label>
-            <input
-                name="formulaReal"
-                formControlName="formulaReal"
-                type="text"
-                autocomplete="off"
-                maxlength="500"
-                matInput
-            >
-                
-                <mat-error *ngIf="controlsForm['formulaReal'].hasError('required')">
-                    La formula es <strong>requerida</strong>.
-                </mat-error>
-                <mat-error *ngIf="controlsForm['formulaReal'].hasError('maxlength')">
-                    Se ha excedido el límite de caracteres
-                </mat-error>
-
             </mat-form-field>
         </div>
     </div>

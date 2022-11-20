@@ -81,11 +81,11 @@ export class LevelListComponent implements OnInit {
       });
   }
 
-  createLevel(): void{
+  create(): void{
     this.abrirModal();
   }
 
-  updateLevel(level: ILevel): void{
+  update(level: ILevel): void{
     this.abrirModal(level);
   }
 

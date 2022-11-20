@@ -23,13 +23,14 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Input() templateColumnsContent: TemplateRef<any>;
   @Input() paginated: Observable<any> = new Observable<any>();
   @Input() behavior: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  @Input() showFilterSearch: boolean = true;
   eventEmitterSearch: EventEmitter<string> = new EventEmitter<string>();
 
   textSearch: string = '';
   totalQuantity: number = 0 ;
   dataList: any[] = [];
   displayColumns: string[] = [];
-  columnsNotOrder:string[] = [];
+  //columnsNotOrder:string[] = [];
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -108,7 +109,7 @@ export class TableComponent implements OnInit, AfterViewInit {
       .subscribe(entity =>  {
         if(entity.length > 0){
           const keys =  Object.keys(entity[0]);
-          this.columnsNotOrder = this.displayColumns.filter(cm => !keys.includes(cm));
+          //this.columnsNotOrder = this.displayColumns.filter(cm => !keys.includes(cm));
         }
 
         this.dataList = entity
@@ -123,9 +124,9 @@ export class TableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  enableColumnSort(columna: string): boolean {
-    return !!this.columnsNotOrder.includes(columna);
-  }
+  // enableColumnSort(columna: string): boolean {
+  //   return !!this.columnsNotOrder.includes(columna);
+  // }
 }
 
 

@@ -22,6 +22,10 @@ export const roots: Routes = [
         loadChildren: () => import('../level/level.module').then( m => m.LevelModule )
       },
       {
+        path:'parameter-range',
+        loadChildren: () => import('../parameter-range/parameter-range.module').then( m => m.ParameterRangeModule )
+      },
+      {
         path:'',
         redirectTo:'',
         pathMatch: 'full'

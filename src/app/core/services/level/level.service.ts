@@ -39,11 +39,7 @@ export class LevelService {
         .delete<boolean>(`${this.url}/${id}`);
   }
 
-  getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<ILevel>> {
-    
-
-    //return this._httpClient.get<IPaginatedResponse<ILevel>>(`https://localhost:7253/api/Level/paging?start=1&rows=5&columnsOrder=CreateDate&typeOrder=1&globalFilter=b`)
-    
+  getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<ILevel>> {    
      return this._apiService
          .get<IPaginatedResponse<ILevel>>(`${this.url}/paging`, paginatedFilter);
   }

@@ -1,0 +1,168 @@
+<div fxLayout="row">
+    <h2 class="fw-bold">Listado de Parametros</h2>
+</div>
+  
+<form
+    #formGroupDirective
+    class="p-3"
+    autocomplete="off"
+    [formGroup]="parameterValueFormGroup"
+    (ngSubmit)="confirmSave()"
+>
+    <div
+        fxLayout.xs="row wrap"
+        fxLayout.sm="row wrap"
+        fxLayout.md="row wrap"
+        fxLayout.lg="row wrap"
+        fxLayout.xl="row wrap"
+        fxLayoutAlign="space-center center"
+    >
+        <div
+            fxFlex.xl="50%"    
+            fxFlex.lg="50%"
+            fxFlex.md="50%"
+            fxFlex.sm="50%"
+            fxFlex.xs="100%"
+            class="p-1 pb-0 pt-0" 
+        >
+            <mat-form-field
+                fxFill
+                appearance="outline"
+            >
+                <mat-label>Nombre de parametro</mat-label>
+                <input
+                    name="name"
+                    formControlName="name"
+                    type="text"
+                    autocomplete="off"
+                    maxlength="100"
+                    matInput
+                    style="text-transform:uppercase"
+                >
+                <mat-error *ngIf="controlsForm['name'].hasError('required')">
+                    El nombre es <strong>requerido</strong>.
+                </mat-error>
+                <mat-error *ngIf="controlsForm['name'].hasError('maxlength')">
+                    Se ha excedido el límite de caracteres
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div
+            fxFlex.xl="50%"    
+            fxFlex.lg="50%"
+            fxFlex.md="50%"
+            fxFlex.sm="50%"
+            fxFlex.xs="100%" 
+            class="p-1 pb-0 pt-0" 
+        >
+            <mat-form-field
+                fxFill
+                appearance="outline"
+            >
+                <mat-label>Valor</mat-label>
+                <input
+                    name="value"
+                    formControlName="value"
+                    type="number"
+                    autocomplete="off"
+                    placeholder="0"
+                    matInput
+                >
+                <mat-error *ngIf="controlsForm['value'].hasError('required')">
+                    El valor es <strong>requerido</strong>.
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div
+        fxLayout.xs="row"
+        fxLayout.sm="row"
+        fxLayout.md="row"
+        fxLayout.lg="row"
+        fxLayout.xl="row"
+        fxLayoutAlign="end center"
+    >
+        <button 
+            mat-mini-fab 
+            color="basic" 
+            matTooltip="Limpiar"
+            type="button" 
+            (click)="clean()"
+        >
+            <mat-icon>brush</mat-icon>
+        </button>
+        <button 
+            mat-mini-fab 
+            color="primary" 
+            matTooltip="Guardar"
+            type="submit" 
+            class="ml-2"
+        >
+            <mat-icon>save</mat-icon>
+        </button>
+    </div>
+</form>
+
+<app-table
+    [listColumns]="columnsTable"
+    [behavior]="paginatedBehavior"
+    [paginated]="parameterValuePaginated$"
+    [templateColumnsContent]="columnContent"
+    [showFilterSearch]="false"
+>
+    <ng-template
+        #columnContent
+        let-column='column'
+        let-element='element'
+    >
+        <div [ngSwitch]="column.columnMatch">
+        <div
+            fxLayout="row"
+            fxLayoutGap="10px"
+            *ngSwitchCase="'actions'"
+        >
+            <button
+                mat-mini-fab
+                color="primary"
+                type="button"
+                class="btn-action-xs"
+                (click)="edit(element)"
+            >
+            <mat-icon>edit</mat-icon>
+            </button>
+            
+            <button
+                mat-mini-fab
+                color="warn"
+                type="button"
+                class="btn-action-xs"
+                (click)="confirmDeleted(element.id)"
+            >
+            <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+        <div *ngSwitchDefault>
+            {{ element[column.columnMatch] }}
+        </div>
+        </div>
+    </ng-template>
+</app-table>
+
+<div
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+>
+    <mat-dialog-actions align="center">
+        <button 
+            mat-mini-fab 
+            color="basic" 
+            matTooltip="Cerrar"
+            type="button" 
+            (click)="close()"
+        >
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-dialog-actions>
+</div>

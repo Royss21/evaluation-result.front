@@ -1,4 +1,5 @@
 <app-search-global
+    *ngIf="showFilterSearch"
     [emiterTextSearch]="eventEmitterSearch">
 </app-search-global>
 <div class="container-fluid">
@@ -20,7 +21,7 @@
           *matHeaderCellDef
           mat-sort-header
           class="fw-bold"
-          [disabled]="enableColumnSort(column.columnMatch)"
+          [disabled]="column.isNotSorted"
         >
         {{ column.columnTitle }}
         </th>
