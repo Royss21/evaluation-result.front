@@ -26,6 +26,10 @@ export const roots: Routes = [
         loadChildren: () => import('../parameter-range/parameter-range.module').then( m => m.ParameterRangeModule )
       },
       {
+        path:'corporate-objectives',
+        loadChildren: () => import('../corporate-objectives/corporate-objectives.module').then( m => m.CorporateObjectivesModule )
+      },
+      {
         path:'',
         redirectTo:'',
         pathMatch: 'full'

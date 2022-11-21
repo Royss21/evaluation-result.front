@@ -1,14 +1,14 @@
 
 <h2  mat-dialog-title>Listado de Parametros</h2>
 
-<mat-dialog-content>
-    <form
-        #formGroupDirective
-        class="p-3"
-        autocomplete="off"
-        [formGroup]="parameterValueFormGroup"
-        (ngSubmit)="confirmSave()"
-    >
+<form
+    #formGroupDirective
+    class="p-3"
+    autocomplete="off"
+    [formGroup]="parameterValueFormGroup"
+    (ngSubmit)="confirmSave()"
+>
+    <mat-dialog-content>
         <div
             fxLayout.xs="row wrap"
             fxLayout.sm="row wrap"
@@ -92,6 +92,7 @@
             fxLayout.lg="row"
             fxLayout.xl="row"
             fxLayoutAlign="end center"
+            class="pb-3"
         >
             <button 
                 mat-mini-fab 
@@ -99,6 +100,7 @@
                 matTooltip="Limpiar"
                 type="button" 
                 (click)="clean()"
+                style="margin-right: 10px;"
             >
                 <mat-icon>brush</mat-icon>
             </button>
@@ -112,61 +114,62 @@
                 <mat-icon>save</mat-icon>
             </button>
         </div>
-    </form>
+    
 
-    <app-table
-        [listColumns]="columnsTable"
-        [behavior]="paginatedBehavior"
-        [paginated]="parameterValuePaginated$"
-        [templateColumnsContent]="columnContent"
-        [showFilterSearch]="false"
-    >
-        <ng-template
-            #columnContent
-            let-column='column'
-            let-element='element'
+        <app-table
+            [listColumns]="columnsTable"
+            [behavior]="paginatedBehavior"
+            [paginated]="parameterValuePaginated$"
+            [templateColumnsContent]="columnContent"
+            [showFilterSearch]="false"
         >
-            <div [ngSwitch]="column.columnMatch">
-            <div
-                fxLayout="row"
-                fxLayoutGap="10px"
-                *ngSwitchCase="'actions'"
+            <ng-template
+                #columnContent
+                let-column='column'
+                let-element='element'
             >
-                <button
-                    mat-mini-fab
-                    color="primary"
-                    type="button"
-                    class="btn-action-xs"
-                    (click)="edit(element)"
+                <div [ngSwitch]="column.columnMatch">
+                <div
+                    fxLayout="row"
+                    fxLayoutGap="10px"
+                    *ngSwitchCase="'actions'"
                 >
-                <mat-icon>edit</mat-icon>
-                </button>
-                
-                <button
-                    mat-mini-fab
-                    color="warn"
-                    type="button"
-                    class="btn-action-xs"
-                    (click)="confirmDeleted(element.id)"
-                >
-                <mat-icon>delete</mat-icon>
-                </button>
-            </div>
-            <div *ngSwitchDefault>
-                {{ element[column.columnMatch] }}
-            </div>
-            </div>
-        </ng-template>
-    </app-table>
-</mat-dialog-content>
-<mat-dialog-actions align="center">
-    <button 
-        mat-mini-fab 
-        color="basic" 
-        matTooltip="Cerrar"
-        type="button" 
-        (click)="close()"
-    >
-        <mat-icon>close</mat-icon>
-    </button>
-</mat-dialog-actions>
+                    <button
+                        mat-mini-fab
+                        color="primary"
+                        type="button"
+                        class="btn-action-xs"
+                        (click)="edit(element)"
+                    >
+                    <mat-icon>edit</mat-icon>
+                    </button>
+                    
+                    <button
+                        mat-mini-fab
+                        color="warn"
+                        type="button"
+                        class="btn-action-xs"
+                        (click)="confirmDeleted(element.id)"
+                    >
+                    <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+                <div *ngSwitchDefault>
+                    {{ element[column.columnMatch] }}
+                </div>
+                </div>
+            </ng-template>
+        </app-table>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <button 
+            mat-mini-fab 
+            color="basic" 
+            matTooltip="Cerrar"
+            type="button" 
+            (click)="close()"
+        >
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-dialog-actions>
+</form>

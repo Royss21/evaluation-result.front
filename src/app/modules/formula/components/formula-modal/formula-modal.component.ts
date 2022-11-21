@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { FormulaService } from '@core/services/formula/formula.service';
@@ -30,6 +31,7 @@ export class FormulaModalComponent implements OnInit {
     private _formulaService: FormulaService,
     private _parameterRangeService: ParameterRangeService,
     private _modalRef: MatDialogRef<FormulaModalComponent>,
+    private _snackBar: MatSnackBar,
     public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: IFormula
   ) { 
@@ -69,6 +71,14 @@ export class FormulaModalComponent implements OnInit {
     });
   }
 
+  private notifyCopy(){  
+    this._snackBar.open('Copiado','', {
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+      duration: 1000
+    }); 
+  }
+
   ngOnInit(): void {
     this._parameterRangeService.getAllWithValues()
       .subscribe(data => {
@@ -82,6 +92,7 @@ export class FormulaModalComponent implements OnInit {
 
   copyNameValue(nameValue: string){
     navigator.clipboard.writeText(nameValue);
+    this.notifyCopy();
   }
 
   confirmSave(isClose: boolean = true){

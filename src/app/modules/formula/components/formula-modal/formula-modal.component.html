@@ -1,12 +1,13 @@
 
 <h2  mat-dialog-title>{{ modalTitle }}</h2>
-<mat-dialog-content>
-    <form
-        class="p-3"
-        autocomplete="off"
-        [formGroup]="formulaFormGroup"
-        (ngSubmit)="confirmSave()"
-    >
+<form
+    class="p-3"
+    autocomplete="off"
+    [formGroup]="formulaFormGroup"
+    (ngSubmit)="confirmSave()"
+>
+    <mat-dialog-content>
+    
         <div
             fxLayout.xs="row wrap"
             fxLayout.sm="row wrap"
@@ -74,7 +75,8 @@
                 fxFlex="100%"
                 class="p-1 pb-2"
             >
-                <p>Parametros configurados:</p>
+            <p>Parametros configurados:</p>
+            <div style="padding: 10px; background-color: rgb(121 187 255 / 18%);;border-radius: 5px; margin-bottom: 10px;">
                 <div
                     fxLayout.xs="column"
                     fxLayout.sm="column"
@@ -99,13 +101,16 @@
                                 (click)="copyNameValue(value.name)"
                             >
                                 {{ value.name }} &nbsp; = {{value.value}}
-                            <mat-icon matChipRemove>file_copy</mat-icon> 
+                                <mat-icon matChipRemove>file_copy</mat-icon> 
                             </mat-chip>
                         </mat-chip-list>
                     </div>
 
                 </div>  
-                <ng-template #notParametersConfigurated>No se encontro parametros configurados</ng-template>
+                <ng-template #notParametersConfigurated>
+                        No hay parametros configurados   
+                </ng-template>
+            </div>
             <div matBadge="4" matBadgeOverlap="false" style="font-size:11px">Nota: Solo puede usar la sentencia SI() y la condicional Y()</div>
             </div>
 
@@ -142,34 +147,34 @@
             </div>
 
         </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <button 
+            mat-mini-fab 
+            color="basic" 
+            matTooltip="Cerrar"
+            type="button" 
+            (click)="closeModal()"
+        >
+            <mat-icon>close</mat-icon>
+        </button>
+        <button 
+            mat-mini-fab 
+            color="primary" 
+            matTooltip="Guardar"
+            type="button"
+            (click)="confirmSave(false)"
+        >
+            <mat-icon>save</mat-icon>
+        </button>
+        <button 
+            mat-raised-button 
+            color="primary" 
+            matTooltip="Guardar y Cerrar"
+            type="submit"
+        >
+            <mat-icon>save</mat-icon> &nbsp;
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </mat-dialog-actions>
     </form>
-</mat-dialog-content>
-<mat-dialog-actions align="center">
-    <button 
-        mat-mini-fab 
-        color="basic" 
-        matTooltip="Cerrar"
-        type="button" 
-        (click)="closeModal()"
-    >
-        <mat-icon>close</mat-icon>
-    </button>
-    <button 
-        mat-mini-fab 
-        color="primary" 
-        matTooltip="Guardar"
-        type="button"
-        (click)="confirmSave(false)"
-    >
-        <mat-icon>save</mat-icon>
-    </button>
-    <button 
-        mat-raised-button 
-        color="primary" 
-        matTooltip="Guardar y Cerrar"
-        type="submit"
-    >
-        <mat-icon>save</mat-icon> &nbsp;
-        <mat-icon>cancel</mat-icon>
-    </button>
-</mat-dialog-actions>
