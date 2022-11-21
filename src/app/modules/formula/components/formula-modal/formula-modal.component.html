@@ -1,157 +1,175 @@
-<div fxLayout="row" class="pb-1">
-    <h2 class="fw-bold">{{ modalTitle }}</h2>
-</div>
 
-<form
-    class="p-3"
-    autocomplete="off"
-    [formGroup]="formulaFormGroup"
-    (ngSubmit)="confirmSave()"
->
-    <div
-        fxLayout.xs="row wrap"
-        fxLayout.sm="row wrap"
-        fxLayout.md="row wrap"
-        fxLayout.lg="row wrap"
-        fxLayout.xl="row wrap"
-        fxLayoutAlign="space-center center"
+<h2  mat-dialog-title>{{ modalTitle }}</h2>
+<mat-dialog-content>
+    <form
+        class="p-3"
+        autocomplete="off"
+        [formGroup]="formulaFormGroup"
+        (ngSubmit)="confirmSave()"
     >
-    
         <div
-            fxFlex.xl="50%"    
-            fxFlex.lg="50%"
-            fxFlex.md="50%"
-            fxFlex.sm="100%"
-            fxFlex.xs="100%"
-            class="p-1 pb-0 pt-0" 
+            fxLayout.xs="row wrap"
+            fxLayout.sm="row wrap"
+            fxLayout.md="row wrap"
+            fxLayout.lg="row wrap"
+            fxLayout.xl="row wrap"
+            fxLayoutAlign="space-center center"
         >
-            <mat-form-field
-                fxFill
-                appearance="outline"
+        
+            <div
+                fxFlex.xl="50%"    
+                fxFlex.lg="50%"
+                fxFlex.md="50%"
+                fxFlex.sm="100%"
+                fxFlex.xs="100%"
+                class="p-1 pb-0 pt-0" 
             >
-            <mat-label>Nombre</mat-label>
-            <input
-                name="name"
-                formControlName="name"
-                type="text"
-                autocomplete="off"
-                maxlength="100"
-                matInput
-            >
-                <mat-error *ngIf="controlsForm['name'].hasError('required')">
-                    El nombre es <strong>requerido</strong>.
-                </mat-error>
-                <mat-error *ngIf="controlsForm['name'].hasError('maxlength')">
-                    Se ha excedido el límite de caracteres
-                </mat-error>
-            </mat-form-field>
-        </div>
-        <div
-            fxFlex.xl="50%"    
-            fxFlex.lg="50%"
-            fxFlex.md="50%"
-            fxFlex.sm="100%"
-            fxFlex.xs="100%" 
-            class="p-1 pb-0 pt-0" 
-        >
-            <mat-form-field
-                fxFill
-                appearance="outline"
-            >
-            <mat-label>Descripción</mat-label>
-                <textarea 
-                    formControlName="description"
+                <mat-form-field
+                    fxFill
+                    appearance="outline"
+                >
+                <mat-label>Nombre</mat-label>
+                <input
+                    name="name"
+                    formControlName="name"
+                    type="text"
+                    autocomplete="off"
+                    maxlength="100"
                     matInput
-                    cdkTextareaAutosize
-                    #autosize="cdkTextareaAutosize"
-                    cdkAutosizeMinRows="1"
-                    cdkAutosizeMaxRows="5"
-                ></textarea>
-            </mat-form-field>
-        </div>
-        <div
-            fxFlex.xl="100%"    
-            fxFlex.lg="100%"
-            fxFlex.md="100%"
-            fxFlex.sm="100%"
-            fxFlex.xs="100%"
-            class="p-1 pb-0"
-        >
-          <p>Parametros para configurar:</p>
-          <ul>
-            <li>ssss</li>
-            <li>ssss</li>
-            <li>ssss</li>
-          </ul>
-          
-        </div>
-        <div
-            fxFlex.xl="100%"    
-            fxFlex.lg="100%"
-            fxFlex.md="100%"
-            fxFlex.sm="100%"
-            fxFlex.xs="100%"
-            class="p-1 pb-0 pt-0" 
-        >
+                >
+                    <mat-error *ngIf="controlsForm['name'].hasError('required')">
+                        El nombre es <strong>requerido</strong>.
+                    </mat-error>
+                    <mat-error *ngIf="controlsForm['name'].hasError('maxlength')">
+                        Se ha excedido el límite de caracteres
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div
+                fxFlex.xl="50%"    
+                fxFlex.lg="50%"
+                fxFlex.md="50%"
+                fxFlex.sm="100%"
+                fxFlex.xs="100%" 
+                class="p-1 pb-0 pt-0" 
+            >
+                <mat-form-field
+                    fxFill
+                    appearance="outline"
+                >
+                <mat-label>Descripción</mat-label>
+                    <textarea 
+                        formControlName="description"
+                        matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5"
+                    ></textarea>
+                </mat-form-field>
+            </div>
+
+            <div
+                fxFlex="100%"
+                class="p-1 pb-2"
+            >
+                <p>Parametros configurados:</p>
+                <div
+                    fxLayout.xs="column"
+                    fxLayout.sm="column"
+                    fxLayout.md="row wrap"
+                    fxLayout.lg="row wrap"
+                    fxLayout.xl="row wrap"
+                    *ngIf="parametersConfigurated.length > 0; else notParametersConfigurated"
+                >
+                    <div
+                        fxFlex.xl="100%"    
+                        fxFlex.lg="100%"
+                        fxFlex.md="100%"
+                        fxFlex.sm="100%"
+                        fxFlex.xs="100%" 
+                        style="margin: 0 0 10px 0;"
+                        *ngFor="let parameter of parametersConfigurated; index as i"
+                    >
+                        <span style="font-weight: bold">{{i + 1}} - {{ parameter.name }} :</span>
+                        <mat-chip-list>
+                            <mat-chip 
+                                *ngFor="let value of parameter.parametersValue"
+                                (click)="copyNameValue(value.name)"
+                            >
+                                {{ value.name }} &nbsp; = {{value.value}}
+                            <mat-icon matChipRemove>file_copy</mat-icon> 
+                            </mat-chip>
+                        </mat-chip-list>
+                    </div>
+
+                </div>  
+                <ng-template #notParametersConfigurated>No se encontro parametros configurados</ng-template>
             <div matBadge="4" matBadgeOverlap="false" style="font-size:11px">Nota: Solo puede usar la sentencia SI() y la condicional Y()</div>
-            <mat-form-field
-                fxFill
-                appearance="outline"
-            >
-            <mat-label>Formula</mat-label>
-            <input
-                name="formulaReal"
-                formControlName="formulaReal"
-                type="text"
-                autocomplete="off"
-                maxlength="500"
-                matInput
-            >
-                
-                <mat-error *ngIf="controlsForm['formulaReal'].hasError('required')">
-                    La formula es <strong>requerida</strong>.
-                </mat-error>
-                <mat-error *ngIf="controlsForm['formulaReal'].hasError('maxlength')">
-                    Se ha excedido el límite de caracteres
-                </mat-error>
+            </div>
 
-            </mat-form-field>
+            <div
+                fxFlex.xl="100%"    
+                fxFlex.lg="100%"
+                fxFlex.md="100%"
+                fxFlex.sm="100%"
+                fxFlex.xs="100%"
+                class="p-1 pb-0 pt-2" 
+            >
+                <mat-form-field
+                    fxFill
+                    appearance="outline"
+                >
+                    <mat-label>Formula</mat-label>
+                    <textarea 
+                        formControlName="formulaReal"
+                        matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5"
+                    ></textarea>
+                    
+                    <mat-error *ngIf="controlsForm['formulaReal'].hasError('required')">
+                        La formula es <strong>requerida</strong>.
+                    </mat-error>
+                    <mat-error *ngIf="controlsForm['formulaReal'].hasError('maxlength')">
+                        Se ha excedido el límite de caracteres
+                    </mat-error>
+
+                </mat-form-field>
+            </div>
+
         </div>
-    </div>
-
-    <div
-        fxLayout="row"
-        fxLayoutAlign="center center"
-        fxLayoutGap="10px"
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button 
+        mat-mini-fab 
+        color="basic" 
+        matTooltip="Cerrar"
+        type="button" 
+        (click)="closeModal()"
     >
-        <mat-dialog-actions align="center">
-            <button 
-              mat-mini-fab 
-              color="basic" 
-              matTooltip="Cerrar"
-              type="button" 
-              (click)="closeModal()"
-            >
-                <mat-icon>close</mat-icon>
-            </button>
-            <button 
-                mat-mini-fab 
-                color="primary" 
-                matTooltip="Guardar"
-                type="button"
-                (click)="confirmSave(false)"
-            >
-                <mat-icon>save</mat-icon>
-            </button>
-            <button 
-                mat-raised-button 
-                color="primary" 
-                matTooltip="Guardar y Cerrar"
-                type="submit"
-            >
-              <mat-icon>save</mat-icon> &nbsp;
-              <mat-icon>cancel</mat-icon>
-            </button>
-        </mat-dialog-actions>
-    </div>
-</form>
+        <mat-icon>close</mat-icon>
+    </button>
+    <button 
+        mat-mini-fab 
+        color="primary" 
+        matTooltip="Guardar"
+        type="button"
+        (click)="confirmSave(false)"
+    >
+        <mat-icon>save</mat-icon>
+    </button>
+    <button 
+        mat-raised-button 
+        color="primary" 
+        matTooltip="Guardar y Cerrar"
+        type="submit"
+    >
+        <mat-icon>save</mat-icon> &nbsp;
+        <mat-icon>cancel</mat-icon>
+    </button>
+</mat-dialog-actions>

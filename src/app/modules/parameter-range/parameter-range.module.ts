@@ -9,7 +9,7 @@ import { ParameterRangeListComponent } from './pages/parameter-range-list/parame
 import { ParameterRangeModalComponent } from './components/parameter-range-modal/parameter-range-modal.component';
 import { ComponentsModule } from '@components/components.module';
 import { ParameterValueModalComponent } from './components/parameter-value-modal/parameter-value-modal.component';
-
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -24,7 +24,8 @@ import { ParameterValueModalComponent } from './components/parameter-value-modal
     ParameterRangeRoutingModule,
     RouterModule,
     SharedModule,
-    ComponentsModule
+    ComponentsModule,
+    NgxMaskModule.forChild()
   ],
   exports: [
     ParameterRangeComponent,

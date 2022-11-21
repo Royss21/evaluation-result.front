@@ -50,7 +50,10 @@ export class ParameterRangeModalComponent implements OnInit {
     if(this.isCloseAfterSave)
       this.closeModal();
     else
+    {
       this.parameterRangeFormGroup.reset();
+      this.parameterRangeFormGroup = this._parameterRangeBuilderService.buildParameterRangeForm();
+    }
   }
 
   private showConfirmMessage(): void {

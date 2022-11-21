@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
+import { IParameterRangeWithValues } from '@modules/parameter-range/interfaces/parameter-range-with-values.interface';
 import { IParameterRange } from '@modules/parameter-range/interfaces/parameter-range.interface';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';
@@ -20,9 +21,8 @@ export class ParameterRangeService {
     return this._apiService.get<IParameterRange>(url);
   }
 
-  getAll(): Observable<IParameterRange[]> {
-    const url = `${this.controller}`;
-    return this._apiService.get<IParameterRange[]>(url);
+  getAllWithValues(): Observable<IParameterRangeWithValues[]> {
+    return this._apiService.get<IParameterRangeWithValues[]>(`${this.url}/GetAllWithValues`);
   }
 
   create(request: IParameterRange): Observable<IParameterRange> {

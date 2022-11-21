@@ -11,6 +11,7 @@ export class ParameterValueModalBuilderService {
   constructor(private _fb: FormBuilder) { }
 
   public buildParameterValueForm(parameterValue?: IParameterValue): FormGroup {
+    console.log(parameterValue?.value);
     return this._fb.group({
       id: [parameterValue?.id || null],
       name: [
@@ -18,11 +19,12 @@ export class ParameterValueModalBuilderService {
         [
           Validators.required,
           CustomValidations.NotEmpty,
-          Validators.maxLength(100)
+          Validators.maxLength(100),
+          //Validators.minLength(4)
         ]
       ],
       value: [ 
-        parameterValue?.value || '', 
+        parameterValue?.value || 0, 
         [Validators.required]
       ]
     });

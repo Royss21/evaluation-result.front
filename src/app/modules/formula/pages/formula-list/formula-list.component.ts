@@ -58,7 +58,6 @@ export class FormulaListComponent implements OnInit {
   private abrirModal(formula?: IFormula): void {
 
     const modalformula = this._dialog.open(FormulaModalComponent, {
-      //width: ConstantsGeneral.lgModal,
       disableClose: true,
       data: formula
     });

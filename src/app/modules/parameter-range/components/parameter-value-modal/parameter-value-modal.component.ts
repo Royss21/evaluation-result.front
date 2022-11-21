@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup, FormGroupDirective } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
@@ -22,8 +22,10 @@ import { ParameterValueModalBuilderService } from './parameter-value-modal-build
 export class ParameterValueModalComponent implements OnInit {
 
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
+
   private unsubscribe$ = new Subject<any>();
 
+  customPatterns = { 'A': { pattern: new RegExp('\[a-zA-Z\]')} };
   parameterValuePaginated$: Observable<any>;
   paginated$: Observable<any>;
   parameterValuePaginatedBehavior: BehaviorSubject<any>;
@@ -100,7 +102,7 @@ export class ParameterValueModalComponent implements OnInit {
     else
       this._parameterValueService.update(parameterValue).subscribe(() => this.showConfirmMessage())
   }
-
+  
   clean(){
     this.parameterValueFormGroup.reset();
     this.formGroupDirective.resetForm();
@@ -125,7 +127,7 @@ export class ParameterValueModalComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) 
         this.save(parameterValue);
-    });
+     });
   }
   
   edit(parameterValue: IParameterValue){
@@ -136,6 +138,7 @@ export class ParameterValueModalComponent implements OnInit {
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseDelete,
       autoFocus: false,
+      restoreFocus: false
     });
 
     dialogRef.afterClosed().subscribe((result) => {

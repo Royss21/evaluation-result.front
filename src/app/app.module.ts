@@ -18,6 +18,13 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PopupChooseComponent } from './components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from './components/popup-confirm/popup-confirm.component';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
+
+const maskConfigFunction: () => Partial<IConfig> = () => {
+  return {
+    validation: false,
+  };
+};
 
 @NgModule({
   declarations: [
@@ -31,6 +38,7 @@ import { PopupConfirmComponent } from './components/popup-confirm/popup-confirm.
     AppRoutingModule,
     HttpClientModule,
     NgHttpLoaderModule.forRoot(),
+    NgxMaskModule.forRoot(),
     FlexLayoutModule,
     BrowserAnimationsModule,
     SharedModule

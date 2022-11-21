@@ -4,8 +4,10 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { FormulaService } from '@core/services/formula/formula.service';
+import { ParameterRangeService } from '@core/services/paramater-range/parameter-range.service';
 import { FormulaText } from '@modules/formula/helpers/formula.helper';
 import { IFormula } from '@modules/formula/interfaces/formula.interface';
+import { IParameterRangeWithValues } from '@modules/parameter-range/interfaces/parameter-range-with-values.interface';
 import { ConstantsGeneral } from '@shared/constants';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 import { FormulaModalBuilderService } from './formula-modal-builder.service';
@@ -21,10 +23,12 @@ export class FormulaModalComponent implements OnInit {
 
   formulaFormGroup: FormGroup;
   modalTitle: string = '';
+  parametersConfigurated: IParameterRangeWithValues[] = [];
 
   constructor(
     private _formulaBuilderService: FormulaModalBuilderService,
     private _formulaService: FormulaService,
+    private _parameterRangeService: ParameterRangeService,
     private _modalRef: MatDialogRef<FormulaModalComponent>,
     public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: IFormula
@@ -39,7 +43,6 @@ export class FormulaModalComponent implements OnInit {
   }
 
   private save(formula: IFormula): void {
-    console.log(formula)
     if(!formula.id)
       this._formulaService.create(formula).subscribe(() => this.showConfirmMessage())
     else
@@ -57,7 +60,8 @@ export class FormulaModalComponent implements OnInit {
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
+      restoreFocus: false
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -66,10 +70,18 @@ export class FormulaModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._parameterRangeService.getAllWithValues()
+      .subscribe(data => {
+        this.parametersConfigurated = data;
+      })
   }
 
   closeModal(): void {
     this._modalRef.close();
+  }
+
+  copyNameValue(nameValue: string){
+    navigator.clipboard.writeText(nameValue);
   }
 
   confirmSave(isClose: boolean = true){

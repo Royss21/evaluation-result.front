@@ -1,107 +1,99 @@
-<div fxLayout="row" class="pb-1">
-    <h2 class="fw-bold">{{ modalTitle }}</h2>
-</div>
-
-<form
-    class="p-3"
-    autocomplete="off"
-    [formGroup]="levelFormGroup"
-    (ngSubmit)="confirmSave()"
->
-    <div
-        fxLayout.xs="row wrap"
-        fxLayout.sm="row wrap"
-        fxLayout.md="row wrap"
-        fxLayout.lg="row wrap"
-        fxLayout.xl="row wrap"
-        fxLayoutAlign="space-center center"
+<h2  mat-dialog-title>{{ modalTitle }}</h2>
+<mat-dialog-content>
+    <form
+        class="p-3"
+        autocomplete="off"
+        [formGroup]="levelFormGroup"
+        (ngSubmit)="confirmSave()"
     >
-    
         <div
-            fxFlex.xl="100%"    
-            fxFlex.lg="100%"
-            fxFlex.md="100%"
-            fxFlex.sm="100%"
-            fxFlex.xs="100%" 
+            fxLayout.xs="row wrap"
+            fxLayout.sm="row wrap"
+            fxLayout.md="row wrap"
+            fxLayout.lg="row wrap"
+            fxLayout.xl="row wrap"
+            fxLayoutAlign="space-center center"
         >
-            <mat-form-field
-                fxFill
-                appearance="outline"
+        
+            <div
+                fxFlex.xl="100%"    
+                fxFlex.lg="100%"
+                fxFlex.md="100%"
+                fxFlex.sm="100%"
+                fxFlex.xs="100%" 
             >
-            <mat-label>Nombre</mat-label>
-            <input
-                name="name"
-                formControlName="name"
-                type="text"
-                autocomplete="off"
-                maxlength="100"
-                matInput
-            >
-                <mat-error *ngIf="controlsForm['name'].hasError('required')">
-                    El nombre es <strong>requerido</strong>.
-                </mat-error>
-                <mat-error *ngIf="controlsForm['name'].hasError('maxlength')">
-                    Se ha excedido el límite de caracteres
-                </mat-error>
-            </mat-form-field>
-        </div>
-        <div
-            fxFlex.xl="100%"    
-            fxFlex.lg="100%"
-            fxFlex.md="100%"
-            fxFlex.sm="100%"
-            fxFlex.xs="100%" 
-        >
-            <mat-form-field
-                fxFill
-                appearance="outline"
-            >
-            <mat-label>Descripción</mat-label>
-                <textarea 
-                    formControlName="description"
+                <mat-form-field
+                    fxFill
+                    appearance="outline"
+                >
+                <mat-label>Nombre</mat-label>
+                <input
+                    name="name"
+                    formControlName="name"
+                    type="text"
+                    autocomplete="off"
+                    maxlength="100"
                     matInput
-                    cdkTextareaAutosize
-                    #autosize="cdkTextareaAutosize"
-                    cdkAutosizeMinRows="1"
-                    cdkAutosizeMaxRows="5"
-                ></textarea>
-            </mat-form-field>
+                >
+                    <mat-error *ngIf="controlsForm['name'].hasError('required')">
+                        El nombre es <strong>requerido</strong>.
+                    </mat-error>
+                    <mat-error *ngIf="controlsForm['name'].hasError('maxlength')">
+                        Se ha excedido el límite de caracteres
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div
+                fxFlex.xl="100%"    
+                fxFlex.lg="100%"
+                fxFlex.md="100%"
+                fxFlex.sm="100%"
+                fxFlex.xs="100%" 
+            >
+                <mat-form-field
+                    fxFill
+                    appearance="outline"
+                >
+                <mat-label>Descripción</mat-label>
+                    <textarea 
+                        formControlName="description"
+                        matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5"
+                    ></textarea>
+                </mat-form-field>
+            </div>
         </div>
-    </div>
-
-    <div
-        fxLayout="row"
-        fxLayoutAlign="center center"
-        fxLayoutGap="10px"
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button 
+        mat-mini-fab 
+        color="basic" 
+        matTooltip="Cerrar"
+        type="button" 
+        (click)="closeModal()"
     >
-        <mat-dialog-actions align="center">
-            <button 
-              mat-mini-fab 
-              color="basic" 
-              matTooltip="Cerrar"
-              type="button" 
-              (click)="closeModal()"
-            >
-                <mat-icon>close</mat-icon>
-            </button>
-            <button 
-                mat-mini-fab 
-                color="primary" 
-                matTooltip="Guardar"
-                type="button"
-                (click)="confirmSave(false)"
-            >
-                <mat-icon>save</mat-icon>
-            </button>
-            <button 
-                mat-raised-button 
-                color="primary" 
-                matTooltip="Guardar y Cerrar"
-                type="submit"
-            >
-              <mat-icon>save</mat-icon> &nbsp;
-              <mat-icon>cancel</mat-icon>
-            </button>
-        </mat-dialog-actions>
-    </div>
-</form>
+        <mat-icon>close</mat-icon>
+    </button>
+    <button 
+        mat-mini-fab 
+        color="primary" 
+        matTooltip="Guardar"
+        type="button"
+        (click)="confirmSave(false)"
+    >
+        <mat-icon>save</mat-icon>
+    </button>
+    <button 
+        mat-raised-button 
+        color="primary" 
+        matTooltip="Guardar y Cerrar"
+        type="submit"
+    >
+        <mat-icon>save</mat-icon> &nbsp;
+        <mat-icon>cancel</mat-icon>
+    </button>
+</mat-dialog-actions>
