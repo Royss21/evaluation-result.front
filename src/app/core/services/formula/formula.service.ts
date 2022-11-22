@@ -21,8 +21,7 @@ export class FormulaService {
   }
 
   getAll(): Observable<IFormula[]> {
-    const url = `${this.controller}`;
-    return this._apiService.get<IFormula[]>(url);
+    return this._apiService.get<IFormula[]>(this.url);
   }
 
   create(request: IFormula): Observable<IFormula> {

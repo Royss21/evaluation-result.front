@@ -41,4 +41,10 @@ export  class ConstantsGeneral{
       large: '800px',
       extraLarge: '1140px',
     };
+
+    static readonly components ={
+      corporateObjectives: 1,
+      areaObjectives: 2,
+      competencies: 3
+    }
 }

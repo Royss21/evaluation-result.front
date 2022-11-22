@@ -1,1 +1,66 @@
-<p>corporate-objectives-list works!</p>
+<div fxLayout="row" >
+    <h2 class="fw-bold">Listado de Objetivos Corporativos</h2>
+  </div>
+  
+  
+  <div
+    fxLayout="row"
+    fxLayoutAlign.xs="end center"
+    fxLayoutAlign.sm="end center"
+    fxLayoutAlign.md="end center"
+    fxLayoutAlign.lg="end center"
+    fxLayoutAlign.xl="end center"
+    class="my-sm-3 my-md-0"
+  >
+    <button
+      mat-mini-fab
+      matTooltip="Crear nuevo nivel"
+      color="primary"
+      (click)="create()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <app-table
+    [listColumns]="columnsTable"
+    [behavior]="paginatedBehavior"
+    [paginated]="corporateObjectivesPaginated$"
+    [templateColumnsContent]="columnContent"
+  >
+    <ng-template
+      #columnContent
+      let-column='column'
+      let-element='element'
+    >
+      <div [ngSwitch]="column.columnMatch">
+        <div
+          fxLayout="row"
+          fxLayoutGap="10px"
+          *ngSwitchCase="'actions'"
+        >
+          <button
+            mat-mini-fab
+            color="primary"
+            type="button"
+            class="btn-action-xs"
+            (click)="update(element)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-mini-fab
+            color="warn"
+            type="button"
+            class="btn-action-xs"
+            (click)="confirmDeleted(element.id)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        <div *ngSwitchDefault>
+          {{ element[column.columnMatch] }}
+        </div>
+      </div>
+    </ng-template>
+  </app-table>
+  
