@@ -10,6 +10,7 @@ import { EvaluationEditComponent } from './pages/evaluation-edit/evaluation-edit
 import { ConfigNewPeriodComponent } from './components/config-new-period/config-new-period.component';
 import { ConfigCorpGoalsComponent } from './components/config-corp-goals/config-corp-goals.component';
 import { ConfigCompetenciesComponent } from './components/config-competencies/config-competencies.component';
+import { ConfigAreaGoalsComponent } from './components/config-area-goals/config-area-goals.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ConfigCompetenciesComponent } from './components/config-competencies/co
     EvaluationComponent,
     ConfigNewPeriodComponent,
     ConfigCorpGoalsComponent,
-    ConfigCompetenciesComponent
+    ConfigCompetenciesComponent,
+    ConfigAreaGoalsComponent
   ],
   imports: [
     CommonModule,

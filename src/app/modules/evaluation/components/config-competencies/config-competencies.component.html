@@ -1,1 +1,85 @@
-<p>config-competencies works!</p>
+<form
+    class="p-3"
+    autocomplete="off"
+    [formGroup]="evaluationStageFormGroup"
+  >
+    <div
+      class="p-3"
+      fxLayout="column"
+      fxLayoutGap="10px"
+    >
+      <mat-card class="example-card" style="max-width: 700px;">
+        <mat-card-title
+          fxLayout="row"
+          fxLayoutGap="10px"
+          fxLayoutAlign="start center"
+        >
+          <div class="steps-circle">4</div>
+          <span class="fs-6 fw-bold">Competencias</span>
+        </mat-card-title>
+        <br>
+        <span class="fw-bolder fs-7">Etapas de competencias</span>
+        <mat-card-content>
+          <div
+            fxLayout.md="row"
+            fxLayout.lg="row"
+            fxLayout.xl="row"
+            fxLayout.xs="column"
+            fxLayoutGap="10px"
+          >
+            <div
+              fxFlex.md="50"
+              fxFlex.lg="50"
+              fxFlex.xl="50"
+              fxFlex="100"
+            >
+              <mat-form-field
+                fxFill
+                appearance="outline"
+              >
+                <mat-label>Inicia</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="dp"
+                  formControlName="startDate">
+                <mat-datepicker-toggle
+                  [for]="dp"
+                  matSuffix
+                ></mat-datepicker-toggle>
+                <mat-datepicker #dp></mat-datepicker>
+                <mat-error *ngIf="controlsForm['startDate'].hasError('required')">
+                  La fecha inicia es <strong>requerido</strong>.
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div
+              fxFlex.md="50"
+              fxFlex.lg="50"
+              fxFlex.xl="50"
+              fxFlex="100"
+            >
+              <mat-form-field
+                fxFill
+                appearance="outline"
+              >
+                <mat-label>termina</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="dp2"
+                  formControlName="endDate"
+                >
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="dp2">
+                </mat-datepicker-toggle>
+                <mat-datepicker #dp2></mat-datepicker>
+                <mat-error *ngIf="controlsForm['endDate'].hasError('required')">
+                  La fecha termina es <strong>requerido</strong>.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </form>

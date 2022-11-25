@@ -18,9 +18,20 @@
           <span class="fs-6 fw-bold">Configurar nuevo periodo</span>
         </mat-card-title>
         <mat-card-content>
-          <div>
+          <!-- Init values period -->
+          <section
+            fxLayout.md="row"
+            fxLayout.lg="row"
+            fxLayout.xl="row"
+            fxLayout.sm="row"
+            fxLayout.xs="column"
+            fxLayoutGap="10px"
+          >
             <mat-form-field
-              fxFill
+              fxFlex.md="80"
+              fxFlex.lg="80"
+              fxFlex.xl="80"
+              fxFlex="100"
               appearance="outline"
             >
               <mat-label>Nombre periodo:</mat-label>
@@ -38,7 +49,26 @@
                 Se ha excedido el límite de caracteres
               </mat-error>
             </mat-form-field>
-          </div>
+            <mat-form-field
+              fxFlex.md="20"
+              fxFlex.lg="20"
+              fxFlex.xl="20"
+              fxFlex="100"
+              appearance="outline"
+            >
+              <mat-label>Peso:</mat-label>
+              <input
+                type="text"
+                formControlName="weight"
+                autocomplete="off"
+                maxlength="70"
+                matInput
+              >
+              <mat-error *ngIf="controlsForm['name'].hasError('required')">
+                El peso es <strong>requerido</strong>.
+              </mat-error>
+            </mat-form-field>
+          </section>
           <div
             fxLayout.md="row"
             fxLayout.lg="row"
@@ -56,7 +86,7 @@
                 fxFill
                 appearance="outline"
               >
-                <mat-label>Fecha inicio</mat-label>
+                <mat-label>Inicia</mat-label>
                 <input
                   matInput
                   [matDatepicker]="dp"
@@ -67,7 +97,7 @@
                 ></mat-datepicker-toggle>
                 <mat-datepicker #dp></mat-datepicker>
                 <mat-error *ngIf="controlsForm['startDate'].hasError('required')">
-                  La fecha inicio es <strong>requerido</strong>.
+                  La fecha inicia es <strong>requerido</strong>.
                 </mat-error>
               </mat-form-field>
             </div>
@@ -81,7 +111,7 @@
                 fxFill
                 appearance="outline"
               >
-                <mat-label>Fecha fin</mat-label>
+                <mat-label>Termina</mat-label>
                 <input
                   matInput
                   [matDatepicker]="dp2"
@@ -93,11 +123,65 @@
                 </mat-datepicker-toggle>
                 <mat-datepicker #dp2></mat-datepicker>
                 <mat-error *ngIf="controlsForm['endDate'].hasError('required')">
-                  La fecha fin es <strong>requerido</strong>.
+                  La fecha termina es <strong>requerido</strong>.
                 </mat-error>
               </mat-form-field>
             </div>
           </div>
+          <!-- End values period -->
+
+          <!-- Components evaluation -->
+          <section>
+            <div class="mb-3"><span class="fs-8 fw-bolder">Seleccionar componentes a evaluar</span></div>
+            <!-- Objectivs corp -->
+            <section>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <div fxFlex="10"><img class="rounded-circle" src="../../../../../assets/images/objCorp.png" alt="objetics corp" width="40" height="40"></div>
+                <div fxLayout="column" fxFlex="80">
+                  <span class="fs-10 fw-bolder">Objetivos Corporativos</span>
+                  <span class="fs-8 fw-lighter">Objetivos y metas planteados para la empresa en el año.</span>
+                </div>
+                <div fxFlex fxFlex="10" fxLayoutAlign="center center">
+                  <mat-checkbox color="primary"></mat-checkbox>
+                </div>
+              </div>
+            </section>
+            <mat-divider class="my-3"></mat-divider>
+            <!-- End Objectivs corp -->
+
+            <!-- Objectivs area -->
+            <section >
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <div fxFlex="10"><img class="rounded-circle" src="../../../../../assets/images/group 1.png" alt="objetics corp" width="40" height="40"></div>
+                <div fxLayout="column" fxFlex="80">
+                  <span class="fs-10 fw-bolder">Objetivos de Área (KPIs)</span>
+                  <span class="fs-8 fw-lighter">Objetivos establecidos para cada área, deben guardar relación con los objetivos corporativos y prioridades estratégicas.</span>
+                </div>
+                <div fxFlex="10" fxLayoutAlign="center center">
+                  <mat-checkbox color="primary"></mat-checkbox>
+                </div>
+              </div>
+            </section>
+            <mat-divider class="my-3"></mat-divider>
+            <!-- End Objectivs area -->
+
+            <!-- Competences -->
+            <section>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <div fxFlex="10"><img class="rounded-circle" src="../../../../../assets/images/comp.png" alt="objetics corp" width="40" height="40"></div>
+                <div fxLayout="column" fxFlex="80">
+                  <span class="fs-10 fw-bolder">Competencias</span>
+                  <span class="fs-8 fw-lighter">Conjunto de conocimientos y habilidades que se potencian por la actitud.</span>
+                </div>
+                <div fxFlex fxFlex="10" fxLayoutAlign="center center">
+                  <mat-checkbox color="primary"></mat-checkbox>
+                </div>
+              </div>
+            </section>
+            <!-- End competences -->
+
+          </section>
+          <!-- End components evaluation -->
         </mat-card-content>
       </mat-card>
     </div>

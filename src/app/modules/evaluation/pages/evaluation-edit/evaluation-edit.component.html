@@ -10,21 +10,19 @@
     >
       <!-- FORM CONFIG NEW PERIOD -->
       <app-config-new-period formControlName="configPeriodControl"></app-config-new-period>
-      <!-- FORM CONFIG NEW PERIOD -->
+      <!-- END FORM CONFIG NEW PERIOD -->
 
       <!-- FORM CONFIG CORP GOALS -->
       <app-config-corp-goals formControlName="configCorpGoals"></app-config-corp-goals>
-      <!-- FORM CONFIG CORP GOALS -->
+      <!-- END FORM CONFIG CORP GOALS -->
 
-      <div>
-        <button
-          color="primary"
-          mat-raised-button
-          (click)="onClick()"
-        >
-          Enviar
-        </button>
-      </div>
+      <!-- FORM CONFIG AREA GOALS-->
+      <app-config-area-goals formControlName="configAreaGoals"></app-config-area-goals>
+      <!-- END FORM CONFIG COMPETENCES-->
+
+       <!-- FORM CONFIG AREA GOALS-->
+       <app-config-competencies formControlName="configCompetences"></app-config-competencies>
+       <!-- END FORM CONFIG COMPETENCES-->
     </form>
   </div>
   <!-- CARD RESUME -->
@@ -69,7 +67,13 @@
           </section>
       </mat-card-content>
       <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
-          <button mat-raised-button color="primary">Crear Evaluación</button>
+          <button
+            color="primary"
+            mat-raised-button
+            (click)="onClick()"
+          >
+            Crear Evaluación
+          </button>
       </mat-card-actions>
     </mat-card>
   </div>

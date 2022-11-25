@@ -424,10 +424,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .btn-action-xs{
   margin-right: 10px !important;
   width: 30px !important;
-  height: 30px !important;  
+  height: 30px !important;
 
   span.mat-button-wrapper{
-    padding: 5px 0; 
+    padding: 5px 0;
 
     mat-icon{
       font-size: 19px;
@@ -437,13 +437,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
-input[type=number] { 
-  -moz-appearance:textfield; 
+input[type=number] {
+  -moz-appearance:textfield;
   text-align: right !important;
 }
 

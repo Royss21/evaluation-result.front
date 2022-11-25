@@ -1,7 +1,7 @@
 <form
     class="p-3"
     autocomplete="off"
-    [formGroup]="corpGoalsFormGroup"
+    [formGroup]="competencesFormGroup"
   >
     <div
       class="p-3"
@@ -14,12 +14,12 @@
           fxLayoutGap="10px"
           fxLayoutAlign="start center"
         >
-          <div class="steps-circle">2</div>
-          <span class="fs-6 fw-bold">Evaluar  Objetivos Corporativos</span>
+          <div class="steps-circle">3</div>
+          <span class="fs-6 fw-bold">Evaluar Objetivos de Área (KPIs)</span>
         </mat-card-title>
         <br>
         <mat-card-subtitle>
-          En esta sección podrás configurar la duración de este componente dentro del rango de fechas de periodo.
+          En esta sección podrás configurar la duración de este componente dentro del rango de fechas del periodo.
         </mat-card-subtitle>
         <mat-card-content>
           <div
@@ -64,7 +64,7 @@
                 fxFill
                 appearance="outline"
               >
-                <mat-label>Termina</mat-label>
+                <mat-label>termina</mat-label>
                 <input
                   matInput
                   [matDatepicker]="dp2"
@@ -85,3 +85,4 @@
       </mat-card>
     </div>
   </form>
+

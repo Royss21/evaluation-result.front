@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { IPeriod } from '@modules/period/interfaces/period.interface';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-evaluation-edit',
@@ -13,7 +12,9 @@ export class EvaluationEditComponent {
 
   evaluationFormGroup = new FormGroup({
     configPeriodControl: new FormControl(),
-    configCorpGoals: new FormControl()
+    configCorpGoals: new FormControl(),
+    configAreaGoals: new FormControl(),
+    configCompetences: new FormControl(),
   });
 
   public onClick(): void {
@@ -26,6 +27,14 @@ export class EvaluationEditComponent {
 
   get controlsCorpGoalsForm() : any {
     return this.evaluationFormGroup.controls['configCorpGoals']?.value
+  }
+
+  get controlsAreaGoalsForm() : any {
+    return this.evaluationFormGroup.controls['configAreaGoals']?.value
+  }
+
+  get controlsCompetencesForm() : any {
+    return this.evaluationFormGroup.controls['configCompetences']?.value
   }
 
 }

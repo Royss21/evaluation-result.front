@@ -91,7 +91,7 @@ export class PeriodListComponent {
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
-      this.callPaginated();
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
       this._dialog.closeAll();
     });
   }
