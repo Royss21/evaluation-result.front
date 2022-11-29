@@ -26,6 +26,10 @@ export const roots: Routes = [
         path:'configuration',
         loadChildren: () => import('../configuration/configuration.module').then( m => m.ConfigurationModule )
       },
+      {
+        path:'leader',
+        loadChildren: () => import('../leader/leader.module').then( m => m.LeaderModule )
+      },
       // {
       //   path:'security',
       //   loadChildren: () => import('../seguridad/seguridad.module').then( m => m.SeguridadModule )

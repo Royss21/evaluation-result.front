@@ -47,4 +47,5 @@ export  class ConstantsGeneral{
       areaObjectives: 2,
       competencies: 3
     }
+
 }
