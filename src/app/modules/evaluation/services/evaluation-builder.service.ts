@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IAreaGoals, ICalibrationStage, ICorpGoals, IEvaluationStage } from '@modules/evaluation/interfaces/evaluation.interface';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { IAreaGoals, ICalibrationStage, ICompetences, ICorpGoals, IEvaluationStage } from '@modules/evaluation/interfaces/evaluation.interface';
 
 import { IPeriod } from '@modules/period/interfaces/period.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
@@ -31,11 +31,15 @@ export class EvaluationBuilderService {
         ]
       ],
       startDate: [
-        (period?.startDate || null),
+        period?.startDate || null,
         [Validators.required]
       ],
       endDate: [
-        (period?.endDate || null),
+        period?.endDate || null,
+        [Validators.required]
+      ],
+      isEvaluationTest: [
+        period?.isEvaluationTest || null,
         [Validators.required]
       ]
     });
@@ -55,19 +59,39 @@ export class EvaluationBuilderService {
         (corpGoals?.isCalc || false),
         [Validators.required]
       ],
-    })
+    });
   }
 
-  public builderCompetences(area?: IAreaGoals): FormGroup {
+  public builderCompetences(competences?: ICompetences): FormGroup {
+
+    const compLocal: ICompetences[] = [
+      {
+        startDate: null,
+        endDate: null,
+        title: 'Etapa de Evaluación por Competencias',
+        description: 'En esta etapa se realiza la evaluación de cada colaborador mediante las competencias registradas'
+      },
+      {
+        startDate: null,
+        endDate: null,
+        title: 'Etapa de Calibración',
+        description: 'En esta etapa la nota de los colaboradores serán reguladas por los calibradores asignados.'
+      }
+    ]
+
     return this._fb.group({
-      startDate: [
-        (area?.startDate || null),
-        [Validators.required]
-      ],
-      endDate: [
-        (area?.endDate || null),
-        [Validators.required]
-      ]
+      competences: this._fb.array(
+        compLocal.map(comp => this.createCompetences(comp))
+      )
+    });
+  }
+
+  createCompetences(comp: ICompetences): FormGroup {
+    return this._fb.group({
+      startDate: [comp.startDate],
+      endDate: [comp.endDate],
+      title: [comp.title],
+      description: [comp.description]
     })
   }
 
@@ -81,7 +105,7 @@ export class EvaluationBuilderService {
         (evaluation?.endDate || null),
         [Validators.required]
       ]
-    })
+    });
   }
 
   public builderCalibrationStage(calibration?: ICalibrationStage): FormGroup {
@@ -94,6 +118,6 @@ export class EvaluationBuilderService {
         (calibration?.endDate || null),
         [Validators.required]
       ]
-    })
+    });
   }
 }

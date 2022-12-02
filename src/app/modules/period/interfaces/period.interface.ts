@@ -4,4 +4,5 @@ export interface IPeriod {
   weight: Number;
   startDate: Date;
   endDate: Date;
+  isEvaluationTest: Boolean;
 }

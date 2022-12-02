@@ -30,7 +30,7 @@ import { EvaluationBuilderService } from '@modules/evaluation/services/evaluatio
 })
 export class ConfigAreaGoalsComponent implements ControlValueAccessor, Validator {
 
-  public competencesFormGroup: FormGroup;
+  public configAreaFormGroup: FormGroup;
   private _onChanged: Function = (_value: { startDate: Date, endDate: Date }) => {}
   private _onTouched: Function = (_value: { startDate: Date, endDate: Date }) => {}
 
@@ -38,20 +38,20 @@ export class ConfigAreaGoalsComponent implements ControlValueAccessor, Validator
   constructor(
     private _evaluationBuilderService: EvaluationBuilderService
   ) {
-    this.competencesFormGroup = this._evaluationBuilderService.builderCorpGoals();
-    this.competencesFormGroup.valueChanges
+    this.configAreaFormGroup = this._evaluationBuilderService.builderCorpGoals();
+    this.configAreaFormGroup.valueChanges
       .subscribe(() => {
-        this._onChanged(this.competencesFormGroup.value);
-        this._onTouched(this.competencesFormGroup.value);
+        this._onChanged(this.configAreaFormGroup.value);
+        this._onTouched(this.configAreaFormGroup.value);
       })
   }
 
   get controlsForm(): { [key: string]: AbstractControl } {
-    return this.competencesFormGroup.controls;
+    return this.configAreaFormGroup.controls;
   }
 
   writeValue(obj: { startDate: Date, endDate: Date, isCalc: boolean }): void {
-    obj && this.competencesFormGroup.setValue(obj);
+    obj && this.configAreaFormGroup.setValue(obj);
   }
   registerOnChange(fn: Function): void {
     this._onChanged = fn;
@@ -62,7 +62,7 @@ export class ConfigAreaGoalsComponent implements ControlValueAccessor, Validator
 
   validate(_control: AbstractControl): ValidationErrors | null {
     //PROPAGAR ERROR AL FORM PADRE
-    return this.competencesFormGroup.valid
+    return this.configAreaFormGroup.valid
       ? null
       : { invalidConfigCorpGoals: true }
   }

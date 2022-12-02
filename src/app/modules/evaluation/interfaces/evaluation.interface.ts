@@ -14,6 +14,13 @@ export interface IEvaluationStage {
   endDate: Date;
 }
 
+export interface ICompetences {
+  startDate: Date | null;
+  endDate: Date | null;
+  title: string;
+  description: string;
+}
+
 export interface ICalibrationStage {
   startDate: Date;
   endDate: Date;

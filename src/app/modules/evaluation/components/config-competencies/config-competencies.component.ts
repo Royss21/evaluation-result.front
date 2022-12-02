@@ -6,7 +6,8 @@ import {
   AbstractControl,
   ValidationErrors,
   NG_VALUE_ACCESSOR,
-  ControlValueAccessor
+  ControlValueAccessor,
+  FormArray
 } from '@angular/forms';
 import { EvaluationBuilderService } from '@modules/evaluation/services/evaluation-builder.service';
 
@@ -29,46 +30,50 @@ import { EvaluationBuilderService } from '@modules/evaluation/services/evaluatio
 })
 export class ConfigCompetenciesComponent implements ControlValueAccessor, Validator {
 
-  public evaluationStageFormGroup: FormGroup;
-  public calibrationStageFormGroup: FormGroup;
-  private _onChangedEvaluation: Function = (_value: { startDate: Date, endDate: Date }) => {}
-  private _onTouchedEvaluation: Function = (_value: { startDate: Date, endDate: Date }) => {}
+  public step: number = -1;
 
-  private _onChangedCalibration: Function = (_value: { startDate: Date, endDate: Date }) => {}
-  private _onTouchedCalibration: Function = (_value: { startDate: Date, endDate: Date }) => {}
+  public setStep(index: number) {
+    this.step = index;
+  }
 
-
+  public competencesFormGroup: FormGroup;
+  private _onChangedCompetences: Function = (_value: { startDate: Date, endDate: Date, title: string, description: string, imgSrc: '' }) => {}
+  private _onTouchedCompetences: Function = (_value: { startDate: Date, endDate: Date, title: string, description: string, imgSrc: '' }) => {}
 
   constructor(
     private _evaluationBuilderService: EvaluationBuilderService
   ) {
-    this.evaluationStageFormGroup = this._evaluationBuilderService.builderCorpGoals();
-    this.evaluationStageFormGroup.valueChanges
+    this.competencesFormGroup = this._evaluationBuilderService.builderCompetences();
+    this.competencesFormGroup.valueChanges
       .subscribe(() => {
-        this._onChangedEvaluation(this.evaluationStageFormGroup.value);
-        this._onTouchedEvaluation(this.evaluationStageFormGroup.value);
+        this._onChangedCompetences(this.competencesFormGroup.value);
+        this._onTouchedCompetences(this.competencesFormGroup.value);
       })
   }
 
-  get controlsForm(): { [key: string]: AbstractControl } {
-    return this.evaluationStageFormGroup.controls;
+  public get controlsForm(): { [key: string]: AbstractControl } {
+    return this.competencesFormGroup.controls;
   }
 
-  writeValue(obj: { startDate: Date, endDate: Date, isCalc: boolean }): void {
-    obj && this.evaluationStageFormGroup.setValue(obj);
+  public get competencesArr() {
+    return this.competencesFormGroup.get('competences') as FormArray;
+  }
+
+  writeValue(obj: { startDate: Date, endDate: Date, title: string, description: string, imgSrc: '' }): void {
+    obj && this.competencesFormGroup.setValue(obj);
   }
   registerOnChange(fn: Function): void {
-    this._onChangedEvaluation = fn;
+    this._onChangedCompetences = fn;
   }
   registerOnTouched(fn: Function): void {
-    this._onTouchedEvaluation = fn;
+    this._onTouchedCompetences = fn;
   }
 
   validate(_control: AbstractControl): ValidationErrors | null {
     //PROPAGAR ERROR AL FORM PADRE
-    return this.evaluationStageFormGroup.valid
+    return this.competencesFormGroup.valid
       ? null
-      : { invalidConfigCorpGoals: true }
+      : { invalidCompetences: true }
   }
 
 }
