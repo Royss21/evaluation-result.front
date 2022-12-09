@@ -55,7 +55,7 @@ export class FormulaListComponent implements OnInit {
       });
   }
 
-  private abrirModal(formula?: IFormula): void {
+  private openModal(formula?: IFormula): void {
 
     const modalformula = this._dialog.open(FormulaModalComponent, {
       disableClose: true,
@@ -78,11 +78,11 @@ export class FormulaListComponent implements OnInit {
   }
 
   createFormula(): void{
-    this.abrirModal();
+    this.openModal();
   }
 
   updateFormula(formula: IFormula): void{
-    this.abrirModal(formula);
+    this.openModal(formula);
   }
 
   confirmDeleted(id: number): void {

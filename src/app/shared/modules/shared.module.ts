@@ -26,6 +26,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { FlexLayoutModule } from "@angular/flex-layout";
+import {MatRadioModule} from '@angular/material/radio';
 import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
@@ -59,7 +60,8 @@ import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/
     MatFormFieldModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatRadioModule
   ],
   exports: [
     MatButtonModule,
@@ -89,6 +91,7 @@ import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/
     ReactiveFormsModule,
     FlexLayoutModule,
     MatSnackBarModule,
+    MatRadioModule
   ],
   providers: [
     MatDatepickerModule,

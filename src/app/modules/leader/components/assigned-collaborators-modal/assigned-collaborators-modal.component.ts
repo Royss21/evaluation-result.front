@@ -1,15 +1,68 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { LeaderService } from '@core/services/leader/leader.service';
+import { LeaderHelper } from '@modules/leader/helpers/leader.helper';
+import { ILeaderCollaboratorFilter } from '@modules/leader/interfaces/leader-collaborador-filter.interface';
+import { ILeaderCollaborator } from '@modules/leader/interfaces/leader-collaborador.interface';
 
 @Component({
   selector: 'app-assigned-collaborators-modal',
   templateUrl: './assigned-collaborators-modal.component.html',
   styleUrls: ['./assigned-collaborators-modal.component.scss']
 })
-export class AssignedCollaboratorsModalComponent implements OnInit {
+export class AssignedCollaboratorsModalComponent implements OnInit, AfterViewInit {
 
-  constructor() { }
+  @ViewChildren("elementObserver", { read: ElementRef }) elementObserver: QueryList<ElementRef>;
 
-  ngOnInit(): void {
+  private filterCurrent: ILeaderCollaboratorFilter;
+  private observer: any;
+  private countCurrent:number = 0;
+  countTotal:number = 0;
+  collaborators: ILeaderCollaborator[] = [];
+
+  constructor(
+    private _leaderService: LeaderService,
+  ) {
+    this.filterCurrent= LeaderHelper.initialFilter;
   }
 
+  ngOnInit(): void {
+    this.getCollaborators();
+    this.intersectionObserver();
+  }
+
+  ngAfterViewInit(): void {
+    this.elementObserver.changes.subscribe(e => {
+      if(e.last)
+        this.observer.observe(e.last.nativeElement);
+    });
+  }
+
+  getCollaborators(): void {
+    this._leaderService.getCollaboratorsByLeader(1, this.filterCurrent)
+      .subscribe(({ countTotal, collaborators }) =>{
+        this.countCurrent += collaborators.length;
+        this.countTotal = countTotal;
+        this.collaborators = [...this.collaborators, ...collaborators];
+      })
+  }
+
+  intersectionObserver() : void{
+    const options= {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5
+    }
+
+    this.observer = new IntersectionObserver((entries) => {
+
+      if(entries[0].isIntersecting){
+        
+        if(this.countCurrent < this.countTotal ){
+          this.filterCurrent.pageIndex += 1;
+          this.getCollaborators();
+        }
+      }
+
+    }, options);
+  }
 }

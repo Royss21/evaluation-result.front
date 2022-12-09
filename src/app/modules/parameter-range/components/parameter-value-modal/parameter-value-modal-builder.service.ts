@@ -11,7 +11,7 @@ export class ParameterValueModalBuilderService {
   constructor(private _fb: FormBuilder) { }
 
   public buildParameterValueForm(parameterValue?: IParameterValue): FormGroup {
-    console.log(parameterValue?.value);
+
     return this._fb.group({
       id: [parameterValue?.id || null],
       name: [

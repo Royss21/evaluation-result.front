@@ -39,7 +39,6 @@ export class LevelModalComponent implements OnInit {
   }
 
   private save(level: ILevel): void {
-    console.log(level)
     if(!level.id)
       this._levelService.create(level).subscribe(() => this.showConfirmMessage())
     else

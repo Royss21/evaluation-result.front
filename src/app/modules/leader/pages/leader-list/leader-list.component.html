@@ -1,5 +1,5 @@
 <div fxLayout="row" >
-  <h2 class="fw-bold">Listado de Formulas</h2>
+  <h2 class="fw-bold">Listado de Lideres</h2>
 </div>
 
 
@@ -14,16 +14,17 @@
 >
   <button
     mat-mini-fab
-    matTooltip="Crear nuevo nivel"
+    matTooltip="Importar lideres"
     color="primary"
+    (click)="openModalImport()"
   >
-    <mat-icon>add</mat-icon>
+    <mat-icon>upload</mat-icon>
   </button>
 </div>
-<!-- <app-table
+<app-table
   [listColumns]="columnsTable"
   [behavior]="paginatedBehavior"
-  [paginated]="formulaPaginated$"
+  [paginated]="leaderPaginated$"
   [templateColumnsContent]="columnContent"
 >
   <ng-template
@@ -59,4 +60,4 @@
       </div>
     </div>
   </ng-template>
-</app-table> -->
+</app-table>

@@ -40,8 +40,6 @@ export class ApiService {
     if(esFormData)
       Object.keys(body).forEach(key => formData.append(key, body[key]))
 
-      console.log(url, esFormData ? formData : body)
-
     return this._httpClient.post<IResponse<T>>(`${url}`,
               esFormData ? formData : body
           )

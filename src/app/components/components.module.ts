@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { TableComponent } from './table/table.component';
 import { SearchGlobalComponent } from './table/search-global/search-global.component';
 import { SharedModule } from '@shared/modules/shared.module';
+import { UploadFileComponent } from './upload-file/upload-file.component';
 
 
 
 @NgModule({
   declarations: [
     TableComponent,
-    SearchGlobalComponent
+    SearchGlobalComponent,
+    UploadFileComponent
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,8 @@ import { SharedModule } from '@shared/modules/shared.module';
   ],
   exports: [
     TableComponent,
-    SearchGlobalComponent
+    SearchGlobalComponent,
+    UploadFileComponent
   ]
 })
 export class ComponentsModule { }

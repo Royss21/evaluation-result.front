@@ -57,7 +57,7 @@ export class ParameterRangeListComponent implements OnInit {
       });
   }
 
-  private abrirModal(parameterRange?: IParameterRange): void {
+  private openModal(parameterRange?: IParameterRange): void {
 
     const modalparameterRange = this._dialog.open(ParameterRangeModalComponent, {
       width: ConstantsGeneral.mdModal,
@@ -81,7 +81,7 @@ export class ParameterRangeListComponent implements OnInit {
   }
 
   create(): void{
-    this.abrirModal();
+    this.openModal();
   }
 
   viewListParameter(id: string){
@@ -98,7 +98,7 @@ export class ParameterRangeListComponent implements OnInit {
   }
 
   update(parameterRange: IParameterRange): void{
-    this.abrirModal(parameterRange);
+    this.openModal(parameterRange);
   }
 
   confirmDeleted(id: number): void {

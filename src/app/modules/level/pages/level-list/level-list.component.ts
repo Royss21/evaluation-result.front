@@ -58,8 +58,7 @@ export class LevelListComponent implements OnInit {
       });
   }
 
-  private abrirModal(level?: ILevel): void {
-
+  private openModal(level?: ILevel): void {
     const modalLevel = this._dialog.open(LevelModalComponent, {
       width: ConstantsGeneral.mdModal,
       disableClose: true,
@@ -82,11 +81,11 @@ export class LevelListComponent implements OnInit {
   }
 
   create(): void{
-    this.abrirModal();
+    this.openModal();
   }
 
   update(level: ILevel): void{
-    this.abrirModal(level);
+    this.openModal(level);
   }
 
   confirmDeleted(id: number): void {

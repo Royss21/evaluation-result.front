@@ -55,7 +55,7 @@ export class CorporateObjectivesListComponent implements OnInit {
       });
   }
 
-  private abrirModal(corporateObjectives?: ICorporateObjectives): void {
+  private openModal(corporateObjectives?: ICorporateObjectives): void {
 
     const modalcorporateObjectives = this._dialog.open(CorporateObjectivesModalComponent, {
       width: ConstantsGeneral.lgModal,
@@ -79,11 +79,11 @@ export class CorporateObjectivesListComponent implements OnInit {
   }
 
   create(): void{
-    this.abrirModal();
+    this.openModal();
   }
 
   update(corporateObjectives: ICorporateObjectives): void{
-    this.abrirModal(corporateObjectives);
+    this.openModal(corporateObjectives);
   }
 
   confirmDeleted(id: number): void {

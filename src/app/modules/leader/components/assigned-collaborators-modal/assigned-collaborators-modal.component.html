@@ -1,1 +1,14 @@
-<p>assigned-collaborators-modal works!</p>
+<mat-dialog-content>
+  <ul>
+    <li *ngFor="let collaborator of collaborators; let i = index">
+  
+      <p *ngIf="(i + 1) !== collaborators.length">
+        {{ collaborator.collaboratorName }}
+      </p> 
+      <p *ngIf="(i + 1) === collaborators.length" #elementobserver>
+        {{ collaborator.collaboratorName }}
+      </p> 
+  
+    </li>
+  </ul>
+</mat-dialog-content>

@@ -1,0 +1,40 @@
+
+<div class="container-upload">
+  <div class="file-input-upload  ml-3">
+    <div style="text-align: center;" *ngIf="filesSelected.length <= 0">
+      <span style="font-size: 1rem; font-weight: bold;">Arrastre sus archivos aquí</span>
+      <p>( o haga clic para cargar )</p>
+    </div>
+    <input 
+      type="file" 
+      class="upload" 
+      [accept]="acceptFiles"
+      [multiple]="isMultiple"
+      (change)="changeFiles($event)"
+    />
+    <div class="file-list">
+      <mat-card class="card-file" *ngFor="let fileItem of filesSelected">
+        <img mat-card-image [src]="fileItem.imagen || fileItem.imagenBuffer">
+        <mat-card-content class="m-0">
+          <p>
+            {{ fileItem.name }}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-mini-fab
+            color="warn"
+            type="button"
+            class="btn-action-xs"
+            (click)="deleteFile(fileItem.name)"
+            style="z-index: 10000"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+
