@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { LeaderService } from '@core/services/leader/leader.service';
+import { AssignedCollaboratorsModalComponent } from '@modules/leader/components/assigned-collaborators-modal/assigned-collaborators-modal.component';
 import { LeaderImportModalComponent } from '@modules/leader/components/leader-import-modal/leader-import-modal.component';
 import { LeaderHelper } from '@modules/leader/helpers/leader.helper';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -55,6 +56,7 @@ export class LeaderListComponent implements OnInit {
   openModalImport(): void {
 
     const modalLeaderImport = this._dialog.open(LeaderImportModalComponent, {
+    //const modalLeaderImport = this._dialog.open(AssignedCollaboratorsModalComponent, {
       disableClose: true,
       data: 'DEF6B939-A6D1-41B0-8BF5-B5994550EDE3',
       autoFocus: false,
@@ -66,34 +68,6 @@ export class LeaderListComponent implements OnInit {
         this.paginatedBehavior.next(this.paginatedFilterCurrent);
       });
   }
-
-  // private delete(id:number): void{
-  //   this._leaderService
-  //     .delete(id)
-  //     .subscribe(() => {
-  //       this.paginatedBehavior.next(this.paginatedFilterCurrent);
-  //       this._dialog.closeAll();
-  //     });
-  // }
-
-  // createleader(): void{
-  //   this.abrirModal();
-  // }
-
-  // updateleader(leader: Ileader): void{
-  //   this.abrirModal(leader);
-  // }
-
-  // confirmDeleted(id: number): void {
-  //   const dialogRef = this._dialog.open(PopupChooseComponent, {
-  //     data: ConstantsGeneral.chooseDelete,
-  //     autoFocus: false,
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result) this.delete(id);
-  //   });
-  // }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(1);

@@ -1,14 +1,51 @@
 <mat-dialog-content>
-  <ul>
-    <li *ngFor="let collaborator of collaborators; let i = index">
+
+  <div
+    fxLayout.xs="row"
+    fxLayoutAlign="space-center center"
+  >
+    <mat-form-field
+      fxFill
+      appearance="outline"
+    >
+      <mat-label>Buscar</mat-label>
+      <input
+          name="name"
+          [(ngModel)]="textSearch"
+          type="text"
+          autocomplete="off"
+          matInput
+          (input)="searchCollaborator()"
+      >
+    </mat-form-field>
+  </div>
   
-      <p *ngIf="(i + 1) !== collaborators.length">
-        {{ collaborator.collaboratorName }}
-      </p> 
-      <p *ngIf="(i + 1) === collaborators.length" #elementobserver>
-        {{ collaborator.collaboratorName }}
-      </p> 
-  
-    </li>
-  </ul>
+  <div
+    fxLayout.xs="row"
+    fxLayoutAlign="space-center center"
+  >
+    <ul>
+      <li *ngFor="let collaborator of collaborators; let i = index">
+    
+        <p *ngIf="(i + 1) !== collaborators.length">
+          {{ collaborator.collaboratorName }}
+        </p> 
+        <p *ngIf="(i + 1) === collaborators.length" #elementobserver>
+          {{ collaborator.collaboratorName }}
+        </p> 
+    
+      </li>
+    </ul>
+  </div>
 </mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button 
+      mat-mini-fab 
+      color="basic" 
+      matTooltip="Cerrar"
+      type="button" 
+      (click)="closeModal()"
+  >
+      <mat-icon>close</mat-icon>
+  </button>
+</mat-dialog-actions>

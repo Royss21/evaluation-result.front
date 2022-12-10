@@ -1,7 +1,6 @@
 <div fxLayout="row" >
-  <h2 class="fw-bold">Listado de Lideres</h2>
+  <h2 class="fw-bold">Listado de colaboradores de la evaluación</h2>
 </div>
-
 
 <div
   fxLayout="row"
@@ -14,17 +13,17 @@
 >
   <button
     mat-mini-fab
-    matTooltip="Importar lideres"
+    matTooltip="Registrar colaborador"
     color="primary"
-    (click)="openModalImport()"
+    (click)="openModal()"
   >
-    <mat-icon>upload</mat-icon>
+    <mat-icon>add</mat-icon>
   </button>
 </div>
 <app-table
   [listColumns]="columnsTable"
   [behavior]="paginatedBehavior"
-  [paginated]="leaderPaginated$"
+  [paginated]="evaluationCollaboratorPaginated$"
   [templateColumnsContent]="columnContent"
 >
   <ng-template
@@ -33,6 +32,7 @@
     let-element='element'
   >
     <div [ngSwitch]="column.columnMatch">
+
       <div
         fxLayout="row"
         fxLayoutGap="10px"
@@ -40,13 +40,30 @@
       >
         <button
           mat-mini-fab
-          color="primary"
+          color="warn"
           type="button"
           class="btn-action-xs"
         >
-          <mat-icon>eye</mat-icon>
+          <mat-icon>delete</mat-icon>
         </button>
       </div>
+
+      <div
+        fxLayout="row"
+        fxLayoutGap="10px"
+        *ngSwitchCase="'isLeaderCompetencies'"
+      >
+        {{ element[column.columnMatch] ? 'Si' : 'No' }}
+      </div>
+
+      <div
+        fxLayout="row"
+        fxLayoutGap="10px"
+        *ngSwitchCase="'isLeaderAreaObjectives'"
+      >
+        {{ element[column.columnMatch] ? 'Si' : 'No' }}
+      </div>
+
       <div *ngSwitchDefault>
         {{ element[column.columnMatch] }}
       </div>
