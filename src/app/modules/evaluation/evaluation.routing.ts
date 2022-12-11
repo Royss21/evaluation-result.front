@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { EvaluationComponent } from '@modules/evaluation/evaluation.component';
+import { EvaluationAddComponent } from '@modules/evaluation/pages/evaluation-add/evaluation-add.component';
 import { EvaluationEditComponent } from '@modules/evaluation/pages/evaluation-edit/evaluation-edit.component';
 import { EvaluationListComponent } from '@modules/evaluation/pages/evaluation-list/evaluation-list.component';
 
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'edit/:id',
         component: EvaluationEditComponent
+      },
+      {
+        path: 'add',
+        component: EvaluationAddComponent
       },
       {
         path:'',

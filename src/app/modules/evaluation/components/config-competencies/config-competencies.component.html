@@ -1,5 +1,4 @@
 <form
-    class="p-3"
     autocomplete="off"
     [formGroup]="competencesFormGroup"
   >
@@ -19,7 +18,7 @@
           <span class="fs-6 fw-bold">Competencias</span>
         </mat-card-title>
         <br>
-        <span class="fw-bolder fs-7">Etapas de competencias</span>
+        <span class="fw-bolder fs-6">Etapas de competencias</span>
         <mat-card-content class="my-3">
           <mat-accordion>
             <ng-container *ngFor="let comp of competencesArr.controls; let i = index">
@@ -30,8 +29,8 @@
                     fxLayoutGap="20px"
                     fxLayoutAlign="start start"
                   >
-                    <img src="../../../../../assets/images/star-objetivo.svg" alt="objetic star">
-                    <p>{{comp.get('title')?.getRawValue()}}</p>
+                    <img src="/assets/images/star-objetivo.svg" alt="objetic star">
+                    <span class="fw-bolder fs-8">{{comp.get('title')?.getRawValue()}}</span>
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <p class="text-muted">{{comp.get('description')?.getRawValue()}}</p>
@@ -64,9 +63,9 @@
                         matSuffix
                       ></mat-datepicker-toggle>
                       <mat-datepicker #dp></mat-datepicker>
-                      <!-- <mat-error *ngIf="controlsForm['startDate'].hasError('required')">
+                      <mat-error *ngIf="controlsForm['competences'].get([i])?.get('startDate')?.hasError('required')">
                         La fecha inicia es <strong>requerido</strong>.
-                      </mat-error> -->
+                      </mat-error>
                     </mat-form-field>
                   </div>
                   <div
@@ -91,9 +90,9 @@
                       [for]="dp2">
                     </mat-datepicker-toggle>
                     <mat-datepicker #dp2></mat-datepicker>
-                    <!-- <mat-error *ngIf="controlsForm['endDate'].hasError('required')">
+                    <mat-error *ngIf="controlsForm['competences'].get([i])?.get('endDate')?.hasError('required')">
                       La fecha termina es <strong>requerido</strong>.
-                    </mat-error> -->
+                    </mat-error>
                     </mat-form-field>
                   </div>
                 </div>

@@ -11,6 +11,8 @@ import { ConfigNewPeriodComponent } from './components/config-new-period/config-
 import { ConfigCorpGoalsComponent } from './components/config-corp-goals/config-corp-goals.component';
 import { ConfigCompetenciesComponent } from './components/config-competencies/config-competencies.component';
 import { ConfigAreaGoalsComponent } from './components/config-area-goals/config-area-goals.component';
+import { ResumeComponentComponent } from './components/resume-component/resume-component.component';
+import { EvaluationAddComponent } from './pages/evaluation-add/evaluation-add.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { ConfigAreaGoalsComponent } from './components/config-area-goals/config-
     ConfigNewPeriodComponent,
     ConfigCorpGoalsComponent,
     ConfigCompetenciesComponent,
-    ConfigAreaGoalsComponent
+    ConfigAreaGoalsComponent,
+    ResumeComponentComponent,
+    EvaluationAddComponent
   ],
   imports: [
     CommonModule,

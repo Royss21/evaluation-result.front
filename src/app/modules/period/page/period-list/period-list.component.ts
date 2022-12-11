@@ -11,6 +11,7 @@ import { PopupChooseComponent } from '@components/popup-choose/popup-choose.comp
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
+import { IPeriod } from '@modules/period/interfaces/period.interface';
 
 @Component({
   selector: 'app-period-list',
@@ -29,7 +30,7 @@ export class PeriodListComponent {
   paginatedFilterCurrent: IPaginatedFilter;
 
   constructor(
-    private router: Router,
+    private _router: Router,
     public _dialog: MatDialog,
     private _periodService: PeriodService,
   ){
@@ -41,7 +42,7 @@ export class PeriodListComponent {
   }
 
   public goToNewPeriod(): void {
-    this.router.navigate(['/period/edit']).then(() => {});
+    this._router.navigate(['/period/edit']).then(() => {});
   }
 
   ngAfterContentInit() {
@@ -60,11 +61,11 @@ export class PeriodListComponent {
   }
 
   public editPeriod(id: number): void {
-    this.router.navigate([`/period/edit/${id}`]).then(() => {});
+    this._router.navigate([`/period/edit/${id}`]).then(() => {});
   }
 
-  public goEvaluation(id: number): void {
-    this.router.navigate([`/evaluation/edit/${id}`]).then(() => {});
+  public goEvaluation(period: IPeriod): void {
+    this._router.navigateByUrl(`/evaluation/add`, { state: period }).then(() => {});
   }
 
   public confirmDeleted(idPeriod: number): void {

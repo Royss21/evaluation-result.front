@@ -47,10 +47,6 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.listenTableChanges();
   }
 
-  ngOnChanges(changes: SimpleChanges): void{
-    
-  }
-
   get quantityColumns(): number {
     return this.listColumns.length
   }

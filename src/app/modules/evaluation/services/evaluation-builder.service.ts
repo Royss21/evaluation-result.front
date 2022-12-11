@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IAreaGoals, ICalibrationStage, ICompetences, ICorpGoals, IEvaluationStage } from '@modules/evaluation/interfaces/evaluation.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EvaluationHelper } from '@modules/evaluation/helpers/evaluation.helpers';
+import { ICompetences } from '@modules/evaluation/interfaces/evaluation.interface';
 
-import { IPeriod } from '@modules/period/interfaces/period.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 
 @Injectable({
@@ -12,11 +12,14 @@ export class EvaluationBuilderService {
 
   constructor(private _fb: FormBuilder) { }
 
-  public buildPeriodForm(period?: IPeriod): FormGroup {
+  public buildEvaluationForm(): FormGroup {
+
+    const compSelection = EvaluationHelper.componentsArray;
+
     return this._fb.group({
-      id: [period?.id || 0],
+      periodId: [0],
       name: [
-        period?.name || null,
+        null,
         [
           Validators.required,
           CustomValidations.NotEmpty,
@@ -24,45 +27,48 @@ export class EvaluationBuilderService {
         ]
       ],
       weight: [
-        period?.weight || null,
+        null,
         [
           Validators.required,
           CustomValidations.NotEmpty
         ]
       ],
       startDate: [
-        period?.startDate || null,
+        null,
         [Validators.required]
       ],
       endDate: [
-        period?.endDate || null,
+        null,
         [Validators.required]
       ],
       isEvaluationTest: [
-        period?.isEvaluationTest || null,
+        null,
         [Validators.required]
-      ]
+      ],
+      components: this._fb.array(
+        compSelection.map(comp => this.createComponents(comp))
+      )
     });
   }
 
-  public builderCorpGoals(corpGoals?: ICorpGoals): FormGroup {
+  createComponents(comp: any): FormGroup {
     return this._fb.group({
-      startDate: [
-        (corpGoals?.startDate || null),
-        [Validators.required]
-      ],
-      endDate: [
-        (corpGoals?.endDate || null),
-        [Validators.required]
-      ],
-      isCalc: [
-        (corpGoals?.isCalc || false),
-        [Validators.required]
-      ],
+      id: [comp.id],
+      img: [comp.img],
+      checked: [comp.checked],
+      title: [comp.title],
+      subtitle: [comp.subtitle]
+    })
+  }
+
+  public builderCorpGoals(): FormGroup {
+    return this._fb.group({
+      startDate: [null],
+      endDate: [null]
     });
   }
 
-  public builderCompetences(competences?: ICompetences): FormGroup {
+  public builderCompetences(): FormGroup {
 
     const compLocal: ICompetences[] = [
       {
@@ -92,32 +98,14 @@ export class EvaluationBuilderService {
       endDate: [comp.endDate],
       title: [comp.title],
       description: [comp.description]
-    })
-  }
-
-  public builderEvaluationStage(evaluation?: IEvaluationStage): FormGroup {
-    return this._fb.group({
-      startDate: [
-        (evaluation?.startDate || null),
-        [Validators.required]
-      ],
-      endDate: [
-        (evaluation?.endDate || null),
-        [Validators.required]
-      ]
     });
   }
 
-  public builderCalibrationStage(calibration?: ICalibrationStage): FormGroup {
+  public builderEvaluationStage(): FormGroup {
     return this._fb.group({
-      startDate: [
-        (calibration?.startDate || null),
-        [Validators.required]
-      ],
-      endDate: [
-        (calibration?.endDate || null),
-        [Validators.required]
-      ]
+      startDate: [null],
+      endDate: [null]
     });
   }
+
 }

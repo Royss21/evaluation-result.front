@@ -1,5 +1,4 @@
 <form
-    class="p-3"
     autocomplete="off"
     [formGroup]="periodFormGroup"
   >
@@ -139,56 +138,24 @@
           <!-- End values period -->
 
           <!-- Components evaluation -->
-          <section>
+
+          <section formArrayName="components">
             <div class="mb-3"><span class="fs-8 fw-bolder">Seleccionar componentes a evaluar</span></div>
-            <!-- Objectivs corp -->
-            <section>
-              <div fxLayout="row" fxLayoutAlign="center center">
-                <div fxFlex="10"><img class="rounded-circle" src="../../../../../assets/images/objCorp.png" alt="objetics corp" width="40" height="40"></div>
+            <section *ngFor="let item of controlsComponentsArr.controls; let i = index">
+              <div fxLayout="row" fxLayoutAlign="center center" [formGroupName]="i">
+                <div fxFlex="10"><img class="rounded-circle" src="{{item.get('img')?.getRawValue()}}" alt="objetics corp" width="40" height="40"></div>
                 <div fxLayout="column" fxFlex="80">
-                  <span class="fs-10 fw-bolder">Objetivos Corporativos</span>
-                  <span class="fs-8 fw-lighter">Objetivos y metas planteados para la empresa en el año.</span>
+                  <span class="fs-10 fw-bolder">{{item.get('title')?.getRawValue()}}</span>
+                  <span class="fs-8 fw-lighter">{{item.get('subtitle')?.getRawValue()}}</span>
                 </div>
                 <div fxFlex fxFlex="10" fxLayoutAlign="center center">
-                  <mat-checkbox color="primary"></mat-checkbox>
+                  <mat-checkbox formControlName="checked" color="primary"></mat-checkbox>
                 </div>
               </div>
+              <mat-divider *ngIf="i < (controlsComponentsArr.controls.length - 1)" class="my-3"></mat-divider>
             </section>
-            <mat-divider class="my-3"></mat-divider>
-            <!-- End Objectivs corp -->
-
-            <!-- Objectivs area -->
-            <section >
-              <div fxLayout="row" fxLayoutAlign="center center">
-                <div fxFlex="10"><img class="rounded-circle" src="../../../../../assets/images/group 1.png" alt="objetics corp" width="40" height="40"></div>
-                <div fxLayout="column" fxFlex="80">
-                  <span class="fs-10 fw-bolder">Objetivos de Área (KPIs)</span>
-                  <span class="fs-8 fw-lighter">Objetivos establecidos para cada área, deben guardar relación con los objetivos corporativos y prioridades estratégicas.</span>
-                </div>
-                <div fxFlex="10" fxLayoutAlign="center center">
-                  <mat-checkbox color="primary"></mat-checkbox>
-                </div>
-              </div>
-            </section>
-            <mat-divider class="my-3"></mat-divider>
-            <!-- End Objectivs area -->
-
-            <!-- Competences -->
-            <section>
-              <div fxLayout="row" fxLayoutAlign="center center">
-                <div fxFlex="10"><img class="rounded-circle" src="../../../../../assets/images/comp.png" alt="objetics corp" width="40" height="40"></div>
-                <div fxLayout="column" fxFlex="80">
-                  <span class="fs-10 fw-bolder">Competencias</span>
-                  <span class="fs-8 fw-lighter">Conjunto de conocimientos y habilidades que se potencian por la actitud.</span>
-                </div>
-                <div fxFlex fxFlex="10" fxLayoutAlign="center center">
-                  <mat-checkbox color="primary"></mat-checkbox>
-                </div>
-              </div>
-            </section>
-            <!-- End competences -->
-
           </section>
+
           <!-- End components evaluation -->
         </mat-card-content>
       </mat-card>

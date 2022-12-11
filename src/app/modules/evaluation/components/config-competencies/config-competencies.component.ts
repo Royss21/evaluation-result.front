@@ -73,7 +73,7 @@ export class ConfigCompetenciesComponent implements ControlValueAccessor, Valida
     //PROPAGAR ERROR AL FORM PADRE
     return this.competencesFormGroup.valid
       ? null
-      : { invalidCompetences: true }
+      : { invalidCompetences: true };
   }
 
 }

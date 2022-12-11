@@ -1,0 +1,18 @@
+<section
+  fxLayout="row"
+  class="resume-container"
+  fxLayoutAlign="start center"
+>
+  <section fxFlex="100">
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
+      <div fxFlex="10"><img class="rounded-circle" src="{{ imageSRC }}" alt="image - {{ title }}" width="40" height="40"></div>
+      <div fxLayout="column" fxFlex="90">
+        <span class="fs-8 fw-bolder">{{ title }}</span>
+        <span class="fs-10 text-muted">
+          Del {{ (dateStart | date:'shortDate') || '[Fecha inicia]' }}
+          al  {{ (dateEnd | date:'shortDate') || '[Fecha termina]' }}
+        </span>
+      </div>
+    </div>
+  </section>
+</section>

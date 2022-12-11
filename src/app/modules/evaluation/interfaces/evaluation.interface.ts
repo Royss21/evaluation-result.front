@@ -1,3 +1,12 @@
+export interface IEvaluation {
+  periodId: number;
+  name: string;
+  weight: Number;
+  startDate: Date;
+  endDate: Date;
+  isEvaluationTest: Boolean;
+}
+
 export interface ICorpGoals {
   startDate: Date;
   endDate: Date;

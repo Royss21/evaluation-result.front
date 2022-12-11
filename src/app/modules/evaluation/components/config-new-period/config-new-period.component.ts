@@ -6,7 +6,8 @@ import {
   AbstractControl,
   ValidationErrors,
   NG_VALUE_ACCESSOR,
-  ControlValueAccessor
+  ControlValueAccessor,
+  FormArray
 } from '@angular/forms';
 
 import { EvaluationBuilderService } from '@modules/evaluation/services/evaluation-builder.service';
@@ -37,7 +38,7 @@ export class ConfigNewPeriodComponent implements ControlValueAccessor, Validator
   constructor(
     private _evaluationBuilderService: EvaluationBuilderService
   ) {
-    this.periodFormGroup = this._evaluationBuilderService.buildPeriodForm();
+    this.periodFormGroup = this._evaluationBuilderService.buildEvaluationForm();
     this.periodFormGroup.valueChanges
       .subscribe(() => {
         this._onChanged(this.periodFormGroup.value);
@@ -47,6 +48,10 @@ export class ConfigNewPeriodComponent implements ControlValueAccessor, Validator
 
   get controlsForm(): { [key: string]: AbstractControl } {
     return this.periodFormGroup.controls;
+  }
+
+  public get controlsComponentsArr() {
+    return this.periodFormGroup.get('components') as FormArray;
   }
 
   writeValue(obj: { id: number, name: string, startDate: Date, endDate: Date }): void {
