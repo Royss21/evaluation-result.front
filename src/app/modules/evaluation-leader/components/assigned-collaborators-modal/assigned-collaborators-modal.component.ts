@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { LeaderService } from '@core/services/leader/leader.service';
-import { LeaderHelper } from '@modules/leader/helpers/leader.helper';
-import { ILeaderCollaboratorFilter } from '@modules/leader/interfaces/leader-collaborador-filter.interface';
-import { ILeaderCollaborator } from '@modules/leader/interfaces/leader-collaborador.interface';
+import { LeaderService } from '@core/services/evaluation-leader/leader.service';
+import { LeaderHelper } from '@modules/evaluation-leader/helpers/leader.helper';
+import { ILeaderCollaboratorFilter } from '@modules/evaluation-leader/interfaces/leader-collaborador-filter.interface';
+import { ILeaderCollaborator } from '@modules/evaluation-leader/interfaces/leader-collaborador.interface';
 
 @Component({
   selector: 'app-assigned-collaborators-modal',

@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
-import { LeaderService } from '@core/services/leader/leader.service';
-import { AssignedCollaboratorsModalComponent } from '@modules/leader/components/assigned-collaborators-modal/assigned-collaborators-modal.component';
-import { LeaderImportModalComponent } from '@modules/leader/components/leader-import-modal/leader-import-modal.component';
-import { LeaderHelper } from '@modules/leader/helpers/leader.helper';
+import { LeaderService } from '@core/services/evaluation-leader/leader.service';
+import { AssignedCollaboratorsModalComponent } from '@modules/evaluation-leader/components/assigned-collaborators-modal/assigned-collaborators-modal.component';
+import { LeaderImportModalComponent } from '@modules/evaluation-leader/components/leader-import-modal/leader-import-modal.component';
+import { LeaderHelper } from '@modules/evaluation-leader/helpers/leader.helper';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Component({

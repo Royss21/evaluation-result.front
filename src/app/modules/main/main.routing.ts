@@ -28,7 +28,7 @@ export const roots: Routes = [
       },
       {
         path:'evaluation/leader',
-        loadChildren: () => import('../leader/leader.module').then( m => m.LeaderModule )
+        loadChildren: () => import('../evaluation-leader/leader.module').then( m => m.LeaderModule )
       },
       {
         path:'evaluation/collaborator',

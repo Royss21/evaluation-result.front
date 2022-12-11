@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
-import { ILeaderCollaboratorFilter } from '@modules/leader/interfaces/leader-collaborador-filter.interface';
-import { ILeaderCollaboratorAssigned } from '@modules/leader/interfaces/leader-collaborador.interface';
-import { ILeaderImport } from '@modules/leader/interfaces/leader-import.interface';
-import { ILeaderPaged } from '@modules/leader/interfaces/leader-paged.interface';
-import { IEvaluationLeader } from '@modules/leader/interfaces/leader.interface';
+import { ILeaderCollaboratorFilter } from '@modules/evaluation-leader/interfaces/leader-collaborador-filter.interface';
+import { ILeaderCollaboratorAssigned } from '@modules/evaluation-leader/interfaces/leader-collaborador.interface';
+import { ILeaderImport } from '@modules/evaluation-leader/interfaces/leader-import.interface';
+import { ILeaderPaged } from '@modules/evaluation-leader/interfaces/leader-paged.interface';
+import { IEvaluationLeader } from '@modules/evaluation-leader/interfaces/leader.interface';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';
 

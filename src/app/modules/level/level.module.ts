@@ -9,13 +9,17 @@ import { ComponentsModule } from '@components/components.module';
 import { LevelListComponent } from './pages/level-list/level-list.component';
 import { LevelComponent } from './level.component';
 import { LevelModalComponent } from './components/level-modal/level-modal.component';
+import { ExampleFormComponent } from './pages/example-form/example-form.component';
+import { ChildComponent } from './pages/exampleForm/child/child.component';
 
 
 @NgModule({
   declarations: [
     LevelListComponent,
     LevelComponent,
-    LevelModalComponent
+    LevelModalComponent,
+    ExampleFormComponent,
+    ChildComponent
   ],
   imports: [
     CommonModule,
