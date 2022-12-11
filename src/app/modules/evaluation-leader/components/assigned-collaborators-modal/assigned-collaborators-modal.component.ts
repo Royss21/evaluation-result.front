@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { LeaderService } from '@core/services/leader/leader.service';
-import { LeaderHelper } from '@modules/leader/helpers/leader.helper';
-import { ILeaderCollaboratorFilter } from '@modules/leader/interfaces/leader-collaborador-filter.interface';
-import { ILeaderCollaborator } from '@modules/leader/interfaces/leader-collaborador.interface';
+import { MatDialogRef } from '@angular/material/dialog';
+import { LeaderService } from '@core/services/evaluation-leader/leader.service';
+import { LeaderHelper } from '@modules/evaluation-leader/helpers/leader.helper';
+import { ILeaderCollaboratorFilter } from '@modules/evaluation-leader/interfaces/leader-collaborador-filter.interface';
+import { ILeaderCollaborator } from '@modules/evaluation-leader/interfaces/leader-collaborador.interface';
 
 @Component({
   selector: 'app-assigned-collaborators-modal',
@@ -10,6 +11,7 @@ import { ILeaderCollaborator } from '@modules/leader/interfaces/leader-collabora
   styleUrls: ['./assigned-collaborators-modal.component.scss']
 })
 export class AssignedCollaboratorsModalComponent implements OnInit, AfterViewInit {
+  //AUN FALTA CULMINAR EL LISTADO Y HACER PRUEBAS
 
   @ViewChildren("elementObserver", { read: ElementRef }) elementObserver: QueryList<ElementRef>;
 
@@ -18,9 +20,11 @@ export class AssignedCollaboratorsModalComponent implements OnInit, AfterViewIni
   private countCurrent:number = 0;
   countTotal:number = 0;
   collaborators: ILeaderCollaborator[] = [];
+  textSearch: string = '';
 
   constructor(
     private _leaderService: LeaderService,
+    private _modalRef: MatDialogRef<AssignedCollaboratorsModalComponent>,
   ) {
     this.filterCurrent= LeaderHelper.initialFilter;
   }
@@ -37,6 +41,10 @@ export class AssignedCollaboratorsModalComponent implements OnInit, AfterViewIni
     });
   }
 
+  closeModal(): void {
+    this._modalRef.close();
+  }
+
   getCollaborators(): void {
     this._leaderService.getCollaboratorsByLeader(1, this.filterCurrent)
       .subscribe(({ countTotal, collaborators }) =>{
@@ -44,6 +52,11 @@ export class AssignedCollaboratorsModalComponent implements OnInit, AfterViewIni
         this.countTotal = countTotal;
         this.collaborators = [...this.collaborators, ...collaborators];
       })
+  }
+
+  searchCollaborator(){
+    this.filterCurrent = { ...LeaderHelper.initialFilter, globalFilter: this.textSearch};
+    this.getCollaborators();
   }
 
   intersectionObserver() : void{
@@ -55,8 +68,7 @@ export class AssignedCollaboratorsModalComponent implements OnInit, AfterViewIni
 
     this.observer = new IntersectionObserver((entries) => {
 
-      if(entries[0].isIntersecting){
-        
+      if(entries[0].isIntersecting){        
         if(this.countCurrent < this.countTotal ){
           this.filterCurrent.pageIndex += 1;
           this.getCollaborators();

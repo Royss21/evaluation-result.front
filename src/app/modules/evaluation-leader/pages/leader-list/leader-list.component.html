@@ -1,0 +1,55 @@
+<div fxLayout="row" >
+  <h2 class="fw-bold">Listado de Lideres</h2>
+</div>
+
+
+<div
+  fxLayout="row"
+  fxLayoutAlign.xs="end center"
+  fxLayoutAlign.sm="end center"
+  fxLayoutAlign.md="end center"
+  fxLayoutAlign.lg="end center"
+  fxLayoutAlign.xl="end center"
+  class="my-sm-3 my-md-0"
+>
+  <button
+    mat-mini-fab
+    matTooltip="Importar lideres"
+    color="primary"
+    (click)="openModalImport()"
+  >
+    <mat-icon>upload</mat-icon>
+  </button>
+</div>
+<app-table
+  [listColumns]="columnsTable"
+  [behavior]="paginatedBehavior"
+  [paginated]="leaderPaginated$"
+  [templateColumnsContent]="columnContent"
+>
+  <ng-template
+    #columnContent
+    let-column='column'
+    let-element='element'
+  >
+    <div [ngSwitch]="column.columnMatch">
+      <div
+        fxLayout="row"
+        fxLayoutGap="10px"
+        *ngSwitchCase="'actions'"
+      >
+        <button
+          mat-mini-fab
+          color="primary"
+          type="button"
+          class="btn-action-xs"
+        >
+          <mat-icon>eye</mat-icon>
+        </button>
+      </div>
+      <div *ngSwitchDefault>
+        {{ element[column.columnMatch] }}
+      </div>
+    </div>
+  </ng-template>
+</app-table>

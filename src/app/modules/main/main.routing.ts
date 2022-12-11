@@ -27,8 +27,12 @@ export const roots: Routes = [
         loadChildren: () => import('../configuration/configuration.module').then( m => m.ConfigurationModule )
       },
       {
-        path:'leader',
-        loadChildren: () => import('../leader/leader.module').then( m => m.LeaderModule )
+        path:'evaluation/leader',
+        loadChildren: () => import('../evaluation-leader/leader.module').then( m => m.LeaderModule )
+      },
+      {
+        path:'evaluation/collaborator',
+        loadChildren: () => import('../evaluation-collaborator/evaluation-collaborator.module').then( m => m.EvaluationCollaboratorModule )
       },
       // {
       //   path:'security',

@@ -9,12 +9,12 @@
     <mat-dialog-content>
     
         <div
-            fxLayout.xs="row wrap"
-            fxLayout.sm="row wrap"
-            fxLayout.md="row wrap"
-            fxLayout.lg="row wrap"
-            fxLayout.xl="row wrap"
-            fxLayoutAlign="space-center center"
+          fxLayout.xs="row wrap"
+          fxLayout.sm="row wrap"
+          fxLayout.md="row wrap"
+          fxLayout.lg="row wrap"
+          fxLayout.xl="row wrap"
+          fxLayoutAlign="space-center center"
         >
         
             <div
@@ -29,21 +29,21 @@
                     fxFill
                     appearance="outline"
                 >
-                <mat-label>Nombre</mat-label>
-                <input
-                    name="name"
-                    formControlName="name"
-                    type="text"
-                    autocomplete="off"
-                    maxlength="100"
-                    matInput
-                >
-                    <mat-error *ngIf="controlsForm['name'].hasError('required')">
-                        El nombre es <strong>requerido</strong>.
-                    </mat-error>
-                    <mat-error *ngIf="controlsForm['name'].hasError('maxlength')">
-                        Se ha excedido el límite de caracteres
-                    </mat-error>
+                  <mat-label>Nombre</mat-label>
+                  <input
+                      name="name"
+                      formControlName="name"
+                      type="text"
+                      autocomplete="off"
+                      maxlength="100"
+                      matInput
+                  >
+                  <mat-error *ngIf="controlsForm['name'].hasError('required')">
+                      El nombre es <strong>requerido</strong>.
+                  </mat-error>
+                  <mat-error *ngIf="controlsForm['name'].hasError('maxlength')">
+                      Se ha excedido el límite de caracteres
+                  </mat-error>
                 </mat-form-field>
             </div>
 

@@ -1,0 +1,24 @@
+<div class="container">
+	<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+
+		<div class="border border-primary p-3 my-2">
+			<h4>Input text</h4>
+			<div class="form-group">
+				<label>Username</label>
+				<input formControlName="username" type="text" class="form-control">
+			</div>
+    </div>
+		
+		<div class="border border-primary p-3 my-2">
+			<h4>Reset Password</h4>
+			<!-- ERROR Error: control.registerOnChange is not a function -->
+			<app-child formControlName="resetPassword"></app-child> 
+		</div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+
+  <pre> {{formGroup.value | json}} </pre>
+
+
+</div>
