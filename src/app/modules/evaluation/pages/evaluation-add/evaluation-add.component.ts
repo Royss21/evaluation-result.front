@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
-import { AbstractControl, FormArray, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { IPeriod } from '@modules/period/interfaces/period.interface';
@@ -31,8 +31,6 @@ export class EvaluationAddComponent {
   //DATES FOR VALIDATION FORM
   public minDateEvaluation: Date;
   public maxDateEvaluation: Date;
-  public minDateEndEvaluation: Date;
-  public maxDateEndEvaluation: Date;
 
   public minDateComponentsEvaluation: Date
   public maxDateComponentsEvaluation: Date
@@ -113,51 +111,81 @@ export class EvaluationAddComponent {
     });
   }
 
+  //TODO: ON CHANGES VALUES
   private _onChangesValuesForm(): void {
-    this._validateDates('evaluation');
-    //TODO: ON CHANGES VALUES
+    this.minDateEvaluation = this._toDate(this.periodValues?.startDate);
+    this.maxDateEvaluation = this._toDate(this.periodValues?.endDate);
+
     this.controlsEvaluationForm['startDate'].valueChanges.subscribe(value => {
       if (value) {
-        this.minDateEndEvaluation = this._toDate(value);
         this.minDateComponentsEvaluation = this._toDate(value);
         this._compareDates('evaluation')
       }
-    })
+    });
 
     this.controlsEvaluationForm['endDate'].valueChanges.subscribe(value => {
       if (value) {
-        ( this.maxDateComponentsEvaluation = this._toDate(value) );
+        this.maxDateComponentsEvaluation = this._toDate(value);
         this._compareDates('evaluation')
       }
-    })
+    });
 
     this.controlsEvaluationForm['components'].valueChanges.subscribe(values => {
       this._validateShowForm(values);
-    })
+      this.controlsCorpGoalsForm['startDate'].valueChanges.subscribe(value => {
+        value && this._compareDates('corpGoals')
+      });
+
+      this.controlsCorpGoalsForm['endDate'].valueChanges.subscribe(value => {
+        value && this._compareDates('corpGoals')
+      });
+
+      this.controlsAreaGoalsForm['startDate'].valueChanges.subscribe(value => {
+        value && this._compareDates('areaGoals')
+      });
+
+      this.controlsAreaGoalsForm['endDate'].valueChanges.subscribe(value => {
+        value && this._compareDates('areaGoals')
+      });
+
+      this.controlsCompetencesArr.valueChanges.subscribe(value => {
+        value &&  this._compareDates('competences');
+      })
+    });
   }
 
   private _compareDates(nameForm: string) {
     switch (nameForm) {
       case 'evaluation':
-        if (this._toDate(this.controlsEvaluationForm['startDate']?.value)?.getTime() > this._toDate(this.controlsEvaluationForm['endDate']?.value)?.getTime()){
+        if (this._toDate(this.controlsEvaluationForm['startDate']?.value)?.getTime() >= this._toDate(this.controlsEvaluationForm['endDate']?.value)?.getTime())
           this.controlsEvaluationForm['endDate'].setErrors({'invalidDate': true});
-        }
+        else
+          this.controlsEvaluationForm['endDate'].setErrors(null);
+        break
 
+      case 'corpGoals':
+        if (this._toDate(this.controlsCorpGoalsForm['startDate']?.value)?.getTime() >= this._toDate(this.controlsCorpGoalsForm['endDate']?.value)?.getTime())
+          this.controlsCorpGoalsForm['endDate'].setErrors({'invalidDate': true});
+        else
+          this.controlsCorpGoalsForm['endDate'].setErrors(null);
+        break
+
+      case 'areaGoals':
+        if (this._toDate(this.controlsAreaGoalsForm['startDate']?.value)?.getTime() >= this._toDate(this.controlsAreaGoalsForm['endDate']?.value)?.getTime())
+          this.controlsAreaGoalsForm['endDate'].setErrors({'invalidDate': true});
+        else
+          this.controlsAreaGoalsForm['endDate'].setErrors(null);
+        break
+      case 'competences':
+        this.controlsCompetencesArr.controls.forEach(comp => {
+          if (this._toDate(comp.get('startDate')?.value)?.getTime() >= this._toDate(comp.get('endDate')?.value)?.getTime()) {
+            comp.get('endDate')?.setErrors({'invalidDate': true});
+          } else
+            comp.get('endDate')?.setErrors(null);
+        });
         break
       default:
         break;
-    }
-  }
-
-  //TODO: VALIDATE DATES
-  private _validateDates(typeForm: string): void {
-    switch (typeForm) {
-      case 'evaluation':
-        this.minDateEvaluation = this._toDate(this.periodValues?.startDate);
-        this.maxDateEvaluation = this._toDate(this.periodValues?.endDate);
-        this.minDateEndEvaluation = this._toDate(this.periodValues?.startDate);
-        this.maxDateEndEvaluation = this._toDate(this.periodValues?.endDate);
-        break
     }
   }
 

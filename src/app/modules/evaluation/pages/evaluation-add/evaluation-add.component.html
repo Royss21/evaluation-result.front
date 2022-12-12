@@ -113,10 +113,10 @@
                   <input
                     matInput
                     formControlName="startDate"
+                    [max]="maxDateEvaluation"
+                    [min]="minDateEvaluation"
                     [matDatepicker]="dpEvaluationStartDate"
                     >
-                    <!-- [max]="maxDateStartEvaluation"
-                    [min]="minDateStartEvaluation" -->
                   <mat-datepicker-toggle
                     [for]="dpEvaluationStartDate"
                     matSuffix
@@ -141,10 +141,10 @@
                   <input
                     matInput
                     formControlName="endDate"
+                    [min]="minDateEvaluation"
+                    [max]="maxDateEvaluation"
                     [matDatepicker]="dpEvaluationEndDate"
                     >
-                    <!-- [min]="minDateEndEvaluation"
-                    [max]="maxDateEndEvaluation" -->
                   <mat-datepicker-toggle
                     matSuffix
                     [for]="dpEvaluationEndDate">
@@ -153,7 +153,7 @@
                   <mat-error *ngIf="controlsEvaluationForm['endDate'].hasError('required')">
                     La fecha termina es <strong>requerido</strong>.
                   </mat-error>
-                  <mat-error *ngIf="controlsEvaluationForm['endDate'].hasError('invalidDate')" style="font-size: 10.5px;">
+                  <mat-error *ngIf="controlsEvaluationForm['endDate'].hasError('invalidDate')">
                     La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
                   </mat-error>
                 </mat-form-field>
@@ -363,6 +363,9 @@
                   <mat-error *ngIf="controlsCorpGoalsForm['endDate'].hasError('required')">
                     La fecha termina es <strong>requerido</strong>.
                   </mat-error>
+                  <mat-error *ngIf="controlsCorpGoalsForm['endDate'].hasError('invalidDate')">
+                    La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
+                  </mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -461,6 +464,9 @@
                   <mat-datepicker #dpAreaGoalsEndDate></mat-datepicker>
                   <mat-error *ngIf="controlsAreaGoalsForm['endDate'].hasError('required')">
                     La fecha termina es <strong>requerido</strong>.
+                  </mat-error>
+                  <mat-error *ngIf="controlsAreaGoalsForm['endDate'].hasError('invalidDate')">
+                    La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
                   </mat-error>
                 </mat-form-field>
               </div>
@@ -575,6 +581,9 @@
                       <mat-datepicker #dpCompetencesEndDate></mat-datepicker>
                       <mat-error *ngIf="controlsCompetencesForm['competences'].get([i])?.get('endDate')?.hasError('required')">
                         La fecha termina es <strong>requerido</strong>.
+                      </mat-error>
+                      <mat-error *ngIf="controlsCompetencesForm['competences'].get([i])?.get('endDate')?.hasError('invalidDate')">
+                        La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
                       </mat-error>
                       </mat-form-field>
                     </div>
