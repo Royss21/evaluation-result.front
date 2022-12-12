@@ -15,6 +15,7 @@ export class EvaluationBuilderService {
   public buildEvaluationForm(): FormGroup {
 
     const compSelection = EvaluationHelper.componentsArray;
+    const competencesArr: ICompetences[] = EvaluationHelper.stageEvaluationArr;
 
     return this._fb.group({
       periodId: [0],
@@ -34,20 +35,19 @@ export class EvaluationBuilderService {
         ]
       ],
       startDate: [
-        null,
-        [Validators.required]
+        null, [Validators.required]
       ],
       endDate: [
-        null,
-        [Validators.required]
+        null, [ Validators.required ]
       ],
       isEvaluationTest: [
-        null,
-        [Validators.required]
+        false, [Validators.required]
       ],
-      components: this._fb.array(
-        compSelection.map(comp => this.createComponents(comp))
-      )
+      components: this._fb.array(compSelection.map(comp => this.createComponents(comp))
+      ),
+      stages: this._fb.array(
+        competencesArr.map(comp => this.createCompetencesFormArray(comp, true))
+      ),
     });
   }
 
@@ -56,56 +56,50 @@ export class EvaluationBuilderService {
       id: [comp.id],
       img: [comp.img],
       checked: [comp.checked],
+      // checked: [{value: comp.checked, disabled: true}],
       title: [comp.title],
       subtitle: [comp.subtitle]
     })
   }
 
-  public builderCorpGoals(): FormGroup {
-    return this._fb.group({
-      startDate: [null],
-      endDate: [null]
-    });
+  public builderCorpGoals(isRequired: boolean = false): FormGroup {
+    if (isRequired) {
+      return this._fb.group({
+        startDate: [null, Validators.required],
+        endDate: [null, Validators.required]
+      });
+    } else {
+      return this._fb.group({
+        startDate: [null],
+        endDate: [null]
+      });
+    }
   }
 
-  public builderCompetences(): FormGroup {
-
-    const compLocal: ICompetences[] = [
-      {
-        startDate: null,
-        endDate: null,
-        title: 'Etapa de Evaluación por Competencias',
-        description: 'En esta etapa se realiza la evaluación de cada colaborador mediante las competencias registradas'
-      },
-      {
-        startDate: null,
-        endDate: null,
-        title: 'Etapa de Calibración',
-        description: 'En esta etapa la nota de los colaboradores serán reguladas por los calibradores asignados.'
-      }
-    ]
-
+  public builderCompetences(isRequired: boolean = false): FormGroup {
+    const compLocal: ICompetences[] = EvaluationHelper.competencesStageArr;
     return this._fb.group({
       competences: this._fb.array(
-        compLocal.map(comp => this.createCompetences(comp))
+        compLocal.map(comp => this.createCompetencesFormArray(comp, isRequired))
       )
     });
   }
 
-  createCompetences(comp: ICompetences): FormGroup {
-    return this._fb.group({
-      startDate: [comp.startDate],
-      endDate: [comp.endDate],
-      title: [comp.title],
-      description: [comp.description]
-    });
+  createCompetencesFormArray(comp: ICompetences, isRequired: boolean = false): FormGroup {
+    if (isRequired) {
+      return this._fb.group({
+        startDate: [comp.startDate, Validators.required],
+        endDate: [comp.endDate, Validators.required],
+        title: [comp.title],
+        description: [comp.description]
+      });
+    } else {
+      return this._fb.group({
+        startDate: [comp.startDate],
+        endDate: [comp.endDate],
+        title: [comp.title],
+        description: [comp.description]
+      });
+    }
   }
-
-  public builderEvaluationStage(): FormGroup {
-    return this._fb.group({
-      startDate: [null],
-      endDate: [null]
-    });
-  }
-
 }
