@@ -1,3 +1,5 @@
+
+<h2  mat-dialog-title>{{ modalTitle }}</h2>
 <mat-dialog-content>
 
   <div
@@ -24,7 +26,7 @@
     fxLayout.xs="row"
     fxLayoutAlign="space-center center"
   >
-    <ul>
+    <!-- <ul>
       <li *ngFor="let collaborator of collaborators; let i = index">
     
         <p *ngIf="(i + 1) !== collaborators.length">
@@ -35,7 +37,32 @@
         </p> 
     
       </li>
-    </ul>
+    </ul> -->
+
+    <table class="styled-table">
+      <thead>
+          <tr>
+              <th>Collaborator</th>
+              <th>Documento</th>
+              <th>Etapas</th>
+              <th>Area</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngIf="collaborators.length <= 0; else elseBody">
+            <td colspan="4">No se ha encontrado datos</td>
+          </tr>
+          <ng-template #elseBody>
+            <tr *ngFor="let collaborator of collaborators">
+                <td>{{ collaborator.collaboratorName }}</td>
+                <td>{{ collaborator.documentNumber }}</td>
+                <td>{{ collaborator.stagesName }}</td>
+                <td>{{ collaborator.areaName }}</td>
+            </tr>
+
+          </ng-template>
+      </tbody>
+  </table>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">

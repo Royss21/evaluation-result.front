@@ -4,11 +4,11 @@ import { ILeaderCollaboratorFilter } from "../interfaces/leader-collaborador-fil
 
 export class LeaderHelper{
     static columnsTable: IElementRowTable[] =  [
-      new ElementRowTable('leaderName','Nombre Lider'),
-      new ElementRowTable('documentNumber','Documento'),
-      new ElementRowTable('areaName','Area'),
-      new ElementRowTable('countAssignedCollaborator','# Colab. Asignados'),
-      new ElementRowTable('actions','Acciones'),
+      new ElementRowTable('leaderName','Nombre Lider', true),
+      new ElementRowTable('documentNumber','Documento' , true),
+      new ElementRowTable('areaName','Area' , true),
+      new ElementRowTable('countAssignedCollaborator','# Asignados' , true),
+      new ElementRowTable('actions','Acciones' , true),
     ];
 
     static initialFilter: ILeaderCollaboratorFilter = {
@@ -23,4 +23,5 @@ export class LeaderHelper{
 
 export class LeaderText{
   static modalImport = 'Importar Lideres';
+  static modalCollaboratorAssigned = 'Colaboradores asignados';
 } 

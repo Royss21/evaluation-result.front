@@ -43,8 +43,9 @@
           color="primary"
           type="button"
           class="btn-action-xs"
+          (click)="openModalViewAssignedCollaborators(element)"
         >
-          <mat-icon>eye</mat-icon>
+          <mat-icon>remove_red_eye</mat-icon>
         </button>
       </div>
       <div *ngSwitchDefault>

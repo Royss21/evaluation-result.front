@@ -1,7 +1,7 @@
 export interface ILeaderCollaborator{
   collaboratorName: string; 
   documentNumber: string; 
-  StagesName: string[]; 
+  stagesName: string[]; 
   areaName: string;
 }
 

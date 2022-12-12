@@ -67,8 +67,8 @@
           class="p-1 pb-0 pt-0" 
         >
           <mat-radio-group aria-label="Seleccione una opcion" formControlName="typeImportLeaders">
-            <mat-radio-button [value]="1" (change)="changeTypeImport($event)">Lideres de competencias</mat-radio-button>
-            <mat-radio-button [value]="0" (change)="changeTypeImport($event)">Lideres de areas</mat-radio-button>
+            <mat-radio-button [value]="1" (change)="changeTypeImport(1)">Lideres de competencias</mat-radio-button>
+            <mat-radio-button [value]="0" (change)="changeTypeImport(0)">Lideres de areas</mat-radio-button>
           </mat-radio-group>
         </div> 
         
