@@ -28,4 +28,5 @@ export class EvaluationCollaboratorService {
      return this._apiService
          .get<IPaginatedResponse<IEvaluationCollaboratorPaged>>(`${this.url}/paging`, paginatedFilter);
   }
+
 }

@@ -34,6 +34,10 @@ export const roots: Routes = [
         path:'evaluation/:evaluationId/collaborator',
         loadChildren: () => import('../evaluation-collaborator/evaluation-collaborator.module').then( m => m.EvaluationCollaboratorModule )
       },
+      {
+        path:'evaluation/:evaluationId/evaluate-component/:componentId',
+        loadChildren: () => import('../evaluate-component/evaluate.module').then( m => m.EvaluateComponentModule )
+      },
       // {
       //   path:'security',
       //   loadChildren: () => import('../seguridad/seguridad.module').then( m => m.SeguridadModule )
