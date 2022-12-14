@@ -13,6 +13,7 @@ import { ConfigCompetenciesComponent } from './components/config-competencies/co
 import { ConfigAreaGoalsComponent } from './components/config-area-goals/config-area-goals.component';
 import { ResumeComponentComponent } from './components/resume-component/resume-component.component';
 import { EvaluationAddComponent } from './pages/evaluation-add/evaluation-add.component';
+import { EvaluationDetailComponent } from './pages/evaluation-detail/evaluation-detail.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { EvaluationAddComponent } from './pages/evaluation-add/evaluation-add.co
     ConfigCompetenciesComponent,
     ConfigAreaGoalsComponent,
     ResumeComponentComponent,
-    EvaluationAddComponent
+    EvaluationAddComponent,
+    EvaluationDetailComponent
   ],
   imports: [
     CommonModule,

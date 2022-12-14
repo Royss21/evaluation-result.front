@@ -1,684 +1,686 @@
-<section
-  fxLayout="row"
-  fxLayoutGap="10px"
->
-  <!-- TODO: agregar estos valores al section principal -->
-  <!-- fxLayout.lg="row"
-  fxLayout.xl="row"
-  fxLayout.md="column"
-  fxLayout.sm="column"
-  fxLayout.xs="column"
-  fxLayoutGap="10px" -->
-  <section>
-    <h2 class="fw-bold p-3">{{title}}</h2>
-    <!-------------------------------------------
-    ---------------- EVALUATION FORM ------------
-    -------------------------------------------->
-    <form
-      autocomplete="off"
-      [formGroup]="evaluationFormGroup"
-    >
-      <div
-        class="p-3"
-        fxLayout="column"
-        fxLayoutGap="10px"
+<mat-card>
+  <section
+    fxLayout="row"
+    fxLayoutGap="10px"
+  >
+    <!-- TODO: agregar estos valores al section principal -->
+    <!-- fxLayout.lg="row"
+    fxLayout.xl="row"
+    fxLayout.md="column"
+    fxLayout.sm="column"
+    fxLayout.xs="column"
+    fxLayoutGap="10px" -->
+    <section>
+      <h2 class="fw-bold p-3">{{title}}</h2>
+      <!-------------------------------------------
+      ---------------- EVALUATION FORM ------------
+      -------------------------------------------->
+      <form
+        autocomplete="off"
+        [formGroup]="evaluationFormGroup"
       >
-        <mat-card class="example-card" style="max-width: 700px;">
-          <mat-card-title
-            fxLayout="row"
-            fxLayoutGap="10px"
-            fxLayoutAlign="start center"
-          >
-            <div class="steps-circle">1</div>
-            <span class="fs-6 fw-bold">Configurar nueva evaluación</span>
-          </mat-card-title>
-          <mat-card-content>
-            <!-- Init values period -->
-            <section class="mt-3 mb-2">
-              <div>
-                <mat-checkbox
-                  formControlName="isEvaluationTest"
-                  color="primary"
-                >Crear como evaluación de Prueba</mat-checkbox>
-              </div>
-            </section>
-            <section
-              fxLayout.md="row"
-              fxLayout.lg="row"
-              fxLayout.xl="row"
-              fxLayout.sm="row"
-              fxLayout.xs="column"
-              fxLayoutGap="10px"
-            >
-              <mat-form-field
-                fxFlex.md="80"
-                fxFlex.lg="80"
-                fxFlex.xl="80"
-                fxFlex="100"
-                appearance="outline"
-              >
-                <mat-label>Nombre evaluación:</mat-label>
-                <input
-                  type="text"
-                  formControlName="name"
-                  autocomplete="off"
-                  maxlength="70"
-                  matInput
-                >
-                <mat-error *ngIf="controlsEvaluationForm['name'].hasError('required')">
-                  El nombre es <strong>requerido</strong>.
-                </mat-error>
-                <mat-error *ngIf="controlsEvaluationForm['name'].hasError('maxlength')">
-                  Se ha excedido el límite de caracteres
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field
-                fxFlex.md="20"
-                fxFlex.lg="20"
-                fxFlex.xl="20"
-                fxFlex="100"
-                appearance="outline"
-              >
-                <mat-label>Peso:</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  maxlength="70"
-                  autocomplete="off"
-                  formControlName="weight"
-                >
-                <mat-error *ngIf="controlsEvaluationForm['name'].hasError('required')">
-                  El peso es <strong>requerido</strong>.
-                </mat-error>
-              </mat-form-field>
-            </section>
-            <div
-              fxLayout.md="row"
-              fxLayout.lg="row"
-              fxLayout.xl="row"
-              fxLayout.xs="column"
-              fxLayoutGap="10px"
-            >
-              <div
-                fxFlex.md="50"
-                fxFlex.lg="50"
-                fxFlex.xl="50"
-                fxFlex="100"
-              >
-                <mat-form-field
-                  fxFill
-                  appearance="outline"
-                >
-                  <mat-label>Inicia</mat-label>
-                  <input
-                    matInput
-                    formControlName="startDate"
-                    [max]="maxDateEvaluation"
-                    [min]="minDateEvaluation"
-                    [matDatepicker]="dpEvaluationStartDate"
-                    >
-                  <mat-datepicker-toggle
-                    [for]="dpEvaluationStartDate"
-                    matSuffix
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker #dpEvaluationStartDate></mat-datepicker>
-                  <mat-error *ngIf="controlsEvaluationForm['startDate'].hasError('required')">
-                    La fecha inicia es <strong>requerido</strong>.
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div
-                fxFlex="100"
-                fxFlex.md="50"
-                fxFlex.lg="50"
-                fxFlex.xl="50"
-              >
-                <mat-form-field
-                  fxFill
-                  appearance="outline"
-                >
-                  <mat-label>Termina</mat-label>
-                  <input
-                    matInput
-                    formControlName="endDate"
-                    [min]="minDateEvaluation"
-                    [max]="maxDateEvaluation"
-                    [matDatepicker]="dpEvaluationEndDate"
-                    >
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="dpEvaluationEndDate">
-                  </mat-datepicker-toggle>
-                  <mat-datepicker #dpEvaluationEndDate></mat-datepicker>
-                  <mat-error *ngIf="controlsEvaluationForm['endDate'].hasError('required')">
-                    La fecha termina es <strong>requerido</strong>.
-                  </mat-error>
-                  <mat-error *ngIf="controlsEvaluationForm['endDate'].hasError('invalidDate')">
-                    La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
-                  </mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-            <!-- End values period -->
-
-            <!-- STAGES -->
-            <mat-accordion formArrayName="stages" multi #accordionEvaluation="matAccordion">
-              <ng-container *ngFor="let comp of controlsEvaluationStagesArr.controls; let i = index">
-                <mat-expansion-panel [formGroupName]="i">
-                  <mat-expansion-panel-header>
-                    <mat-panel-title
-                      fxLayout="row"
-                      fxLayoutGap="20px"
-                      fxLayoutAlign="start start"
-                    >
-                      <img src="/assets/images/star-objetivo.svg" alt="objetic star">
-                      <span class="fw-bolder fs-8">{{comp.get('title')?.getRawValue()}}</span>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <p class="text-muted">{{comp.get('description')?.getRawValue()}}</p>
-                  <div
-                    fxLayout.md="row"
-                    fxLayout.lg="row"
-                    fxLayout.xl="row"
-                    fxLayout.xs="column"
-                    fxLayoutGap="10px"
-                  >
-                    <div
-                      fxFlex.md="50"
-                      fxFlex.lg="50"
-                      fxFlex.xl="50"
-                      fxFlex="100"
-                    >
-                      <mat-form-field
-                        fxFill
-                        appearance="outline"
-                      >
-                        <mat-label>Inicia</mat-label>
-                        <input
-                          matInput
-                          formControlName="startDate"
-                          id="startDateEvaluation_{{i}}"
-                          [min]="minDateComponentsEvaluation"
-                          [max]="maxDateComponentsEvaluation"
-                          [matDatepicker]="dpEvaluationStageStartDate"
-                        >
-                        <mat-datepicker-toggle
-                          [for]="dpEvaluationStageStartDate"
-                          matSuffix
-                        ></mat-datepicker-toggle>
-                        <mat-datepicker #dpEvaluationStageStartDate></mat-datepicker>
-                        <mat-error *ngIf="controlsEvaluationForm['stages'].get([i])?.get('startDate')?.hasError('required')">
-                          La fecha inicia es <strong>requerido</strong>.
-                        </mat-error>
-                      </mat-form-field>
-                    </div>
-                    <div
-                      fxFlex.md="50"
-                      fxFlex.lg="50"
-                      fxFlex.xl="50"
-                      fxFlex="100"
-                    >
-                      <mat-form-field
-                        fxFill
-                        appearance="outline"
-                      >
-                      <mat-label>termina</mat-label>
-                      <input
-                        matInput
-                        formControlName="endDate"
-                        id="endDateEvaluation_{{i}}"
-                        [min]="minDateComponentsEvaluation"
-                        [max]="maxDateComponentsEvaluation"
-                        [matDatepicker]="dpEvaluationStageEndDate"
-                      >
-                      <mat-datepicker-toggle
-                        matSuffix
-                        [for]="dpEvaluationStageEndDate">
-                      </mat-datepicker-toggle>
-                      <mat-datepicker #dpEvaluationStageEndDate></mat-datepicker>
-                      <mat-error *ngIf="controlsEvaluationForm['stages'].get([i])?.get('endDate')?.hasError('required')">
-                        La fecha termina es <strong>requerido</strong>.
-                      </mat-error>
-                      </mat-form-field>
-                    </div>
-                  </div>
-                </mat-expansion-panel>
-              </ng-container>
-            </mat-accordion>
-            <!-- END STAGES -->
-
-            <!-- Components evaluation -->
-
-            <section formArrayName="components" class="my-3">
-              <div class="mb-3"><span class="fs-8 fw-bolder">Seleccionar componentes a evaluar</span></div>
-              <section *ngFor="let item of controlsComponentsArr.controls; let i = index">
-                <div fxLayout="row" fxLayoutAlign="center center" [formGroupName]="i">
-                  <div fxFlex="10"><img class="rounded-circle" src="{{item.get('img')?.getRawValue()}}" alt="objetics corp" width="40" height="40"></div>
-                  <div fxLayout="column" fxFlex="80">
-                    <span class="fs-10 fw-bolder">{{item.get('title')?.getRawValue()}}</span>
-                    <span class="fs-8 fw-lighter">{{item.get('subtitle')?.getRawValue()}}</span>
-                  </div>
-                  <div fxFlex fxFlex="10" fxLayoutAlign="center center">
-                    <mat-checkbox formControlName="checked" color="primary"></mat-checkbox>
-                  </div>
-                </div>
-                <mat-divider *ngIf="i < (controlsComponentsArr.controls.length - 1)" class="my-3"></mat-divider>
-              </section>
-            </section>
-
-            <!-- End components evaluation -->
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </form>
-    <!-------------------------------------------
-    -------------END EVALUATION FORM ------------
-    -------------------------------------------->
-
-    <!-------------------------------------------
-    ---------------- CORP GOALS FORM ------------
-    -------------------------------------------->
-    <form
-      autocomplete="off"
-      *ngIf="showConfigCorpGoals"
-      [formGroup]="corpGoalsFormGroup"
-    >
-      <div
-        class="p-3"
-        fxLayout="column"
-        fxLayoutGap="10px"
-      >
-        <mat-card class="example-card" style="max-width: 700px;">
-          <mat-card-title
-            fxLayout="row"
-            fxLayoutGap="10px"
-            fxLayoutAlign="start center"
-          >
-            <div class="steps-circle">2</div>
-            <span class="fs-6 fw-bold">Evaluar  Objetivos Corporativos</span>
-          </mat-card-title>
-          <br>
-          <mat-card-subtitle>
-            En esta sección podrás configurar la duración de este componente dentro del rango de fechas de periodo.
-          </mat-card-subtitle>
-          <mat-card-content>
-            <div
-              fxLayout.md="row"
-              fxLayout.lg="row"
-              fxLayout.xl="row"
-              fxLayout.xs="column"
-              fxLayoutGap="10px"
-            >
-              <div
-                fxFlex.md="50"
-                fxFlex.lg="50"
-                fxFlex.xl="50"
-                fxFlex="100"
-              >
-                <mat-form-field
-                  fxFill
-                  appearance="outline"
-                >
-                  <mat-label>Inicia</mat-label>
-                  <input
-                    matInput
-                    formControlName="startDate"
-                    [min]="minDateComponentsEvaluation"
-                    [max]="maxDateComponentsEvaluation"
-                    [matDatepicker]="dpCorpGoalsStartDate"
-                  >
-                  <mat-datepicker-toggle
-                    [for]="dpCorpGoalsStartDate"
-                    matSuffix
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker #dpCorpGoalsStartDate></mat-datepicker>
-                  <mat-error *ngIf="controlsCorpGoalsForm['startDate'].hasError('required')">
-                    La fecha inicia es <strong>requerido</strong>.
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div
-                fxFlex.md="50"
-                fxFlex.lg="50"
-                fxFlex.xl="50"
-                fxFlex="100"
-              >
-                <mat-form-field
-                  fxFill
-                  appearance="outline"
-                >
-                  <mat-label>Termina</mat-label>
-                  <input
-                    matInput
-                    formControlName="endDate"
-                    [min]="minDateComponentsEvaluation"
-                    [max]="maxDateComponentsEvaluation"
-                    [matDatepicker]="dpCorpGoalsEndDate"
-                  >
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="dpCorpGoalsEndDate">
-                  </mat-datepicker-toggle>
-                  <mat-datepicker #dpCorpGoalsEndDate></mat-datepicker>
-                  <mat-error *ngIf="controlsCorpGoalsForm['endDate'].hasError('required')">
-                    La fecha termina es <strong>requerido</strong>.
-                  </mat-error>
-                  <mat-error *ngIf="controlsCorpGoalsForm['endDate'].hasError('invalidDate')">
-                    La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
-                  </mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </form>
-    <!-------------------------------------------
-    --------------END CORP GOALS FORM -----------
-    -------------------------------------------->
-
-    <!-------------------------------------------
-    ---------------- AREA GOALS FORM ------------
-    -------------------------------------------->
-    <form
-      autocomplete="off"
-      *ngIf="showConfigAreaGoals"
-      [formGroup]="areaGoalsFormGroup"
-    >
-      <div
-        class="p-3"
-        fxLayout="column"
-        fxLayoutGap="10px"
-      >
-        <mat-card class="example-card" style="max-width: 700px;">
-          <mat-card-title
-            fxLayout="row"
-            fxLayoutGap="10px"
-            fxLayoutAlign="start center"
-          >
-            <div class="steps-circle">3</div>
-            <span class="fs-6 fw-bold">Evaluar Objetivos de Área (KPIs)</span>
-          </mat-card-title>
-          <br>
-          <mat-card-subtitle>
-            En esta sección podrás configurar la duración de este componente dentro del rango de fechas del periodo.
-          </mat-card-subtitle>
-          <mat-card-content>
-            <div
-              fxLayout.md="row"
-              fxLayout.lg="row"
-              fxLayout.xl="row"
-              fxLayout.xs="column"
-              fxLayoutGap="10px"
-            >
-              <div
-                fxFlex.md="50"
-                fxFlex.lg="50"
-                fxFlex.xl="50"
-                fxFlex="100"
-              >
-                <mat-form-field
-                  fxFill
-                  appearance="outline"
-                >
-                  <mat-label>Inicia</mat-label>
-                  <input
-                    matInput
-                    formControlName="startDate"
-                    [min]="minDateComponentsEvaluation"
-                    [max]="maxDateComponentsEvaluation"
-                    [matDatepicker]="dpAreaGoalsStartDate"
-                  >
-                  <mat-datepicker-toggle
-                    [for]="dpAreaGoalsStartDate"
-                    matSuffix
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker #dpAreaGoalsStartDate></mat-datepicker>
-                  <mat-error *ngIf="controlsAreaGoalsForm['startDate'].hasError('required')">
-                    La fecha inicia es <strong>requerido</strong>.
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div
-                fxFlex.md="50"
-                fxFlex.lg="50"
-                fxFlex.xl="50"
-                fxFlex="100"
-              >
-                <mat-form-field
-                  fxFill
-                  appearance="outline"
-                >
-                  <mat-label>termina</mat-label>
-                  <input
-                    matInput
-                    formControlName="endDate"
-                    [min]="minDateComponentsEvaluation"
-                    [max]="maxDateComponentsEvaluation"
-                    [matDatepicker]="dpAreaGoalsEndDate"
-                  >
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="dpAreaGoalsEndDate">
-                  </mat-datepicker-toggle>
-                  <mat-datepicker #dpAreaGoalsEndDate></mat-datepicker>
-                  <mat-error *ngIf="controlsAreaGoalsForm['endDate'].hasError('required')">
-                    La fecha termina es <strong>requerido</strong>.
-                  </mat-error>
-                  <mat-error *ngIf="controlsAreaGoalsForm['endDate'].hasError('invalidDate')">
-                    La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
-                  </mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </form>
-    <!-------------------------------------------
-    --------------END AREA GOALS FORM -----------
-    -------------------------------------------->
-
-    <!-------------------------------------------
-    --------------- COMPETENCES FORM ------------
-    -------------------------------------------->
-    <form
-      autocomplete="off"
-      *ngIf="showConfigCompetences"
-      [formGroup]="competencesFormGroup"
-    >
-      <div
-        class="p-3"
-        fxLayout="column"
-        fxLayoutGap="10px"
-        formArrayName="competences"
-      >
-        <mat-card class="example-card" style="max-width: 700px;">
-          <mat-card-title
-            fxLayout="row"
-            fxLayoutGap="10px"
-            fxLayoutAlign="start center"
-          >
-            <div class="steps-circle">4</div>
-            <span class="fs-6 fw-bold">Competencias</span>
-          </mat-card-title>
-          <br>
-          <span class="fw-bolder fs-6">Etapas de competencias</span>
-          <mat-card-content class="my-3">
-            <mat-accordion multi #accordionCompetences="matAccordion">
-              <ng-container *ngFor="let comp of controlsCompetencesArr.controls; let i = index">
-                <mat-expansion-panel [formGroupName]="i">
-                  <mat-expansion-panel-header>
-                    <mat-panel-title
-                      fxLayout="row"
-                      fxLayoutGap="20px"
-                      fxLayoutAlign="start start"
-                    >
-                      <img src="/assets/images/star-objetivo.svg" alt="objetic star">
-                      <span class="fw-bolder fs-8">{{comp.get('title')?.getRawValue()}}</span>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <p class="text-muted">{{comp.get('description')?.getRawValue()}}</p>
-                  <div
-                    fxLayout.md="row"
-                    fxLayout.lg="row"
-                    fxLayout.xl="row"
-                    fxLayout.xs="column"
-                    fxLayoutGap="10px"
-                  >
-                    <div
-                      fxFlex.md="50"
-                      fxFlex.lg="50"
-                      fxFlex.xl="50"
-                      fxFlex="100"
-                    >
-                      <mat-form-field
-                        fxFill
-                        appearance="outline"
-                      >
-                        <mat-label>Inicia</mat-label>
-                        <input
-                          matInput
-                          id="startDate_{{i}}"
-                          formControlName="startDate"
-                          [min]="minDateComponentsEvaluation"
-                          [max]="maxDateComponentsEvaluation"
-                          [matDatepicker]="dpCompetencesStartDate"
-                        >
-                        <mat-datepicker-toggle
-                          [for]="dpCompetencesStartDate"
-                          matSuffix
-                        ></mat-datepicker-toggle>
-                        <mat-datepicker #dpCompetencesStartDate></mat-datepicker>
-                        <mat-error *ngIf="controlsCompetencesForm['competences'].get([i])?.get('startDate')?.hasError('required')">
-                          La fecha inicia es <strong>requerido</strong>.
-                        </mat-error>
-                      </mat-form-field>
-                    </div>
-                    <div
-                      fxFlex.md="50"
-                      fxFlex.lg="50"
-                      fxFlex.xl="50"
-                      fxFlex="100"
-                    >
-                      <mat-form-field
-                        fxFill
-                        appearance="outline"
-                      >
-                      <mat-label>termina</mat-label>
-                      <input
-                        matInput
-                        id="endDate_{{i}}"
-                        formControlName="endDate"
-                        [min]="minDateComponentsEvaluation"
-                        [max]="maxDateComponentsEvaluation"
-                        [matDatepicker]="dpCompetencesEndDate"
-                      >
-                      <mat-datepicker-toggle
-                        matSuffix
-                        [for]="dpCompetencesEndDate">
-                      </mat-datepicker-toggle>
-                      <mat-datepicker #dpCompetencesEndDate></mat-datepicker>
-                      <mat-error *ngIf="controlsCompetencesForm['competences'].get([i])?.get('endDate')?.hasError('required')">
-                        La fecha termina es <strong>requerido</strong>.
-                      </mat-error>
-                      <mat-error *ngIf="controlsCompetencesForm['competences'].get([i])?.get('endDate')?.hasError('invalidDate')">
-                        La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
-                      </mat-error>
-                      </mat-form-field>
-                    </div>
-                  </div>
-                </mat-expansion-panel>
-              </ng-container>
-            </mat-accordion>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </form>
-    <!-------------------------------------------
-    --------------END COMPETENCES FORM ----------
-    -------------------------------------------->
-  </section>
-
-  <!-------------------------------------------
-  ---------------- CARD RESUME ----------------
-  -------------------------------------------->
-  <section fxLayout="column" style="max-width: 700px;" class="p-3" *ngIf="periodValues">
-    <mat-card>
-      <div fxLayout="column" fxLayoutAlign="center center" class="mb-2">
-        <mat-card-title class="fs-4 fw-bold">{{periodValues.name || ''}}</mat-card-title>
-        <mat-card-subtitle>
-          Desde el {{((periodValues.startDate || '') | date:'shortDate')}}
-          hasta el {{((periodValues.endDate || '') | date:'shortDate')}}
-        </mat-card-subtitle>
-      </div>
-      <mat-card-title class="fs-6 fw-bold">{{controlsEvaluationForm['name'].value || '[Nombre de la evaluación]'}}</mat-card-title>
-      <mat-card-title class="fs-6 fw-bolder">Peso: {{controlsEvaluationForm['weight'].value || '[Peso]'}}</mat-card-title>
-      <mat-card-subtitle>
-        Desde el {{(controlsEvaluationForm['startDate'].value | date:'shortDate') || '[Fecha inicia]'}}
-        hasta el {{(controlsEvaluationForm['endDate'].value | date:'shortDate') || '[Fecha termina]'}}
-      </mat-card-subtitle>
-      <mat-card-content *ngIf="showConfigCorpGoals || showConfigAreaGoals || showConfigCompetences">
-          <span class="fs-6 fw-bolder">Componentes seleccionados</span>
-
-          <app-resume-component *ngIf="showConfigCorpGoals"
-            [title]="'Objetivos corporativos'"
-            [dateStart]="controlsCorpGoalsForm['startDate'].value"
-            [dateEnd]="controlsCorpGoalsForm['endDate'].value"
-            [imageSRC]="'assets/images/objCorp.png'"
-          ></app-resume-component>
-
-          <app-resume-component *ngIf="showConfigAreaGoals"
-            [title]="'Objetivos de Área (KPIs)'"
-            [dateStart]="controlsAreaGoalsForm['startDate'].value"
-            [dateEnd]="controlsAreaGoalsForm['endDate'].value"
-            [imageSRC]="'/assets/images/group 1.png'"
-          ></app-resume-component>
-
-          <section *ngIf="showConfigCompetences">
-            <section class="resume-container" fxLayout="column">
-              <section
-                class="mb-3"
-                fxLayout="row"
-                fxLayoutGap="15px"
-                fxLayoutAlign="center center"
-              >
-                <div fxFlex="10"><img class="rounded-circle" src="/assets/images/comp.png" alt="image - competences" width="40" height="40"></div>
-                <div fxFlex="90"><span class="fs-8 fw-bolder">Competencias</span></div>
-              </section>
-              <section *ngFor="let item of controlsCompetencesArr.value">
-                <div
-                  class="mb-2"
-                  fxLayout="row"
-                  fxLayoutAlign="start center"
-                >
-                  <div fxFlex="10"></div>
-                  <div fxLayout="column" fxFlex="90">
-                    <span class="fs-8 fw-bolder">{{ item.title }}</span>
-                    <span class="fs-10 text-muted">
-                      Del {{ (item.startDate | date:'shortDate') || '[Fecha inicia]' }}
-                      al  {{ (item.endDate | date:'shortDate') || '[Fecha termina]' }}
-                    </span>
-                  </div>
-                </div>
-              </section>
-            </section>
-          </section>
-
-      </mat-card-content>
-
-      <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
-        <button
-          color="primary"
-          mat-raised-button
-          (click)="onClick()"
+        <div
+          class="p-3"
+          fxLayout="column"
+          fxLayoutGap="10px"
         >
-          Crear Evaluación
-        </button>
-      </mat-card-actions>
-    </mat-card>
+          <mat-card class="example-card" style="max-width: 700px;">
+            <mat-card-title
+              fxLayout="row"
+              fxLayoutGap="10px"
+              fxLayoutAlign="start center"
+            >
+              <div class="steps-circle">1</div>
+              <span class="fs-6 fw-bold">Configurar nueva evaluación</span>
+            </mat-card-title>
+            <mat-card-content>
+              <!-- Init values period -->
+              <section class="mt-3 mb-2">
+                <div>
+                  <mat-checkbox
+                    formControlName="isEvaluationTest"
+                    color="primary"
+                  >Crear como evaluación de Prueba</mat-checkbox>
+                </div>
+              </section>
+              <section
+                fxLayout.md="row"
+                fxLayout.lg="row"
+                fxLayout.xl="row"
+                fxLayout.sm="row"
+                fxLayout.xs="column"
+                fxLayoutGap="10px"
+              >
+                <mat-form-field
+                  fxFlex.md="80"
+                  fxFlex.lg="80"
+                  fxFlex.xl="80"
+                  fxFlex="100"
+                  appearance="outline"
+                >
+                  <mat-label>Nombre evaluación:</mat-label>
+                  <input
+                    type="text"
+                    formControlName="name"
+                    autocomplete="off"
+                    maxlength="70"
+                    matInput
+                  >
+                  <mat-error *ngIf="controlsEvaluationForm['name'].hasError('required')">
+                    El nombre es <strong>requerido</strong>.
+                  </mat-error>
+                  <mat-error *ngIf="controlsEvaluationForm['name'].hasError('maxlength')">
+                    Se ha excedido el límite de caracteres
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field
+                  fxFlex.md="20"
+                  fxFlex.lg="20"
+                  fxFlex.xl="20"
+                  fxFlex="100"
+                  appearance="outline"
+                >
+                  <mat-label>Peso:</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    maxlength="70"
+                    autocomplete="off"
+                    formControlName="weight"
+                  >
+                  <mat-error *ngIf="controlsEvaluationForm['name'].hasError('required')">
+                    El peso es <strong>requerido</strong>.
+                  </mat-error>
+                </mat-form-field>
+              </section>
+              <div
+                fxLayout.md="row"
+                fxLayout.lg="row"
+                fxLayout.xl="row"
+                fxLayout.xs="column"
+                fxLayoutGap="10px"
+              >
+                <div
+                  fxFlex.md="50"
+                  fxFlex.lg="50"
+                  fxFlex.xl="50"
+                  fxFlex="100"
+                >
+                  <mat-form-field
+                    fxFill
+                    appearance="outline"
+                  >
+                    <mat-label>Inicia</mat-label>
+                    <input
+                      matInput
+                      formControlName="startDate"
+                      [max]="maxDateEvaluation"
+                      [min]="minDateEvaluation"
+                      [matDatepicker]="dpEvaluationStartDate"
+                      >
+                    <mat-datepicker-toggle
+                      [for]="dpEvaluationStartDate"
+                      matSuffix
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #dpEvaluationStartDate></mat-datepicker>
+                    <mat-error *ngIf="controlsEvaluationForm['startDate'].hasError('required')">
+                      La fecha inicia es <strong>requerido</strong>.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div
+                  fxFlex="100"
+                  fxFlex.md="50"
+                  fxFlex.lg="50"
+                  fxFlex.xl="50"
+                >
+                  <mat-form-field
+                    fxFill
+                    appearance="outline"
+                  >
+                    <mat-label>Termina</mat-label>
+                    <input
+                      matInput
+                      formControlName="endDate"
+                      [min]="minDateEvaluation"
+                      [max]="maxDateEvaluation"
+                      [matDatepicker]="dpEvaluationEndDate"
+                      >
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="dpEvaluationEndDate">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #dpEvaluationEndDate></mat-datepicker>
+                    <mat-error *ngIf="controlsEvaluationForm['endDate'].hasError('required')">
+                      La fecha termina es <strong>requerido</strong>.
+                    </mat-error>
+                    <mat-error *ngIf="controlsEvaluationForm['endDate'].hasError('invalidDate')">
+                      La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <!-- End values period -->
+
+              <!-- STAGES -->
+              <mat-accordion formArrayName="stages" multi #accordionEvaluation="matAccordion">
+                <ng-container *ngFor="let comp of controlsEvaluationStagesArr.controls; let i = index">
+                  <mat-expansion-panel [formGroupName]="i">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title
+                        fxLayout="row"
+                        fxLayoutGap="20px"
+                        fxLayoutAlign="start start"
+                      >
+                        <img src="/assets/images/star-objetivo.svg" alt="objetic star">
+                        <span class="fw-bolder fs-8">{{comp.get('title')?.getRawValue()}}</span>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p class="text-muted">{{comp.get('description')?.getRawValue()}}</p>
+                    <div
+                      fxLayout.md="row"
+                      fxLayout.lg="row"
+                      fxLayout.xl="row"
+                      fxLayout.xs="column"
+                      fxLayoutGap="10px"
+                    >
+                      <div
+                        fxFlex.md="50"
+                        fxFlex.lg="50"
+                        fxFlex.xl="50"
+                        fxFlex="100"
+                      >
+                        <mat-form-field
+                          fxFill
+                          appearance="outline"
+                        >
+                          <mat-label>Inicia</mat-label>
+                          <input
+                            matInput
+                            formControlName="startDate"
+                            id="startDateEvaluation_{{i}}"
+                            [min]="minDateComponentsEvaluation"
+                            [max]="maxDateComponentsEvaluation"
+                            [matDatepicker]="dpEvaluationStageStartDate"
+                          >
+                          <mat-datepicker-toggle
+                            [for]="dpEvaluationStageStartDate"
+                            matSuffix
+                          ></mat-datepicker-toggle>
+                          <mat-datepicker #dpEvaluationStageStartDate></mat-datepicker>
+                          <mat-error *ngIf="controlsEvaluationForm['stages'].get([i])?.get('startDate')?.hasError('required')">
+                            La fecha inicia es <strong>requerido</strong>.
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div
+                        fxFlex.md="50"
+                        fxFlex.lg="50"
+                        fxFlex.xl="50"
+                        fxFlex="100"
+                      >
+                        <mat-form-field
+                          fxFill
+                          appearance="outline"
+                        >
+                        <mat-label>termina</mat-label>
+                        <input
+                          matInput
+                          formControlName="endDate"
+                          id="endDateEvaluation_{{i}}"
+                          [min]="minDateComponentsEvaluation"
+                          [max]="maxDateComponentsEvaluation"
+                          [matDatepicker]="dpEvaluationStageEndDate"
+                        >
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="dpEvaluationStageEndDate">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #dpEvaluationStageEndDate></mat-datepicker>
+                        <mat-error *ngIf="controlsEvaluationForm['stages'].get([i])?.get('endDate')?.hasError('required')">
+                          La fecha termina es <strong>requerido</strong>.
+                        </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </ng-container>
+              </mat-accordion>
+              <!-- END STAGES -->
+
+              <!-- Components evaluation -->
+
+              <section formArrayName="components" class="my-3">
+                <div class="mb-3"><span class="fs-8 fw-bolder">Seleccionar componentes a evaluar</span></div>
+                <section *ngFor="let item of controlsComponentsArr.controls; let i = index">
+                  <div fxLayout="row" fxLayoutAlign="center center" [formGroupName]="i">
+                    <div fxFlex="10"><img class="rounded-circle" src="{{item.get('img')?.getRawValue()}}" alt="objetics corp" width="40" height="40"></div>
+                    <div fxLayout="column" fxFlex="80">
+                      <span class="fs-10 fw-bolder">{{item.get('title')?.getRawValue()}}</span>
+                      <span class="fs-8 fw-lighter">{{item.get('subtitle')?.getRawValue()}}</span>
+                    </div>
+                    <div fxFlex fxFlex="10" fxLayoutAlign="center center">
+                      <mat-checkbox formControlName="checked" color="primary"></mat-checkbox>
+                    </div>
+                  </div>
+                  <mat-divider *ngIf="i < (controlsComponentsArr.controls.length - 1)" class="my-3"></mat-divider>
+                </section>
+              </section>
+
+              <!-- End components evaluation -->
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </form>
+      <!-------------------------------------------
+      -------------END EVALUATION FORM ------------
+      -------------------------------------------->
+
+      <!-------------------------------------------
+      ---------------- CORP GOALS FORM ------------
+      -------------------------------------------->
+      <form
+        autocomplete="off"
+        *ngIf="showConfigCorpGoals"
+        [formGroup]="corpGoalsFormGroup"
+      >
+        <div
+          class="p-3"
+          fxLayout="column"
+          fxLayoutGap="10px"
+        >
+          <mat-card class="example-card" style="max-width: 700px;">
+            <mat-card-title
+              fxLayout="row"
+              fxLayoutGap="10px"
+              fxLayoutAlign="start center"
+            >
+              <div class="steps-circle">2</div>
+              <span class="fs-6 fw-bold">Evaluar  Objetivos Corporativos</span>
+            </mat-card-title>
+            <br>
+            <mat-card-subtitle>
+              En esta sección podrás configurar la duración de este componente dentro del rango de fechas de periodo.
+            </mat-card-subtitle>
+            <mat-card-content>
+              <div
+                fxLayout.md="row"
+                fxLayout.lg="row"
+                fxLayout.xl="row"
+                fxLayout.xs="column"
+                fxLayoutGap="10px"
+              >
+                <div
+                  fxFlex.md="50"
+                  fxFlex.lg="50"
+                  fxFlex.xl="50"
+                  fxFlex="100"
+                >
+                  <mat-form-field
+                    fxFill
+                    appearance="outline"
+                  >
+                    <mat-label>Inicia</mat-label>
+                    <input
+                      matInput
+                      formControlName="startDate"
+                      [min]="minDateComponentsEvaluation"
+                      [max]="maxDateComponentsEvaluation"
+                      [matDatepicker]="dpCorpGoalsStartDate"
+                    >
+                    <mat-datepicker-toggle
+                      [for]="dpCorpGoalsStartDate"
+                      matSuffix
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #dpCorpGoalsStartDate></mat-datepicker>
+                    <mat-error *ngIf="controlsCorpGoalsForm['startDate'].hasError('required')">
+                      La fecha inicia es <strong>requerido</strong>.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div
+                  fxFlex.md="50"
+                  fxFlex.lg="50"
+                  fxFlex.xl="50"
+                  fxFlex="100"
+                >
+                  <mat-form-field
+                    fxFill
+                    appearance="outline"
+                  >
+                    <mat-label>Termina</mat-label>
+                    <input
+                      matInput
+                      formControlName="endDate"
+                      [min]="minDateComponentsEvaluation"
+                      [max]="maxDateComponentsEvaluation"
+                      [matDatepicker]="dpCorpGoalsEndDate"
+                    >
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="dpCorpGoalsEndDate">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #dpCorpGoalsEndDate></mat-datepicker>
+                    <mat-error *ngIf="controlsCorpGoalsForm['endDate'].hasError('required')">
+                      La fecha termina es <strong>requerido</strong>.
+                    </mat-error>
+                    <mat-error *ngIf="controlsCorpGoalsForm['endDate'].hasError('invalidDate')">
+                      La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </form>
+      <!-------------------------------------------
+      --------------END CORP GOALS FORM -----------
+      -------------------------------------------->
+
+      <!-------------------------------------------
+      ---------------- AREA GOALS FORM ------------
+      -------------------------------------------->
+      <form
+        autocomplete="off"
+        *ngIf="showConfigAreaGoals"
+        [formGroup]="areaGoalsFormGroup"
+      >
+        <div
+          class="p-3"
+          fxLayout="column"
+          fxLayoutGap="10px"
+        >
+          <mat-card class="example-card" style="max-width: 700px;">
+            <mat-card-title
+              fxLayout="row"
+              fxLayoutGap="10px"
+              fxLayoutAlign="start center"
+            >
+              <div class="steps-circle">3</div>
+              <span class="fs-6 fw-bold">Evaluar Objetivos de Área (KPIs)</span>
+            </mat-card-title>
+            <br>
+            <mat-card-subtitle>
+              En esta sección podrás configurar la duración de este componente dentro del rango de fechas del periodo.
+            </mat-card-subtitle>
+            <mat-card-content>
+              <div
+                fxLayout.md="row"
+                fxLayout.lg="row"
+                fxLayout.xl="row"
+                fxLayout.xs="column"
+                fxLayoutGap="10px"
+              >
+                <div
+                  fxFlex.md="50"
+                  fxFlex.lg="50"
+                  fxFlex.xl="50"
+                  fxFlex="100"
+                >
+                  <mat-form-field
+                    fxFill
+                    appearance="outline"
+                  >
+                    <mat-label>Inicia</mat-label>
+                    <input
+                      matInput
+                      formControlName="startDate"
+                      [min]="minDateComponentsEvaluation"
+                      [max]="maxDateComponentsEvaluation"
+                      [matDatepicker]="dpAreaGoalsStartDate"
+                    >
+                    <mat-datepicker-toggle
+                      [for]="dpAreaGoalsStartDate"
+                      matSuffix
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #dpAreaGoalsStartDate></mat-datepicker>
+                    <mat-error *ngIf="controlsAreaGoalsForm['startDate'].hasError('required')">
+                      La fecha inicia es <strong>requerido</strong>.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div
+                  fxFlex.md="50"
+                  fxFlex.lg="50"
+                  fxFlex.xl="50"
+                  fxFlex="100"
+                >
+                  <mat-form-field
+                    fxFill
+                    appearance="outline"
+                  >
+                    <mat-label>termina</mat-label>
+                    <input
+                      matInput
+                      formControlName="endDate"
+                      [min]="minDateComponentsEvaluation"
+                      [max]="maxDateComponentsEvaluation"
+                      [matDatepicker]="dpAreaGoalsEndDate"
+                    >
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="dpAreaGoalsEndDate">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #dpAreaGoalsEndDate></mat-datepicker>
+                    <mat-error *ngIf="controlsAreaGoalsForm['endDate'].hasError('required')">
+                      La fecha termina es <strong>requerido</strong>.
+                    </mat-error>
+                    <mat-error *ngIf="controlsAreaGoalsForm['endDate'].hasError('invalidDate')">
+                      La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </form>
+      <!-------------------------------------------
+      --------------END AREA GOALS FORM -----------
+      -------------------------------------------->
+
+      <!-------------------------------------------
+      --------------- COMPETENCES FORM ------------
+      -------------------------------------------->
+      <form
+        autocomplete="off"
+        *ngIf="showConfigCompetences"
+        [formGroup]="competencesFormGroup"
+      >
+        <div
+          class="p-3"
+          fxLayout="column"
+          fxLayoutGap="10px"
+          formArrayName="competences"
+        >
+          <mat-card class="example-card" style="max-width: 700px;">
+            <mat-card-title
+              fxLayout="row"
+              fxLayoutGap="10px"
+              fxLayoutAlign="start center"
+            >
+              <div class="steps-circle">4</div>
+              <span class="fs-6 fw-bold">Competencias</span>
+            </mat-card-title>
+            <br>
+            <span class="fw-bolder fs-6">Etapas de competencias</span>
+            <mat-card-content class="my-3">
+              <mat-accordion multi #accordionCompetences="matAccordion">
+                <ng-container *ngFor="let comp of controlsCompetencesArr.controls; let i = index">
+                  <mat-expansion-panel [formGroupName]="i">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title
+                        fxLayout="row"
+                        fxLayoutGap="20px"
+                        fxLayoutAlign="start start"
+                      >
+                        <img src="/assets/images/star-objetivo.svg" alt="objetic star">
+                        <span class="fw-bolder fs-8">{{comp.get('title')?.getRawValue()}}</span>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p class="text-muted">{{comp.get('description')?.getRawValue()}}</p>
+                    <div
+                      fxLayout.md="row"
+                      fxLayout.lg="row"
+                      fxLayout.xl="row"
+                      fxLayout.xs="column"
+                      fxLayoutGap="10px"
+                    >
+                      <div
+                        fxFlex.md="50"
+                        fxFlex.lg="50"
+                        fxFlex.xl="50"
+                        fxFlex="100"
+                      >
+                        <mat-form-field
+                          fxFill
+                          appearance="outline"
+                        >
+                          <mat-label>Inicia</mat-label>
+                          <input
+                            matInput
+                            id="startDate_{{i}}"
+                            formControlName="startDate"
+                            [min]="minDateComponentsEvaluation"
+                            [max]="maxDateComponentsEvaluation"
+                            [matDatepicker]="dpCompetencesStartDate"
+                          >
+                          <mat-datepicker-toggle
+                            [for]="dpCompetencesStartDate"
+                            matSuffix
+                          ></mat-datepicker-toggle>
+                          <mat-datepicker #dpCompetencesStartDate></mat-datepicker>
+                          <mat-error *ngIf="controlsCompetencesForm['competences'].get([i])?.get('startDate')?.hasError('required')">
+                            La fecha inicia es <strong>requerido</strong>.
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div
+                        fxFlex.md="50"
+                        fxFlex.lg="50"
+                        fxFlex.xl="50"
+                        fxFlex="100"
+                      >
+                        <mat-form-field
+                          fxFill
+                          appearance="outline"
+                        >
+                        <mat-label>termina</mat-label>
+                        <input
+                          matInput
+                          id="endDate_{{i}}"
+                          formControlName="endDate"
+                          [min]="minDateComponentsEvaluation"
+                          [max]="maxDateComponentsEvaluation"
+                          [matDatepicker]="dpCompetencesEndDate"
+                        >
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="dpCompetencesEndDate">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #dpCompetencesEndDate></mat-datepicker>
+                        <mat-error *ngIf="controlsCompetencesForm['competences'].get([i])?.get('endDate')?.hasError('required')">
+                          La fecha termina es <strong>requerido</strong>.
+                        </mat-error>
+                        <mat-error *ngIf="controlsCompetencesForm['competences'].get([i])?.get('endDate')?.hasError('invalidDate')">
+                          La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
+                        </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </ng-container>
+              </mat-accordion>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </form>
+      <!-------------------------------------------
+      --------------END COMPETENCES FORM ----------
+      -------------------------------------------->
+    </section>
+
+    <!-------------------------------------------
+    ---------------- CARD RESUME ----------------
+    -------------------------------------------->
+    <section fxLayout="column" style="max-width: 700px;" class="p-3" *ngIf="periodValues">
+      <mat-card>
+        <div fxLayout="column" fxLayoutAlign="center center" class="mb-2">
+          <mat-card-title class="fs-4 fw-bold">{{periodValues.name || ''}}</mat-card-title>
+          <mat-card-subtitle>
+            Desde el {{((periodValues.startDate || '') | date:'shortDate')}}
+            hasta el {{((periodValues.endDate || '') | date:'shortDate')}}
+          </mat-card-subtitle>
+        </div>
+        <mat-card-title class="fs-6 fw-bold">{{controlsEvaluationForm['name'].value || '[Nombre de la evaluación]'}}</mat-card-title>
+        <mat-card-title class="fs-6 fw-bolder">Peso: {{controlsEvaluationForm['weight'].value || '[Peso]'}}</mat-card-title>
+        <mat-card-subtitle>
+          Desde el {{(controlsEvaluationForm['startDate'].value | date:'shortDate') || '[Fecha inicia]'}}
+          hasta el {{(controlsEvaluationForm['endDate'].value | date:'shortDate') || '[Fecha termina]'}}
+        </mat-card-subtitle>
+        <mat-card-content *ngIf="showConfigCorpGoals || showConfigAreaGoals || showConfigCompetences">
+            <span class="fs-6 fw-bolder">Componentes seleccionados</span>
+
+            <app-resume-component *ngIf="showConfigCorpGoals"
+              [title]="'Objetivos corporativos'"
+              [dateStart]="controlsCorpGoalsForm['startDate'].value"
+              [dateEnd]="controlsCorpGoalsForm['endDate'].value"
+              [imageSRC]="'assets/images/objCorp.png'"
+            ></app-resume-component>
+
+            <app-resume-component *ngIf="showConfigAreaGoals"
+              [title]="'Objetivos de Área (KPIs)'"
+              [dateStart]="controlsAreaGoalsForm['startDate'].value"
+              [dateEnd]="controlsAreaGoalsForm['endDate'].value"
+              [imageSRC]="'/assets/images/group 1.png'"
+            ></app-resume-component>
+
+            <section *ngIf="showConfigCompetences">
+              <section class="resume-container" fxLayout="column">
+                <section
+                  class="mb-3"
+                  fxLayout="row"
+                  fxLayoutGap="15px"
+                  fxLayoutAlign="center center"
+                >
+                  <div fxFlex="10"><img class="rounded-circle" src="/assets/images/comp.png" alt="image - competences" width="40" height="40"></div>
+                  <div fxFlex="90"><span class="fs-8 fw-bolder">Competencias</span></div>
+                </section>
+                <section *ngFor="let item of controlsCompetencesArr.value">
+                  <div
+                    class="mb-2"
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                  >
+                    <div fxFlex="10"></div>
+                    <div fxLayout="column" fxFlex="90">
+                      <span class="fs-8 fw-bolder">{{ item.title }}</span>
+                      <span class="fs-10 text-muted">
+                        Del {{ (item.startDate | date:'shortDate') || '[Fecha inicia]' }}
+                        al  {{ (item.endDate | date:'shortDate') || '[Fecha termina]' }}
+                      </span>
+                    </div>
+                  </div>
+                </section>
+              </section>
+            </section>
+
+        </mat-card-content>
+
+        <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+          <button
+            color="primary"
+            mat-raised-button
+            (click)="onClick()"
+          >
+            Crear Evaluación
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </section>
+    <!-------------------------------------------
+    -------------- END CARD RESUME --------------
+    -------------------------------------------->
   </section>
-  <!-------------------------------------------
-  -------------- END CARD RESUME --------------
-  -------------------------------------------->
-</section>
+</mat-card>

@@ -30,7 +30,10 @@
       "@modules/*": ["src/app/modules/*"],
       "@services/*": ["src/app/services/*"],
       "@components/*": ["src/app/components/*"]
-    }
+    },
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
 
   "angularCompilerOptions": {

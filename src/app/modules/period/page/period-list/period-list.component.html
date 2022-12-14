@@ -1,77 +1,79 @@
-<div
-  fxLayout="row"
-  fxLayoutAlign.xs="center center"
-  fxLayoutAlign.sm="center center"
-  fxLayoutAlign.md="end center"
-  fxLayoutAlign.lg="end center"
-  fxLayoutAlign.xl="end center"
-  class="my-sm-3 my-md-0"
->
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="goToNewPeriod()"
+<mat-card>
+  <div
+    fxLayout="row"
+    fxLayoutAlign.xs="center center"
+    fxLayoutAlign.sm="center center"
+    fxLayoutAlign.md="end center"
+    fxLayoutAlign.lg="end center"
+    fxLayoutAlign.xl="end center"
+    class="my-sm-3 my-md-0"
   >
-  Nuevo Periodo
-  </button>
-</div>
-<app-table
-  [listColumns]="columnsTable"
-  [behavior]="paginatedBehavior"
-  [paginated]="periodPaginated$"
-  [templateColumnsContent]="columnContent"
->
-  <ng-template
-    #columnContent
-    let-column='column'
-    let-element='element'
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="goToNewPeriod()"
+    >
+    Nuevo Periodo
+    </button>
+  </div>
+  <app-table
+    [listColumns]="columnsTable"
+    [behavior]="paginatedBehavior"
+    [paginated]="periodPaginated$"
+    [templateColumnsContent]="columnContent"
   >
-    <div [ngSwitch]="column.columnMatch">
-      <div
-        fxLayout="row"
-        fxLayoutGap="10px"
-        *ngSwitchCase="'actions'"
-      >
-        <button
-          mat-mini-fab
-          type="button"
-          color="primary"
-          matTooltipPosition="left"
-          matTooltip="Ver evaluación"
-          (click)="goEvaluation(element)"
+    <ng-template
+      #columnContent
+      let-column='column'
+      let-element='element'
+    >
+      <div [ngSwitch]="column.columnMatch">
+        <div
+          fxLayout="row"
+          fxLayoutGap="10px"
+          *ngSwitchCase="'actions'"
         >
-          <mat-icon>visibility</mat-icon>
-        </button>
-        <button
-          mat-mini-fab
-          color="primary"
-          matTooltip="Editar"
-          matTooltipPosition="left"
-          type="button"
-          (click)="editPeriod(element.id)"
-        >
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button
-          mat-mini-fab
-          color="warn"
-          matTooltip="Eliminar"
-          matTooltipPosition="left"
-          type="button"
-          (click)="confirmDeleted(element.id)"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
+          <button
+            mat-mini-fab
+            type="button"
+            color="primary"
+            matTooltipPosition="left"
+            matTooltip="Ver evaluación"
+            (click)="goEvaluation(element)"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button
+            mat-mini-fab
+            color="primary"
+            matTooltip="Editar"
+            matTooltipPosition="left"
+            type="button"
+            (click)="editPeriod(element.id)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-mini-fab
+            color="warn"
+            matTooltip="Eliminar"
+            matTooltipPosition="left"
+            type="button"
+            (click)="confirmDeleted(element.id)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        <div *ngSwitchCase="'startDate'">
+          {{ element[column.columnMatch] | date: 'mediumDate' }}
+        </div>
+        <div *ngSwitchCase="'endDate'">
+          {{ element[column.columnMatch] | date: 'mediumDate' }}
+        </div>
+        <div *ngSwitchDefault>
+          {{ element[column.columnMatch] }}
+        </div>
       </div>
-      <div *ngSwitchCase="'startDate'">
-        {{ element[column.columnMatch] | date: 'mediumDate' }}
-      </div>
-      <div *ngSwitchCase="'endDate'">
-        {{ element[column.columnMatch] | date: 'mediumDate' }}
-      </div>
-      <div *ngSwitchDefault>
-        {{ element[column.columnMatch] }}
-      </div>
-    </div>
-  </ng-template>
-</app-table>
+    </ng-template>
+  </app-table>
+</mat-card>
