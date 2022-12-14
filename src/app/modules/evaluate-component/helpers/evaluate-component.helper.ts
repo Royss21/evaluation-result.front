@@ -1,7 +1,7 @@
 import { IElementRowTable } from "@components/table/interfaces/table.interface";
 import { ElementRowTable } from "@components/table/models/table.model";
 
-export class EvaluateComponentHelper{
+export class EvaluateComponentHelper {
     static columnsTable: IElementRowTable[] =  [
       new ElementRowTable('collaboratorName','Colaborador', true),
       new ElementRowTable('documentNumber','Documento' , true),
@@ -16,7 +16,7 @@ export class EvaluateComponentHelper{
 }
 
 
-export class EvaluateComponentText{
+export class EvaluateComponentText {
 
   static titleCorporateObjectives = 'Listado de colaboradores de Objetivos Corporativos';
   static titleAreaObjectives = 'Listado de colaboradores de Objetivos de Area'; 

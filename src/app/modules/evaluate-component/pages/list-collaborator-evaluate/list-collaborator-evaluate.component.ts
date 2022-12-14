@@ -77,6 +77,15 @@ export class ListCollaboratorEvaluateComponent implements OnInit {
       });
   }
 
+  evaluate(){
+    if(this._componentId == ConstantsGeneral.components.corporateObjectives)
+      console.log('acaa');
+    else if(this._componentId == ConstantsGeneral.components.areaObjectives)
+      console.log('acaa');
+    else if(this._componentId == ConstantsGeneral.components.competencies)
+      console.log('acaa');
+  } 
+
   ngOnDestroy(): void {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
