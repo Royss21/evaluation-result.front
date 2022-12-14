@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
@@ -17,17 +18,19 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 export class EvaluationCollaboratorListComponent implements OnInit {
 
   private unsubscribe$ = new Subject<any>();
-
+  private _evaluationId: string = '';
   evaluationCollaboratorPaginated$: Observable<any>;
   paginated$: Observable<any>;
   evaluationCollaboratorPaginatedBehavior: BehaviorSubject<any>;
   paginatedBehavior: BehaviorSubject<any>;
   columnsTable: IElementRowTable[];
   paginatedFilterCurrent: IPaginatedFilter;
+  
 
   constructor(
     public _dialog: MatDialog,
     private _evaluationCollaboratorService: EvaluationCollaboratorService,
+    private _route: ActivatedRoute
   ){
     this.evaluationCollaboratorPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
@@ -35,15 +38,16 @@ export class EvaluationCollaboratorListComponent implements OnInit {
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = EvaluationCollaboratorHelper.columnsTable;
   }
+
   ngOnInit(): void {
-    
+    this._route.params.subscribe(params => this._evaluationId = params['evaluationId']);
   }
   
   ngAfterContentInit() {
-    this.callPaginated();
+    this._callPaginated();
   }
 
-  private callPaginated(): void {
+  private _callPaginated(): void {
     this.paginated$
       .subscribe((paginatedFilter: IPaginatedFilter) => {
         if(paginatedFilter){
@@ -54,7 +58,7 @@ export class EvaluationCollaboratorListComponent implements OnInit {
       });
   }
 
-  private delete(id:string): void{
+  private _delete(id:string): void{
     this._evaluationCollaboratorService
       .delete(id)
       .subscribe(() => {
@@ -67,7 +71,7 @@ export class EvaluationCollaboratorListComponent implements OnInit {
 
     const modalRegsiterCollaborator = this._dialog.open(RegisterCollaboratorModalComponent, {
       disableClose: true,
-      data: 'DEF6B939-A6D1-41B0-8BF5-B5994550EDE3',
+      data: this._evaluationId,
       autoFocus: false,
       restoreFocus: false
     });
@@ -85,7 +89,7 @@ export class EvaluationCollaboratorListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) this.delete(id);
+      if (result) this._delete(id);
     });
   }
 

@@ -62,8 +62,9 @@ export class LeaderImportModalComponent implements OnInit {
     this._modalRef.close();
   }
 
-  changeTypeImport(event: any){
-    const componentId = event.currentTarget.value == 0 
+  changeTypeImport(typeImportLeaders: number){
+    console.log(this.leaderImportFormGroup.controls["typeImportLeaders"].value)
+    const componentId = typeImportLeaders == 0 
       ? ConstantsGeneral.components.areaObjectives 
       : ConstantsGeneral.components.competencies;
       

@@ -1,0 +1,54 @@
+<div fxLayout="row" >
+  <h2 class="fw-bold">{{title}}</h2>
+</div>
+
+<app-table
+  [listColumns]="columnsTable"
+  [behavior]="paginatedBehavior"
+  [paginated]="evaluateComponentPaginated$"
+  [templateColumnsContent]="columnContent"
+>
+  <ng-template
+    #columnContent
+    let-column='column'
+    let-element='element'
+  >
+    <div [ngSwitch]="column.columnMatch">
+      <div
+        fxLayout="row"
+        fxLayoutGap="10px"
+        *ngSwitchCase="'actions'"
+      >
+        <button
+          mat-mini-fab
+          color="primary"
+          type="button"
+          class="btn-action-xs"
+        >
+          <mat-icon>remove_red_eye</mat-icon>
+        </button>
+      </div>
+      <div
+        fxLayout="row"
+        fxLayoutGap="10px"
+        *ngSwitchCase="'statusId'"
+      >
+          <mat-chip-list>
+            <mat-chip 
+              [class]="{
+                'status-color-create': element[column.columnMatch] === 2,
+                'status-color-pending': element[column.columnMatch] === 3,
+                'status-color-inprogress': element[column.columnMatch] === 4,
+                'status-color-completed': element[column.columnMatch] === 5,
+                'status-color-finalized': element[column.columnMatch] === 6
+              }">
+                {{ status[element[column.columnMatch]] }}
+            </mat-chip>
+        </mat-chip-list>
+      </div>
+      <div *ngSwitchDefault>
+        {{ element[column.columnMatch] }}
+      </div>
+    </div>
+  </ng-template>
+</app-table>

@@ -3,15 +3,15 @@ import { ElementRowTable } from "@components/table/models/table.model";
 
 export class EvaluationCollaboratorHelper{
     static columnsTable: IElementRowTable[] =  [
-      new ElementRowTable('collaboratorName','Colaborador'),
-      new ElementRowTable('documentNumber','Documento'),
-      new ElementRowTable('chargeName','Cargo'),
-      new ElementRowTable('areaName','Area'),
-      new ElementRowTable('gerencyName','Gerencia'),
-      new ElementRowTable('hierarchyName','Jerarquia'),
-      new ElementRowTable('levelName','Nivel'),
-      new ElementRowTable('isLeaderCompetencies','Evalua Comp.'),
-      new ElementRowTable('isLeaderAreaObjectives','Evalua Obj. Area.'),
+      new ElementRowTable('collaboratorName','Colaborador', true),
+      new ElementRowTable('documentNumber','Documento' , true),
+      new ElementRowTable('chargeName','Cargo', true),
+      new ElementRowTable('areaName','Area' , true ),
+      new ElementRowTable('gerencyName','Gerencia' , true),
+      new ElementRowTable('hierarchyName','Jerarquia' , true),
+      new ElementRowTable('levelName','Nivel' , true),
+      new ElementRowTable('isLeaderCompetencies','Evalua Comp.' , true),
+      new ElementRowTable('isLeaderAreaObjectives','Evalua Obj. Area.' , true),
       new ElementRowTable('actions','Acciones'),
     ];
 }

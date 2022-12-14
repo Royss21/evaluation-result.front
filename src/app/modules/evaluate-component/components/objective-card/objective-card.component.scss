@@ -1,0 +1,26 @@
+.objective{
+
+  // &-card{
+  //   display:flex;
+  //   border: 1px solid black;
+  //   border-radius: 5px;
+  // }
+
+  // &-icon{
+  //   display:flex;
+  //   align-items:center;
+  //   padding: 5px;
+  // }
+
+  // &-info{
+  //   width:150px;
+  // }
+
+  padding: 10px;
+  background-color: rgb(240, 238, 238);
+  border-radius: 5px;
+
+  &-info{
+    padding: 0 10px; 
+  }
+}

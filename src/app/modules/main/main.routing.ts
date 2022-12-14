@@ -27,12 +27,16 @@ export const roots: Routes = [
         loadChildren: () => import('../configuration/configuration.module').then( m => m.ConfigurationModule )
       },
       {
-        path:'evaluation/leader',
+        path:'evaluation/:evaluationId/leader',
         loadChildren: () => import('../evaluation-leader/leader.module').then( m => m.LeaderModule )
       },
       {
-        path:'evaluation/collaborator',
+        path:'evaluation/:evaluationId/collaborator',
         loadChildren: () => import('../evaluation-collaborator/evaluation-collaborator.module').then( m => m.EvaluationCollaboratorModule )
+      },
+      {
+        path:'evaluation/:evaluationId/evaluate-component/:componentId',
+        loadChildren: () => import('../evaluate-component/evaluate.module').then( m => m.EvaluateComponentModule )
       },
       // {
       //   path:'security',

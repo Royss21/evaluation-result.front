@@ -45,7 +45,7 @@ export class LeaderService {
   }
 
   importLeader(request: ILeaderImport): Observable<any> {
-    return this._apiService.post(`${this.url}/import-file-leader`, request, true)
+    return this._apiService.post(`${this.url}/import-leaders`, request, true)
   }
 
   update(request: IEvaluationLeader): Observable<boolean> {
