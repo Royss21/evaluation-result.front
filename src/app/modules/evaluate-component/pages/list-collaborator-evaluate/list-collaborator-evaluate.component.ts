@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { ComponentCollaboratorService } from '@core/services/component-collaborator/component-collaborator.service';
-import { EvaluationCollaboratorService } from '@core/services/evaluation-collaborator/evaluation-collaborator.service';
 import { EvaluateComponentHelper, EvaluateComponentText } from '@modules/evaluate-component/helpers/evaluate-component.helper';
-import { IComponentCollaboratorFilter } from '@modules/evaluate-component/interfaces/evaluation-collaborator-evaluate-filter.interface';
+import { IComponentCollaboratorFilter } from '@modules/evaluate-component/interfaces/component-collaborator-filter.interface';
+import { IComponentCollaboratorPaged } from '@modules/evaluate-component/interfaces/component-collaborator-paged.interface';
 import { ConstantsGeneral } from '@shared/constants';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
@@ -33,7 +32,8 @@ export class ListCollaboratorEvaluateComponent implements OnInit {
   constructor(
     public _dialog: MatDialog,
     private _componentCollaboratorService: ComponentCollaboratorService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _router: Router
   ){
     this.evaluateComponentPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
@@ -77,13 +77,18 @@ export class ListCollaboratorEvaluateComponent implements OnInit {
       });
   }
 
-  evaluate(){
+  evaluate(componentCollaborator: IComponentCollaboratorPaged){
+
+    let routeChild = '';
+
     if(this._componentId == ConstantsGeneral.components.corporateObjectives)
-      console.log('acaa');
+      routeChild = 'corporate-objectives';
     else if(this._componentId == ConstantsGeneral.components.areaObjectives)
-      console.log('acaa');
+      routeChild = 'area-objectives';
     else if(this._componentId == ConstantsGeneral.components.competencies)
-      console.log('acaa');
+      routeChild = 'competencies';
+
+    this._router.navigate([routeChild, componentCollaborator.id], {relativeTo: this._route})
   } 
 
   ngOnDestroy(): void {
