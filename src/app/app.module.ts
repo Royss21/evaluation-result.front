@@ -20,6 +20,7 @@ import { PopupChooseComponent } from './components/popup-choose/popup-choose.com
 import { PopupConfirmComponent } from './components/popup-confirm/popup-confirm.component';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { CorporateObjectivesComponent } from './modules/corporate-objectives/corporate-objectives.component';
+import { CollaboratorListComponent } from './modules/maintenance/maintenance-collaborator/collaborator-list/collaborator-list.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { CorporateObjectivesComponent } from './modules/corporate-objectives/cor
     PopupChooseComponent,
     PopupConfirmComponent,
     CorporateObjectivesComponent,
+    CollaboratorListComponent,
   ],
   imports: [
     BrowserModule,
