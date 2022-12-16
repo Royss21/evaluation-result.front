@@ -21,8 +21,8 @@ export class ComponentCollaboratorService {
         .get<IPaginatedResponse<IComponentCollaboratorPaged>>(`${this.url}/paging`, paginatedFilter);
   }
 
-  getEvaluationData(id: string): Observable<IPaginatedResponse<IComponentCollaborator>> {
+  getEvaluationData(id: string): Observable<IComponentCollaborator> {
     return this._apiService
-        .get<IPaginatedResponse<IComponentCollaborator>>(`${this.url}/${id}/evaluation-data`);
+        .get<IComponentCollaborator>(`${this.url}/${id}/evaluation-data`);
   }
 }

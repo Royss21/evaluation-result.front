@@ -51,8 +51,6 @@ export class UploadFileComponent implements ControlValueAccessor, Validator {
     {
       for(let file of files){
 
-       
-    
         const fileItem = {
           name: file.name,
           extension: this.getExtension(file.name),

@@ -50,13 +50,13 @@
     class="objective-info"
   >
       <div>
-        <strong>NPS OLINE 1AL 17 [RMM SKSOPA]</strong>
+        <strong>{{ subcomponentName }}</strong>
       </div>
       <div>
-        Meta: 70
+        Meta: {{ maximunPercentage }}
       </div>
       <div>
-        Minimo 80
+        Minimo: {{ minimunPercentage }}
       </div>
   </div>
   <div
@@ -75,12 +75,17 @@
     >
       <mat-label>Puntaje</mat-label>
       <input
-          name="name"
-          type="text"
+          #valueInput="ngModel"
+          type="number"
           autocomplete="off"
-          maxlength="100"
           matInput
+          [(ngModel)]="objective.valueInput"
+          required
+          (input)="onInput()"
       >
+      <mat-error *ngIf="valueInput.errors?.['required']">
+        El puntaje es <strong>requerido</strong>.
+      </mat-error>
     </mat-form-field>
   </div>
 </div>

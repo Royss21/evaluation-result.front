@@ -1,4 +1,8 @@
-<h2>Evaluación de Objetivos Corporativos </h2>
+
+<div fxLayout="row" >
+  <h2 class="fw-bold">Evaluación de Objetivos Corporativos</h2>
+</div>
+
 <div
 fxLayout.xs="column"
 fxLayout.sm="row wrap"
@@ -32,53 +36,62 @@ fxLayoutAlign.xs="start"
   
 </div>
 
-<div
-fxLayout.xs="column"
-fxLayout.sm="column"
-fxLayout.md="row wrap"
-fxLayout.lg="row wrap"
-fxLayout.xl="row wrap"
-class="p-1 pb-0 pt-0"
-fxLayoutAlign="space-between center"
+<form
+    class="p-3"
+    autocomplete="off"
+    [formGroup]="evaluateFormGroup"
+    (ngSubmit)="confirmFinalizedEvaluation()"
 >
   <div
-    fxFlex.xl="50%"    
-    fxFlex.lg="50%"
-    fxFlex.md="50%"
-    fxFlex.sm="50%"
-    fxFlex.xs="50%"
-    class="p-1 pb-0 pt-0 mb-2" 
-  >
-    <app-objective-card></app-objective-card>
+    fxLayout.xs="column"
+    fxLayout.sm="row wrap"
+    fxLayout.md="row wrap"
+    fxLayout.lg="row wrap"
+    fxLayout.xl="row wrap"
+    class="p-1 pb-0 pt-0"
+    fxLayoutAlign="space-between center"
+    formArrayName="componentCollaboratorDetailsEvaluate"
+   >
+    <ng-container [formGroupName]="i" *ngFor="let evaluateDetail of componentCollaboratorDetailsEvaluate.controls; let i = index">
+      <div
+        fxFlex.xl="33%"    
+        fxFlex.lg="33%"
+        fxFlex.md="50%"
+        fxFlex.sm="100%"
+        fxFlex.xs="100%"
+        class="p-1 pb-0 pt-0 mb-2" 
+      >
+        <app-objective-card
+          [subcomponentName]="getValueFormControl(i, 'subcomponentName')"
+          [minimunPercentage]="getValueFormControl(i, 'minimunPercentage')"
+          [maximunPercentage]="getValueFormControl(i, 'maximunPercentage')"
+          formControlName="valueResult"
+        >
+        </app-objective-card>
+      </div>
+    </ng-container>
   </div>
+
   <div
-    fxFlex.xl="50%"    
-    fxFlex.lg="50%"
-    fxFlex.md="50%"
-    fxFlex.sm="50%"
-    fxFlex.xs="50%"
-    class="p-1 pb-0 pt-0 mb-2"
-  >
-    <app-objective-card></app-objective-card>
-  </div>
-  <div
-    fxFlex.xl="50%"    
-    fxFlex.lg="50%"
-    fxFlex.md="50%"
-    fxFlex.sm="50%"
-    fxFlex.xs="50%"
-    class="p-1 pb-0 pt-0 mb-2"
-  >
-    <app-objective-card></app-objective-card>
-  </div>
-  <div
-    fxFlex.xl="50%"    
-    fxFlex.lg="50%"
-    fxFlex.md="50%"
-    fxFlex.sm="50%"
-    fxFlex.xs="50%"
-    class="p-1 pb-0 pt-0 mb-2"
-  >
-    <app-objective-card></app-objective-card>
-  </div>
-</div>
+    fxLayout.xs="column"
+    fxLayout.sm="column"
+    fxLayout.md="row wrap"
+    fxLayout.lg="row wrap"
+    fxLayout.xl="row wrap"
+    class="p-1 pb-0 pt-3"
+    fxLayoutAlign="end end"
+   >
+    <button 
+      mat-raised-button
+      color="primary" 
+      matTooltip="Guardar"
+      type="submit"
+    >
+      <mat-icon>save</mat-icon> Terminar evaluación
+    </button>
+   </div>
+</form>
+
+<pre>
+  {{ evaluateFormGroup.value | json }}
+</pre>

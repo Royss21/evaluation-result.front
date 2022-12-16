@@ -33,10 +33,22 @@ const routes: Routes = [
         component: EvaluationDetailComponent
       },
       {
+        path:':evaluationId/leader',
+        loadChildren: () => import('../evaluation-leader/leader.module').then( m => m.LeaderModule )
+      },
+      {
+        path:':evaluationId/collaborator',
+        loadChildren: () => import('../evaluation-collaborator/evaluation-collaborator.module').then( m => m.EvaluationCollaboratorModule )
+      },
+      {
+        path:':evaluationId/evaluate-component/:componentId',
+        loadChildren: () => import('../evaluate-component/evaluate.module').then( m => m.EvaluateComponentModule )
+      },
+      {
         path:'',
         redirectTo:'list',
         pathMatch: 'full'
-      }
+      },
     ]
   }
 ];
