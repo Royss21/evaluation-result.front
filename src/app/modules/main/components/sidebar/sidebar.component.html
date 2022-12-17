@@ -32,6 +32,14 @@
       <span class="navigation-title">Configuracion</span>
   </mat-list-item>
 
+  <mat-list-item
+      routerLinkActive="list-item-active"
+      [routerLink]="'/maintenance'"
+      [routerLinkActiveOptions]="{ exact: true}">
+      <mat-icon>settings</mat-icon>
+      <span class="navigation-title">Mantenimiento</span>
+  </mat-list-item>
+
 
   <mat-list-item  class="d-md-none">
     <mat-icon>arrow_drop_down</mat-icon>

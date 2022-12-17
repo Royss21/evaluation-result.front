@@ -1,24 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
-import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
-import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
-import { IElementRowTable } from '@components/table/interfaces/table.interface';
-import { LevelService } from '@core/services/level/level.service';
-import { LevelModalComponent } from '@modules/level/components/level-modal/level-modal.component';
-import { LevelHelper } from '@modules/level/helpers/level.helper';
-import { ILevel } from '@modules/level/interfaces/level.interface';
-import { ConstantsGeneral } from '@shared/constants';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-import { BehaviorSubject, Observable, of, Subject, takeUntil } from 'rxjs';
+import { ConstantsGeneral } from '@shared/constants';
+import { LevelHelper } from '@modules/level/helpers/level.helper';
+import { LevelService } from '@core/services/level/level.service';
+import { ILevel } from '@modules/level/interfaces/level.interface';
+import { IElementRowTable } from '@components/table/interfaces/table.interface';
+import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
+import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
+import { LevelModalComponent } from '@modules/level/components/level-modal/level-modal.component';
+
 
 @Component({
   selector: 'app-level-list',
   templateUrl: './level-list.component.html',
   styleUrls: ['./level-list.component.scss']
 })
-export class LevelListComponent implements OnInit {
+export class LevelListComponent {
 
   private unsubscribe$ = new Subject<any>();
 
@@ -39,10 +38,7 @@ export class LevelListComponent implements OnInit {
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = LevelHelper.columnsTable;
   }
-  ngOnInit(): void {
-    
-  }
-  
+
   ngAfterContentInit() {
     this.callPaginated();
   }

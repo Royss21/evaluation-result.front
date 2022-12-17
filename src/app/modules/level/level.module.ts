@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { LevelRoutingModule } from './level.routing';
-import { SharedModule } from "src/app/shared/modules/shared.module";
-import { ComponentsModule } from '@components/components.module';
+import { CommonModule } from '@angular/common';
 
-
-import { LevelListComponent } from './pages/level-list/level-list.component';
 import { LevelComponent } from './level.component';
-import { LevelModalComponent } from './components/level-modal/level-modal.component';
-import { ExampleFormComponent } from './pages/example-form/example-form.component';
+import { LevelRoutingModule } from './level.routing';
+import { ComponentsModule } from '@components/components.module';
+import { SharedModule } from "src/app/shared/modules/shared.module";
 import { ChildComponent } from './pages/exampleForm/child/child.component';
+import { LevelListComponent } from './pages/level-list/level-list.component';
+import { ExampleFormComponent } from './pages/example-form/example-form.component';
+import { LevelModalComponent } from './components/level-modal/level-modal.component';
 
 
 @NgModule({

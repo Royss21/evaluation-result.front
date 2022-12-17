@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { ConfigurationComponent } from './configuration.component'
 import { OptionComponent } from "./views/option/option.component";
+import { ConfigurationComponent } from './configuration.component'
 
 export const roots: Routes = [
   {

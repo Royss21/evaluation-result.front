@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-option',
   templateUrl: './option.component.html',
   styleUrls: ['./option.component.scss']
 })
-export class OptionComponent implements OnInit {
+export class OptionComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
