@@ -88,7 +88,7 @@ export class ListCollaboratorEvaluateComponent implements OnInit {
     else if(this._componentId == ConstantsGeneral.components.competencies)
       routeChild = 'competencies';
 
-    this._router.navigate([routeChild, componentCollaborator.id], {relativeTo: this._route})
+    this._router.navigateByUrl(`${this._router.url}/${routeChild}/${componentCollaborator.id}`, { state: { gg: 'ss' }})
   } 
 
   ngOnDestroy(): void {

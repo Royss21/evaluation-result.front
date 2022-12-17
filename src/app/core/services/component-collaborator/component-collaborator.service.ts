@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
 import { IComponentCollaboratorPaged } from '@modules/evaluate-component/interfaces/component-collaborator-paged.interface';
-import { IComponentCollaborator } from '@modules/evaluate-component/interfaces/component-collaborator.interface';
+import { IComponentCollaborator, IComponentCollaboratorEvaluate } from '@modules/evaluate-component/interfaces/component-collaborator.interface';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';
 
@@ -20,6 +20,11 @@ export class ComponentCollaboratorService {
     return this._apiService
         .get<IPaginatedResponse<IComponentCollaboratorPaged>>(`${this.url}/paging`, paginatedFilter);
   }
+
+  evaluate(request: IComponentCollaboratorEvaluate): Observable<boolean> {
+    return this._apiService.post<boolean>(`${this.url}/evaluate`, request);
+  }
+
 
   getEvaluationData(id: string): Observable<IComponentCollaborator> {
     return this._apiService

@@ -10,7 +10,7 @@ import { ApiService } from '../api.service';
 })
 export class ParameterValueService {
 
-  private controller = 'ParameterValue';
+  private controller = 'parameter-value';
   private url = `https://localhost:7253/api/${this.controller}`
   constructor(
     private _apiService: ApiService

@@ -10,7 +10,7 @@ import { ApiService } from '../api.service';
 })
 export class AreaService {
   
-  private controller = 'Area';
+  private controller = 'area';
   private url = `https://localhost:7253/api/${this.controller}`
   constructor(
     private _apiService: ApiService

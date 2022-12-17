@@ -18,16 +18,16 @@ fxLayoutAlign.xs="start"
 >
  
   <ul>
-    <li><span><strong>Colaborador: </strong> adasasd</span></li>
-    <li><span><strong>Cargo: </strong> adasasd</span></li>
-    <li><span><strong>Area: </strong> adasasd</span></li>
-    <li><span><strong>Gerencia: </strong> adasasd</span></li>
-    <li><span><strong>Jerarquia: </strong> adasasd</span></li>
-    <li><span><strong>Nivel: </strong> adasasd</span></li>
+    <li><span><strong>Colaborador: </strong> {{ collaboratorInfo.collaboratorName }}</span></li>
+    <li><span><strong>Cargo: </strong> {{ collaboratorInfo.chargeName }}</span></li>
+    <li><span><strong>Area: </strong> {{ collaboratorInfo.areaName }}</span></li>
+    <li><span><strong>Gerencia: </strong> {{ collaboratorInfo.gerencyName }}</span></li>
+    <li><span><strong>Jerarquia: </strong> {{ collaboratorInfo.hierarchyName }}</span></li>
+    <li><span><strong>Nivel: </strong> {{ collaboratorInfo.levelName }}</span></li>
   </ul>
 
   <div class="status">
-    Estado
+    {{ collaboratorInfo.statusName }}
   </div>
     <!-- <span><strong>Area: </strong> adasasd</span>
     <span><strong>Gerencia: </strong> adasasd</span>
@@ -91,7 +91,3 @@ fxLayoutAlign.xs="start"
     </button>
    </div>
 </form>
-
-<pre>
-  {{ evaluateFormGroup.value | json }}
-</pre>

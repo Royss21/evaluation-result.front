@@ -1,13 +1,9 @@
-export interface IComponentCollaboratorPaged{
+import { ICollaboratorInformation } from "./collaborator-information.interface";
+
+export interface IComponentCollaboratorPaged extends ICollaboratorInformation{
   
   id:string;
-  collaboratorName:string;
-  documentNumber:string; 
-  gerencyName:string;
   collaboratorId:string;
-  chargeName:string;
-  areaName:string;
-  levelName:string;
-  hierarchyName:string;
+  documentNumber:string; 
   statusId: number;
 }

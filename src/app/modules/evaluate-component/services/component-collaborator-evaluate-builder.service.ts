@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IComponentCollaboratorConduct, IComponentCollaboratorDetail } from '../interfaces/component-collaborator.interface';
+import { IComponentCollaborator, IComponentCollaboratorConduct, IComponentCollaboratorDetail } from '../interfaces/component-collaborator.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,14 @@ export class ComponentCollaboratorEvaluateBuilderService {
 
   constructor(private _fb: FormBuilder) { }
 
-  public buildComponentCollaboratorEvaluateForm(): FormGroup {
+  public buildComponentCollaboratorEvaluateForm(data: IComponentCollaborator | null, componentId: number): FormGroup {
     return this._fb.group({
+      id:[data?.id],
+      evaluationComponentId:[data?.evaluationComponentId],
+      evaluationComponentStageId:[data?.evaluationComponentStageId],
+      stageId:[data?.stageId],
+      componentId: [componentId],
+      comment:[''],
       componentCollaboratorDetailsEvaluate:  this._fb.array([])
     });
   }

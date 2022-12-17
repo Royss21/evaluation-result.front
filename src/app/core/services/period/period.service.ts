@@ -10,7 +10,7 @@ import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.
   providedIn: 'root'
 })
 export class PeriodService {
-  private controller = 'Period';
+  private controller = 'period';
   private url = `https://localhost:7253/api/${this.controller}`
   constructor(private _apiService: ApiService) { }
 

@@ -9,7 +9,7 @@ import { ApiService } from '../api.service';
 })
 export class FormulaService {
   
-  private controller = 'Formula';
+  private controller = 'formula';
   private url = `https://localhost:7253/api/${this.controller}`
   constructor(
     private _apiService: ApiService

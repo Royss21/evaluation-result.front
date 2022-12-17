@@ -1,5 +1,17 @@
+import { ICollaboratorInformation } from "./collaborator-information.interface";
 
-export interface IComponentCollaborator{
+export interface IComponentCollaborator extends ICollaboratorInformation{
+
+  id: string;
+  evaluationComponentId: number,
+  evaluationComponentStageId: number,
+  stageId: number
+  componentId: number,
+  comment: string;
+  componentCollaboratorDetails: IComponentCollaboratorDetail[]
+}
+
+export interface IComponentCollaboratorEvaluate{
 
   id: string;
   evaluationComponentId: number,

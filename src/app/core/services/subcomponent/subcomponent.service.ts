@@ -11,7 +11,7 @@ import { ApiService } from '../api.service';
 })
 export class SubcomponentService {
   
-  private controller = 'Subcomponent';
+  private controller = 'subcomponent';
   private url = `https://localhost:7253/api/${this.controller}`
   constructor(
     private _apiService: ApiService
