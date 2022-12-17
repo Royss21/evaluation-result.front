@@ -18,6 +18,8 @@ export class ObjectiveCardComponent implements OnInit, ControlValueAccessor {
   @Input() subcomponentName: string;
   @Input() minimunPercentage: number;
   @Input() maximunPercentage: number;
+  @Input() valueCurrent: number;
+  @Input() isCompleted: boolean;
 
   objective: { valueInput: number | null} = { valueInput: null }
   valueResult: number = 0;
@@ -25,7 +27,10 @@ export class ObjectiveCardComponent implements OnInit, ControlValueAccessor {
   private _onChanged: Function = ( valueResult: number) => {}
   private _onTouched: Function = () => {}
 
-  constructor() { }
+  constructor() {
+    
+  }
+
 
   onInput() {
     
@@ -50,6 +55,7 @@ export class ObjectiveCardComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit(): void {
+    this.objective.valueInput = this.valueCurrent;
   }
 
 }

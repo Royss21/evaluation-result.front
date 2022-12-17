@@ -13,6 +13,8 @@ import { EvaluateCompetenciesComponent } from './pages/evaluate-competencies/eva
 import { ObjectiveCardComponent } from './components/objective-card/objective-card.component';
 import { CompetencyCardComponent } from './components/competency-card/competency-card.component';
 import { ConductItemComponent } from './components/conduct-item/conduct-item.component';
+import { StatusComponent } from './components/status/status.component';
+import { InfoCollaboratorComponent } from './components/info-collaborator/info-collaborator.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { ConductItemComponent } from './components/conduct-item/conduct-item.com
     EvaluateCompetenciesComponent,
     ObjectiveCardComponent,
     CompetencyCardComponent,
-    ConductItemComponent
+    ConductItemComponent,
+    StatusComponent,
+    InfoCollaboratorComponent
   ],
   imports: [
     CommonModule,

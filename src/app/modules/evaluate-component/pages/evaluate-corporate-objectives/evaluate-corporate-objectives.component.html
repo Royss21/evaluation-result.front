@@ -9,31 +9,23 @@ fxLayout.sm="row wrap"
 fxLayout.md="row wrap"
 fxLayout.lg="row wrap"
 fxLayout.xl="row wrap"
-class="p-1 pb-0 pt-0 pb-3"
-fxLayoutAlign.xl="space-between center"
-fxLayoutAlign.lg="space-between center"
-fxLayoutAlign.md="space-between center"
-fxLayoutAlign.sm="space-between center"
+class="p-1 pb-0 pt-0 pb-2"
+fxLayoutAlign.xl="space-between"
+fxLayoutAlign.lg="space-between"
+fxLayoutAlign.md="space-between"
+fxLayoutAlign.sm="space-between"
 fxLayoutAlign.xs="start"
 >
  
-  <ul>
-    <li><span><strong>Colaborador: </strong> {{ collaboratorInfo.collaboratorName }}</span></li>
-    <li><span><strong>Cargo: </strong> {{ collaboratorInfo.chargeName }}</span></li>
-    <li><span><strong>Area: </strong> {{ collaboratorInfo.areaName }}</span></li>
-    <li><span><strong>Gerencia: </strong> {{ collaboratorInfo.gerencyName }}</span></li>
-    <li><span><strong>Jerarquia: </strong> {{ collaboratorInfo.hierarchyName }}</span></li>
-    <li><span><strong>Nivel: </strong> {{ collaboratorInfo.levelName }}</span></li>
-  </ul>
+  <app-info-collaborator
+    [infoCollaborator]="infoCollaborator"
+  ></app-info-collaborator>
 
-  <div class="status">
-    {{ collaboratorInfo.statusName }}
-  </div>
-    <!-- <span><strong>Area: </strong> adasasd</span>
-    <span><strong>Gerencia: </strong> adasasd</span>
-    <span><strong>Jerarquia: </strong> adasasd</span>
-    <span><strong>Nivel: </strong> adasasd</span> -->
-  
+  <app-status
+    [statusName]="infoCollaborator.statusName"
+    [statusId]="infoCollaborator.statusId"
+  ></app-status>
+
 </div>
 
 <form
@@ -49,13 +41,17 @@ fxLayoutAlign.xs="start"
     fxLayout.lg="row wrap"
     fxLayout.xl="row wrap"
     class="p-1 pb-0 pt-0"
-    fxLayoutAlign="space-between center"
+    fxLayoutAlign.xs="space-between center"
+    fxLayoutAlign.sm="space-between center"
+    fxLayoutAlign.md="start center"
+    fxLayoutAlign.lg="start center"
+    fxLayoutAlign.xl="start center"
     formArrayName="componentCollaboratorDetailsEvaluate"
    >
     <ng-container [formGroupName]="i" *ngFor="let evaluateDetail of componentCollaboratorDetailsEvaluate.controls; let i = index">
       <div
-        fxFlex.xl="33%"    
-        fxFlex.lg="33%"
+        fxFlex.xl="33.333%"    
+        fxFlex.lg="33.333%"
         fxFlex.md="50%"
         fxFlex.sm="100%"
         fxFlex.xs="100%"
@@ -65,6 +61,8 @@ fxLayoutAlign.xs="start"
           [subcomponentName]="getValueFormControl(i, 'subcomponentName')"
           [minimunPercentage]="getValueFormControl(i, 'minimunPercentage')"
           [maximunPercentage]="getValueFormControl(i, 'maximunPercentage')"
+          [valueCurrent]="getValueFormControl(i, 'valueResult')"
+          [isCompleted]="isStatusCompleted"
           formControlName="valueResult"
         >
         </app-objective-card>
@@ -73,21 +71,37 @@ fxLayoutAlign.xs="start"
   </div>
 
   <div
-    fxLayout.xs="column"
-    fxLayout.sm="column"
+    fxLayout.xs="row wra"
+    fxLayout.sm="row wra"
     fxLayout.md="row wrap"
     fxLayout.lg="row wrap"
     fxLayout.xl="row wrap"
     class="p-1 pb-0 pt-3"
-    fxLayoutAlign="end end"
+    fxLayoutAlign="center center"
+    fxLayoutAlign.xs="space-between center"
+    fxLayoutGap="10"
    >
     <button 
-      mat-raised-button
-      color="primary" 
-      matTooltip="Guardar"
-      type="submit"
+      mat-mini-fab 
+      color="basic" 
+      matTooltip="Cancelar"
+      type="button" 
+      (click)="cancel()"
     >
-      <mat-icon>save</mat-icon> Terminar evaluación
+        <mat-icon>close</mat-icon>
+    </button>
+    <button 
+      mat-mini-fab 
+      color="primary" 
+      matTooltip="Guardar notas de evaluación"
+      type="submit"
+      *ngIf="!isStatusCompleted"
+    >
+      <mat-icon>save</mat-icon>
     </button>
    </div>
 </form>
+
+<!-- <pre>
+  {{ evaluateFormGroup.value | json }}
+</pre> -->

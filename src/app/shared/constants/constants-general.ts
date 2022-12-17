@@ -48,6 +48,7 @@ export  class ConstantsGeneral{
       competencies: 3
     }
 
+
     static readonly status = {
       1: 'Prueba',
       2: 'Creado',
@@ -55,6 +56,12 @@ export  class ConstantsGeneral{
       4: 'En Progreso',
       5: 'Completado',
       6: 'Finalizado',
+      Test: 1,
+      Create: 2,
+      Pending: 3,
+      InProgress : 4,
+      Completed: 5,
+      Finalized: 6,
     }
 
 }

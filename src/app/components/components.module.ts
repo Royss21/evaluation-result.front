@@ -7,13 +7,15 @@ import { SharedModule } from '@shared/modules/shared.module';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 import { CardOptionComponent } from './card-option/card-option.component';
 import { SearchGlobalComponent } from './table/search-global/search-global.component';
+import { StatusChipComponent } from './status-chip/status-chip.component';
 
 @NgModule({
   declarations: [
     TableComponent,
     SearchGlobalComponent,
     UploadFileComponent,
-    CardOptionComponent
+    CardOptionComponent,
+    StatusChipComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { SearchGlobalComponent } from './table/search-global/search-global.compo
     TableComponent,
     SearchGlobalComponent,
     UploadFileComponent,
-    CardOptionComponent
+    CardOptionComponent,
+    StatusChipComponent
   ]
 })
 export class ComponentsModule { }

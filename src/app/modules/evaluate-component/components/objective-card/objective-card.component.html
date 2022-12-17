@@ -1,27 +1,3 @@
-<!-- <div class="objective-card">
-  <div class="objective-icon">
-    aaaaa
-  </div>
-  <div class="objective-info">
-      <div>
-        bbbbb
-      </div>
-      <div>
-        ccccc
-      </div>
-      <div>
-        ddddd
-      </div>
-  </div>
-  <div>
-    <div>
-      fffff
-    </div>
-    <div>
-      ggggg
-    </div>
-  </div>
-</div> -->
 
 <div
   fxLayout.xs="row wrap"
@@ -81,6 +57,7 @@
           matInput
           [(ngModel)]="objective.valueInput"
           required
+          [readonly]="isCompleted"
           (input)="onInput()"
       >
       <mat-error *ngIf="valueInput.errors?.['required']">

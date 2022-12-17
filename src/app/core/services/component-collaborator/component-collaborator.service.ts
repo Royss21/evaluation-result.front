@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
 import { IComponentCollaboratorPaged } from '@modules/evaluate-component/interfaces/component-collaborator-paged.interface';
 import { IComponentCollaborator, IComponentCollaboratorEvaluate } from '@modules/evaluate-component/interfaces/component-collaborator.interface';
+import { IUpdateStatus } from '@modules/evaluate-component/interfaces/update-status.interface';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';
 
@@ -23,6 +24,10 @@ export class ComponentCollaboratorService {
 
   evaluate(request: IComponentCollaboratorEvaluate): Observable<boolean> {
     return this._apiService.post<boolean>(`${this.url}/evaluate`, request);
+  }
+
+  updateStatus(request: IUpdateStatus): Observable<boolean> {
+    return this._apiService.put<boolean>(`${this.url}/status`, request);
   }
 
 

@@ -8,6 +8,8 @@ export interface IComponentCollaborator extends ICollaboratorInformation{
   stageId: number
   componentId: number,
   comment: string;
+  statusName: string;
+  statusId: number;
   componentCollaboratorDetails: IComponentCollaboratorDetail[]
 }
 

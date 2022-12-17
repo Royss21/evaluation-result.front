@@ -34,18 +34,9 @@
         fxLayoutGap="10px"
         *ngSwitchCase="'statusId'"
       >
-          <mat-chip-list>
-            <mat-chip 
-              [class]="{
-                'status-color-create': element[column.columnMatch] === 2,
-                'status-color-pending': element[column.columnMatch] === 3,
-                'status-color-inprogress': element[column.columnMatch] === 4,
-                'status-color-completed': element[column.columnMatch] === 5,
-                'status-color-finalized': element[column.columnMatch] === 6
-              }">
-                {{ status[element[column.columnMatch]] }}
-            </mat-chip>
-        </mat-chip-list>
+          <app-status-chip
+            [statusId]="element[column.columnMatch]"
+          ></app-status-chip>
       </div>
       <div *ngSwitchDefault>
         {{ element[column.columnMatch] }}

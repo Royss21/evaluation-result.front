@@ -40,7 +40,7 @@ export class ListCollaboratorEvaluateComponent implements OnInit {
     this.evaluateComponentPaginated$ = this.evaluateComponentPaginatedBehavior.asObservable();
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = EvaluateComponentHelper.columnsTable;
-    this.status = ConstantsGeneral.status;
+    
   }
   ngOnInit(): void {
     

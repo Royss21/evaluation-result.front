@@ -1,0 +1,12 @@
+<div 
+  class="status"
+  [ngClass]="{
+    'status-color-create': statusId == 2,
+    'status-color-pending': statusId == 3,
+    'status-color-inprogress': statusId == 4,
+    'status-color-completed': statusId == 5,
+    'status-color-finalized': statusId == 6
+  }"
+>
+  <h3>{{ statusName }}</h3>
+</div>

@@ -27,7 +27,7 @@ export class ComponentCollaboratorEvaluateBuilderService {
       subcomponentName:[detail.subcomponentName],
       maximunPercentage:[detail.maximunPercentage],
       minimunPercentage:[detail.minimunPercentage],
-      valueResult:[null, isValidate ? [Validators.required] : []],
+      valueResult:[detail.valueResult, isValidate ? [Validators.required] : []],
       componentCollaboratorConductsEvaluate: this._fb.array([])
     });
   }

@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { ComponentCollaboratorService } from '@core/services/component-collaborator/component-collaborator.service';
 import { ComponentCollaboratorEvaluateBuilderService } from '@modules/evaluate-component/services/component-collaborator-evaluate-builder.service';
-import { IComponentCollaborator, IComponentCollaboratorEvaluate } from '@modules/evaluate-component/interfaces/component-collaborator.interface';
 import { ConstantsGeneral } from '@shared/constants';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 import { ICollaboratorInformation } from '@modules/evaluate-component/interfaces/collaborator-information.interface';
+import { IComponentCollaboratorEvaluate } from '@modules/evaluate-component/interfaces/component-collaborator.interface';
+import { Location } from '@angular/common';
+import { IUpdateStatus } from '@modules/evaluate-component/interfaces/update-status.interface';
+import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 
 @Component({
   selector: 'app-evaluate-corporate-objectives',
@@ -19,13 +22,14 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
 
   private _componentCollaboratorId: string;
   
-  collaboratorInfo: ICollaboratorInformation
+  infoCollaborator: ICollaboratorInformation
   evaluateFormGroup: FormGroup;
 
   constructor(
     private _route: ActivatedRoute,
     private _componentCollaboratorService: ComponentCollaboratorService,
     private _formBuilder: ComponentCollaboratorEvaluateBuilderService,
+    private _location: Location,
     public _dialog: MatDialog,
   ) {
     this.evaluateFormGroup = _formBuilder.buildComponentCollaboratorEvaluateForm(null, ConstantsGeneral.components.corporateObjectives);
@@ -41,6 +45,10 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
 
   get componentCollaboratorDetailsEvaluate() {
     return this.evaluateFormGroup.controls["componentCollaboratorDetailsEvaluate"] as FormArray;
+  }
+
+  get isStatusCompleted(){
+    return this.infoCollaborator.statusId == ConstantsGeneral.status.Completed;
   }
 
   private _getEvaluationData(){
@@ -59,7 +67,7 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
   }
 
   private _setInformationCollaborator(info: ICollaboratorInformation | null){
-    this.collaboratorInfo = {
+    this.infoCollaborator = {
       collaboratorName: info?.collaboratorName ?? "",
       hierarchyName: info?.hierarchyName ?? "",
       gerencyName: info?.gerencyName ?? "",
@@ -69,15 +77,42 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
       statusId :info?.statusId ?? 0,
       statusName :info?.statusName ?? ""
     };
-
   }
 
   private _save(evaluate: IComponentCollaboratorEvaluate){
     this._componentCollaboratorService.evaluate(evaluate)
-      .subscribe(data => {
-        
-      });
+      .subscribe(data => this._showConfirmMessage());
   }
+
+  private _showConfirmMessage(): void {
+    const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
+      data: ConstantsGeneral.confirmCreatePopup,
+      autoFocus: false,
+      restoreFocus: false
+    });
+
+    dialogRefConfirm.afterClosed().subscribe(() => {
+      this._location.back()
+    });
+  }
+
+  cancel(){
+    if(this.infoCollaborator.statusId == ConstantsGeneral.status.InProgress)
+    {
+      const updateStatus: IUpdateStatus = {
+          id: this._componentCollaboratorId,
+          statusId: ConstantsGeneral.status.Pending
+      }
+
+      console.log(updateStatus)
+      this._componentCollaboratorService.updateStatus(updateStatus)
+        .subscribe(() => this._location.back())
+    }
+    else
+      this._location.back();
+  }
+
+  
 
   getValueFormControl(index:number, prop: string){
     return this.componentCollaboratorDetailsEvaluate.getRawValue()[index][prop];
@@ -91,8 +126,6 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
       return;
 
       const evaluateComponent: IComponentCollaboratorEvaluate = { ...this.evaluateFormGroup.getRawValue() } ;
-      console.log(evaluateComponent);
-
       const dialogRef = this._dialog.open(PopupChooseComponent, {
         data: ConstantsGeneral.chooseData,
         autoFocus: false,
