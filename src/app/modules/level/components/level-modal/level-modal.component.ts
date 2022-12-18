@@ -1,21 +1,22 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
-import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
-import { LevelService } from '@core/services/level/level.service';
-import { LevelText } from '@modules/level/helpers/level.helper';
-import { ILevel } from '@modules/level/interfaces/level.interface';
+
 import { ConstantsGeneral } from '@shared/constants';
+import { LevelText } from '@modules/level/helpers/level.helper';
+import { LevelService } from '@core/services/level/level.service';
+import { ILevel } from '@modules/level/interfaces/level.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 import { LevelModalBuilderService } from './level-modal-builder.service';
+import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
+import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 
 @Component({
   selector: 'app-level-modal',
   templateUrl: './level-modal.component.html',
   styleUrls: ['./level-modal.component.scss']
 })
-export class LevelModalComponent implements OnInit {
+export class LevelModalComponent {
 
   private isCloseAfterSave: boolean = false;
 
@@ -28,9 +29,9 @@ export class LevelModalComponent implements OnInit {
     private _modalRef: MatDialogRef<LevelModalComponent>,
     public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: ILevel
-  ) { 
+  ) {
 
-    this.modalTitle = data ? LevelText.modalUdpate : LevelText.modalCreate; 
+    this.modalTitle = data ? LevelText.modalUdpate : LevelText.modalCreate;
     this.levelFormGroup = _levelBuilderService.buildLevelForm(data);
   }
 
@@ -64,9 +65,6 @@ export class LevelModalComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
-
   closeModal(): void {
     this._modalRef.close();
   }
@@ -74,7 +72,7 @@ export class LevelModalComponent implements OnInit {
   confirmSave(isClose: boolean = true){
 
     CustomValidations.marcarFormGroupTouched(this.levelFormGroup);
-    
+
     if(this.levelFormGroup.invalid)
       return;
 
@@ -88,7 +86,7 @@ export class LevelModalComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) 
+      if (result)
         this.save(level);
     });
   }

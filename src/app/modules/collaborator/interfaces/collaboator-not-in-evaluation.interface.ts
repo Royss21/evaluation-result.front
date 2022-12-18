@@ -1,4 +1,5 @@
 export interface ICollaboratorNotInEvaluation{
+  id:string;
   chargeName: string;
   hierarchyName : string;
   gerencyName : string;
@@ -8,5 +9,17 @@ export interface ICollaboratorNotInEvaluation{
   middleName : string;
   name : string;
   lastName : string;
-  id:string;
+}
+
+export interface ICollaboratorNotInEvaluationCreate {
+  chargeId: number,
+  documentNumber: string,
+  middleName: string,
+  lastName: string,
+  name: string,
+  email: string,
+  code: string,
+  dateBirthday: Date,
+  dateAdmission: Date,
+  dateEgress: Date
 }

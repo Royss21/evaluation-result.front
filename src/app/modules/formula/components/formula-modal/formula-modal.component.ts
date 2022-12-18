@@ -1,17 +1,18 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { ConstantsGeneral } from '@shared/constants';
+import { FormulaText } from '@modules/formula/helpers/formula.helper';
+import { CustomValidations } from '@shared/helpers/custom-validations';
+import { FormulaService } from '@core/services/formula/formula.service';
+import { IFormula } from '@modules/formula/interfaces/formula.interface';
+import { FormulaModalBuilderService } from './formula-modal-builder.service';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
-import { FormulaService } from '@core/services/formula/formula.service';
 import { ParameterRangeService } from '@core/services/paramater-range/parameter-range.service';
-import { FormulaText } from '@modules/formula/helpers/formula.helper';
-import { IFormula } from '@modules/formula/interfaces/formula.interface';
 import { IParameterRangeWithValues } from '@modules/parameter-range/interfaces/parameter-range-with-values.interface';
-import { ConstantsGeneral } from '@shared/constants';
-import { CustomValidations } from '@shared/helpers/custom-validations';
-import { FormulaModalBuilderService } from './formula-modal-builder.service';
 
 @Component({
   selector: 'app-formula-modal',
@@ -34,9 +35,9 @@ export class FormulaModalComponent implements OnInit {
     private _snackBar: MatSnackBar,
     public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: IFormula
-  ) { 
+  ) {
 
-    this.modalTitle = data ? FormulaText.modalUdpate : FormulaText.modalCreate; 
+    this.modalTitle = data ? FormulaText.modalUdpate : FormulaText.modalCreate;
     this.formulaFormGroup = _formulaBuilderService.buildFormulaForm(data);
   }
 
@@ -71,12 +72,12 @@ export class FormulaModalComponent implements OnInit {
     });
   }
 
-  private notifyCopy(){  
+  private notifyCopy(){
     this._snackBar.open('Copiado','', {
       horizontalPosition: 'end',
       verticalPosition: 'bottom',
       duration: 1000
-    }); 
+    });
   }
 
   ngOnInit(): void {
@@ -98,7 +99,7 @@ export class FormulaModalComponent implements OnInit {
   confirmSave(isClose: boolean = true){
 
     CustomValidations.marcarFormGroupTouched(this.formulaFormGroup);
-    
+
     if(this.formulaFormGroup.invalid)
       return;
 
@@ -112,7 +113,7 @@ export class FormulaModalComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) 
+      if (result)
         this.save(formula);
     });
   }

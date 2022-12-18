@@ -1,4 +1,5 @@
 export interface ICollaboratorInformation{
+  // id: number;
   collaboratorName:string;
   gerencyName:string;
   chargeName:string;

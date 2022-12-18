@@ -6,6 +6,8 @@ import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { CollaboratorService } from '@core/services/collaborator/collaborator.service';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { CollaboratorHelper } from '@modules/collaborator/helpers/collaborator.helpers';
+import { CollaboratorModalComponent } from '@modules/collaborator/components/collaborator-modal/collaborator-modal.component';
+import { ConstantsGeneral } from '@shared/constants';
 
 @Component({
   selector: 'app-collaborator-list',
@@ -47,6 +49,27 @@ export class CollaboratorListComponent {
             .subscribe(paginated => this.collaboratorPaginatedBehavior.next(paginated));
         }
       });
+  }
+
+  private openModal(): void {
+    const modalLevel = this._dialog.open(CollaboratorModalComponent, {
+      width: ConstantsGeneral.mdModal,
+      disableClose: true,
+      data: 1
+    });
+
+    modalLevel.afterClosed()
+      .subscribe(() => {
+        this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      });
+  }
+
+  create(): void{
+    this.openModal();
+  }
+
+  update(): void{
+    this.openModal();
   }
 
   ngOnDestroy(): void {

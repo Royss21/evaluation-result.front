@@ -1,0 +1,105 @@
+<h2  mat-dialog-title>{{ modalTitle }}</h2>
+<form
+    class="p-3"
+    autocomplete="off"
+    [formGroup]="collaboratorFormGroup"
+    (ngSubmit)="confirmSave()"
+>
+    <mat-dialog-content>
+
+        <div
+            fxLayout.xs="row wrap"
+            fxLayout.sm="row wrap"
+            fxLayout.md="row wrap"
+            fxLayout.lg="row wrap"
+            fxLayout.xl="row wrap"
+            fxLayoutAlign="space-center center"
+        >
+
+            <div
+                fxFlex.xl="100%"
+                fxFlex.lg="100%"
+                fxFlex.md="100%"
+                fxFlex.sm="100%"
+                fxFlex.xs="100%"
+            >
+                <mat-form-field
+                    fxFill
+                    appearance="outline"
+                >
+                <mat-label>Nombre</mat-label>
+                <input
+                    name="name"
+                    formControlName="name"
+                    type="text"
+                    autocomplete="off"
+                    maxlength="200"
+                    matInput
+                >
+                  <mat-error *ngIf="controlsForm['name'].hasError('required')">
+                    El nombre es <strong>requerido</strong>.
+                  </mat-error>
+                  <mat-error *ngIf="controlsForm['name'].hasError('maxlength')">
+                    Se ha excedido el límite de caracteres
+                  </mat-error>
+                </mat-form-field>
+            </div>
+            <div
+                fxFlex.xl="100%"
+                fxFlex.lg="100%"
+                fxFlex.md="100%"
+                fxFlex.sm="100%"
+                fxFlex.xs="100%"
+            >
+                <mat-form-field
+                    fxFill
+                    appearance="outline"
+                >
+                  <input
+                    name="middleName"
+                    formControlName="middleName"
+                    type="text"
+                    autocomplete="off"
+                    maxlength="200"
+                    matInput
+                  >
+                    <mat-error *ngIf="controlsForm['middleName'].hasError('required')">
+                      El nombre es <strong>requerido</strong>.
+                    </mat-error>
+                    <mat-error *ngIf="controlsForm['middleName'].hasError('maxlength')">
+                      Se ha excedido el límite de caracteres
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <button
+            mat-mini-fab
+            color="basic"
+            matTooltip="Cerrar"
+            type="button"
+            (click)="closeModal()"
+        >
+            <mat-icon>close</mat-icon>
+        </button>
+        <button
+            mat-mini-fab
+            color="primary"
+            matTooltip="Guardar"
+            type="button"
+            (click)="confirmSave(false)"
+        >
+            <mat-icon>save</mat-icon>
+        </button>
+        <button
+            mat-raised-button
+            color="primary"
+            matTooltip="Guardar y Cerrar"
+            type="submit"
+        >
+            <mat-icon>save</mat-icon> &nbsp;
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </mat-dialog-actions>
+</form>

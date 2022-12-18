@@ -7,11 +7,13 @@ import { ComponentsModule } from '@components/components.module';
 import { CollaboratorRoutingModule } from './collaborator.routing';
 import { CollaboratorComponent } from '@modules/collaborator/collaborator.component';
 import { CollaboratorListComponent } from '@modules/collaborator/pages/collaborator-list/collaborator-list.component';
+import { CollaboratorModalComponent } from './components/collaborator-modal/collaborator-modal.component';
 
 @NgModule({
   declarations: [
     CollaboratorComponent,
-    CollaboratorListComponent
+    CollaboratorListComponent,
+    CollaboratorModalComponent
   ],
   imports: [
     CommonModule,

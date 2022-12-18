@@ -74,7 +74,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
           if(!this.sort.active || this.sort.direction === "")
           {
-            paginatedFilter.orderColumn = 'id';//"createDate";
+            paginatedFilter.orderColumn = 'id'; //"createDate";
             paginatedFilter.typeOrder = TypeOrderEnum.Descendant;
           }
           else
