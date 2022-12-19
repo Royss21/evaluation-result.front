@@ -37,7 +37,7 @@ export class RegisterCollaboratorModalComponent implements OnInit {
     private _modalRef: MatDialogRef<RegisterCollaboratorModalComponent>,
     public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: string
-  ) { 
+  ) {
 
     this.modalTitle = EvaluationCollaboratorText.modalRegisterCollaborator;
     this.evaluationCollaboratorFormGroup = _registerCollaboratorBuilderService.buildEvaluationCollaboratorForm();
@@ -51,10 +51,10 @@ export class RegisterCollaboratorModalComponent implements OnInit {
     return this.evaluationCollaboratorFormGroup.controls;
   }
 
-  private _valueChangeControl(){
+  private _valueChangeControl(): void {
     this.filteredOptions = this.collaboratorNameControl.valueChanges.pipe(
       startWith(''),
-      map(value => {    
+      map(value => {
 
         if(typeof value === 'string' && this._characterOption !== value){
           this._setValueForm(null);
@@ -125,8 +125,8 @@ export class RegisterCollaboratorModalComponent implements OnInit {
   }
 
   displayFn(collaborator: ICollaboratorNotInEvaluation): string {
-    
-    return collaborator 
+
+    return collaborator
       ? `${collaborator?.documentNumber} | ${collaborator?.name} ${collaborator?.lastName} ${collaborator?.middleName}`
       : '';
   }
@@ -138,7 +138,7 @@ export class RegisterCollaboratorModalComponent implements OnInit {
   confirmSave(isClose: boolean = true){
 
     CustomValidations.marcarFormGroupTouched(this.evaluationCollaboratorFormGroup);
-    
+
     if(this.evaluationCollaboratorFormGroup.invalid)
       return;
 
@@ -154,7 +154,7 @@ export class RegisterCollaboratorModalComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) 
+      if (result)
         this._save(evaluationCollaborator);
     });
   }

@@ -52,13 +52,13 @@ export class CollaboratorListComponent {
   }
 
   private openModal(): void {
-    const modalLevel = this._dialog.open(CollaboratorModalComponent, {
-      width: ConstantsGeneral.mdModal,
+    const collaboratorModal = this._dialog.open(CollaboratorModalComponent, {
+      width: ConstantsGeneral.lgModal,
       disableClose: true,
       data: 1
     });
 
-    modalLevel.afterClosed()
+    collaboratorModal.afterClosed()
       .subscribe(() => {
         this.paginatedBehavior.next(this.paginatedFilterCurrent);
       });

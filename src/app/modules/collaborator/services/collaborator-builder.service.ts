@@ -54,7 +54,8 @@ export class CollaboratorBuilderService {
         collaborator?.email || null,
         [
           //TODO: FALTA AGREGAR VALIDACION DE EMAIL
-          Validators.required
+          Validators.required,
+          Validators.maxLength(100)
         ]
       ],
       code: [collaborator?.code || null],

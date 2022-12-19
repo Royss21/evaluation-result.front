@@ -1,29 +1,30 @@
 
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 import { ApiService } from '../api.service';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
-import { ICollaboratorNotInEvaluation } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
+import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
+import { ICollaborator, ICollaboratorNotInEvaluation } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CollaboratorService {
 
-  private controller = 'collaborator';
-  private url = `https://localhost:7253/api/${this.controller}`
+  private _url = `${environment.serverUriApi}/collaborator`;
+
   constructor(
     private _apiService: ApiService
   ) { }
 
-
   getAllCollaboratorNotInEvaluation(evaluationId: string): Observable<ICollaboratorNotInEvaluation[]> {
-    return this._apiService.get<ICollaboratorNotInEvaluation[]>(`${this.url}/not-in-evaluation/${evaluationId}`);
+    return this._apiService.get<ICollaboratorNotInEvaluation[]>(`${this._url}${evaluationId}`);
   }
 
-  getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<ICollaboratorNotInEvaluation>> {
+  getPaginated(paginatedFilter: IPaginatedFilter): Observable<IPaginatedResponse<ICollaborator>> {
     return this._apiService
-      .get<IPaginatedResponse<ICollaboratorNotInEvaluation>>(`${this.url}/not-in-evaluation/paging`, paginatedFilter);
- }
+      .get<IPaginatedResponse<ICollaborator>>(`${this._url}/paging`, paginatedFilter);
+  }
 }

@@ -24,4 +24,9 @@ export class ChargeService {
     const url = `${this._url}/${id}`;
     return this._apiService.get<ICharge>(url);
   }
+
+  getByAreaId(id: number): Observable<ICharge[]> {
+    const url = `${this._url}/by-area/${id}`;
+    return this._apiService.get<ICharge[]>(url);
+  }
 }
