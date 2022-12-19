@@ -1,0 +1,17 @@
+
+::ng-deep{
+  mat-panel-description{
+    justify-content:end;
+
+    mat-checkbox{
+      margin: 0 2px;
+    }
+  }
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}

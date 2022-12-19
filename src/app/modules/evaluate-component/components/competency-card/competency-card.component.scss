@@ -1,0 +1,39 @@
+
+
+::ng-deep{
+
+  mat-radio-group{
+    text-align: center;
+
+    mat-radio-button{
+      padding: 2px 10px 3px 10px;
+  
+      .mat-radio-label{
+        display: flex !important;
+        justify-content: center!important;
+        align-items: center !important;
+        text-align: center !important;
+        flex-direction: column-reverse !important;
+        margin: auto !important;
+        
+        
+        .mat-radio-label-content{
+          padding:0;
+        }
+      } 
+    }
+  }
+}
+
+.competencies{
+  width: 100%;
+
+  .conduct{
+
+    &-description{
+      background-color: rgb(245, 245, 245);
+      text-align: justify;
+      text-justify: inter-word;
+    }
+  }
+}

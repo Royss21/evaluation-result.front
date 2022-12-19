@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
+import { IComponentCollaboratorEvaluate } from '@modules/evaluate-component/interfaces/component-collaborator-evaluate.interface';
 import { IComponentCollaboratorPaged } from '@modules/evaluate-component/interfaces/component-collaborator-paged.interface';
-import { IComponentCollaborator, IComponentCollaboratorEvaluate } from '@modules/evaluate-component/interfaces/component-collaborator.interface';
+import { IComponentCollaborator } from '@modules/evaluate-component/interfaces/component-collaborator.interface';
 import { IUpdateStatus } from '@modules/evaluate-component/interfaces/update-status.interface';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';

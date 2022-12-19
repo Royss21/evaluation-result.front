@@ -18,9 +18,9 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PopupChooseComponent } from './components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from './components/popup-confirm/popup-confirm.component';
-import { IConfig, NgxMaskModule } from 'ngx-mask';
+import { NgxMaskModule } from 'ngx-mask';
 import { CorporateObjectivesComponent } from './modules/corporate-objectives/corporate-objectives.component';
-import { CollaboratorListComponent } from './modules/collaborator/pages/collaborator-list/collaborator-list.component';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import { CollaboratorListComponent } from './modules/collaborator/pages/collabor
     PageNotFoundComponent,
     PopupChooseComponent,
     PopupConfirmComponent,
-    CorporateObjectivesComponent,
+    CorporateObjectivesComponent
   ],
   imports: [
     BrowserModule,

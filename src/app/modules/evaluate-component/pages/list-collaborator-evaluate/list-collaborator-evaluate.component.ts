@@ -47,10 +47,10 @@ export class ListCollaboratorEvaluateComponent implements OnInit {
     this._route.params.subscribe(params => {
       this._componentId = params['componentId'];
       this._evaluationId = params['evaluationId'];
-
-      this.title = this._componentId === ConstantsGeneral.components.corporateObjectives  
+      
+      this.title = this._componentId == ConstantsGeneral.components.corporateObjectives  
           ? EvaluateComponentText.titleCorporateObjectives
-          : this._componentId === ConstantsGeneral.components.areaObjectives
+          : this._componentId == ConstantsGeneral.components.areaObjectives
             ?  EvaluateComponentText.titleAreaObjectives
             : EvaluateComponentText.titleCompetencies;
     });
