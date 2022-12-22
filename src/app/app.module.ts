@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import localeEs from '@angular/common/locales/es';
 registerLocaleData(localeEs);
 
+import { NgxMaskModule } from 'ngx-mask';
 import { AppComponent } from './app.component';
 import { getPaginationEs } from './app.helpers';
 import { MatPaginatorIntl } from '@angular/material/paginator';
@@ -18,7 +19,6 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PopupChooseComponent } from './components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from './components/popup-confirm/popup-confirm.component';
-import { NgxMaskModule } from 'ngx-mask';
 import { CorporateObjectivesComponent } from './modules/corporate-objectives/corporate-objectives.component';
 
 

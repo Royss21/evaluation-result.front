@@ -1,1 +1,19 @@
-<p>page-not-found works!</p>
+<mat-card>
+  <div fxLayout="column" fxLayoutAlign="center center" class="my-5">
+    <div>
+      <img class="image-not-found" src="/assets/images/not-found.gif" alt="image not found">
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <h2>¡La página a la que desea navegar no existe!</h2>
+      <button
+        mat-raised-button
+        color="primary"
+        class="py-2 px-4"
+        (click)="goBack()"
+      >
+        <mat-icon>arrow_back_ios_new</mat-icon>&nbsp;
+        Volver
+      </button>
+    </div>
+  </div>
+</mat-card>

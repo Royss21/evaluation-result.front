@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="left">
+    <img src="https://pngimage.net/wp-content/uploads/2018/06/generic-company-logo-png-7.png" class="animation a6" style="margin: 0 auto 10px;width: 150px">
+    <div class="header">
+      <h2 class="animation a1">Form Login with random background</h2>
+      <p class="animation a2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultricies sit amet erat at finibus. Praesent justo justo, fringilla sed tellus in, pellentesque eleifend tortor.</p>
+    </div>
+    <form
+      class="form"
+      autocomplete="off"
+      [formGroup]="loginForm"
+      (ngSubmit)="login()"
+    >
+      <mat-form-field>
+        <mat-label>
+          <mat-icon>person</mat-icon>&nbsp;
+          <span>Usuario</span>
+        </mat-label>
+        <input
+          matInput
+          type="text"
+          maxlength="200"
+          name="username"
+          autocomplete="off"
+          formControlName="username"
+        >
+          <mat-error *ngIf="controlsForm['username'].hasError('required')">
+            Debe ingresar un usuario
+          </mat-error>
+          <mat-error *ngIf="controlsForm['username'].hasError('email')">
+            Debe ingresar un email válido
+          </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>
+          <mat-icon>person</mat-icon>&nbsp;
+          <span>Contraseña</span>
+        </mat-label>
+        <input
+          matInput
+          type="text"
+          maxlength="200"
+          name="password"
+          autocomplete="off"
+          formControlName="password"
+        >
+          <mat-error *ngIf="controlsForm['password'].hasError('required')">
+            Debe ingresar una contraseña
+          </mat-error>
+      </mat-form-field>
+      <div class="animation a5" style="margin: 20px">
+        <input type="checkbox" id="check" class="animation a5" name=""><label for="check" style="padding-left: 10px;color: #afafaf">Remember my password</label>
+      </div>
+      <button
+        mat-raised-button
+        color="primary"
+      >
+        Ingresar
+        <mat-icon>login</mat-icon>
+      </button>
+      <div class="mt-4">
+        <a class="forgot-password" href="#">¿Olvidó su contraseña?</a>
+      </div>
+    </form>
+  </div>
+  <div id="right"></div>
+</div>

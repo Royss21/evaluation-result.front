@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
-import { ICollaborator, ICollaboratorNotInEvaluation } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
+import { ICollaborator, ICollaboratorCreate, ICollaboratorNotInEvaluation } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +26,13 @@ export class CollaboratorService {
   getPaginated(paginatedFilter: IPaginatedFilter): Observable<IPaginatedResponse<ICollaborator>> {
     return this._apiService
       .get<IPaginatedResponse<ICollaborator>>(`${this._url}/paging`, paginatedFilter);
+  }
+
+  create(request: ICollaboratorCreate): Observable<ICollaborator> {
+    return this._apiService.post<ICollaborator>(`${this._url}`, request);
+  }
+
+  update(request: ICollaboratorCreate): Observable<boolean> {
+    return this._apiService.put<boolean>(`${this._url}`, request);
   }
 }

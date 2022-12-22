@@ -32,7 +32,7 @@ export interface ICollaboratorNotInEvaluation{
   lastName : string;
 }
 
-export interface ICollaboratorNotInEvaluationCreate {
+export interface ICollaboratorCreate {
   chargeId: number,
   documentNumber: string,
   middleName: string,

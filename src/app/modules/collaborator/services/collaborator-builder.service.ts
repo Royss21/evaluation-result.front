@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ICollaboratorNotInEvaluationCreate } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
+import { ICollaboratorCreate } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class CollaboratorBuilderService {
 
   constructor(private _fb: FormBuilder) { }
 
-  public buildCollaboratorForm(collaborator?: ICollaboratorNotInEvaluationCreate): FormGroup {
+  public buildCollaboratorForm(collaborator?: ICollaboratorCreate): FormGroup {
     return this._fb.group({
       name: [
         collaborator?.name || null,
@@ -53,8 +53,8 @@ export class CollaboratorBuilderService {
       email: [
         collaborator?.email || null,
         [
-          //TODO: FALTA AGREGAR VALIDACION DE EMAIL
           Validators.required,
+          Validators.email,
           Validators.maxLength(100)
         ]
       ],
