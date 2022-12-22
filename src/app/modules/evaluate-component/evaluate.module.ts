@@ -15,6 +15,7 @@ import { CompetencyCardComponent } from './components/competency-card/competency
 import { ConductItemComponent } from './components/conduct-item/conduct-item.component';
 import { StatusComponent } from './components/status/status.component';
 import { InfoCollaboratorComponent } from './components/info-collaborator/info-collaborator.component';
+import { CoreModule } from '@core/core.module';
 
 
 @NgModule({
@@ -28,13 +29,15 @@ import { InfoCollaboratorComponent } from './components/info-collaborator/info-c
     CompetencyCardComponent,
     ConductItemComponent,
     StatusComponent,
-    InfoCollaboratorComponent
+    InfoCollaboratorComponent,
+
   ],
   imports: [
     CommonModule,
     RouterModule,
     SharedModule,
     ComponentsModule,
+    CoreModule,
     EvaluateComponentRoutingModule
   ],
   exports: [

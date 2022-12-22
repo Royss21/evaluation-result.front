@@ -58,10 +58,10 @@ fxLayoutAlign.xs="start"
         class="p-1 pb-0 pt-0 mb-2" 
       >
         <app-objective-card
-          [subcomponentName]="getValueFormControl(i, 'subcomponentName')"
-          [minimunPercentage]="getValueFormControl(i, 'minimunPercentage')"
-          [maximunPercentage]="getValueFormControl(i, 'maximunPercentage')"
-          [valueCurrent]="getValueFormControl(i, 'valueResult')"
+          [subcomponentName]="evaluateDetail.value.subcomponentName"
+          [minimunPercentage]="evaluateDetail.value.minimunPercentage"
+          [maximunPercentage]="evaluateDetail.value.maximunPercentage"
+          [valueCurrent]="evaluateDetail.value.valueResult"
           [isCompleted]="isStatusCompleted"
           formControlName="valueResult"
         >
@@ -71,8 +71,8 @@ fxLayoutAlign.xs="start"
   </div>
 
   <div
-    fxLayout.xs="row wra"
-    fxLayout.sm="row wra"
+    fxLayout.xs="row wrap"
+    fxLayout.sm="row wrap"
     fxLayout.md="row wrap"
     fxLayout.lg="row wrap"
     fxLayout.xl="row wrap"
@@ -101,7 +101,3 @@ fxLayoutAlign.xs="start"
     </button>
    </div>
 </form>
-
-<!-- <pre>
-  {{ evaluateFormGroup.value | json }}
-</pre> -->

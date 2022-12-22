@@ -17,6 +17,8 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 })
 export class EvaluationCollaboratorListComponent implements OnInit {
 
+  //validar/avisar si tiene evaluaciones terminadas
+
   private unsubscribe$ = new Subject<any>();
   private _evaluationId: string = '';
   evaluationCollaboratorPaginated$: Observable<any>;

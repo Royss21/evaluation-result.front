@@ -29,10 +29,10 @@
         <strong>{{ subcomponentName }}</strong>
       </div>
       <div>
-        Meta: {{ maximunPercentage }}
+        Meta: {{ maximunPercentage | percent: '0.2-2':'en' }}
       </div>
       <div>
-        Minimo: {{ minimunPercentage }}
+        Minimo: {{ minimunPercentage | percent: '0.2-2':'en'  }}
       </div>
   </div>
   <div
@@ -51,14 +51,17 @@
     >
       <mat-label>Puntaje</mat-label>
       <input
+          [ngModel]="objective.valueInput | numberFormat" 
+          (ngModelChange)="onChange($event)"
+          [ngModelOptions]="{updateOn:'blur'}"
+          class="text-right"
           #valueInput="ngModel"
-          type="number"
+          type="text"
           autocomplete="off"
           matInput
-          [(ngModel)]="objective.valueInput"
+          appOnlyNumber
           required
           [readonly]="isCompleted"
-          (input)="onInput()"
       >
       <mat-error *ngIf="valueInput.errors?.['required']">
         El puntaje es <strong>requerido</strong>.

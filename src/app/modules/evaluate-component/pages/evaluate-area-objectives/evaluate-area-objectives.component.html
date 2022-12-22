@@ -1,1 +1,103 @@
-<p>evaluate-area-objectives works!</p>
+
+<div fxLayout="row" >
+  <h2 class="fw-bold">Evaluación de Objetivos de Area</h2>
+</div>
+
+<div
+  fxLayout.xs="column"
+  fxLayout.sm="row wrap"
+  fxLayout.md="row wrap"
+  fxLayout.lg="row wrap"
+  fxLayout.xl="row wrap"
+  class="p-1 pb-0 pt-0 pb-2"
+  fxLayoutAlign.xl="space-between"
+  fxLayoutAlign.lg="space-between"
+  fxLayoutAlign.md="space-between"
+  fxLayoutAlign.sm="space-between"
+  fxLayoutAlign.xs="start"
+>
+ 
+  <app-info-collaborator
+    [infoCollaborator]="infoCollaborator"
+  ></app-info-collaborator>
+
+  <app-status
+    [statusName]="infoCollaborator.statusName"
+    [statusId]="infoCollaborator.statusId"
+  ></app-status>
+
+</div>
+
+<form
+    class="p-3"
+    autocomplete="off"
+    [formGroup]="evaluateFormGroup"
+    (ngSubmit)="confirmFinalizedEvaluation()"
+>
+  <div
+    fxLayout.xs="column"
+    fxLayout.sm="row wrap"
+    fxLayout.md="row wrap"
+    fxLayout.lg="row wrap"
+    fxLayout.xl="row wrap"
+    class="p-1 pb-0 pt-0"
+    fxLayoutAlign.xs="space-between center"
+    fxLayoutAlign.sm="space-between center"
+    fxLayoutAlign.md="start center"
+    fxLayoutAlign.lg="start center"
+    fxLayoutAlign.xl="start center"
+    formArrayName="componentCollaboratorDetailsEvaluate"
+   >
+    <ng-container [formGroupName]="i" *ngFor="let evaluateDetail of componentCollaboratorDetailsEvaluate.controls; let i = index">
+      <div
+        fxFlex.xl="33.333%"    
+        fxFlex.lg="33.333%"
+        fxFlex.md="50%"
+        fxFlex.sm="100%"
+        fxFlex.xs="100%"
+        class="p-1 pb-0 pt-0 mb-2" 
+      >
+        <app-objective-card
+          [subcomponentName]="evaluateDetail.value.subcomponentName"
+          [minimunPercentage]="evaluateDetail.value.minimunPercentage"
+          [maximunPercentage]="evaluateDetail.value.maximunPercentage"
+          [valueCurrent]="evaluateDetail.value.valueResult"
+          [isCompleted]="isStatusCompleted"
+          formControlName="valueResult"
+        >
+        </app-objective-card>
+      </div>
+    </ng-container>
+  </div>
+
+  <div
+    fxLayout.xs="row wra"
+    fxLayout.sm="row wra"
+    fxLayout.md="row wrap"
+    fxLayout.lg="row wrap"
+    fxLayout.xl="row wrap"
+    class="p-1 pb-0 pt-3"
+    fxLayoutAlign="center center"
+    fxLayoutAlign.xs="space-between center"
+    fxLayoutGap="10"
+   >
+    <button 
+      mat-mini-fab 
+      color="basic" 
+      matTooltip="Cancelar"
+      type="button" 
+      (click)="cancel()"
+    >
+        <mat-icon>close</mat-icon>
+    </button>
+    <button 
+      mat-mini-fab 
+      color="primary" 
+      matTooltip="Guardar notas de evaluación"
+      type="submit"
+      *ngIf="!isStatusCompleted"
+    >
+      <mat-icon>save</mat-icon>
+    </button>
+   </div>
+</form>

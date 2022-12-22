@@ -36,7 +36,8 @@ export class ComponentCollaboratorEvaluateBuilderService {
     return this._fb.group({
       id:[detail.id],
       conductDescription:[detail.conductDescription],
-      valueResult:[detail.pointValue, [Validators.required]]
+      pointValue:[detail.pointValue, [Validators.required]],
+      isSelected:[(detail.pointValue || 0) > 0],
     });
   }
 

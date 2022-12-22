@@ -8,7 +8,7 @@ import { ComponentCollaboratorEvaluateBuilderService } from '@modules/evaluate-c
 import { ConstantsGeneral } from '@shared/constants';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 import { ICollaboratorInformation } from '@modules/evaluate-component/interfaces/collaborator-information.interface';
-import { IComponentCollaboratorEvaluate } from '@modules/evaluate-component/interfaces/component-collaborator.interface';
+import { IComponentCollaboratorEvaluate } from '@modules/evaluate-component/interfaces/component-collaborator-evaluate.interface';
 import { Location } from '@angular/common';
 import { IUpdateStatus } from '@modules/evaluate-component/interfaces/update-status.interface';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
@@ -104,7 +104,6 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
           statusId: ConstantsGeneral.status.Pending
       }
 
-      console.log(updateStatus)
       this._componentCollaboratorService.updateStatus(updateStatus)
         .subscribe(() => this._location.back())
     }
@@ -125,7 +124,13 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
     if(this.evaluateFormGroup.invalid)
       return;
 
-      const evaluateComponent: IComponentCollaboratorEvaluate = { ...this.evaluateFormGroup.getRawValue() } ;
+      const evaluateComponent: IComponentCollaboratorEvaluate = { ...this.evaluateFormGroup.getRawValue() } ; 
+      evaluateComponent.componentCollaboratorDetailsEvaluate.forEach(cc => 
+      {
+          cc.valueResult = cc.valueResult > 0 ? (cc.valueResult / 100.00) : cc.valueResult;
+      });
+      console.log(evaluateComponent);   
+      
       const dialogRef = this._dialog.open(PopupChooseComponent, {
         data: ConstantsGeneral.chooseData,
         autoFocus: false,
@@ -136,6 +141,5 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
         if (result) 
           this._save(evaluateComponent);
       });
-
   }
 }
