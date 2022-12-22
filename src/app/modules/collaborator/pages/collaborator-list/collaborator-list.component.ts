@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
+import { ConstantsGeneral } from '@shared/constants';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { CollaboratorService } from '@core/services/collaborator/collaborator.service';
-import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { CollaboratorHelper } from '@modules/collaborator/helpers/collaborator.helpers';
+import { ICollaborator } from '../../interfaces/collaboator-not-in-evaluation.interface';
+import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { CollaboratorModalComponent } from '@modules/collaborator/components/collaborator-modal/collaborator-modal.component';
-import { ConstantsGeneral } from '@shared/constants';
 
 @Component({
   selector: 'app-collaborator-list',
@@ -51,17 +52,21 @@ export class CollaboratorListComponent {
       });
   }
 
-  private openModal(): void {
+  private openModal(collaborator?: ICollaborator): void {
     const collaboratorModal = this._dialog.open(CollaboratorModalComponent, {
       width: ConstantsGeneral.lgModal,
       disableClose: true,
-      data: 1
+      data: collaborator
     });
 
     collaboratorModal.afterClosed()
       .subscribe(() => {
         this.paginatedBehavior.next(this.paginatedFilterCurrent);
       });
+  }
+
+  public updateCollaborator(collaborator: ICollaborator): void {
+    this.openModal(collaborator);
   }
 
   create(): void{

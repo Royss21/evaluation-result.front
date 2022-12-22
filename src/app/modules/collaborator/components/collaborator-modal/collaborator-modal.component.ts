@@ -1,19 +1,20 @@
 import { Component, Inject } from '@angular/core';
 import { forkJoin, Observable, map, startWith } from 'rxjs';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { AreaService } from '@core/services/area/area.service';
 import { IArea } from '@modules/area/interfaces/area.interface';
-import { CollaboratorBuilderService } from '../../services/collaborator-builder.service';
-import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
-import { ICollaboratorNotInEvaluationCreate } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { GerencyService } from '@core/services/gerency/gerency.service';
-import { IGerency } from '@modules/gerency/interfaces/gerency.interface';
 import { ChargeService } from '@core/services/charge/charge.service';
 import { ICharge } from '@modules/charge/interfaces/charge.interface';
+import { GerencyService } from '@core/services/gerency/gerency.service';
+import { IGerency } from '@modules/gerency/interfaces/gerency.interface';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { CollaboratorBuilderService } from '../../services/collaborator-builder.service';
+import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
+import { ICollaborator } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
+import { CollaboratorText } from '@modules/collaborator/helpers/collaborator.helpers';
 
 @Component({
   selector: 'app-collaborator-modal',
@@ -24,9 +25,8 @@ export class CollaboratorModalComponent {
 
   private _isCloseAfterSave: boolean = false;
 
-
   public collaboratorFormGroup: FormGroup;
-  public modalTitle: string = 'Crear colaborador';
+  public modalTitle: string = '';
 
   private _areaList: IArea[] = [];
   private _chargeList: ICharge[] = [];
@@ -36,21 +36,27 @@ export class CollaboratorModalComponent {
   public chargeListFiltered: Observable<ICharge[]>;
   public gerencyListFiltered: Observable<IGerency[]>;
 
-  public areaNameControl = new FormControl('');
-  public chargeNameControl = new FormControl('');
-  public gerencyNameControl = new FormControl('');
+  public areaNameControl = new FormControl('', Validators.required);
+  public chargeNameControl = new FormControl('', Validators.required);
+  public gerencyNameControl = new FormControl('', Validators.required);
 
   constructor(
     public _dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: number,
-    private _modalRef: MatDialogRef<CollaboratorModalComponent>,
     private _areaService: AreaService,
     private _chargeService: ChargeService,
     private _gerencyService: GerencyService,
+    @Inject(MAT_DIALOG_DATA) public data: ICollaborator,
+    private _modalRef: MatDialogRef<CollaboratorModalComponent>,
     private _collaboratorBuilderService: CollaboratorBuilderService
   ) {
-    this.collaboratorFormGroup = _collaboratorBuilderService.buildCollaboratorForm();
+    this.modalTitle = data ? CollaboratorText.modalUdpate : CollaboratorText.modalCreate;
+    this.collaboratorFormGroup = _collaboratorBuilderService.buildCollaboratorForm(data);
     this._getGerencies();
+  }
+
+  private _setValues(collaborator: ICollaborator) {
+    const gerency = this._gerencyList.find(gerency => gerency.id === collaborator.gerencyId) as IGerency;
+    this.gerencyNameControl.setValue(gerency.name);
   }
 
   private _getGerencies(): void {
@@ -58,11 +64,12 @@ export class CollaboratorModalComponent {
       .subscribe((gerencies: IGerency[]) => {
         this._gerencyList = gerencies;
         this._valueChangeControls();
+        this.data && this._setValues(this.data);
       });
   }
 
-  private _getAreas(): void {
-    this._areaService.getAll()
+  private _getAreas(gerencyId: number): void {
+    this._areaService.getByIdGerency(gerencyId)
      .subscribe((areas: IArea[]) => {
        this._areaList = areas;
       });
@@ -79,8 +86,8 @@ export class CollaboratorModalComponent {
     );
   }
 
-  private _getCharges(idArea: number): void {
-    this._chargeService.getByAreaId(idArea)
+  private _getCharges(areaId: number): void {
+    this._chargeService.getByAreaId(areaId)
       .subscribe((charges: ICharge[]) => {
         this._chargeList = charges;
       });
@@ -99,15 +106,14 @@ export class CollaboratorModalComponent {
 
   private _valueChangeControls(): void {
     this.gerencyListFiltered = this.gerencyNameControl.valueChanges
-      .pipe(
-        startWith(''),
-        map((gerency: any) => {
-          return gerency
-            ? this._filterGerency(gerency)
-            : this._gerencyList.slice()
-          }
-        )
-      );
+    .pipe(
+      startWith(''),
+      map((gerency: any) => {
+        return gerency
+        ? this._filterGerency(gerency)
+        : this._gerencyList.slice()
+      })
+    );
   }
 
   private _filterGerency(value: string | IGerency): IGerency[] {
@@ -149,10 +155,15 @@ export class CollaboratorModalComponent {
       return this._chargeList;
   }
 
-  public selectedGerency(selected: MatAutocompleteSelectedEvent): void {
-    const gerency = selected.option.value as IGerency;
-    this._getAreas();
+  public selectedGerency(selected: MatAutocompleteSelectedEvent | IGerency): void {
+    let gerency = null;
+    if ('name' in selected) {
+      gerency = selected
+    } else {
+      gerency = selected.option.value as IGerency;
+    }
     this.displayFnGerency(gerency);
+    this._getAreas(gerency.id);
   }
 
   public selectedArea(selected: MatAutocompleteSelectedEvent): void {
@@ -179,7 +190,7 @@ export class CollaboratorModalComponent {
     return charge ? `${charge.name}` : '';
   }
 
-  private save(collaborator: ICollaboratorNotInEvaluationCreate): void {
+  private save(collaborator: ICollaborator): void {
     console.log("collaborator: ", collaborator)
   }
 

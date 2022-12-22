@@ -202,6 +202,9 @@
                   <span>{{ gerency.name }}</span>
                 </mat-option>
               </mat-autocomplete>
+              <mat-error *ngIf="gerencyNameControl.hasError('required')">
+                La gerencia es <strong>requerida</strong>.
+              </mat-error>
             </mat-form-field>
           </div>
         <div
@@ -230,6 +233,9 @@
                 <span>{{ area.name }}</span>
               </mat-option>
             </mat-autocomplete>
+            <mat-error *ngIf="areaNameControl.hasError('required')">
+              El área es <strong>requerida</strong>.
+            </mat-error>
           </mat-form-field>
         </div>
         <div
@@ -258,7 +264,91 @@
               <span>{{ charge.name }}</span>
             </mat-option>
           </mat-autocomplete>
+          <mat-error *ngIf="chargeNameControl.hasError('required')">
+            El cargo es <strong>requerido</strong>.
+          </mat-error>
         </mat-form-field>
+        </div>
+      </div>
+      <div
+        fxLayout.xs="column"
+        fxLayout.sm="row"
+        fxLayout.md="row"
+        fxLayout.lg="row"
+        fxLayout.xl="row"
+        fxLayoutGap="10px"
+        >
+          <div
+            fxFlex.xl="33"
+            fxFlex.lg="33"
+            fxFlex.md="33"
+            fxFlex.sm="33"
+            fxFlex.xs="100"
+          >
+            <mat-form-field
+              fxFill
+              appearance="outline"
+            >
+              <mat-label>Fecha cumpleaños</mat-label>
+              <input
+                matInput
+                formControlName="dateBirthday"
+                [matDatepicker]="dpDateBirthday"
+              >
+              <mat-datepicker-toggle
+                [for]="dpDateBirthday"
+                matSuffix
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpDateBirthday></mat-datepicker>
+            </mat-form-field>
+          </div>
+        <div
+          fxFlex.xl="33"
+          fxFlex.lg="33"
+          fxFlex.md="33"
+          fxFlex.sm="33"
+          fxFlex.xs="100"
+        >
+          <mat-form-field
+            fxFill
+            appearance="outline"
+          >
+            <mat-label>Fecha admisión</mat-label>
+            <input
+              matInput
+              formControlName="dateAdmission"
+              [matDatepicker]="dpDateAdmision"
+            >
+            <mat-datepicker-toggle
+              [for]="dpDateAdmision"
+              matSuffix
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dpDateAdmision></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div
+          fxFlex.xl="33"
+          fxFlex.lg="33"
+          fxFlex.md="33"
+          fxFlex.sm="33"
+          fxFlex.xs="100"
+        >
+          <mat-form-field
+            fxFill
+            appearance="outline"
+          >
+            <mat-label>Fecha egreso</mat-label>
+            <input
+              matInput
+              formControlName="dateEgress"
+              [matDatepicker]="dpDateEgress"
+            >
+            <mat-datepicker-toggle
+              [for]="dpDateEgress"
+              matSuffix
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dpDateEgress></mat-datepicker>
+          </mat-form-field>
         </div>
       </div>
     </mat-dialog-content>
