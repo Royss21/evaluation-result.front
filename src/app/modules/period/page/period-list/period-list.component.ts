@@ -65,7 +65,7 @@ export class PeriodListComponent {
   }
 
   public goEvaluation(period: IPeriod): void {
-    this._router.navigateByUrl(`/evaluation/add`, { state: period }).then(() => {});
+    this._router.navigateByUrl(`/evaluation/list`);
   }
 
   public confirmDeleted(idPeriod: number): void {

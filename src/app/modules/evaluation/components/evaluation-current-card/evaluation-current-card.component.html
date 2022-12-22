@@ -1,0 +1,68 @@
+<mat-card>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start"
+    fxLayoutGap="10px grid"
+    fxflexfill
+    class="p-3"
+  >
+    <div 
+      fxLayout="row"
+      fxLayoutGap="10px grid"
+      fxflexfill
+    >
+      <img src="/assets/images/flow.svg" alt="flow">
+      <div 
+        fxLayout="column"
+        fxLayoutAlign="start"
+      >
+        <mat-card-title class="fs-6 fw-bold m-0">
+         {{ periodInProgress?.periodName }}
+        </mat-card-title>
+        <mat-card-title class="fs-6 fw-bold m-0">
+          {{ periodInProgress?.evaluationCurrent?.name }} en curso:
+        </mat-card-title>
+        <mat-card-subtitle class="m-0">
+          {{ periodInProgress?.evaluationCurrent?.rangeDate }}
+        </mat-card-subtitle>
+      </div>
+    </div>
+
+
+    <mat-card-content class="m-0 p-0">
+      <span class="fs-8 fw-bolder mb-2">Componentes habilitados: </span>
+      <ul class="p-0 mt-2">
+
+        <app-component-item
+          [icon]="'/assets/images/objCorp.png'"
+          [componentName]="'Objetivos corporativos'"
+          [isCreatedInEvaluation]="periodInProgress?.evaluationCurrent?.hasComponentCorporateObjectives || false"
+        ></app-component-item>
+
+        <app-component-item
+          [icon]="'/assets/images/kpi.png'"
+          [componentName]="'Objetivos de Áreas'"
+          [isCreatedInEvaluation]="periodInProgress?.evaluationCurrent?.hasComponentAreaObjectives || false"
+        ></app-component-item>
+
+        <app-component-item
+          [icon]="'/assets/images/comp.png'"
+          [componentName]="'Competencias'"
+          [isCreatedInEvaluation]="periodInProgress?.evaluationCurrent?.hasComponentCompetencies || false"
+        ></app-component-item>
+        
+      </ul>
+    </mat-card-content>
+
+    <ng-template *ngId=" stagesRangeDate.lenght > 0 ">
+      <hr >
+      <app-stage-evaluate-item
+        [stageName] = "'Etapa'"
+        [rangeDate] = "'asdsad asdsadsad assadasdsadasd a'"
+      ></app-stage-evaluate-item>
+    </ng-template>
+    
+
+    
+  </div>
+</mat-card>

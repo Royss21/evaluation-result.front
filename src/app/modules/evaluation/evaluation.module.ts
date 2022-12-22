@@ -14,6 +14,9 @@ import { ConfigAreaGoalsComponent } from './components/config-area-goals/config-
 import { ResumeComponentComponent } from './components/resume-component/resume-component.component';
 import { EvaluationAddComponent } from './pages/evaluation-add/evaluation-add.component';
 import { EvaluationDetailComponent } from './pages/evaluation-detail/evaluation-detail.component';
+import { ComponentItemComponent } from './components/component-item/component-item.component';
+import { StageEvaluateItemComponent } from './components/stage-evaluate-item/stage-evaluate-item.component';
+import { EvaluationCurrentCardComponent } from './components/evaluation-current-card/evaluation-current-card.component';
 
 
 @NgModule({
@@ -27,7 +30,10 @@ import { EvaluationDetailComponent } from './pages/evaluation-detail/evaluation-
     ConfigAreaGoalsComponent,
     ResumeComponentComponent,
     EvaluationAddComponent,
-    EvaluationDetailComponent
+    EvaluationDetailComponent,
+    ComponentItemComponent,
+    StageEvaluateItemComponent,
+    EvaluationCurrentCardComponent
   ],
   imports: [
     CommonModule,

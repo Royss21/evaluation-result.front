@@ -25,11 +25,11 @@ const routes: Routes = [
         component: EvaluationEditComponent
       },
       {
-        path: 'add',
+        path: 'create',
         component: EvaluationAddComponent
       },
       {
-        path: 'detail',
+        path: ':id/detail',
         component: EvaluationDetailComponent
       },
       {
