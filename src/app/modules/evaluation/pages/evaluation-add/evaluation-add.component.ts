@@ -10,6 +10,7 @@ import { CustomValidations } from '@shared/helpers/custom-validations';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { EvaluationBuilderService } from '@modules/evaluation/services/evaluation-builder.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-evaluation-add',
@@ -38,7 +39,8 @@ export class EvaluationAddComponent {
   constructor(
     private _router: Router,
     public _dialog: MatDialog,
-    private _evaluationBuilderService: EvaluationBuilderService
+    private _evaluationBuilderService: EvaluationBuilderService,
+    private _location: Location
   ) {
     this.evaluationFormGroup = this._evaluationBuilderService.buildEvaluationForm();
     this.corpGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals();
@@ -97,7 +99,8 @@ export class EvaluationAddComponent {
   }
 
   private _goBack(): void {
-    this._router.navigate([`/period/list`]).then(() => {});
+    //this._router.navigate([`/period/list`]).then(() => {});
+    this._location.back();
   }
 
   showConfirmMessage() {

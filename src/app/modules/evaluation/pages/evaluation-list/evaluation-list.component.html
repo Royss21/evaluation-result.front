@@ -1,86 +1,93 @@
 <div
   fxLayout.xs="column"
   fxLayout.sm="column"
-  fxLayout.md="row"
-  fxLayout.lg="row"
-  fxLayout.xl="row"
-  fxLayoutGap="10px"
+  fxLayout.md="row wrap"
+  fxLayout.lg="row wrap"
+  fxLayout.xl="row wrap"
+  fxLayoutAlign="start"
+  fxLayoutGap="10px grid"
+  fxflexfill
 >
-  <mat-card class="card-container p-3">
-    <div
-      fxLayout="row wrap"
-      fxLayoutGap="20px"
-      fxLayoutAlign="between center"
-    >
-      <img src="/assets/images/flow.svg" alt="flow">
-      <div>
-        <mat-card-title class="fs-6 fw-bold">
-          Periodo 2021-1 en curso:
-        </mat-card-title>
-        <mat-card-subtitle>
-          01 de enero, 2022 - 31 de julio, 2022
-        </mat-card-subtitle>
-      </div>
-    </div>
 
-    <mat-card-content>
-      <span class="fs-8 fw-bolder">Componentes habilitados</span>
-      <ul>
-        <li>Objetivos corporativos</li>
-        <li>Objetivos de Áreas</li>
-        <li>Competencias</li>
-      </ul>
-    </mat-card-content>
-  </mat-card>
+  <div
+    fxFlex.xl="33.3333%"    
+    fxFlex.lg="50%"
+    fxFlex.md="50%"
+    fxFlex.sm="100%"
+    fxFlex.xs="100%"
+    *ngIf="periodInProgress?.evaluationCurrent"
+    (click)="goEvaluationDetail()"
+    class="cursor-pointer"
+  >
+    <app-evaluation-current-card
+      [periodInProgress]="periodInProgress"
+    ></app-evaluation-current-card>
+  </div>
 
-  <mat-card class="card-container_period">
-    <div
-      fxLayout="row"
-      fxLayoutGap="20px"
-      fxLayoutAlign="between center"
-    >
-      <div class="container-text p-3">
-        <mat-card-title class="fs-6 fw-bold">
-          Crear nuevo periodo
-        </mat-card-title>
-        <p class="text-muted">Ingresa a esta sección para realizar la validación de los datos de cajas</p>
-        <button
-          type="button"
-          mat-raised-button
-        >
-        <span class="text-primary">crear</span>
-          <mat-icon class="text-primary">arrow_right_alt</mat-icon>
-        </button>
+  
+  <div
+    fxFlex.xl="33.3333%"    
+    fxFlex.lg="50%"
+    fxFlex.md="50%"
+    fxFlex.sm="100%"
+    fxFlex.xs="100%"
+    *ngIf="periodInProgress"
+  >
+    <mat-card class="">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="between center"
+      >
+        <div class="p-3">
+          <mat-card-title class="fs-6 fw-bold">
+            Crear evaluación
+          </mat-card-title>
+          <p class="text-muted">Ingresa a esta sección para realizar la validación de los datos de cajas</p>
+          <button
+            mat-raised-button
+            type="button"
+            (click)="goEvaluation()"
+          >
+          <span class="text-primary">Crear</span>
+            <mat-icon class="text-primary">arrow_right_alt</mat-icon>
+          </button>
+        </div>
+        <div class="container-img">
+          <img class="img-vatacion" src="../../../../../assets/images/cherry-vacation.svg" width="150px" alt="vacation">
+        </div>
       </div>
-      <div class="container-img">
-        <img class="img-vatacion" src="../../../../../assets/images/cherry-vacation.svg  " alt="vacation">
+    </mat-card>
+  </div>
+  
+  <div
+    fxFlex.xl="33.3333%"    
+    fxFlex.lg="50%"
+    fxFlex.md="50%"
+    fxFlex.sm="100%"
+    fxFlex.xs="100%"
+  >
+    <mat-card class="">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="between center"
+      >
+        <div class="p-3">
+          <mat-card-title class="fs-6 fw-bold">
+            Configuraciones de evaluación
+          </mat-card-title>
+          <p class="text-muted">Ingresa a esta sección para realizar la validación de los datos de cajas</p>
+          <a
+            routerLink="/configuration"
+            mat-raised-button
+          >
+            <span class="text-primary">Ir a configuraciones</span>
+            <mat-icon class="text-primary">arrow_right_alt</mat-icon>
+          </a>
+        </div>
+        <div class="container-img">
+          <img class="img-vatacion" src="../../../../../assets/images/configuracion 1.svg" width="120px" alt="vacation">
+        </div>
       </div>
-    </div>
-  </mat-card>
-
-  <mat-card class="card-container_period">
-    <div
-      fxLayout="row"
-      fxLayoutGap="20px"
-      fxLayoutAlign="between center"
-    >
-      <div class="container-text p-3">
-        <mat-card-title class="fs-6 fw-bold">
-          Configuración de periodos
-        </mat-card-title>
-        <p class="text-muted">Ingresa a esta sección para realizar la validación de los datos de cajas</p>
-        <button
-          type="button"
-          mat-raised-button
-        >
-          <span class="text-primary">Ir a configuración</span>
-          <mat-icon class="text-primary">arrow_right_alt</mat-icon>
-        </button>
-      </div>
-      <div class="container-img">
-        <img class="img-vatacion" src="../../../../../assets/images/configuracion 1.svg" alt="vacation">
-      </div>
-    </div>
-  </mat-card>
-
+    </mat-card>
+  </div>
 </div>

@@ -1,0 +1,29 @@
+<li 
+  fxLayout="row"
+  fxLayoutAlign="start center"
+  fxLayoutGap="10px grid"
+  fxflexfill
+>
+  <div 
+    fxFlex="15%"
+    fxFlex.xl="10%"
+  >
+    <img [src]="icon" alt="flow" width="30" class="p-0">
+  </div>
+  <div 
+    fxFlex.xs="70%"
+    fxFlex.sm="40%"
+    fxFlex.md="50%"
+    fxFlex.lg="40%"
+    fxFlex.xl="40%"
+  >
+    {{ componentName }}
+  </div>
+  <div 
+    fxFlex="15%"
+    fxFlex.xl="10%"
+  >
+    <mat-icon *ngIf="isCreatedInEvaluation">check_circle</mat-icon>
+    <mat-icon *ngIf="!isCreatedInEvaluation">highlight_off</mat-icon>
+  </div>
+</li>
