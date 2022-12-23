@@ -18,6 +18,22 @@ const routes: Routes = [
         loadChildren: () => import('../collaborator/collaborator.module').then(m => m.CollaboratorModule)
       },
       {
+        path: 'gerency',
+        loadChildren: () => import('../gerency/gerency.module').then(m => m.GerencyModule)
+      },
+      {
+        path: 'hierarchy',
+        loadChildren: () => import('../hierarchy/hierarchy.module').then(m => m.HierarchyModule)
+      },
+      {
+        path: 'charge',
+        loadChildren: () => import('../charge/charge.module').then(m => m.ChargeModule)
+      },
+      {
+        path: 'area',
+        loadChildren: () => import('../area/area.module').then(m => m.AreaModule)
+      },
+      {
         path:'',
         redirectTo:'',
         pathMatch: 'full'

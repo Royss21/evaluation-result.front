@@ -1,6 +1,9 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import {MatRadioModule} from '@angular/material/radio';
+import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -16,17 +19,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { FlexLayoutModule } from "@angular/flex-layout";
-import {MatRadioModule} from '@angular/material/radio';
 import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
@@ -61,7 +62,8 @@ import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/
     ReactiveFormsModule,
     FlexLayoutModule,
     MatSnackBarModule,
-    MatRadioModule
+    MatRadioModule,
+    RouterModule
   ],
   exports: [
     MatButtonModule,
@@ -91,7 +93,8 @@ import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/
     ReactiveFormsModule,
     FlexLayoutModule,
     MatSnackBarModule,
-    MatRadioModule
+    MatRadioModule,
+    RouterModule
   ],
   providers: [
     MatDatepickerModule,

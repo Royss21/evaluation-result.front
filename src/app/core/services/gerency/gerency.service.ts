@@ -27,4 +27,17 @@ export class GerencyService {
     return this._apiService
       .get<IPaginatedResponse<IGerency>>(`${this._url}/paging`, paginatedFilter);
   }
+
+  create(request: IGerency): Observable<IGerency> {
+    return this._apiService.post<IGerency>(`${this._url}`, request);
+  }
+
+  update(request: IGerency): Observable<boolean> {
+    return this._apiService.put<boolean>(`${this._url}`, request);
+  }
+
+  delete(id: number): Observable<boolean> {
+    return this._apiService
+        .delete<boolean>(`${this._url}/${id}`);
+  }
 }

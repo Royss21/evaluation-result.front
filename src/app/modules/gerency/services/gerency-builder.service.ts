@@ -1,28 +1,27 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ILevel } from '@modules/level/interfaces/level.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
+import { IGerency } from '@modules/gerency/interfaces/gerency.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LevelModalBuilderService {
+export class GerencyBuilderService {
 
   constructor(private _fb: FormBuilder) { }
 
-  public buildLevelForm(level?: ILevel): FormGroup {
+  public buildGerencyForm(gerency: IGerency): FormGroup {
     return this._fb.group({
-      id: [level?.id || null],
+      id: [gerency?.id || null],
       name: [
-        level?.name || '',
+        gerency?.name || null,
         [
           Validators.required,
           CustomValidations.NotEmpty,
           Validators.maxLength(100)
         ]
       ],
-      description: [ level?.description || '']
-    });
+    })
   }
 }

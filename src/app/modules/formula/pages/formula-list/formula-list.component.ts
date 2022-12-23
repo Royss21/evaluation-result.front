@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+
+import { ConstantsGeneral } from '@shared/constants';
+import { FormulaHelper } from '@modules/formula/helpers/formula.helper';
+import { FormulaService } from '@core/services/formula/formula.service';
+import { IFormula } from '@modules/formula/interfaces/formula.interface';
+import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
-import { IElementRowTable } from '@components/table/interfaces/table.interface';
-import { FormulaService } from '@core/services/formula/formula.service';
 import { FormulaModalComponent } from '@modules/formula/components/formula-modal/formula-modal.component';
-import { FormulaHelper } from '@modules/formula/helpers/formula.helper';
-import { IFormula } from '@modules/formula/interfaces/formula.interface';
-import { ConstantsGeneral } from '@shared/constants';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-formula-list',
   templateUrl: './formula-list.component.html',
   styleUrls: ['./formula-list.component.scss']
 })
-export class FormulaListComponent implements OnInit {
+export class FormulaListComponent {
 
   private unsubscribe$ = new Subject<any>();
 
@@ -36,10 +37,7 @@ export class FormulaListComponent implements OnInit {
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = FormulaHelper.columnsTable;
   }
-  ngOnInit(): void {
-    
-  }
-  
+
   ngAfterContentInit() {
     this.callPaginated();
   }
@@ -68,7 +66,7 @@ export class FormulaListComponent implements OnInit {
       });
   }
 
-  private delete(id:number): void{
+  private delete(id:number): void {
     this._formulaService
       .delete(id)
       .subscribe(() => {
@@ -77,11 +75,11 @@ export class FormulaListComponent implements OnInit {
       });
   }
 
-  createFormula(): void{
+  createFormula(): void {
     this.openModal();
   }
 
-  updateFormula(formula: IFormula): void{
+  updateFormula(formula: IFormula): void {
     this.openModal(formula);
   }
 
