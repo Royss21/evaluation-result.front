@@ -29,7 +29,7 @@ const routes: Routes = [
         component: EvaluationAddComponent
       },
       {
-        path: ':id/detail',
+        path: ':evaluationId/detail',
         component: EvaluationDetailComponent
       },
       {

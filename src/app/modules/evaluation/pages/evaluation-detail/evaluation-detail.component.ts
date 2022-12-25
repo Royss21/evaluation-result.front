@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Route } from '@angular/router';
+import { EvaluationService } from '@core/services/evaluation/evaluation.service';
+import { IStageRangeDate } from '@modules/evaluation/interfaces/evaluation-detail.interface';
+import { IPeriodInProgress } from '@modules/period/interfaces/period-in-progress.interface';
 
 @Component({
   selector: 'app-evaluation-detail',
@@ -6,6 +10,33 @@ import { Component } from '@angular/core';
   styleUrls: ['./evaluation-detail.component.scss']
 })
 export class EvaluationDetailComponent {
+
+  private _evaluationId: string;
+  evaluationInProgress: IPeriodInProgress | null = null;
+  stagesRangeDate: IStageRangeDate[] | [] = [];
+
+  constructor(
+    private _evaluationService: EvaluationService,
+    private _route: ActivatedRoute
+  ) {
+    
+  }
+
+  ngOnInit(){
+    this._route.params.subscribe(params => {
+      this._evaluationId = params['evaluationId'];
+      this._getEvaluationDetail();
+    });
+  }
+
+  private _getEvaluationDetail(){
+    this._evaluationService.getDetail(this._evaluationId)
+      .subscribe(detail => {
+        console.log(detail)
+        this.stagesRangeDate = detail.stagesEvaluation;
+        this.evaluationInProgress = { ...detail } as IPeriodInProgress;
+      })
+  }
 
   public data = {
     "isEnableImportLeaders": true,

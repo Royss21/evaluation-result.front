@@ -1,70 +1,69 @@
-<!-- PERIOD DATA -->
-<section
-  *ngIf="data"
-  fxLayout="row wrap"
-  fxLayoutGap="20px"
+<div
+  fxLayout.xs="column"
+  fxLayout.sm="column"
+  fxLayout.md="row wrap"
+  fxLayout.lg="row wrap"
+  fxLayout.xl="row wrap"
+  fxLayoutAlign="start"
+  fxLayoutGap="10px grid"
+  fxflexfill
 >
-   <mat-card style="max-width: 500px;">
-    <div
-      fxLayout="row wrap"
-      fxLayoutGap="20px"
-      fxLayoutAlign="start start"
-    >
-      <div><img src="/assets/images/flow.svg" alt="flow"></div>
-      <div>
-        <mat-card-title class="fs-6 fw-bold">
-          {{ data.periodName }}
-        </mat-card-title>
-        <mat-card-subtitle>
-          {{ data.rangeDate }}
-        </mat-card-subtitle>
+
+  <div
+    fxFlex.xl="33.3333%"    
+    fxFlex.lg="50%"
+    fxFlex.md="50%"
+    fxFlex.sm="100%"
+    fxFlex.xs="100%"
+  >
+    <app-evaluation-current-card
+      [evaluationInProgress]="evaluationInProgress"
+      [stagesRangeDate]="stagesRangeDate"
+    ></app-evaluation-current-card>
+  </div>
+
+  <div
+    fxFlex.xl="33.3333%"    
+    fxFlex.lg="50%"
+    fxFlex.md="50%"
+    fxFlex.sm="100%"
+    fxFlex.xs="100%"
+  >
+    <mat-card>
+      <div 
+        fxLayout="row" 
+        fxLayoutAlign="space-between center"
+      >
+        <mat-chip-list><mat-chip selected color="warn" selected><mat-icon>brightness_1</mat-icon></mat-chip></mat-chip-list>
+        <mat-chip-list><mat-chip selected color="warn" selected>Habilitado</mat-chip></mat-chip-list>
       </div>
-    </div>
-    <mat-card-content>
-      <span class="fs-8 fw-bolder">Componentes habilitados</span>
-      <section
-        class="mt-2"
-        fxLayout="row"
-        fxLayoutAlign="start center"
-        *ngIf="data.hasComponentCorporateObjectives"
+      <mat-card-content
+        class="mt-4"
+        fxLayout="column"
+        fxLayoutGap="10px"
+        fxLayoutAlign="center center"
       >
-        <div fxFlex="10"><img src="/assets/images/objCorp.png" alt="objetics corp"></div>
-        <div fxFlex="80"><span>{{data.components[0].componentName}}</span></div>
-        <div fxFlex="10"><img src="/assets/images/circle-check.svg" alt="check circle"></div>
-      </section>
-      <section
-        class="mt-2"
-        fxLayout="row"
-        fxLayoutAlign="start center"
-        *ngIf="data.hasComponentAreaObjectives"
-      >
-        <div fxFlex="10"><img src="/assets/images/kpi.png" alt="flow"></div>
-        <div fxFlex="80"><span>{{data.components[1].componentName}}</span></div>
-        <div fxFlex="10"><img src="/assets/images/circle-check.svg" alt="check circle"></div>
-      </section>
-      <section
-        class="mt-2"
-        fxLayout="row"
-        fxLayoutAlign="start center"
-        *ngIf="data.hasComponentCompetencies"
-      >
-        <div fxFlex="10"><img src="/assets/images/comp.png" alt="flow"></div>
-        <div fxFlex="80"><span>{{data.components[2].componentName}}</span></div>
-        <div fxFlex="10"><img src="/assets/images/circle-check.svg" alt="check circle"></div>
-      </section>
-      <section *ngFor="let stage of data.stagesEvaluation" class="mt-4">
-        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="5px">
-          <div fxFlex="5"><img src="/assets/images/star 1.png" alt="objetics corp"></div>
-          <div fxFlex="30"><span class="fw-bolder fs-8">{{stage.stageName}}</span></div>
-          <div fxFlex="65"><span>{{stage.rangeDate}}</span></div>
+        <img src="/assets/images/objCorp.png" alt="objetics corp">
+        <mat-card-title class="fs-6">{{data.components[0].componentName}}</mat-card-title>
+        <span class="text-center">Ingresa a esta sección para calificar a todas las áreas correspondientes</span>
+        <div class="mt-3">
+          <button 
+            *ngIf="data.hasComponentCorporateObjectives"
+            color="primary" 
+            mat-raised-button>Ver avance</button>
         </div>
-      </section>
-    </mat-card-content>
-  </mat-card>
-  <!-- END PERIOD DATA -->
+      </mat-card-content>
+    </mat-card> 
+  </div>
+
+
+</div>
+
+
 
   <!-- OBJETICS CORP -->
-  <mat-card *ngIf="data.hasComponentCorporateObjectives" class="mt-2" style="width: 500px; max-width: 700px;">
+  <!-- 
+    <mat-card *ngIf="data.hasComponentCorporateObjectives" class="mt-2" style="width: 500px; max-width: 700px;">
     <section fxLayout="row" fxLayoutAlign="space-between center">
       <mat-chip-list><mat-chip selected color="warn" selected><mat-icon>brightness_1</mat-icon></mat-chip></mat-chip-list>
       <mat-chip-list><mat-chip selected color="warn" selected>Habilitado</mat-chip></mat-chip-list>
@@ -82,11 +81,12 @@
         <button color="primary" mat-raised-button>Ver avance</button>
       </div>
     </mat-card-content>
-  </mat-card>
+  </mat-card> 
+  -->
   <!-- END OBJETICS CORP -->
 
   <!-- COMPETENCES -->
-  <mat-card *ngIf="data.hasComponentCompetencies" class="mt-2" style="width: 500px; max-width: 700px;">
+  <!-- <mat-card *ngIf="data.hasComponentCompetencies" class="mt-2" style="width: 500px; max-width: 700px;">
     <section fxLayout="row" fxLayoutAlign="space-between center">
       <mat-chip-list><mat-chip selected color="warn" selected><mat-icon>brightness_1</mat-icon></mat-chip></mat-chip-list>
       <mat-chip-list><mat-chip selected color="warn" selected>Habilitado</mat-chip></mat-chip-list>
@@ -103,11 +103,11 @@
         <button mat-raised-button color="primary">Ver avance</button>
       </div>
     </mat-card-content>
-  </mat-card>
+  </mat-card> -->
   <!-- END COMPETENCES -->
 
   <!-- AREA OBJETIVS -->
-  <mat-card *ngIf="data.hasComponentAreaObjectives" class="mt-2" style="width: 500px; max-width: 700px;">
+  <!-- <mat-card *ngIf="data.hasComponentAreaObjectives" class="mt-2" style="width: 500px; max-width: 700px;">
     <section fxLayout="row" fxLayoutAlign="space-between center">
       <mat-chip-list><mat-chip selected color="warn" selected><mat-icon>brightness_1</mat-icon></mat-chip></mat-chip-list>
       <mat-chip-list><mat-chip selected color="warn">Habilitado</mat-chip></mat-chip-list>
@@ -123,11 +123,11 @@
       <span class="text-center">Ingresa a esta sección para calificar a todas las áreas correspondientes</span>
       <div class="mt-3"><button mat-raised-button color="primary">Ver avance</button></div>
     </mat-card-content>
-  </mat-card>
+  </mat-card> -->
   <!-- END AREA OBJETIVS -->
 
   <!-- UPDATE COLLABORATORS -->
-  <mat-card *ngIf="data.hasComponentCompetencies" class="mt-2" style="width: 500px; max-width: 700px;">
+  <!-- <mat-card *ngIf="data.hasComponentCompetencies" class="mt-2" style="width: 500px; max-width: 700px;">
     <mat-card-content
       class="my-5"
       fxLayout="column"
@@ -141,11 +141,11 @@
         <button mat-raised-button color="primary">Actualizar</button>
       </div>
     </mat-card-content>
-  </mat-card>
+  </mat-card> -->
   <!-- END UPDATE COLLABORATORS -->
 
   <!-- ASSIGN RESPONSABILITIES -->
-  <mat-card *ngIf="data.hasComponentCompetencies" class="mt-2" style="width: 500px; max-width: 700px;">
+  <!-- <mat-card *ngIf="data.hasComponentCompetencies" class="mt-2" style="width: 500px; max-width: 700px;">
     <mat-card-content
       class="my-5"
       fxLayout="column"
@@ -157,6 +157,6 @@
       <span class="text-center">Ingresa a esta sección para asignar a los responsables en las etapas de Competencias</span>
       <div class="mt-3"><button mat-raised-button color="primary">Asignar ahora</button></div>
     </mat-card-content>
-  </mat-card>
+  </mat-card> -->
   <!-- END ASSIGN RESPONSABILITIES -->
-</section>
+<!-- </section> -->

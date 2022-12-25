@@ -17,13 +17,13 @@
         fxLayoutAlign="start"
       >
         <mat-card-title class="fs-6 fw-bold m-0">
-         {{ periodInProgress?.periodName }}
+         {{ evaluationInProgress?.periodName }}
         </mat-card-title>
         <mat-card-title class="fs-6 fw-bold m-0">
-          {{ periodInProgress?.evaluationCurrent?.name }} en curso:
+          {{ evaluationInProgress?.evaluationCurrent?.name }} en curso:
         </mat-card-title>
         <mat-card-subtitle class="m-0">
-          {{ periodInProgress?.evaluationCurrent?.rangeDate }}
+          {{ evaluationInProgress?.evaluationCurrent?.rangeDate }}
         </mat-card-subtitle>
       </div>
     </div>
@@ -36,33 +36,31 @@
         <app-component-item
           [icon]="'/assets/images/objCorp.png'"
           [componentName]="'Objetivos corporativos'"
-          [isCreatedInEvaluation]="periodInProgress?.evaluationCurrent?.hasComponentCorporateObjectives || false"
+          [isCreatedInEvaluation]="evaluationInProgress?.evaluationCurrent?.hasComponentCorporateObjectives || false"
         ></app-component-item>
 
         <app-component-item
           [icon]="'/assets/images/kpi.png'"
           [componentName]="'Objetivos de Áreas'"
-          [isCreatedInEvaluation]="periodInProgress?.evaluationCurrent?.hasComponentAreaObjectives || false"
+          [isCreatedInEvaluation]="evaluationInProgress?.evaluationCurrent?.hasComponentAreaObjectives || false"
         ></app-component-item>
 
         <app-component-item
           [icon]="'/assets/images/comp.png'"
           [componentName]="'Competencias'"
-          [isCreatedInEvaluation]="periodInProgress?.evaluationCurrent?.hasComponentCompetencies || false"
+          [isCreatedInEvaluation]="evaluationInProgress?.evaluationCurrent?.hasComponentCompetencies || false"
         ></app-component-item>
         
       </ul>
     </mat-card-content>
 
-    <ng-template *ngId=" stagesRangeDate.lenght > 0 ">
+    <div *ngIf="stagesRangeDate.length > 0">
       <hr >
-      <app-stage-evaluate-item
-        [stageName] = "'Etapa'"
-        [rangeDate] = "'asdsad asdsadsad assadasdsadasd a'"
+      <app-stage-evaluate-item *ngFor="let stage of stagesRangeDate"
+        [stageName]="stage.stageName"
+        [rangeDate]="stage.rangeDate"
       ></app-stage-evaluate-item>
-    </ng-template>
-    
-
+    </div>
     
   </div>
 </mat-card>

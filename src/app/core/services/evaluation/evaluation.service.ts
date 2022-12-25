@@ -1,5 +1,6 @@
 
 import { Injectable } from '@angular/core';
+import { IEvaluationDetail } from '@modules/evaluation/interfaces/evaluation-detail.interface';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';
 
@@ -15,5 +16,8 @@ export class EvaluationService {
   ) { }
 
 
+  getDetail(id: string): Observable<IEvaluationDetail> {
+    return this._apiService.get<IEvaluationDetail>(`${this.url}/${id}/detail`);
+  }
 
 }

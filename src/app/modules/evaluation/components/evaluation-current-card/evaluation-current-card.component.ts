@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IStageRangeDate } from '@modules/evaluation/interfaces/stage-range-date.interface';
+import { IStageRangeDate } from '@modules/evaluation/interfaces/evaluation-detail.interface';
 import { IPeriodInProgress } from '@modules/period/interfaces/period-in-progress.interface';
 
 @Component({
@@ -9,8 +9,8 @@ import { IPeriodInProgress } from '@modules/period/interfaces/period-in-progress
 })
 export class EvaluationCurrentCardComponent implements OnInit {
 
-  @Input() periodInProgress: IPeriodInProgress | null;
-  @Input() stagesRangeDate: IStageRangeDate[] = [];
+  @Input() evaluationInProgress: IPeriodInProgress | null;
+  @Input() stagesRangeDate: IStageRangeDate[];
 
   constructor() { }
 
