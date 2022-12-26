@@ -27,12 +27,11 @@ export class EvaluationListComponent {
   getEvaluationInProgress(): void{
     this._periodService.getInProgress().subscribe( periodInProgress =>{
       this.periodInProgress = periodInProgress;
-      console.log(periodInProgress);
     })
   }
 
   goEvaluation(): void {
-    
+
     const period: IPeriod = {
       name: this.periodInProgress?.periodName || "",
       id: this.periodInProgress?.periodId || 0,

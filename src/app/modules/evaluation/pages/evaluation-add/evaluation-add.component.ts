@@ -11,6 +11,8 @@ import { PopupChooseComponent } from '@components/popup-choose/popup-choose.comp
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { EvaluationBuilderService } from '@modules/evaluation/services/evaluation-builder.service';
 import { Location } from '@angular/common';
+import { IEvaluationCreate } from '@modules/evaluation/interfaces/evaluation-create.interface';
+import { EvaluationService } from '@core/services/evaluation/evaluation.service';
 
 @Component({
   selector: 'app-evaluation-add',
@@ -22,30 +24,32 @@ export class EvaluationAddComponent {
   @ViewChild('accordionEvaluation') accordionEvaluation: MatAccordion;
   @ViewChild('accordionCompetences') accordionCompetences: MatAccordion;
 
-  public title: string = 'Crear nueva evaluación'
-  public evaluationFormGroup: FormGroup;
-  public corpGoalsFormGroup: FormGroup;
-  public areaGoalsFormGroup: FormGroup;
-  public competencesFormGroup: FormGroup;
-  public periodValues: IPeriod;
+  competenceId: number = ConstantsGeneral.components.competencies;
+  stagesEvaluation: number[] = [ConstantsGeneral.stages.feedback, ConstantsGeneral.stages.approval];
+  stagesCompetence: number[] = [ConstantsGeneral.stages.evaluation, ConstantsGeneral.stages.calibration];
 
-  //DATES FOR VALIDATION FORM
-  public minDateEvaluation: Date;
-  public maxDateEvaluation: Date;
-
-  public minDateComponentsEvaluation: Date
-  public maxDateComponentsEvaluation: Date
+  title: string = 'Crear nueva evaluación'
+  evaluationFormGroup: FormGroup;
+  corpGoalsFormGroup: FormGroup;
+  areaGoalsFormGroup: FormGroup;
+  competencesFormGroup: FormGroup;
+  periodValues: IPeriod;
+  minDateEvaluation: Date;
+  maxDateEvaluation: Date;
+  minDateComponentsEvaluation: Date
+  maxDateComponentsEvaluation: Date
 
   constructor(
     private _router: Router,
-    public _dialog: MatDialog,
+    private _dialog: MatDialog,
     private _evaluationBuilderService: EvaluationBuilderService,
-    private _location: Location
+    private _location: Location,
+    private _evaluationService: EvaluationService
   ) {
     this.evaluationFormGroup = this._evaluationBuilderService.buildEvaluationForm();
-    this.corpGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals();
-    this.areaGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals();
-    this.competencesFormGroup = this._evaluationBuilderService.builderCompetences();
+    // this.corpGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals();
+    // this.areaGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals();
+    // this.competencesFormGroup = this._evaluationBuilderService.builderCompetences();
     this.routeValidate();
     this._onChangesValuesForm();
   }
@@ -58,60 +62,29 @@ export class EvaluationAddComponent {
       this._goBack();
   }
 
-  public onClick(): void {
 
-    console.log("VALIDATES: ", this.evaluationFormGroup);
+  get evaluationComponents() : FormArray {
+    return this.evaluationFormGroup.get("evaluationComponents") as FormArray
+  }
 
-    CustomValidations.marcarFormGroupTouched(this.evaluationFormGroup);
-    this.showConfigCorpGoals   && CustomValidations.marcarFormGroupTouched(this.corpGoalsFormGroup);
-    this.showConfigAreaGoals   && CustomValidations.marcarFormGroupTouched(this.areaGoalsFormGroup);
-    this.showConfigCompetences && CustomValidations.marcarFormGroupTouched(this.competencesFormGroup);
+  get evaluationComponentStages() : FormArray {
+    return this.evaluationFormGroup.get("evaluationComponentStages") as FormArray
+  }
 
-    if (this.evaluationFormGroup.invalid || this.corpGoalsFormGroup.invalid
-      || this.areaGoalsFormGroup.invalid || this.competencesFormGroup.invalid )
-    {
-      if (this.evaluationFormGroup.invalid)
-        this.accordionEvaluation.openAll();
-      if (this.showConfigCompetences && this.competencesFormGroup.invalid)
-        this.accordionCompetences.openAll();
-
-      return;
-    }
-
-    // const dialogRef = this._dialog.open(PopupChooseComponent, {
-    //   data: ConstantsGeneral.chooseData,
-    //   autoFocus: false,
-    //   restoreFocus: false
-    // });
-
-    // let body = this.periodFormGroup.getRawValue() as IPeriod;
-
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     this._periodService
-    //     .create(body)
-    //     .pipe(takeUntil(this.unsubscribe$))
-    //     .subscribe(() => this.showConfirmMessage());
-    //   }
-    // });
-
-    console.log("FORM : ",this.evaluationFormGroup)
+  get one(): FormGroup{
+    return this.evaluationComponents.controls[0] as FormGroup;
   }
 
   private _goBack(): void {
-    //this._router.navigate([`/period/list`]).then(() => {});
     this._location.back();
   }
 
-  showConfirmMessage() {
-    const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
-      data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
-    });
-
-    dialogRefConfirm.afterClosed().subscribe(() => {
-      this._goBack();
-    });
+  private _save(evaluation : IEvaluationCreate){
+    this._evaluationService.create(evaluation)
+      .subscribe(data =>{
+        console.log(data);
+        this._goBack();
+      })
   }
 
   //TODO: ON CHANGES VALUES
@@ -133,28 +106,28 @@ export class EvaluationAddComponent {
       }
     });
 
-    this.controlsEvaluationForm['components'].valueChanges.subscribe(values => {
-      this._validateShowForm(values);
-      this.controlsCorpGoalsForm['startDate'].valueChanges.subscribe(value => {
-        value && this._compareDates('corpGoals')
-      });
+    // this.controlsEvaluationForm['components'].valueChanges.subscribe(values => {
+    //   this._validateShowForm(values);
+    //   this.controlsCorpGoalsForm['startDate'].valueChanges.subscribe(value => {
+    //     value && this._compareDates('corpGoals')
+    //   });
 
-      this.controlsCorpGoalsForm['endDate'].valueChanges.subscribe(value => {
-        value && this._compareDates('corpGoals')
-      });
+    //   this.controlsCorpGoalsForm['endDate'].valueChanges.subscribe(value => {
+    //     value && this._compareDates('corpGoals')
+    //   });
 
-      this.controlsAreaGoalsForm['startDate'].valueChanges.subscribe(value => {
-        value && this._compareDates('areaGoals')
-      });
+    //   this.controlsAreaGoalsForm['startDate'].valueChanges.subscribe(value => {
+    //     value && this._compareDates('areaGoals')
+    //   });
 
-      this.controlsAreaGoalsForm['endDate'].valueChanges.subscribe(value => {
-        value && this._compareDates('areaGoals')
-      });
+    //   this.controlsAreaGoalsForm['endDate'].valueChanges.subscribe(value => {
+    //     value && this._compareDates('areaGoals')
+    //   });
 
-      this.controlsCompetencesArr.valueChanges.subscribe(value => {
-        value &&  this._compareDates('competences');
-      })
-    });
+    //   this.controlsCompetencesArr.valueChanges.subscribe(value => {
+    //     value &&  this._compareDates('competences');
+    //   })
+    // });
   }
 
   private _compareDates(nameForm: string) {
@@ -192,22 +165,22 @@ export class EvaluationAddComponent {
     }
   }
 
-  private _validateShowForm(values: any): void {
-    if (values[0]?.checked)
-      this.corpGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals(true);
-    else
-      this.corpGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals();
+  // private _validateShowForm(values: any): void {
+  //   if (values[0]?.checked)
+  //     this.corpGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals(true);
+  //   else
+  //     this.corpGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals();
 
-    if (values[1]?.checked)
-      this.areaGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals(true);
-    else
-      this.areaGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals();
+  //   if (values[1]?.checked)
+  //     this.areaGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals(true);
+  //   else
+  //     this.areaGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals();
 
-    if (values[2]?.checked)
-      this.competencesFormGroup = this._evaluationBuilderService.builderCompetences(true);
-    else
-      this.competencesFormGroup = this._evaluationBuilderService.builderCompetences();
-  }
+  //   if (values[2]?.checked)
+  //     this.competencesFormGroup = this._evaluationBuilderService.builderCompetences(true);
+  //   else
+  //     this.competencesFormGroup = this._evaluationBuilderService.builderCompetences();
+  // }
 
   private _toDate(date: Date | string, numberAdd: number = 0): Date {
     const dateLocal = (typeof date === 'string') ? new Date(date) : date;
@@ -217,6 +190,92 @@ export class EvaluationAddComponent {
     } else
       return dateLocal;
   }
+
+  showConfirmMessage() {
+    const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
+      data: ConstantsGeneral.confirmCreatePopup,
+      autoFocus: false
+    });
+
+    dialogRefConfirm.afterClosed().subscribe(() => {
+      this._goBack();
+    });
+  }
+
+  confirmSave(): void {
+
+    console.log(this.evaluationFormGroup.valid);
+    console.log(this.evaluationFormGroup.getRawValue());
+
+    CustomValidations.marcarFormGroupTouched(this.evaluationFormGroup);
+
+    if(this.evaluationFormGroup.invalid)
+      return;
+
+    const evaluationCreate: IEvaluationCreate = { ...this.evaluationFormGroup.getRawValue() } ;
+
+    evaluationCreate.evaluationComponents = [ ...evaluationCreate.evaluationComponents.filter(ec => ec.checked)];
+
+    if(!evaluationCreate.evaluationComponents.some(ec => ec.componentId === ConstantsGeneral.components.competencies))
+      evaluationCreate.evaluationComponentStages = [ ...evaluationCreate.evaluationComponentStages.filter(s => s.componentId !== ConstantsGeneral.components.competencies)];
+    else{
+      evaluationCreate.evaluationComponents = evaluationCreate.evaluationComponents
+        .map(ec => ec.componentId === ConstantsGeneral.components.competencies
+            ? {
+                ...ec,
+                startDate: evaluationCreate.evaluationComponentStages
+                  .find(s => s.componentId === ConstantsGeneral.components.competencies && s.stageId === ConstantsGeneral.stages.evaluation)?.startDate || null,
+                endDate: evaluationCreate.evaluationComponentStages
+                  .find(s => s.componentId === ConstantsGeneral.components.competencies && s.stageId === ConstantsGeneral.stages.calibration)?.endDate || null
+              }
+            : ec);
+    }
+
+    const dialogRef = this._dialog.open(PopupChooseComponent, {
+      data: ConstantsGeneral.chooseData,
+      autoFocus: false,
+      restoreFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result)
+        this._save(evaluationCreate);
+    });
+    // this.showConfigCorpGoals   && CustomValidations.marcarFormGroupTouched(this.corpGoalsFormGroup);
+    // this.showConfigAreaGoals   && CustomValidations.marcarFormGroupTouched(this.areaGoalsFormGroup);
+    // this.showConfigCompetences && CustomValidations.marcarFormGroupTouched(this.competencesFormGroup);
+
+    // if (this.evaluationFormGroup.invalid || this.corpGoalsFormGroup.invalid
+    //   || this.areaGoalsFormGroup.invalid || this.competencesFormGroup.invalid )
+    // {
+    //   if (this.evaluationFormGroup.invalid)
+    //     this.accordionEvaluation.openAll();
+    //   if (this.showConfigCompetences && this.competencesFormGroup.invalid)
+    //     this.accordionCompetences.openAll();
+
+    //   return;
+    // }
+
+    // const dialogRef = this._dialog.open(PopupChooseComponent, {
+    //   data: ConstantsGeneral.chooseData,
+    //   autoFocus: false,
+    //   restoreFocus: false
+    // });
+
+    // let body = this.periodFormGroup.getRawValue() as IPeriod;
+
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   if (result) {
+    //     this._periodService
+    //     .create(body)
+    //     .pipe(takeUntil(this.unsubscribe$))
+    //     .subscribe(() => this.showConfirmMessage());
+    //   }
+    // });
+
+    //console.log("FORM : ",this.evaluationFormGroup)
+  }
+
 
   /********************************
   ******SHOW CONDITIONAL VIEW******

@@ -8,21 +8,21 @@
   class="objective"
 >
   <div
-    fxFlex.xl="10%"    
+    fxFlex.xl="10%"
     fxFlex.lg="10%"
     fxFlex.md="10%"
     fxFlex.sm="10%"
     fxFlex.xs="10%"
-    fxLayoutAlign="center center" 
+    fxLayoutAlign="center center"
   >
     <mat-icon>add</mat-icon>
   </div>
   <div
-    fxFlex.xl="50%"    
+    fxFlex.xl="50%"
     fxFlex.lg="50%"
     fxFlex.md="50%"
     fxFlex.sm="50%"
-    fxFlex.xs="90%" 
+    fxFlex.xs="90%"
     class="objective-info"
   >
       <div>
@@ -36,29 +36,29 @@
       </div>
   </div>
   <div
-    fxFlex.xl="40%"    
+    fxFlex.xl="40%"
     fxFlex.lg="40%"
     fxFlex.md="40%"
     fxFlex.sm="40%"
-    fxFlex.xs="100%" 
+    fxFlex.xs="100%"
     fxLayoutAlign="center center"
     class="objective-input"
   >
     <mat-form-field
       fxFill
       appearance="outline"
-     
+
     >
       <mat-label>Puntaje</mat-label>
       <input
-          [ngModel]="objective.valueInput | numberFormat" 
+          [ngModel]="objective.valueInput | numberFormat"
           (ngModelChange)="onChange($event)"
           [ngModelOptions]="{updateOn:'blur'}"
-          class="text-right"
           #valueInput="ngModel"
           type="text"
           autocomplete="off"
           matInput
+          class="text-right"
           appOnlyNumber
           required
           [readonly]="isCompleted"

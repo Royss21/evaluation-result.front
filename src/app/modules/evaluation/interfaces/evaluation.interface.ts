@@ -23,14 +23,20 @@ export interface IEvaluationStage {
   endDate: Date;
 }
 
-export interface ICompetences {
-  startDate: Date | null;
-  endDate: Date | null;
-  title: string;
-  description: string;
+export interface IEvaluationComponent {
+  componentId: number
+  checked: boolean,
+  img: string,
+  title: string,
+  subtitle: string,
+  startDate: Date | null,
+  endDate: Date | null,
 }
 
-export interface ICalibrationStage {
-  startDate: Date;
-  endDate: Date;
+export interface IEvaluationComponentStage {
+  componentId: number | null;
+  stageId: number;
+  startDate: Date | null
+  endDate:Date | null;
+  title: string;
 }

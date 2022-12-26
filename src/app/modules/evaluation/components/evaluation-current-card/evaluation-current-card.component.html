@@ -6,13 +6,13 @@
     fxflexfill
     class="p-3"
   >
-    <div 
+    <div
       fxLayout="row"
       fxLayoutGap="10px grid"
       fxflexfill
     >
       <img src="/assets/images/flow.svg" alt="flow">
-      <div 
+      <div
         fxLayout="column"
         fxLayoutAlign="start"
       >
@@ -50,7 +50,7 @@
           [componentName]="'Competencias'"
           [isCreatedInEvaluation]="evaluationInProgress?.evaluationCurrent?.hasComponentCompetencies || false"
         ></app-component-item>
-        
+
       </ul>
     </mat-card-content>
 
@@ -59,8 +59,9 @@
       <app-stage-evaluate-item *ngFor="let stage of stagesRangeDate"
         [stageName]="stage.stageName"
         [rangeDate]="stage.rangeDate"
+        [stageId]="stage.stageId"
       ></app-stage-evaluate-item>
     </div>
-    
+
   </div>
 </mat-card>

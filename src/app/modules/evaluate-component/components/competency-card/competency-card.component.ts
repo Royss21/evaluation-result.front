@@ -30,12 +30,12 @@ export class CompetencyCardComponent implements OnInit, ControlValueAccessor {
   private _onTouched: Function = () => {}
 
   constructor(
-    private _fb: FormBuilder, 
+    private _fb: FormBuilder,
     private _formBuilder: ComponentCollaboratorEvaluateBuilderService,
-  ) { 
+  ) {
     this.formGroupDetail.valueChanges.subscribe(value => {
       const{ componentCollaboratorConductsEvaluate } = value;
-      console.log(componentCollaboratorConductsEvaluate);
+      
       componentCollaboratorConductsEvaluate.forEach((cc: any) => cc.isSelected = cc.pointValue > 0)
 
       this._onTouched();
@@ -72,7 +72,7 @@ export class CompetencyCardComponent implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    
+
   }
 
 

@@ -10,7 +10,7 @@ import { IPeriodInProgress } from '@modules/period/interfaces/period-in-progress
 export class EvaluationCurrentCardComponent implements OnInit {
 
   @Input() evaluationInProgress: IPeriodInProgress | null;
-  @Input() stagesRangeDate: IStageRangeDate[];
+  @Input() stagesRangeDate: IStageRangeDate[] = [];
 
   constructor() { }
 

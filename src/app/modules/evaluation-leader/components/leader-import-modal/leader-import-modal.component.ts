@@ -27,7 +27,7 @@ export class LeaderImportModalComponent implements OnInit {
     private _modalRef: MatDialogRef<LeaderImportModalComponent>,
     public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public evaluationId: string
-  ) { 
+  ) {
     this.modalTitle = LeaderText.modalImport ;
     this.leaderImportFormGroup = _leaderImportBuilderService.buildLeaderImportForm();
   }
@@ -43,12 +43,11 @@ export class LeaderImportModalComponent implements OnInit {
 
   private save(leaderImport: ILeaderImport): void {
     this._leaderService.importLeader(leaderImport).subscribe(f => {
-      console.log('se esta importando');
     });
   }
 
   downloadTemplate(componentId: number){
-    
+
     const fileName = componentId == ConstantsGeneral.components.areaObjectives
       ? "Plantilla_Lideres_Objetivos_Areas.xlsx"
       : "Plantilla_Lideres_Competencias.xlsx";
@@ -63,26 +62,25 @@ export class LeaderImportModalComponent implements OnInit {
   }
 
   changeTypeImport(typeImportLeaders: number){
-    console.log(this.leaderImportFormGroup.controls["typeImportLeaders"].value)
-    const componentId = typeImportLeaders == 0 
-      ? ConstantsGeneral.components.areaObjectives 
+    const componentId = typeImportLeaders == 0
+      ? ConstantsGeneral.components.areaObjectives
       : ConstantsGeneral.components.competencies;
-      
+
     this.existsPreviousImport(componentId);
   }
 
   confirmSave(){
 
     CustomValidations.marcarFormGroupTouched(this.leaderImportFormGroup);
-    
+
     if(this.leaderImportFormGroup.invalid)
       return;
 
     const dataLeaderImport ={ ...this.leaderImportFormGroup.getRawValue() } ;
-    const leaderImport: ILeaderImport = { 
+    const leaderImport: ILeaderImport = {
       ...dataLeaderImport,
       evaluationId: this.evaluationId,
-      file: dataLeaderImport.files[0] 
+      file: dataLeaderImport.files[0]
     };
 
     const dialogRef = this._dialog.open(PopupChooseComponent, {
@@ -92,7 +90,7 @@ export class LeaderImportModalComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) 
+      if (result)
         this.save(leaderImport);
     });
   }

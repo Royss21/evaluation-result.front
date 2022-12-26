@@ -21,7 +21,7 @@ import { IComponentCollaboratorEvaluate } from '@modules/evaluate-component/inte
 export class EvaluateCompetenciesComponent implements OnInit {
 
   private _componentCollaboratorId: string;
-  
+
   infoCollaborator: ICollaboratorInformation
   evaluateFormGroup: FormGroup;
 
@@ -59,12 +59,12 @@ export class EvaluateCompetenciesComponent implements OnInit {
         this._setInformationCollaborator(data);
 
         if(data.componentCollaboratorDetails.length > 0)
-        { 
+        {
           data.componentCollaboratorDetails.forEach(detail => {
 
             const detailGroup = this._formBuilder.buildComponentCollaboratorDetailEvaluateForm(detail, false);
 
-            detail.componentCollaboratorConducts.forEach(conduct => 
+            detail.componentCollaboratorConducts.forEach(conduct =>
               (detailGroup.controls["componentCollaboratorConductsEvaluate"] as FormArray)
                 .push( this._formBuilder.buildComponentCollaboratorConductEvaluateForm(conduct))
             );
@@ -124,25 +124,24 @@ export class EvaluateCompetenciesComponent implements OnInit {
   confirmFinalizedEvaluation(){
 
     CustomValidations.marcarFormGroupTouched(this.evaluateFormGroup);
-    
+
     if(this.evaluateFormGroup.invalid)
       return;
 
-      const evaluateComponent: IComponentCollaboratorEvaluate = { ...this.evaluateFormGroup.getRawValue() } ; 
-      evaluateComponent.componentCollaboratorDetailsEvaluate.forEach(cc => 
+      const evaluateComponent: IComponentCollaboratorEvaluate = { ...this.evaluateFormGroup.getRawValue() } ;
+      evaluateComponent.componentCollaboratorDetailsEvaluate.forEach(cc =>
       {
           cc.valueResult = cc.valueResult > 0 ? (cc.valueResult / 100.00) : cc.valueResult;
       });
-      console.log(evaluateComponent);   
-      
+
       const dialogRef = this._dialog.open(PopupChooseComponent, {
         data: ConstantsGeneral.chooseData,
         autoFocus: false,
         restoreFocus: false
       });
-  
+
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) 
+        if (result)
           this._save(evaluateComponent);
       });
   }

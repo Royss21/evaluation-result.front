@@ -1,57 +1,65 @@
-import { ICompetences } from "@modules/evaluation/interfaces/evaluation.interface"
+import { ConstantsGeneral } from "@shared/constants"
+import {  IEvaluationComponent, IEvaluationComponentStage } from "../interfaces/evaluation.interface"
 
 export class EvaluationHelper {
-  static componentsArray = [
+  static evaluationComponents: IEvaluationComponent[] = [
     {
-      id: 1,
+      componentId: ConstantsGeneral.components.corporateObjectives,
       checked: false,
       img: '/assets/images/objCorp.png',
       title: 'Objetivos Corporativos',
       subtitle: 'Objetivos y metas planteados para la empresa en el año.',
+      startDate: null,
+      endDate: null,
     },
     {
-      id: 2,
+      componentId: ConstantsGeneral.components.areaObjectives,
       checked: false,
       img: '/assets/images/group 1.png',
       title: 'Objetivos de Área (KPIs)',
       subtitle: 'Objetivos establecidos para cada área, deben guardar relación con los objetivos corporativos y prioridades estratégicas.',
+      startDate: null,
+      endDate: null,
     },
     {
-      id: 3,
+      componentId: ConstantsGeneral.components.competencies,
       checked: false,
       img: '/assets/images/comp.png',
       title: 'Competencias',
       subtitle: 'Conjunto de conocimientos y habilidades que se potencian por la actitud.',
+      startDate: null,
+      endDate: null,
     }
   ]
 
-  static stageEvaluationArr: ICompetences[] = [
+  static evaluationComponentStages: IEvaluationComponentStage[] = [
     {
+      componentId: null,
       startDate: null,
       endDate: null,
+      stageId: ConstantsGeneral.stages.feedback,
       title: 'Etapa de Feedback',
-      description: 'lorem ipsum'
     },
     {
+      componentId: null,
       startDate: null,
       endDate: null,
+      stageId: ConstantsGeneral.stages.approval,
       title: 'Etapa de Visto Bueno',
-      description: 'lorem ipsum'
-    }
-  ]
-
-  static competencesStageArr: ICompetences[] = [
-    {
-      startDate: null,
-      endDate: null,
-      title: 'Etapa de Evaluación por Competencias',
-      description: 'En esta etapa se realiza la evaluación de cada colaborador mediante las competencias registradas'
     },
     {
+      componentId: ConstantsGeneral.components.competencies,
       startDate: null,
       endDate: null,
-      title: 'Etapa de Calibración',
-      description: 'En esta etapa la nota de los colaboradores serán reguladas por los calibradores asignados.'
+      stageId: ConstantsGeneral.stages.evaluation,
+      title: 'Etapa de Evaluación'
+    },
+    {
+      componentId:ConstantsGeneral.components.competencies,
+      startDate: null,
+      endDate: null,
+      stageId: ConstantsGeneral.stages.calibration,
+      title: 'Etapa de Calibración'
     }
   ]
 }

@@ -1,5 +1,6 @@
 
 import { Injectable } from '@angular/core';
+import { IEvaluationCreate } from '@modules/evaluation/interfaces/evaluation-create.interface';
 import { IEvaluationDetail } from '@modules/evaluation/interfaces/evaluation-detail.interface';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';
@@ -8,7 +9,7 @@ import { ApiService } from '../api.service';
   providedIn: 'root'
 })
 export class EvaluationService {
-  
+
   private controller = 'evaluation';
   private url = `https://localhost:7253/api/${this.controller}`
   constructor(
@@ -18,6 +19,10 @@ export class EvaluationService {
 
   getDetail(id: string): Observable<IEvaluationDetail> {
     return this._apiService.get<IEvaluationDetail>(`${this.url}/${id}/detail`);
+  }
+
+  create(request: IEvaluationCreate): Observable<IEvaluationCreate> {
+    return this._apiService.post<IEvaluationCreate>(`${this.url}`, request);
   }
 
 }

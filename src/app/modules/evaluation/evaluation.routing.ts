@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { EvaluationComponent } from '@modules/evaluation/evaluation.component';
 import { EvaluationAddComponent } from '@modules/evaluation/pages/evaluation-add/evaluation-add.component';
 import { EvaluationDetailComponent } from '@modules/evaluation/pages/evaluation-detail/evaluation-detail.component';
-import { EvaluationEditComponent } from '@modules/evaluation/pages/evaluation-edit/evaluation-edit.component';
 import { EvaluationListComponent } from '@modules/evaluation/pages/evaluation-list/evaluation-list.component';
 
 const routes: Routes = [
@@ -15,14 +14,6 @@ const routes: Routes = [
       {
         path: 'list',
         component: EvaluationListComponent
-      },
-      {
-        path: 'edit',
-        component: EvaluationEditComponent
-      },
-      {
-        path: 'edit/:id',
-        component: EvaluationEditComponent
       },
       {
         path: 'create',

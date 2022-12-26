@@ -22,7 +22,7 @@ import { PopupChooseComponent } from '@components/popup-choose/popup-choose.comp
 export class EvaluateAreaObjectivesComponent implements OnInit {
 
   private _componentCollaboratorId: string;
-  
+
   infoCollaborator: ICollaboratorInformation
   evaluateFormGroup: FormGroup;
 
@@ -59,7 +59,7 @@ export class EvaluateAreaObjectivesComponent implements OnInit {
         this._setInformationCollaborator(data);
 
         if(data.componentCollaboratorDetails.length > 0)
-        { 
+        {
           data.componentCollaboratorDetails.forEach(detail => {
             this.componentCollaboratorDetailsEvaluate.push(this._formBuilder.buildComponentCollaboratorDetailEvaluateForm(detail));
           });
@@ -112,7 +112,7 @@ export class EvaluateAreaObjectivesComponent implements OnInit {
       this._location.back();
   }
 
-  
+
 
   getValueFormControl(index:number, prop: string){
     return this.componentCollaboratorDetailsEvaluate.getRawValue()[index][prop];
@@ -121,25 +121,24 @@ export class EvaluateAreaObjectivesComponent implements OnInit {
   confirmFinalizedEvaluation(){
 
     CustomValidations.marcarFormGroupTouched(this.evaluateFormGroup);
-    
+
     if(this.evaluateFormGroup.invalid)
       return;
 
-      const evaluateComponent: IComponentCollaboratorEvaluate = { ...this.evaluateFormGroup.getRawValue() } ; 
-      evaluateComponent.componentCollaboratorDetailsEvaluate.forEach(cc => 
+      const evaluateComponent: IComponentCollaboratorEvaluate = { ...this.evaluateFormGroup.getRawValue() } ;
+      evaluateComponent.componentCollaboratorDetailsEvaluate.forEach(cc =>
       {
           cc.valueResult = cc.valueResult > 0 ? (cc.valueResult / 100.00) : cc.valueResult;
       });
-      console.log(evaluateComponent);   
-      
+
       const dialogRef = this._dialog.open(PopupChooseComponent, {
         data: ConstantsGeneral.chooseData,
         autoFocus: false,
         restoreFocus: false
       });
-  
+
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) 
+        if (result)
           this._save(evaluateComponent);
       });
   }

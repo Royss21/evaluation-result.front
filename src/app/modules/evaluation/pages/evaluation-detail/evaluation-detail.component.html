@@ -10,7 +10,7 @@
 >
 
   <div
-    fxFlex.xl="33.3333%"    
+    fxFlex.xl="33.3333%"
     fxFlex.lg="50%"
     fxFlex.md="50%"
     fxFlex.sm="100%"
@@ -23,46 +23,113 @@
   </div>
 
   <div
-    fxFlex.xl="33.3333%"    
+    fxFlex.xl="33.3333%"
     fxFlex.lg="50%"
     fxFlex.md="50%"
     fxFlex.sm="100%"
     fxFlex.xs="100%"
   >
-    <mat-card>
-      <div 
-        fxLayout="row" 
-        fxLayoutAlign="space-between center"
-      >
-        <mat-chip-list><mat-chip selected color="warn" selected><mat-icon>brightness_1</mat-icon></mat-chip></mat-chip-list>
-        <mat-chip-list><mat-chip selected color="warn" selected>Habilitado</mat-chip></mat-chip-list>
-      </div>
+    <mat-card
+      *ngIf="evaluationInProgress?.evaluationCurrent?.hasComponentCompetencies"
+    >
       <mat-card-content
-        class="mt-4"
+        class="my-5"
         fxLayout="column"
         fxLayoutGap="10px"
         fxLayoutAlign="center center"
       >
-        <img src="/assets/images/objCorp.png" alt="objetics corp">
-        <mat-card-title class="fs-6">{{data.components[0].componentName}}</mat-card-title>
-        <span class="text-center">Ingresa a esta sección para calificar a todas las áreas correspondientes</span>
+        <img src="/assets/images/group 1.png" alt="objetics corp">
+        <mat-card-title class="fs-6">Actualizar colaboradores</mat-card-title>
+        <span class="text-center">Ingresa a esta sección para asignar a los responsables en las etapas de Competencias</span>
         <div class="mt-3">
-          <button 
-            *ngIf="data.hasComponentCorporateObjectives"
-            color="primary" 
-            mat-raised-button>Ver avance</button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="goToCollaborators()"
+          >
+            Actualizar
+          </button>
         </div>
       </mat-card-content>
-    </mat-card> 
+    </mat-card>
   </div>
 
+  <div
+    fxFlex.xl="33.3333%"
+    fxFlex.lg="50%"
+    fxFlex.md="50%"
+    fxFlex.sm="100%"
+    fxFlex.xs="100%"
+  >
+    <mat-card *ngIf="evaluationInProgress?.evaluationCurrent?.hasComponentCompetencies">
+      <mat-card-content
+        class="my-5"
+        fxLayout="column"
+        fxLayoutGap="10px"
+        fxLayoutAlign="center center"
+      >
+        <img src="/assets/images/group 1.png" alt="objetics corp">
+        <mat-card-title class="fs-6">Asignación de responsabilidades</mat-card-title>
+        <span class="text-center">Ingresa a esta sección para asignar a los responsables en las etapas de Competencias</span>
+        <div class="mt-3">
+          <button mat-raised-button color="primary"
+            (click)="goToLeaders()"
+          >
+            Asignar lideres
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div
+    fxFlex.xl="33.3333%"
+    fxFlex.lg="50%"
+    fxFlex.md="50%"
+    fxFlex.sm="100%"
+    fxFlex.xs="100%"
+  >
+    <app-card-component
+      [infoComponent]="infoObjetivesCorporate"
+      [isEnable]="evaluationInProgress?.evaluationCurrent?.hasComponentCorporateObjectives || false"
+      (emitNavigate)="goToEvaluate($event)"
+    ></app-card-component>
+  </div>
+
+  <div
+    fxFlex.xl="33.3333%"
+    fxFlex.lg="50%"
+    fxFlex.md="50%"
+    fxFlex.sm="100%"
+    fxFlex.xs="100%"
+  >
+    <app-card-component
+      (emitNavigate)="goToEvaluate($event)"
+      [infoComponent]="infoObjetivesArea"
+      [isEnable]="evaluationInProgress?.evaluationCurrent?.hasComponentAreaObjectives || false"
+    ></app-card-component>
+  </div>
+
+  <div
+    fxFlex.xl="33.3333%"
+    fxFlex.lg="50%"
+    fxFlex.md="50%"
+    fxFlex.sm="100%"
+    fxFlex.xs="100%"
+  >
+    <app-card-component
+      (emitNavigate)="goToEvaluate($event)"
+      [infoComponent]="infoCompetence"
+      [isEnable]="evaluationInProgress?.evaluationCurrent?.hasComponentCompetencies || false"
+    ></app-card-component>
+  </div>
 
 </div>
 
 
 
   <!-- OBJETICS CORP -->
-  <!-- 
+  <!--
     <mat-card *ngIf="data.hasComponentCorporateObjectives" class="mt-2" style="width: 500px; max-width: 700px;">
     <section fxLayout="row" fxLayoutAlign="space-between center">
       <mat-chip-list><mat-chip selected color="warn" selected><mat-icon>brightness_1</mat-icon></mat-chip></mat-chip-list>
@@ -81,7 +148,7 @@
         <button color="primary" mat-raised-button>Ver avance</button>
       </div>
     </mat-card-content>
-  </mat-card> 
+  </mat-card>
   -->
   <!-- END OBJETICS CORP -->
 

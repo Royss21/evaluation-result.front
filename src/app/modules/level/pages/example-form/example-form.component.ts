@@ -12,7 +12,7 @@ export class ExampleFormComponent implements OnInit {
   public formGroup: FormGroup;
 
   constructor() {
-    
+
     this.formGroup = new FormGroup({
       username: new FormControl(''),
       // Nest group
@@ -32,8 +32,6 @@ export class ExampleFormComponent implements OnInit {
 
   onSubmit() {
     CustomValidations.marcarFormGroupTouched(this.formGroup);
-    
-    console.log(this.formGroup)
   }
 
 }

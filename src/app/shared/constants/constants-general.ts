@@ -48,6 +48,13 @@ export  class ConstantsGeneral{
       competencies: 3
     }
 
+    static readonly stages ={
+      evaluation: 1,
+      calibration: 2,
+      feedback: 3,
+      approval: 4
+    }
+
 
     static readonly status = {
       1: 'Prueba',

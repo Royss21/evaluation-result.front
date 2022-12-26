@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EvaluationHelper } from '@modules/evaluation/helpers/evaluation.helpers';
-import { ICompetences } from '@modules/evaluation/interfaces/evaluation.interface';
+import { IEvaluationComponent, IEvaluationComponentStage } from '@modules/evaluation/interfaces/evaluation.interface';
+import { ConstantsGeneral } from '@shared/constants';
 
 import { CustomValidations } from '@shared/helpers/custom-validations';
 
@@ -14,8 +15,8 @@ export class EvaluationBuilderService {
 
   public buildEvaluationForm(): FormGroup {
 
-    const compSelection = EvaluationHelper.componentsArray;
-    const competencesArr: ICompetences[] = EvaluationHelper.stageEvaluationArr;
+    const evaluationComponents = EvaluationHelper.evaluationComponents;
+    const evaluationComponentStages = EvaluationHelper.evaluationComponentStages;
 
     return this._fb.group({
       periodId: [0],
@@ -31,7 +32,8 @@ export class EvaluationBuilderService {
         null,
         [
           Validators.required,
-          CustomValidations.NotEmpty
+          Validators.max(100),
+          Validators.min(0)
         ]
       ],
       startDate: [
@@ -43,63 +45,68 @@ export class EvaluationBuilderService {
       isEvaluationTest: [
         false, [Validators.required]
       ],
-      components: this._fb.array(compSelection.map(comp => this.createComponents(comp))
+      evaluationComponents: this._fb.array(evaluationComponents.map(c => this.createComponent(c))
       ),
-      stages: this._fb.array(
-        competencesArr.map(comp => this.createCompetencesFormArray(comp, true))
-      ),
+      evaluationComponentStages: this._fb.array(evaluationComponentStages.map(c => this.createStage(c))),
     });
   }
 
-  createComponents(comp: any): FormGroup {
+  createComponent(component: IEvaluationComponent): FormGroup {
     return this._fb.group({
-      id: [comp.id],
-      img: [comp.img],
-      checked: [comp.checked],
-      // checked: [{value: comp.checked, disabled: true}],
-      title: [comp.title],
-      subtitle: [comp.subtitle]
+      componentId: [component.componentId],
+      img: [component.img],
+      checked: [component.checked],
+      title: [component.title],
+      subtitle: [component.subtitle],
+      startDate: [
+        null,
+        ConstantsGeneral.components.competencies === component.componentId
+          ? []
+          : [Validators.required]
+      ],
+      endDate: [
+        null,
+        ConstantsGeneral.components.competencies === component.componentId
+          ? []
+          : [Validators.required]
+      ],
     })
   }
 
-  public builderCorpGoals(isRequired: boolean = false): FormGroup {
-    if (isRequired) {
-      return this._fb.group({
-        startDate: [null, Validators.required],
-        endDate: [null, Validators.required]
-      });
-    } else {
-      return this._fb.group({
-        startDate: [null],
-        endDate: [null]
-      });
-    }
-  }
+  // public builderCorpGoals(isRequired: boolean = false): FormGroup {
+  //   if (isRequired) {
+  //     return this._fb.group({
+  //       startDate: [null, Validators.required],
+  //       endDate: [null, Validators.required]
+  //     });
+  //   } else {
+  //     return this._fb.group({
+  //       startDate: [null],
+  //       endDate: [null]
+  //     });
+  //   }
+  // }
 
-  public builderCompetences(isRequired: boolean = false): FormGroup {
-    const compLocal: ICompetences[] = EvaluationHelper.competencesStageArr;
+  // public builderCompetences(isRequired: boolean = false): FormGroup {
+  //   const compLocal: ICompetences[] = EvaluationHelper.competencesStageArr;
+  //   return this._fb.group({
+  //     competences: this._fb.array(
+  //       compLocal.map(comp => this.createCompetencesFormArray(comp, isRequired))
+  //     )
+  //   });
+  // }
+
+  createStage(stage: IEvaluationComponentStage): FormGroup {
     return this._fb.group({
-      competences: this._fb.array(
-        compLocal.map(comp => this.createCompetencesFormArray(comp, isRequired))
-      )
-    });
-  }
-
-  createCompetencesFormArray(comp: ICompetences, isRequired: boolean = false): FormGroup {
-    if (isRequired) {
-      return this._fb.group({
-        startDate: [comp.startDate, Validators.required],
-        endDate: [comp.endDate, Validators.required],
-        title: [comp.title],
-        description: [comp.description]
-      });
-    } else {
-      return this._fb.group({
-        startDate: [comp.startDate],
-        endDate: [comp.endDate],
-        title: [comp.title],
-        description: [comp.description]
-      });
-    }
+      componentId: [stage.componentId],
+      stageId: [stage.stageId],
+      title: [stage.title],
+      startDate: [
+        null, [Validators.required]
+      ],
+      endDate: [
+        null, [ Validators.required ]
+      ],
+    })
   }
 }

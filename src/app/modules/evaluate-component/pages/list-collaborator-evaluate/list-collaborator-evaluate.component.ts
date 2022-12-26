@@ -40,22 +40,22 @@ export class ListCollaboratorEvaluateComponent implements OnInit {
     this.evaluateComponentPaginated$ = this.evaluateComponentPaginatedBehavior.asObservable();
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = EvaluateComponentHelper.columnsTable;
-    
+
   }
   ngOnInit(): void {
-    
+
     this._route.params.subscribe(params => {
       this._componentId = params['componentId'];
       this._evaluationId = params['evaluationId'];
-      
-      this.title = this._componentId == ConstantsGeneral.components.corporateObjectives  
+
+      this.title = this._componentId == ConstantsGeneral.components.corporateObjectives
           ? EvaluateComponentText.titleCorporateObjectives
           : this._componentId == ConstantsGeneral.components.areaObjectives
             ?  EvaluateComponentText.titleAreaObjectives
             : EvaluateComponentText.titleCompetencies;
     });
   }
-  
+
   ngAfterContentInit() {
     this._callPaginated();
   }
@@ -73,7 +73,7 @@ export class ListCollaboratorEvaluateComponent implements OnInit {
 
           this._componentCollaboratorService.getPaginated(this.paginatedFilterCurrent)
               .subscribe(paginated => this.evaluateComponentPaginatedBehavior.next(paginated));
-        }  
+        }
       });
   }
 
@@ -88,8 +88,8 @@ export class ListCollaboratorEvaluateComponent implements OnInit {
     else if(this._componentId == ConstantsGeneral.components.competencies)
       routeChild = 'competencies';
 
-    this._router.navigateByUrl(`${this._router.url}/${routeChild}/${componentCollaborator.id}`, { state: { gg: 'ss' }})
-  } 
+    this._router.navigateByUrl(`${this._router.url}/${routeChild}/${componentCollaborator.id}`);
+  }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(1);

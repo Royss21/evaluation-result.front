@@ -1,0 +1,46 @@
+<mat-card>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    class="p-3"
+  >
+    <mat-chip-list><mat-chip selected color="warn" selected><mat-icon>brightness_1</mat-icon></mat-chip></mat-chip-list>
+    <mat-chip-list>
+      <mat-chip selected color="warn" selected>{{ isEnable ? 'Habilitado' : 'Deshabilitado' }}</mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div class="p-3">
+    <mat-card-content
+      class="mt-4"
+      fxLayout="column"
+      fxLayoutGap="10px"
+      fxLayoutAlign="center center"
+    >
+      <img src="/assets/images/objCorp.png" alt="objetics corp">
+      <mat-card-title class="fs-6">{{ infoComponent?.componentName || '' }}</mat-card-title>
+      <span class="text-center">
+        {{ infoComponent?.rangeDate || '' }}
+      </span>
+      <div class="mt-3">
+        <button
+          *ngIf="isEnable && (infoComponent?.stages || []).length === 0"
+          color="primary"
+          mat-raised-button
+          (click)="onClick()"
+        >Ir a evaluar</button>
+      </div>
+    </mat-card-content>
+
+    <div *ngIf="(infoComponent?.stages || []).length > 0">
+      <hr >
+      <app-stage-evaluate-item *ngFor="let stage of infoComponent?.stages "
+        [stageName]="stage.stageName"
+        [rangeDate]="stage.rangeDate"
+        [stageId]="stage.stageId"
+      ></app-stage-evaluate-item>
+    </div>
+  </div>
+
+
+</mat-card>
