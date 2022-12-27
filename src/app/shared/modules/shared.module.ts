@@ -29,6 +29,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 @NgModule({
   declarations: [],
@@ -63,7 +64,8 @@ import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/
     FlexLayoutModule,
     MatSnackBarModule,
     MatRadioModule,
-    RouterModule
+    RouterModule,
+    AutocompleteLibModule
   ],
   exports: [
     MatButtonModule,
@@ -94,7 +96,8 @@ import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/
     FlexLayoutModule,
     MatSnackBarModule,
     MatRadioModule,
-    RouterModule
+    RouterModule,
+    AutocompleteLibModule
   ],
   providers: [
     MatDatepickerModule,
