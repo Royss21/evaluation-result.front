@@ -1,6 +1,6 @@
 {
-    "FSharp.suggestGitignore": false,
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true,
-    "editor.detectIndentation": false
+  "FSharp.suggestGitignore": false,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false
 }

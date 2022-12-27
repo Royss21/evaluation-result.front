@@ -22,7 +22,6 @@ export class GerencyModalComponent {
   public gerencyFormGroup: FormGroup;
   public modalTitle: string = '';
 
-
   constructor(
     public _dialog: MatDialog,
     private _gerencyService: GerencyService,
