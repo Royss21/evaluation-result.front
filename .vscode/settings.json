@@ -2,5 +2,6 @@
   "FSharp.suggestGitignore": false,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
-  "editor.detectIndentation": false
+  "editor.detectIndentation": false,
+  "console-ninja.outputMode": "Beside File"
 }

@@ -1,16 +1,16 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { delay, Subscription } from 'rxjs';
 import { MainBehaviorsService } from './services';
+import { Component, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent {
 
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
   private _routerSub: Subscription = new Subscription();
@@ -23,9 +23,6 @@ export class MainComponent implements OnInit {
     private _mainBehaviorService: MainBehaviorsService,
   ) { }
 
-  ngOnInit(): void {
-  }
-
   ngAfterViewInit() {
     this.listenSidebarToggle();
     this._observer.observe(['(max-width: 767px)']).subscribe((res) => {
@@ -35,7 +32,7 @@ export class MainComponent implements OnInit {
            this.sidenav.toggle();
            //this.sidenav.toggle();
            //  this.sidenav.close();
-          // if (this.sideBarOpen) 
+          // if (this.sideBarOpen)
           this.sideBarOpen = false;
         } else {
           this.sidenav.mode = 'side';
@@ -59,11 +56,11 @@ export class MainComponent implements OnInit {
     })
   }
 
-  private showHideSidebarToggle(){    
+  private showHideSidebarToggle(){
     if (this.sidenav.mode === 'over') {
       this.sidenav.toggle();
     }
-    else 
+    else
       this.sideBarOpen = !this.sideBarOpen
   }
 

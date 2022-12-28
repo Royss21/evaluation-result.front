@@ -125,7 +125,7 @@ export class EvaluateAreaObjectivesComponent implements OnInit {
     if(this.evaluateFormGroup.invalid)
       return;
 
-      const evaluateComponent: IComponentCollaboratorEvaluate = { ...this.evaluateFormGroup.getRawValue() } ;
+      const evaluateComponent: IComponentCollaboratorEvaluate = { ...this.evaluateFormGroup.getRawValue() };
       evaluateComponent.componentCollaboratorDetailsEvaluate.forEach(cc =>
       {
           cc.valueResult = cc.valueResult > 0 ? (cc.valueResult / 100.00) : cc.valueResult;

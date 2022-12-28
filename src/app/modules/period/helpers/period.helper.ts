@@ -9,4 +9,10 @@ export class PeriodHelper{
     new ElementRowTable('endDate','Fecha de Fin'),
     new ElementRowTable('actions','Acciones')
   ];
+
+  static titleActionText = {
+    list: 'Listado de Periodos',
+    modalCreate: 'Crear Periodo',
+    modalUdpate:  'Editar Periodo'
+  }
 }

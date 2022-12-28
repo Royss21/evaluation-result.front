@@ -1,15 +1,14 @@
 import { MatSort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatPaginator } from '@angular/material/paginator';
-import { BehaviorSubject, delay, from, map, merge, Observable, of, startWith, switchMap } from 'rxjs';
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { BehaviorSubject, map, merge, Observable, startWith, switchMap } from 'rxjs';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 
 import { TableTipeOrder } from './models/table.model';
 import { TypeOrderEnum } from './enums/type-order.enum';
 import { IElementRowTable } from './interfaces/table.interface';
 import { IPaginatedFilter } from './interfaces/paginated-filter.interface';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
-import { IResponse } from '@core/interfaces/response.interface';
 
 @Component({
   selector: 'app-table',
@@ -104,7 +103,7 @@ export class TableComponent implements OnInit, AfterViewInit {
       )
       .subscribe(entity =>  {
         if(entity.length > 0){
-          const keys =  Object.keys(entity[0]);
+          // const keys =  Object.keys(entity[0]);
           //this.columnsNotOrder = this.displayColumns.filter(cm => !keys.includes(cm));
         }
 

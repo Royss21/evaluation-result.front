@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ConstantsGeneral } from '@shared/constants';
 
 @Component({
@@ -6,16 +6,13 @@ import { ConstantsGeneral } from '@shared/constants';
   templateUrl: './status-chip.component.html',
   styleUrls: ['./status-chip.component.scss']
 })
-export class StatusChipComponent implements OnInit {
+export class StatusChipComponent {
 
   @Input() statusId: number;
   status: any;
-  
-  constructor() { 
-    this.status = ConstantsGeneral.status;
-  }
 
-  ngOnInit(): void {
+  constructor() {
+    this.status = ConstantsGeneral.status;
   }
 
 }

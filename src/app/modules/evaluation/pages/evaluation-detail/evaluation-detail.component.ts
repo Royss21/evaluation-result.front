@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { EvaluationService } from '@core/services/evaluation/evaluation.service';
-import { IComponentsRangeDate, IStageRangeDate } from '@modules/evaluation/interfaces/evaluation-detail.interface';
-import { EvaluationBehaviorsService } from '@modules/evaluation/services/evaluation-behaviors.service';
-import { IPeriodInProgress } from '@modules/period/interfaces/period-in-progress.interface';
-import { ConstantsGeneral } from '@shared/constants';
 import { Subject, takeUntil } from 'rxjs';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { ConstantsGeneral } from '@shared/constants';
+import { EvaluationService } from '@core/services/evaluation/evaluation.service';
+import { IPeriodInProgress } from '@modules/period/interfaces/period-in-progress.interface';
+import { EvaluationBehaviorsService } from '@modules/evaluation/services/evaluation-behaviors.service';
+import { IComponentsRangeDate, IStageRangeDate } from '@modules/evaluation/interfaces/evaluation-detail.interface';
 
 @Component({
   selector: 'app-evaluation-detail',

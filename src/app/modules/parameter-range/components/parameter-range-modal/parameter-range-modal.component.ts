@@ -1,21 +1,22 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
-import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
-import { ParameterRangeService } from '@core/services/paramater-range/parameter-range.service';
-import { ParameterRangeText } from '@modules/parameter-range/helpers/parameter-range.helper';
-import { IParameterRange } from '@modules/parameter-range/interfaces/parameter-range.interface';
+
 import { ConstantsGeneral } from '@shared/constants';
 import { CustomValidations } from '@shared/helpers/custom-validations';
+import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
+import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { ParameterRangeModalBuilderService } from './parameter-range-modal-builder.service';
+import { ParameterRangeText } from '@modules/parameter-range/helpers/parameter-range.helper';
+import { ParameterRangeService } from '@core/services/paramater-range/parameter-range.service';
+import { IParameterRange } from '@modules/parameter-range/interfaces/parameter-range.interface';
 
 @Component({
   selector: 'app-parameter-range-modal',
   templateUrl: './parameter-range-modal.component.html',
   styleUrls: ['./parameter-range-modal.component.scss']
 })
-export class ParameterRangeModalComponent implements OnInit {
+export class ParameterRangeModalComponent {
 
   private isCloseAfterSave: boolean = false;
 
@@ -28,9 +29,9 @@ export class ParameterRangeModalComponent implements OnInit {
     private _modalRef: MatDialogRef<ParameterRangeModalComponent>,
     public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: IParameterRange
-  ) { 
+  ) {
 
-    this.modalTitle = data ? ParameterRangeText.modalUdpate : ParameterRangeText.modalCreate; 
+    this.modalTitle = data ? ParameterRangeText.modalUdpate : ParameterRangeText.modalCreate;
     this.parameterRangeFormGroup = _parameterRangeBuilderService.buildParameterRangeForm(data);
   }
 
@@ -67,9 +68,6 @@ export class ParameterRangeModalComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
-
   closeModal(): void {
     this._modalRef.close();
   }
@@ -77,7 +75,7 @@ export class ParameterRangeModalComponent implements OnInit {
   confirmSave(isClose: boolean = true){
 
     CustomValidations.marcarFormGroupTouched(this.parameterRangeFormGroup);
-    
+
     if(this.parameterRangeFormGroup.invalid)
       return;
 
@@ -91,7 +89,7 @@ export class ParameterRangeModalComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) 
+      if (result)
         this.save(parameterRange);
     });
   }

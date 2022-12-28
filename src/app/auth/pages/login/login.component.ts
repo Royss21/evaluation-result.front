@@ -21,7 +21,7 @@ export class LoginComponent {
   }
 
   public login(): void {
-
+    console.log("login");
   }
 
   public get controlsForm(): { [key: string]: AbstractControl } {

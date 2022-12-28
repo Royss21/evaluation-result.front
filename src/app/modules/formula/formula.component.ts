@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-formula',
   templateUrl: './formula.component.html',
   styleUrls: ['./formula.component.scss']
 })
-export class FormulaComponent implements OnInit {
+export class FormulaComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

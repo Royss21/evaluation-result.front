@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input } from '@angular/core';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-global',

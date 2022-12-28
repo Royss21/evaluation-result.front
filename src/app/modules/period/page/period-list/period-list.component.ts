@@ -4,14 +4,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, BehaviorSubject, Subject, takeUntil } from 'rxjs';
 
 import { ConstantsGeneral } from '@shared/constants';
-import { PeriodHelper } from '@modules/period/helpers/period.helper';
 import { PeriodService } from '@core/services/period/period.service';
+import { PeriodHelper } from '@modules/period/helpers/period.helper';
+import { IPeriod } from '@modules/period/interfaces/period.interface';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
-import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
-import { IPeriod } from '@modules/period/interfaces/period.interface';
+import { PeriodModalComponent } from '@modules/period/components/period-modal/period-modal.component';
 
 @Component({
   selector: 'app-period-list',
@@ -20,6 +20,7 @@ import { IPeriod } from '@modules/period/interfaces/period.interface';
 })
 export class PeriodListComponent {
 
+  public title = PeriodHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
 
   periodPaginated$: Observable<any>;
@@ -41,10 +42,6 @@ export class PeriodListComponent {
     this.columnsTable = PeriodHelper.columnsTable;
   }
 
-  public goToNewPeriod(): void {
-    this._router.navigate(['/period/edit']).then(() => {});
-  }
-
   ngAfterContentInit() {
     this.callPaginated();
   }
@@ -60,45 +57,51 @@ export class PeriodListComponent {
     });
   }
 
-  public editPeriod(id: number): void {
-    this._router.navigate([`/period/edit/${id}`]).then(() => {});
+  private openModal(period?: IPeriod): void {
+
+    const modalPeriod = this._dialog.open(PeriodModalComponent, {
+      data: period,
+      disableClose: true,
+      width: ConstantsGeneral.mdModal
+    });
+
+    modalPeriod.afterClosed()
+      .subscribe(() => {
+        this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      });
   }
 
-  public goEvaluation(period: IPeriod): void {
-    this._router.navigateByUrl(`/evaluation/list`);
+  createPeriod(): void{
+    this.openModal();
   }
 
-  public confirmDeleted(idPeriod: number): void {
+  updatePeriod(period: IPeriod): void{
+    this.openModal(period);
+  }
+
+  confirmDeleted(id: number): void {
     const dialogRef = this._dialog.open(PopupChooseComponent, {
-      data: ConstantsGeneral.chooseData,
+      data: ConstantsGeneral.chooseDelete,
       autoFocus: false,
-      restoreFocus: false
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this._periodService
-        .delete(idPeriod)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(() => this.showConfirmMessage());
-      }
+      if (result) this.delete(id);
     });
   }
 
-  showConfirmMessage() {
-    const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
-      data: ConstantsGeneral.chooseDelete,
-      autoFocus: false
-    });
-
-    dialogRefConfirm.afterClosed().subscribe(() => {
-      this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      this._dialog.closeAll();
-    });
+  private delete(id: number): void{
+    this._periodService
+      .delete(id)
+      .subscribe(() => {
+        this.paginatedBehavior.next(this.paginatedFilterCurrent);
+        this._dialog.closeAll();
+      });
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
+
 }
