@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
@@ -50,6 +50,11 @@ export class EvaluateCompetenciesComponent implements OnInit {
   get isStatusCompleted(){
     return this.infoCollaborator.statusId == ConstantsGeneral.status.Completed;
   }
+
+  get controlsForm(): { [key: string]: AbstractControl } {
+    return this.evaluateFormGroup.controls;
+  }
+
 
   private _getEvaluationData(){
     this._componentCollaboratorService.getEvaluationData(this._componentCollaboratorId)

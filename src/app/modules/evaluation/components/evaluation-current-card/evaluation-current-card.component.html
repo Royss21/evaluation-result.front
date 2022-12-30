@@ -57,9 +57,7 @@
     <div *ngIf="stagesRangeDate.length > 0">
       <hr >
       <app-stage-evaluate-item *ngFor="let stage of stagesRangeDate"
-        [stageName]="stage.stageName"
-        [rangeDate]="stage.rangeDate"
-        [stageId]="stage.stageId"
+        [stageRangeDate]="stage"
       ></app-stage-evaluate-item>
     </div>
 

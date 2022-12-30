@@ -10,6 +10,7 @@ export class CardComponentComponent implements OnInit {
 
   @Input() infoComponent: IComponentsRangeDate | null;
   @Input() isEnable: boolean = false;
+  @Input() isActive: boolean = false;
   @Output() emitNavigate = new EventEmitter<number>();
 
   constructor() { }

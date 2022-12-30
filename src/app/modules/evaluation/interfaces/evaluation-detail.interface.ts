@@ -13,12 +13,15 @@ export interface IComponentsRangeDate{
   componentId : number;
   componentName  :string;
   rangeDate  :string;
+  isActive  :boolean;
   stages: IStageRangeDate[]
 }
 
 export interface IStageRangeDate{
+  
   stageId :number;
   stageName  :string;
   rangeDate  : string;
+  isActive  :boolean;
 }
 

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IStageRangeDate } from '@modules/evaluation/interfaces/evaluation-detail.interface';
 import { EvaluationBehaviorsService } from '@modules/evaluation/services/evaluation-behaviors.service';
 import { ConstantsGeneral } from '@shared/constants';
 
@@ -10,9 +11,7 @@ import { ConstantsGeneral } from '@shared/constants';
 })
 export class StageEvaluateItemComponent implements OnInit {
 
-  @Input() stageName: string;
-  @Input() rangeDate: string;
-  @Input() stageId: number;
+  @Input() stageRangeDate: IStageRangeDate;
 
   constructor(
     private _evaluationBehavior: EvaluationBehaviorsService
@@ -22,7 +21,7 @@ export class StageEvaluateItemComponent implements OnInit {
   }
 
   onClick(){
-    this._evaluationBehavior.gotoEvaluateStage(this.stageId);
+    this._evaluationBehavior.gotoEvaluateStage(this.stageRangeDate.stageId);
   }
 
 

@@ -16,7 +16,7 @@ export class ComponentCollaboratorEvaluateBuilderService {
       evaluationComponentStageId:[data?.evaluationComponentStageId],
       stageId:[data?.stageId],
       componentId: [componentId],
-      comment:[''],
+      comment:[data?.comment || '', [Validators.required]],
       componentCollaboratorDetailsEvaluate:  this._fb.array([])
     });
   }

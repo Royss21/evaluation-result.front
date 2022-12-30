@@ -16,7 +16,7 @@ fxLayoutAlign.md="space-between"
 fxLayoutAlign.sm="space-between"
 fxLayoutAlign.xs="start"
 >
- 
+
   <app-info-collaborator
     [infoCollaborator]="infoCollaborator"
   ></app-info-collaborator>
@@ -50,12 +50,12 @@ fxLayoutAlign.xs="start"
    >
     <ng-container [formGroupName]="i" *ngFor="let evaluateDetail of componentCollaboratorDetailsEvaluate.controls; let i = index">
       <div
-        fxFlex.xl="33.333%"    
+        fxFlex.xl="33.333%"
         fxFlex.lg="33.333%"
         fxFlex.md="50%"
         fxFlex.sm="100%"
         fxFlex.xs="100%"
-        class="p-1 pb-0 pt-0 mb-2" 
+        class="p-1 pb-0 pt-0 mb-2"
       >
         <app-objective-card
           [subcomponentName]="evaluateDetail.value.subcomponentName"
@@ -71,6 +71,39 @@ fxLayoutAlign.xs="start"
   </div>
 
   <div
+    fxLayout.xs="column"
+    fxLayout.sm="row wrap"
+    fxLayout.md="row wrap"
+    fxLayout.lg="row wrap"
+    fxLayout.xl="row wrap"
+    class="p-1 pb-0 pt-0"
+    fxLayoutAlign.xs="space-between center"
+    fxLayoutAlign.sm="space-between center"
+    fxLayoutAlign.md="start center"
+    fxLayoutAlign.lg="start center"
+    fxLayoutAlign.xl="start center"
+  >
+    <mat-form-field
+      fxFill
+      appearance="outline"
+    >
+      <mat-label>Comentario</mat-label>
+      <textarea
+          formControlName="comment"
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="2"
+          cdkAutosizeMaxRows="5"
+          [readonly]="isStatusCompleted"
+      ></textarea>
+      <mat-error *ngIf="controlsForm['comment'].hasError('required')">
+          El comentario es <strong>requerido</strong>.
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div
     fxLayout.xs="row wrap"
     fxLayout.sm="row wrap"
     fxLayout.md="row wrap"
@@ -81,18 +114,18 @@ fxLayoutAlign.xs="start"
     fxLayoutAlign.xs="space-between center"
     fxLayoutGap="10"
    >
-    <button 
-      mat-mini-fab 
-      color="basic" 
+    <button
+      mat-mini-fab
+      color="basic"
       matTooltip="Cancelar"
-      type="button" 
+      type="button"
       (click)="cancel()"
     >
         <mat-icon>close</mat-icon>
     </button>
-    <button 
-      mat-mini-fab 
-      color="primary" 
+    <button
+      mat-mini-fab
+      color="primary"
       matTooltip="Guardar notas de evaluación"
       type="submit"
       *ngIf="!isStatusCompleted"

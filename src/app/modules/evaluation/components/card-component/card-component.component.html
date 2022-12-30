@@ -28,6 +28,7 @@
           color="primary"
           mat-raised-button
           (click)="onClick()"
+          [disabled]="!infoComponent?.isActive"
         >Ir a evaluar</button>
       </div>
     </mat-card-content>
@@ -35,9 +36,7 @@
     <div *ngIf="(infoComponent?.stages || []).length > 0">
       <hr >
       <app-stage-evaluate-item *ngFor="let stage of infoComponent?.stages "
-        [stageName]="stage.stageName"
-        [rangeDate]="stage.rangeDate"
-        [stageId]="stage.stageId"
+        [stageRangeDate]="stage"
       ></app-stage-evaluate-item>
     </div>
   </div>

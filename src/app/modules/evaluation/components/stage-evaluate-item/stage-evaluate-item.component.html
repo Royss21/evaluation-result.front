@@ -1,13 +1,15 @@
 <div
+  fxLayout.xs="column"
   fxLayout="row"
-  fxLayoutAlign="start start"
+  fxLayoutAlign="start center"
   fxLayoutGap="5px"
+  class="mb-3"
 >
   <div fxFlex="5"><img src="/assets/images/star 1.png" alt="objetics corp"></div>
-  <div fxFlex="80">
-    <p class="m-0"><strong>{{ stageName }}</strong></p>
+  <div fxFlex="80" fxLayoutAlign.xs="center center" fxLayout.xs="column">
+    <p class="m-0"><strong>{{ stageRangeDate.stageName }}</strong></p>
     <span style="font-size: 12px;">
-      {{ rangeDate }}
+      {{ stageRangeDate.rangeDate }}
     </span>
   </div>
   <div fxFlex="20">
@@ -15,6 +17,7 @@
       mat-raised-button
       type="button"
       (click)="onClick()"
+      [disabled]="!stageRangeDate.isActive"
     >
     <span class="text-primary">Ir a evaluar</span>
     </button>

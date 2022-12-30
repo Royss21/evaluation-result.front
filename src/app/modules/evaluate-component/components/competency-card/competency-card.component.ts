@@ -19,6 +19,7 @@ export class CompetencyCardComponent implements OnInit, ControlValueAccessor {
 
   @Input() id: number = 0;
   @Input() subcomponentName:string =  '';
+  @Input() isCompleted: boolean;
   @Input() conducts:IComponentCollaboratorConduct[] =[];
 
   formGroupDetail: FormGroup = this._fb.group({
@@ -35,7 +36,7 @@ export class CompetencyCardComponent implements OnInit, ControlValueAccessor {
   ) {
     this.formGroupDetail.valueChanges.subscribe(value => {
       const{ componentCollaboratorConductsEvaluate } = value;
-      
+
       componentCollaboratorConductsEvaluate.forEach((cc: any) => cc.isSelected = cc.pointValue > 0)
 
       this._onTouched();
@@ -45,6 +46,11 @@ export class CompetencyCardComponent implements OnInit, ControlValueAccessor {
 
   get conductsEvaluate() {
     return this.formGroupDetail.controls["componentCollaboratorConductsEvaluate"] as FormArray;
+  }
+
+
+  getChecked(){
+
   }
 
   ngOnInit(): void {

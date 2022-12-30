@@ -20,7 +20,7 @@ export class CollaboratorService {
   ) { }
 
   getAllCollaboratorNotInEvaluation(evaluationId: string): Observable<ICollaboratorNotInEvaluation[]> {
-    return this._apiService.get<ICollaboratorNotInEvaluation[]>(`${this._url}${evaluationId}`);
+    return this._apiService.get<ICollaboratorNotInEvaluation[]>(`${this._url}/not-in-evaluation/${evaluationId}`);
   }
 
   getPaginated(paginatedFilter: IPaginatedFilter): Observable<IPaginatedResponse<ICollaborator>> {

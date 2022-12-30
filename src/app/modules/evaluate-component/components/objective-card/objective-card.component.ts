@@ -28,20 +28,21 @@ export class ObjectiveCardComponent implements OnInit, ControlValueAccessor {
   private _onTouched: Function = () => {}
 
   constructor() {
-    
+
   }
 
   onChange(value: any) {
-    
+
     if(value && value.startsWith('.'))
       value = `0${value}`;
-    
+
     this.objective.valueInput = value;
     this._onTouched();
     this._onChanged?.(!value?  null  : Number(value.toString().replace(',', "")));
   }
 
   writeValue(value: number): void {
+
   }
 
   registerOnChange(fn: any): void {
@@ -53,7 +54,7 @@ export class ObjectiveCardComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit(): void {
-    this.objective.valueInput = (this.valueCurrent || 0) * 100;
+    this.objective.valueInput = ((this.valueCurrent || 0) * 100).toString();
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ComponentCollaboratorService } from '@core/services/component-collaborator/component-collaborator.service';
@@ -50,6 +50,10 @@ export class EvaluateAreaObjectivesComponent implements OnInit {
 
   get isStatusCompleted(){
     return this.infoCollaborator.statusId == ConstantsGeneral.status.Completed;
+  }
+
+  get controlsForm(): { [key: string]: AbstractControl } {
+    return this.evaluateFormGroup.controls;
   }
 
   private _getEvaluationData(){
@@ -121,7 +125,7 @@ export class EvaluateAreaObjectivesComponent implements OnInit {
   confirmFinalizedEvaluation(){
 
     CustomValidations.marcarFormGroupTouched(this.evaluateFormGroup);
-
+    console.log(this.evaluateFormGroup)
     if(this.evaluateFormGroup.invalid)
       return;
 

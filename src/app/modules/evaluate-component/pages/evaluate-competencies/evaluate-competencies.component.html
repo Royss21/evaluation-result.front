@@ -15,7 +15,7 @@ fxLayoutAlign.md="space-between"
 fxLayoutAlign.sm="space-between"
 fxLayoutAlign.xs="start"
 >
- 
+
   <app-info-collaborator
     [infoCollaborator]="infoCollaborator"
   ></app-info-collaborator>
@@ -47,9 +47,9 @@ fxLayoutAlign.xs="start"
             </mat-panel-title>
             <mat-panel-description>
               <section class="selected-option">
-                <mat-checkbox 
+                <mat-checkbox
                   *ngFor="let conductSelected of evaluateDetail.value.componentCollaboratorConductsEvaluate"
-                  class="mr-2" 
+                  class="mr-2"
                   color="primary"
                   (click)="$event.preventDefault()"
                   [checked]="conductSelected.isSelected">
@@ -57,18 +57,52 @@ fxLayoutAlign.xs="start"
               </section>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          
+
           <app-competency-card
 
             [conducts]="evaluateDetail.value.componentCollaboratorConductsEvaluate"
+            [isCompleted]="isStatusCompleted"
             formControlName="componentCollaboratorConductsEvaluate"
           >
           </app-competency-card>
         </mat-expansion-panel>
-    
-      </ng-container> 
+
+      </ng-container>
     </mat-accordion>
    </div>
+
+   <div
+    fxLayout.xs="column"
+    fxLayout.sm="row wrap"
+    fxLayout.md="row wrap"
+    fxLayout.lg="row wrap"
+    fxLayout.xl="row wrap"
+    class="p-1 pb-0 pt-0 mt-2"
+    fxLayoutAlign.xs="space-between center"
+    fxLayoutAlign.sm="space-between center"
+    fxLayoutAlign.md="start center"
+    fxLayoutAlign.lg="start center"
+    fxLayoutAlign.xl="start center"
+  >
+    <mat-form-field
+      fxFill
+      appearance="outline"
+    >
+      <mat-label>Comentario</mat-label>
+      <textarea
+          formControlName="comment"
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="2"
+          cdkAutosizeMaxRows="5"
+          [readonly]="isStatusCompleted"
+      ></textarea>
+      <mat-error *ngIf="controlsForm['comment'].hasError('required')">
+          El comentario es <strong>requerido</strong>.
+      </mat-error>
+    </mat-form-field>
+  </div>
 
    <div
     fxLayout.xs="row wra"
@@ -81,18 +115,18 @@ fxLayoutAlign.xs="start"
     fxLayoutAlign.xs="space-between center"
     fxLayoutGap="10"
     >
-    <button 
-      mat-mini-fab 
-      color="basic" 
+    <button
+      mat-mini-fab
+      color="basic"
       matTooltip="Cancelar"
-      type="button" 
+      type="button"
       (click)="cancel()"
     >
         <mat-icon>close</mat-icon>
     </button>
-    <button 
-      mat-mini-fab 
-      color="primary" 
+    <button
+      mat-mini-fab
+      color="primary"
       matTooltip="Guardar notas de evaluación"
       type="submit"
       *ngIf="!isStatusCompleted"

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
@@ -34,7 +34,7 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
   ) {
     this.evaluateFormGroup = _formBuilder.buildComponentCollaboratorEvaluateForm(null, ConstantsGeneral.components.corporateObjectives);
     this._setInformationCollaborator(null);
-   }
+  }
 
   ngOnInit(): void {
     this._route.params.subscribe(params => {
@@ -49,6 +49,10 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
 
   get isStatusCompleted(){
     return this.infoCollaborator.statusId == ConstantsGeneral.status.Completed;
+  }
+
+  get controlsForm(): { [key: string]: AbstractControl } {
+    return this.evaluateFormGroup.controls;
   }
 
   private _getEvaluationData(){
@@ -120,7 +124,7 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
   confirmFinalizedEvaluation(){
 
     CustomValidations.marcarFormGroupTouched(this.evaluateFormGroup);
-
+    console.log(this.evaluateFormGroup)
     if(this.evaluateFormGroup.invalid)
       return;
 
