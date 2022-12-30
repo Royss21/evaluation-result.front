@@ -5,16 +5,16 @@ import { PeriodRouting } from './period.routing';
 import { RouterModule } from '@angular/router';
 import { PeriodComponent } from './period.component';
 import { SharedModule } from "@shared/modules/shared.module";
-import { PeriodEditComponent } from './page/period-edit/period-edit.component';
 import { PeriodListComponent } from './page/period-list/period-list.component';
 import { ComponentsModule } from '@components/components.module';
+import { PeriodModalComponent } from './components/period-modal/period-modal.component';
 
 
 @NgModule({
   declarations: [
-    PeriodEditComponent,
     PeriodListComponent,
     PeriodComponent,
+    PeriodModalComponent,
   ],
   imports: [
     CommonModule,

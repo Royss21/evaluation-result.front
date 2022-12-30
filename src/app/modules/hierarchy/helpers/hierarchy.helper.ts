@@ -5,7 +5,7 @@ export class HierarchyHelper{
   static columnsTable: IElementRowTable[] =  [
     new ElementRowTable('id','#'),
     new ElementRowTable('name','Nombre'),
-    new ElementRowTable('nivelName','Nivel'),
+    new ElementRowTable('levelName','Nivel'),
     new ElementRowTable('actions','Acciones'),
   ];
 

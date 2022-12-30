@@ -1,6 +1,5 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
-import { CustomValidations } from '@shared/helpers/custom-validations';
 
 @Component({
   selector: 'app-child',
@@ -19,7 +18,7 @@ import { CustomValidations } from '@shared/helpers/custom-validations';
     }
   ],
 })
-export class ChildComponent implements OnInit ,ControlValueAccessor{
+export class ChildComponent implements ControlValueAccessor {
 
   public formGroupTest: FormGroup = new FormGroup(
     {
@@ -29,11 +28,6 @@ export class ChildComponent implements OnInit ,ControlValueAccessor{
   );
 
   //@Input() formGroupTest : FormGroup;
-
-  constructor() {}
-  
-  ngOnInit(): void {
-  }
 
   validate(control: AbstractControl<any, any>): ValidationErrors | null {
     this.formGroupTest.markAllAsTouched();

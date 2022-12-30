@@ -2,12 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AreaRoutingModule } from './area.routing';
-
+import { SharedModule } from '@shared/modules/shared.module';
+import { AreaComponent } from '@modules/area/area.component';
+import { ComponentsModule } from '@components/components.module';
+import { AreaListComponent } from '@modules/area/pages/area-list/area-list.component';
+import { AreaModalComponent } from './components/area-modal/area-modal.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    AreaComponent,
+    AreaListComponent,
+    AreaModalComponent
+  ],
   imports: [
     CommonModule,
+    SharedModule,
+    ComponentsModule,
     AreaRoutingModule
   ]
 })

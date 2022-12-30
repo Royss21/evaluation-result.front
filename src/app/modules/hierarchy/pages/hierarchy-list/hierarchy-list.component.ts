@@ -57,7 +57,8 @@ export class HierarchyListComponent {
 
     const modalHierarchy = this._dialog.open(HierarchyModalComponent, {
       disableClose: true,
-      data: hierarchy
+      data: hierarchy,
+      width: ConstantsGeneral.mdModal
     });
 
     modalHierarchy.afterClosed()
@@ -66,7 +67,7 @@ export class HierarchyListComponent {
       });
   }
 
-  private delete(id:number): void{
+  private delete(id: number): void{
     this._hierarchyService
       .delete(id)
       .subscribe(() => {

@@ -20,8 +20,12 @@ export class PeriodService {
     return this._apiService.get<boolean>(url);
   }
 
-  create(request: IPeriod): Observable<boolean> {
-    return this._apiService.post<boolean>(`${this.url}`, request);
+  create(request: IPeriod): Observable<IPeriod> {
+    return this._apiService.post<IPeriod>(`${this.url}`, request);
+  }
+
+  update(request: IPeriod): Observable<boolean> {
+    return this._apiService.put<boolean>(`${this.url}`, request);
   }
 
   delete(idPeriod: number): Observable<boolean> {

@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+
+import { ConstantsGeneral } from '@shared/constants';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { SubcomponentService } from '@core/services/subcomponent/subcomponent.service';
-import { CorporateObjectivesModalComponent } from '@modules/corporate-objectives/components/corporate-objectives-modal/corporate-objectives-modal.component';
+import { ISubcomponentFilter } from '@shared/interfaces/subcomponent-filter.interface';
+import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { CorporateObjectivesHelper } from '@modules/corporate-objectives/helpers/corporate-objectives.helper';
 import { ICorporateObjectives } from '@modules/corporate-objectives/interfaces/corporate-objectives.interface';
-import { ConstantsGeneral } from '@shared/constants';
-import { ISubcomponentFilter } from '@shared/interfaces/subcomponent-filter.interface';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { CorporateObjectivesModalComponent } from '@modules/corporate-objectives/components/corporate-objectives-modal/corporate-objectives-modal.component';
 
 @Component({
   selector: 'app-corporate-objectives-list',
   templateUrl: './corporate-objectives-list.component.html',
   styleUrls: ['./corporate-objectives-list.component.scss']
 })
-export class CorporateObjectivesListComponent implements OnInit {
+export class CorporateObjectivesListComponent {
 
   private unsubscribe$ = new Subject<any>();
 
@@ -36,10 +37,7 @@ export class CorporateObjectivesListComponent implements OnInit {
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = CorporateObjectivesHelper.columnsTable;
   }
-  ngOnInit(): void {
-    
-  }
-  
+
   ngAfterContentInit() {
     this.callPaginated();
   }

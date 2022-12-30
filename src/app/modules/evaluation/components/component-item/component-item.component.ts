@@ -1,19 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-component-item',
   templateUrl: './component-item.component.html',
   styleUrls: ['./component-item.component.scss']
 })
-export class ComponentItemComponent implements OnInit {
+export class ComponentItemComponent {
 
   @Input() icon: string;
   @Input() componentName: string;
   @Input() isCreatedInEvaluation: boolean;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

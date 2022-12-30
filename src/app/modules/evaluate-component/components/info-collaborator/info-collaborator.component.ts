@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ICollaboratorInformation } from '@modules/evaluate-component/interfaces/collaborator-information.interface';
 
 @Component({
@@ -6,13 +6,8 @@ import { ICollaboratorInformation } from '@modules/evaluate-component/interfaces
   templateUrl: './info-collaborator.component.html',
   styleUrls: ['./info-collaborator.component.scss']
 })
-export class InfoCollaboratorComponent implements OnInit {
+export class InfoCollaboratorComponent {
 
   @Input() infoCollaborator: ICollaboratorInformation
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

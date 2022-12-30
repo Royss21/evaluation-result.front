@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 
@@ -7,7 +7,7 @@ import { CustomValidations } from '@shared/helpers/custom-validations';
   templateUrl: './example-form.component.html',
   styleUrls: ['./example-form.component.scss']
 })
-export class ExampleFormComponent implements OnInit {
+export class ExampleFormComponent {
 
   public formGroup: FormGroup;
 
@@ -21,9 +21,6 @@ export class ExampleFormComponent implements OnInit {
         confirmPassword: new FormControl(),
       })
     });
-  }
-  ngOnInit(): void {
-
   }
 
   get f() {

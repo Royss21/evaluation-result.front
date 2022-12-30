@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+
+import { ConstantsGeneral } from '@shared/constants';
+import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
-import { IElementRowTable } from '@components/table/interfaces/table.interface';
+import { ParameterRangeHelper } from '@modules/parameter-range/helpers/parameter-range.helper';
 import { ParameterRangeService } from '@core/services/paramater-range/parameter-range.service';
+import { IParameterRange } from '@modules/parameter-range/interfaces/parameter-range.interface';
 import { ParameterRangeModalComponent } from '@modules/parameter-range/components/parameter-range-modal/parameter-range-modal.component';
 import { ParameterValueModalComponent } from '@modules/parameter-range/components/parameter-value-modal/parameter-value-modal.component';
-import { ParameterRangeHelper } from '@modules/parameter-range/helpers/parameter-range.helper';
-import { IParameterRange } from '@modules/parameter-range/interfaces/parameter-range.interface';
-import { ConstantsGeneral } from '@shared/constants';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-parameter-range-list',
   templateUrl: './parameter-range-list.component.html',
   styleUrls: ['./parameter-range-list.component.scss']
 })
-export class ParameterRangeListComponent implements OnInit {
+export class ParameterRangeListComponent {
 
   private unsubscribe$ = new Subject<any>();
 
@@ -38,10 +39,6 @@ export class ParameterRangeListComponent implements OnInit {
     this.columnsTable = ParameterRangeHelper.columnsTable;
   }
 
-  ngOnInit(): void {
-    
-  }
-  
   ngAfterContentInit() {
     this.callPaginated();
   }

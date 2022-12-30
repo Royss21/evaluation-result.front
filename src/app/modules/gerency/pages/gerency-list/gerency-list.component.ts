@@ -87,7 +87,7 @@ export class GerencyListComponent {
     });
   }
 
-  private delete(id:number): void{
+  private delete(id: number): void{
     this._gerencyService
       .delete(id)
       .subscribe(() => {

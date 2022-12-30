@@ -1,5 +1,6 @@
 export interface IArea {
-    id: number;
-    name: string;
-    gerencyId: number;
+  id: number;
+  name: string;
+  gerencyId: number;
+  gerencyName: string;
 }

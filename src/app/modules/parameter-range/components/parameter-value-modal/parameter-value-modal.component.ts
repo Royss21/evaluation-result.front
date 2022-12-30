@@ -1,25 +1,26 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup, FormGroupDirective } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { ConstantsGeneral } from '@shared/constants';
+import { CustomValidations } from '@shared/helpers/custom-validations';
+import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
-import { IElementRowTable } from '@components/table/interfaces/table.interface';
-import { ParameterValueService } from '@core/services/paramater-value/parameter-range.service';
-import { IParameterValueFilter } from '@modules/parameter-range/helpers/parameter-value-filter.interface';
-import { ParameterValueHelper } from '@modules/parameter-range/helpers/parameter-value.helper';
-import { IParameterValue } from '@modules/parameter-range/interfaces/parameter-value.interface';
-import { ConstantsGeneral } from '@shared/constants';
-import { CustomValidations } from '@shared/helpers/custom-validations';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ParameterValueModalBuilderService } from './parameter-value-modal-builder.service';
+import { ParameterValueHelper } from '@modules/parameter-range/helpers/parameter-value.helper';
+import { ParameterValueService } from '@core/services/paramater-value/parameter-range.service';
+import { IParameterValue } from '@modules/parameter-range/interfaces/parameter-value.interface';
+import { IParameterValueFilter } from '@modules/parameter-range/helpers/parameter-value-filter.interface';
 
 @Component({
   selector: 'app-parameter-value-modal',
   templateUrl: './parameter-value-modal.component.html',
   styleUrls: ['./parameter-value-modal.component.scss']
 })
-export class ParameterValueModalComponent implements OnInit {
+export class ParameterValueModalComponent {
 
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
@@ -51,10 +52,6 @@ export class ParameterValueModalComponent implements OnInit {
     this.parameterValueFormGroup = _parameterValueBuilderService.buildParameterValueForm();
   }
 
-  ngOnInit(): void {
-    
-  }
-  
   ngAfterContentInit() {
     this.callPaginated();
   }
@@ -102,7 +99,7 @@ export class ParameterValueModalComponent implements OnInit {
     else
       this._parameterValueService.update(parameterValue).subscribe(() => this.showConfirmMessage())
   }
-  
+
   clean(){
     this.parameterValueFormGroup.reset();
     this.formGroupDirective.resetForm();
@@ -111,13 +108,13 @@ export class ParameterValueModalComponent implements OnInit {
   confirmSave(){
 
     CustomValidations.marcarFormGroupTouched(this.parameterValueFormGroup);
-    
+
     if(this.parameterValueFormGroup.invalid)
       return;
 
     const parameterValue: IParameterValue = { ...this.parameterValueFormGroup.getRawValue() } ;
     parameterValue.parameterRangeId = this.data;
-    
+
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
@@ -125,11 +122,11 @@ export class ParameterValueModalComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) 
+      if (result)
         this.save(parameterValue);
      });
   }
-  
+
   edit(parameterValue: IParameterValue){
     this.parameterValueFormGroup = this._parameterValueBuilderService.buildParameterValueForm(parameterValue);
   }

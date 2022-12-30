@@ -1,16 +1,15 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+
+import { LeaderHelper } from '@modules/evaluation-leader/helpers/leader.helper';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { LeaderService } from '@core/services/evaluation-leader/leader.service';
-import { AssignedCollaboratorsModalComponent } from '@modules/evaluation-leader/components/assigned-collaborators-modal/assigned-collaborators-modal.component';
-import { LeaderImportModalComponent } from '@modules/evaluation-leader/components/leader-import-modal/leader-import-modal.component';
-import { LeaderHelper } from '@modules/evaluation-leader/helpers/leader.helper';
+import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { ILeaderPaged } from '@modules/evaluation-leader/interfaces/leader-paged.interface';
-import { IEvaluationLeader } from '@modules/evaluation-leader/interfaces/leader.interface';
-import { ConstantsGeneral } from '@shared/constants';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { LeaderImportModalComponent } from '@modules/evaluation-leader/components/leader-import-modal/leader-import-modal.component';
+import { AssignedCollaboratorsModalComponent } from '@modules/evaluation-leader/components/assigned-collaborators-modal/assigned-collaborators-modal.component';
 
 @Component({
   selector: 'app-leader-list',
@@ -40,10 +39,11 @@ export class LeaderListComponent implements OnInit {
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = LeaderHelper.columnsTable;
   }
+
   ngOnInit(): void {
     this._route.params.subscribe(params => this._evaluationId = params['evaluationId']);
   }
-  
+
   ngAfterContentInit() {
     this._callPaginated();
   }
@@ -60,7 +60,7 @@ export class LeaderListComponent implements OnInit {
   }
 
   openModalViewAssignedCollaborators(leader: ILeaderPaged){
-    
+
       const modalLeaderImport = this._dialog.open(AssignedCollaboratorsModalComponent, {
         disableClose: true,
         data: {
@@ -70,7 +70,7 @@ export class LeaderListComponent implements OnInit {
         autoFocus: false,
         restoreFocus: false
       });
-  
+
       modalLeaderImport.afterClosed()
         .subscribe(() => {
           this.paginatedBehavior.next(this.paginatedFilterCurrent);

@@ -11,7 +11,6 @@ import { PopupChooseComponent } from '@components/popup-choose/popup-choose.comp
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { LevelModalComponent } from '@modules/level/components/level-modal/level-modal.component';
 
-
 @Component({
   selector: 'app-level-list',
   templateUrl: './level-list.component.html',
