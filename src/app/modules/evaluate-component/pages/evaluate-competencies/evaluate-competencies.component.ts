@@ -22,7 +22,8 @@ export class EvaluateCompetenciesComponent implements OnInit {
 
   private _componentCollaboratorId: string;
 
-  infoCollaborator: ICollaboratorInformation
+  infoCollaborator: ICollaboratorInformation;
+  stageCurrentId: number;
   evaluateFormGroup: FormGroup;
 
   constructor(
@@ -60,6 +61,7 @@ export class EvaluateCompetenciesComponent implements OnInit {
     this._componentCollaboratorService.getEvaluationData(this._componentCollaboratorId)
       .subscribe(data => {
 
+        this.stageCurrentId = data.stageId;
         this.evaluateFormGroup = this._formBuilder.buildComponentCollaboratorEvaluateForm(data, ConstantsGeneral.components.competencies);
         this._setInformationCollaborator(data);
 

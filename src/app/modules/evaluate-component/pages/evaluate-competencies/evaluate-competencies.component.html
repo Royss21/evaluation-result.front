@@ -46,7 +46,7 @@ fxLayoutAlign.xs="start"
               {{ evaluateDetail.value.subcomponentName }}
             </mat-panel-title>
             <mat-panel-description>
-              <section class="selected-option">
+              <section class="selected-option" *ngIf="stageCurrentId === 1">
                 <mat-checkbox
                   *ngFor="let conductSelected of evaluateDetail.value.componentCollaboratorConductsEvaluate"
                   class="mr-2"
@@ -62,6 +62,7 @@ fxLayoutAlign.xs="start"
 
             [conducts]="evaluateDetail.value.componentCollaboratorConductsEvaluate"
             [isCompleted]="isStatusCompleted"
+            [stageId]=" stageCurrentId"
             formControlName="componentCollaboratorConductsEvaluate"
           >
           </app-competency-card>
@@ -136,4 +137,3 @@ fxLayoutAlign.xs="start"
     </div>
 </form>
 
-<!-- <pre>{{ evaluateFormGroup.value | json }}</pre> -->

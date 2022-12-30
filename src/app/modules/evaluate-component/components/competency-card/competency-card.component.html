@@ -27,8 +27,10 @@
         {{ conduct.value.conductDescription }}
       </p>
 
+
       <mat-radio-group
-        aria-label="Select an option"
+        *ngIf=" isStageEvaluation ; else templateStageCalibration"
+        aria-label="Seleccione una opcion"
         class="mb-3"
         formControlName="pointValue"
       >
@@ -38,68 +40,66 @@
         <mat-radio-button value="4.00" [checked]="conduct.value.pointValue === 4.00" [disabled]="isCompleted">4</mat-radio-button>
         <mat-radio-button value="5.00" [checked]="conduct.value.pointValue === 5.00" [disabled]="isCompleted">5</mat-radio-button>
       </mat-radio-group>
+
+      <ng-template #templateStageCalibration>
+        <div
+          fxLayout.xs="row wrap"
+          fxLayout.sm="row wrap"
+          fxLayout.md="row wrap"
+          fxLayout.lg="row wrap"
+          fxLayout.xl="row wrap"
+          class="p-1 pb-0 pt-3 "
+          fxLayoutAlign="center"
+          fxLayoutGap="10"
+        >
+          <div
+            fxFlex.sm="30%"
+          >
+            <p class="text-center">Puntaje Evaluación</p>
+            <mat-form-field
+              fxFill
+              appearance="outline"
+            >
+              <input
+                type="text"
+                formControlName="pointValue"
+                autocomplete="off"
+                matInput
+                class="text-right"
+                readonly
+              >
+            </mat-form-field>
+          </div>
+          <div
+            fxFlex.sm="30%"
+          >
+            <p class="text-center">Puntaje Calibración</p>
+            <mat-form-field
+              fxFill
+              appearance="outline"
+            >
+              <input
+                type="text"
+                formControlName="pointValueCalibrated"
+                autocomplete="off"
+                matInput
+                appOnlyNumber
+                required
+                [min]="0"
+                class="text-right"
+              >
+              <mat-error *ngIf="conduct.get('pointValueCalibrated')?.errors?.['required']">
+                El puntaje es <strong>requerido</strong>.
+              </mat-error>
+              <mat-error *ngIf="conduct.get('pointValueCalibrated')?.errors?.['min']">
+                El puntaje minimo es <strong>1</strong>.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-template>
     </div>
   </ng-container>
-
-    <!-- <div
-      fxFlex.xl="32.3333%"
-      fxFlex.lg="32.3333%"
-      fxFlex.md="50%"
-      fxFlex.sm="100%"
-      fxFlex.xs="100%"
-      fxLayout="column"
-      class="p-1 conduct"
-    >
-      <p class="conduct-description ">Lorem ipsum dolor sit amet, consectet Lorem ipsum dolor sit amet, consectet
-        Lorem ipsum dolor sit amet, consectet
-        Lorem ipsum dolor sit amet, consectet
-        Lorem ipsum dolor sit amet, consectet
-        Lorem ipsum dolor sit amet, consectet
-      </p>
-
-      <mat-radio-group
-        aria-label="Select an option"
-        class="mb-3"
-      >
-        <mat-radio-button value="1">1</mat-radio-button>
-        <mat-radio-button value="2">2</mat-radio-button>
-        <mat-radio-button value="3">3</mat-radio-button>
-        <mat-radio-button value="4">4</mat-radio-button>
-        <mat-radio-button value="5">5</mat-radio-button>
-      </mat-radio-group>
-
-      <p>asdsadsadasdasdasdasd  sadsadsa</p>
-    </div>
-
-    <div
-      fxFlex.xl="32.3333%"
-      fxFlex.lg="32.3333%"
-      fxFlex.md="50%"
-      fxFlex.sm="100%"
-      fxFlex.xs="100%"
-      fxLayout="column"
-      class="p-1 conduct"
-    >
-      <p class="conduct-description ">Lorem ipsum dolor sit amet, consectet Lorem ipsum dolor sit amet, consectet
-        Lorem ipsum dolor sit amet, consectet
-        Lorem ipsum dolor sit amet, consectet
-        Lorem ipsum dolor sit amet, consectet
-        Lorem ipsum dolor sit amet, consectet
-      </p>
-
-      <mat-radio-group
-        aria-label="Select an option"
-        class="mb-3"
-      >
-        <mat-radio-button value="1">1</mat-radio-button>
-        <mat-radio-button value="2">2</mat-radio-button>
-        <mat-radio-button value="3">3</mat-radio-button>
-        <mat-radio-button value="4">4</mat-radio-button>
-        <mat-radio-button value="5">5</mat-radio-button>
-      </mat-radio-group>
-
-      <p>asdsadsadasdasdasdasd  sadsadsa</p>
-    </div> -->
 
   </div>
 </form>

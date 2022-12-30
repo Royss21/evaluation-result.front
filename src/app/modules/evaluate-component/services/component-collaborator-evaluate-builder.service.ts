@@ -37,6 +37,7 @@ export class ComponentCollaboratorEvaluateBuilderService {
       id:[detail.id],
       conductDescription:[detail.conductDescription],
       pointValue:[detail.pointValue, [Validators.required]],
+      pointValueCalibrated:[detail.pointValueCalibrated, []],
       isSelected:[(detail.pointValue || 0) > 0],
     });
   }

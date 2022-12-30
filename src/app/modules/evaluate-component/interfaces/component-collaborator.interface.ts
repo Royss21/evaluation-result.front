@@ -28,6 +28,7 @@ export interface IComponentCollaboratorConduct{
 
   id: number;
   pointValue: 0;
+  pointValueCalibrated: 0;
   conductDescription: string;
   isSelected: boolean;
 }

@@ -2,6 +2,7 @@ import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IComponentCollaboratorConduct } from '@modules/evaluate-component/interfaces/component-collaborator.interface';
 import { ComponentCollaboratorEvaluateBuilderService } from '@modules/evaluate-component/services/component-collaborator-evaluate-builder.service';
+import { ConstantsGeneral } from '@shared/constants';
 
 @Component({
   selector: 'app-competency-card',
@@ -18,6 +19,7 @@ import { ComponentCollaboratorEvaluateBuilderService } from '@modules/evaluate-c
 export class CompetencyCardComponent implements OnInit, ControlValueAccessor {
 
   @Input() id: number = 0;
+  @Input() stageId:number = 0;
   @Input() subcomponentName:string =  '';
   @Input() isCompleted: boolean;
   @Input() conducts:IComponentCollaboratorConduct[] =[];
@@ -49,8 +51,8 @@ export class CompetencyCardComponent implements OnInit, ControlValueAccessor {
   }
 
 
-  getChecked(){
-
+  get isStageEvaluation(){
+    return this.stageId == ConstantsGeneral.stages.evaluation;
   }
 
   ngOnInit(): void {
