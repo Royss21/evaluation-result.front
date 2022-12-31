@@ -50,20 +50,32 @@
                 fxFlex.md="100%"
                 fxFlex.sm="100%"
                 fxFlex.xs="100%"
-            >
-                <mat-form-field
-                    fxFill
-                    appearance="outline"
-                >
-                <mat-label>Gerencia</mat-label>
-                <input
-                    name="name"
-                    type="text"
-                    autocomplete="off"
-                    maxlength="100"
-                    matInput
-                >
-                </mat-form-field>
+            ><div class="ng-autocomplete">
+              <mat-label>Gerencia</mat-label>
+              <ng-autocomplete #ngAutoCompleteGerency
+                [data]="gerencyList"
+                notFoundText="No se escontraron resultados"
+                formControlName="gerencyName"
+                [initialValue]="defaultValueGerency"
+                placeholder="Ingresa una gerencia"
+                [searchKeyword]="keywordSearch"
+                (selected)='selectedGerency($event)'
+                [itemTemplate]="itemTemplateStaticGerency"
+                [notFoundTemplate]="notFoundTemplateGerency"
+              ></ng-autocomplete>
+
+              <ng-template #itemTemplateStaticGerency let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplateGerency let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+
+              <!-- <mat-error *ngIf="controlsForm['levelName'].hasError('required')">
+                El nivel es <strong>requerido</strong>.
+              </mat-error> -->
+            </div>
             </div>
         </div>
     </mat-dialog-content>

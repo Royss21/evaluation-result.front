@@ -21,6 +21,22 @@ export class ChargeBuilderService {
           Validators.maxLength(100)
         ]
       ],
+      hierarchyId: [
+        charge?.hierarchyId || null,
+        [Validators.required]
+      ],
+      hierarchyName: [
+        charge?.hierarchyName || null,
+        [Validators.required]
+      ],
+      areaId: [
+        charge?.areaId || null,
+        [Validators.required]
+      ],
+      areaName: [
+        charge?.areaName || null,
+        [Validators.required]
+      ],
     })
   }
 }

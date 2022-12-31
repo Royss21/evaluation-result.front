@@ -1,5 +1,5 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChildren } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
@@ -10,6 +10,8 @@ import { AreaHelper } from '@modules/area/helpers/area-helper.interface';
 import { AreaBuilderService } from '@modules/area/services/area-builder.service';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
+import { IGerency } from '@modules/gerency/interfaces/gerency.interface';
+import { GerencyService } from '@core/services/gerency/gerency.service';
 
 @Component({
   selector: 'app-area-modal',
@@ -23,15 +25,39 @@ export class AreaModalComponent{
   areaFormGroup: FormGroup;
   modalTitle: string = AreaHelper.titleActionText.modalCreate;
 
+  public gerencyList: IGerency[] = [];
+  public keywordSearch: string = 'name';
+
+  public defaultValueGerency: string = '';
+  @ViewChildren('ngAutoCompleteGerency') ngAutoCompleteGerency : any;
+
   constructor(
     private _areaService: AreaService,
+    private _gerencyService: GerencyService,
     private _areaBuilderService: AreaBuilderService,
     private _modalRef: MatDialogRef<AreaModalComponent>,
     public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: IArea
   ) {
-    data && (this.modalTitle = AreaHelper.titleActionText.modalUdpate);
     this.areaFormGroup = _areaBuilderService.buildAreaForm(data);
+    data && this._setDefaultValues();
+    this._getGerencies();
+  }
+
+  private _setDefaultValues(): void {
+    this.defaultValueGerency = this.data.gerencyName;
+    this.modalTitle = AreaHelper.titleActionText.modalUdpate;
+  }
+
+  private _getGerencies(): void {
+    this._gerencyService.getAll().subscribe((res: IGerency[]) => {
+      this.gerencyList = res;
+    });
+  }
+
+  public selectedGerency(gerency: IGerency): void {
+    if (typeof gerency !== 'string')
+      this.areaFormGroup.controls['gerencyId'].setValue(gerency.id);
   }
 
   get controlsForm(): { [key: string]: AbstractControl } {

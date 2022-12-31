@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { forkJoin, Observable, map, startWith } from 'rxjs';
+import { Observable, map, startWith } from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 

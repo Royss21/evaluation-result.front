@@ -48,10 +48,10 @@
           >
             <div class="ng-autocomplete">
               <ng-autocomplete #ngAutoCompleteLevel
-                [data]="_levelList"
+                [data]="levelList"
                 notFoundText="Not found"
                 formControlName="levelName"
-                [initialValue]="defaulValue"
+                [initialValue]="defaultValue"
                 placeholder="Ingresa un nivel"
                 [searchKeyword]="keywordSearch"
                 (selected)='selectedLevel($event)'

@@ -14,14 +14,21 @@ export class AreaBuilderService {
     return this._fb.group({
       id: [area?.id || null],
       name: [
-        area?.name || '',
+        area?.name || null,
         [
           Validators.required,
           CustomValidations.NotEmpty,
           Validators.maxLength(100)
         ]
       ],
-      gerencyId: [ area?.gerencyId || '']
+      gerencyId: [
+        area?.gerencyId || null,
+        [Validators.required]
+      ],
+      gerencyName: [
+        area?.gerencyName || null,
+        [Validators.required]
+      ]
     })
   }
 }
