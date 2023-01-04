@@ -1,40 +1,39 @@
-<div class="container-login">
+<div
+  *ngIf="isViewLogin"
+  class="container-login"
+  >
+  <!-- [ngClass]="showPassword ? 'opacity-container' : ''" -->
   <div class="left">
-    <img src="https://pngimage.net/wp-content/uploads/2018/06/generic-company-logo-png-7.png" class="animation a6" style="margin: 0 auto 10px;width: 150px">
+    <img src="https://pngimage.net/wp-content/uploads/2018/06/generic-company-logo-png-7.png" class="animation a6" alt="logo img" style="margin: 0 auto 10px;width: 150px">
     <div class="header">
-      <h2 class="animation a1">Form Login with random background</h2>
-      <p class="animation a2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultricies sit amet erat at finibus. Praesent justo justo, fringilla sed tellus in, pellentesque eleifend tortor.</p>
+      <h2 class="animation a1">SISTEMA DE EVALUACIÓN DE COMPETENCIAS</h2>
+      <p class="animation a2">Evalúa el manejo de los conocimientos y las destrezas logradas, las mismas que son contrastadas con las unidades de competencia que conforman el perfil laboral.</p>
     </div>
     <form
       class="form"
       autocomplete="off"
       [formGroup]="loginForm"
-      (ngSubmit)="login()"
     >
-      <mat-form-field>
+        <mat-form-field *ngIf="showUsername">
+          <mat-label>
+            <mat-icon>person</mat-icon>&nbsp;
+            <span>Usuario</span>
+          </mat-label>
+          <input
+            matInput
+            type="text"
+            maxlength="200"
+            name="username"
+            autocomplete="off"
+            formControlName="username"
+          >
+            <mat-error *ngIf="controlsLoginForm['username'].hasError('required')">
+              Debe ingresar un usuario
+            </mat-error>
+        </mat-form-field>
+      <mat-form-field *ngIf="showPassword">
         <mat-label>
-          <mat-icon>person</mat-icon>&nbsp;
-          <span>Usuario</span>
-        </mat-label>
-        <input
-          matInput
-          type="text"
-          maxlength="200"
-          name="username"
-          autocomplete="off"
-          formControlName="username"
-        >
-          <mat-error *ngIf="controlsForm['username'].hasError('required')">
-            Debe ingresar un usuario
-          </mat-error>
-          <mat-error *ngIf="controlsForm['username'].hasError('email')">
-            Debe ingresar un email válido
-          </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>
-          <mat-icon>person</mat-icon>&nbsp;
+          <mat-icon>vpn_key</mat-icon>&nbsp;
           <span>Contraseña</span>
         </mat-label>
         <input
@@ -45,8 +44,70 @@
           autocomplete="off"
           formControlName="password"
         >
-          <mat-error *ngIf="controlsForm['password'].hasError('required')">
+          <mat-error *ngIf="controlsLoginForm['password'].hasError('required')">
             Debe ingresar una contraseña
+          </mat-error>
+      </mat-form-field>
+      <br />
+      <button
+        color="primary"
+        mat-raised-button
+        (click)="validUser()"
+        *ngIf="!showPassword"
+      >
+        Siguiente
+      </button>
+      <button
+        color="primary"
+        mat-raised-button
+        (click)="login()"
+        *ngIf="showPassword"
+      >
+        Ingresar
+        <mat-icon>login</mat-icon>
+      </button>
+      <!-- <div class="mt-4">
+        <a class="forgot-password" href="#">¿Olvidó su contraseña?</a>
+      </div> -->
+    </form>
+  </div>
+  <div id="right"></div>
+</div>
+
+<div
+  *ngIf="!isViewLogin"
+  class="container-login"
+>
+  <div class="left">
+    <img src="https://pngimage.net/wp-content/uploads/2018/06/generic-company-logo-png-7.png" class="animation a6" alt="logo img" style="margin: 0 auto 10px;width: 150px">
+    <div class="header">
+      <h2 class="animation a1">Form Login with random background</h2>
+      <p class="animation a2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultricies sit amet erat at finibus. Praesent justo justo, fringilla sed tellus in, pellentesque eleifend tortor.</p>
+    </div>
+    <form
+      class="form"
+      autocomplete="off"
+      [formGroup]="codeForm"
+      (ngSubmit)="loginCode()"
+    >
+      <mat-form-field>
+        <mat-label>
+          <mat-icon>vpn_key</mat-icon>&nbsp;
+          <span>Codigo de acceso</span>
+        </mat-label>
+        <input
+          matInput
+          type="text"
+          maxlength="200"
+          name="code"
+          autocomplete="off"
+          formControlName="code"
+        >
+          <mat-error *ngIf="controlsCodeForm['code'].hasError('required')">Debe ingresar el código de
+            recuperación.
+          </mat-error>
+          <mat-error *ngIf="controlsCodeForm['confirmCode'].hasError('equalTo')">El código ingresado no es
+            válido.
           </mat-error>
       </mat-form-field>
       <div class="animation a5" style="margin: 20px">
@@ -56,12 +117,9 @@
         mat-raised-button
         color="primary"
       >
-        Ingresar
+        Acceder
         <mat-icon>login</mat-icon>
       </button>
-      <div class="mt-4">
-        <a class="forgot-password" href="#">¿Olvidó su contraseña?</a>
-      </div>
     </form>
   </div>
   <div id="right"></div>

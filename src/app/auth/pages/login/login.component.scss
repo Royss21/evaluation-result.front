@@ -195,3 +195,13 @@ body {
     width: 500px;
   }
 }
+
+.opacity-container {
+  opacity: 0.33;
+}
+
+::ng-deep .modal-check-role {
+  mat-dialog-container {
+    // opacity: 0.8;
+  }
+}

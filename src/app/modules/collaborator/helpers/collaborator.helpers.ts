@@ -10,9 +10,10 @@ export class CollaboratorHelper{
     new ElementRowTable('chargeName','Cargo'),
     new ElementRowTable('actions','Acciones'),
   ];
-}
 
-export class CollaboratorText{
-  static modalCreate = 'Crear Colaborador';
-  static modalUdpate =  'Editar Colaborador';
+  static titleActionText = {
+    list: 'Listado de Colaboradores',
+    modalCreate: 'Crear Colaborador',
+    modalUdpate:  'Editar Colaborador'
+  }
 }

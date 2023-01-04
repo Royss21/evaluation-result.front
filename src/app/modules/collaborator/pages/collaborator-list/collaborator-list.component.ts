@@ -9,6 +9,7 @@ import { CollaboratorHelper } from '@modules/collaborator/helpers/collaborator.h
 import { ICollaborator } from '../../interfaces/collaboator-not-in-evaluation.interface';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { CollaboratorModalComponent } from '@modules/collaborator/components/collaborator-modal/collaborator-modal.component';
+import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 
 @Component({
   selector: 'app-collaborator-list',
@@ -65,16 +66,32 @@ export class CollaboratorListComponent {
       });
   }
 
-  public updateCollaborator(collaborator: ICollaborator): void {
-    this.openModal(collaborator);
-  }
-
   create(): void{
     this.openModal();
   }
 
-  update(): void{
-    this.openModal();
+  update(collaborator: ICollaborator): void{
+    this.openModal(collaborator);
+  }
+
+  confirmDeleted(id: string): void {
+    const dialogRef = this._dialog.open(PopupChooseComponent, {
+      data: ConstantsGeneral.chooseDelete,
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) this._delete(id);
+    });
+  }
+
+  private _delete(id: string): void{
+    this._collaboratorService
+      .delete(id)
+      .subscribe(() => {
+        this.paginatedBehavior.next(this.paginatedFilterCurrent);
+        this._dialog.closeAll();
+      });
   }
 
   ngOnDestroy(): void {

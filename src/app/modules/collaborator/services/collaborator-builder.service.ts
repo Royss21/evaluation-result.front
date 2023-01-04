@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ICollaboratorCreate } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
+import { ICollaborator } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,9 @@ export class CollaboratorBuilderService {
 
   constructor(private _fb: FormBuilder) { }
 
-  public buildCollaboratorForm(collaborator?: ICollaboratorCreate): FormGroup {
+  public buildCollaboratorForm(collaborator?: ICollaborator): FormGroup {
     return this._fb.group({
+      id: [collaborator?.id || null],
       name: [
         collaborator?.name || null,
         [
@@ -50,6 +51,18 @@ export class CollaboratorBuilderService {
           Validators.required,
         ]
       ],
+      chargeName: [
+        collaborator?.chargeName || null,
+        [Validators.required]
+      ],
+      areaName: [
+        collaborator?.areaName || null,
+        [Validators.required]
+      ],
+      gerencyName: [
+        collaborator?.gerencyName || null,
+        [Validators.required]
+      ],
       email: [
         collaborator?.email || null,
         [
@@ -58,7 +71,7 @@ export class CollaboratorBuilderService {
           Validators.maxLength(100)
         ]
       ],
-      code: [collaborator?.code || null],
+      code: [collaborator?.code || ''],
       dateBirthday: [collaborator?.dateBirthday || null],
       dateAdmission: [
         collaborator?.dateAdmission || null,

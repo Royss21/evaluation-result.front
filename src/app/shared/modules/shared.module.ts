@@ -28,8 +28,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 
 @NgModule({
   declarations: [],
@@ -65,7 +67,9 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     MatSnackBarModule,
     MatRadioModule,
     RouterModule,
-    AutocompleteLibModule
+    AutocompleteLibModule,
+    SharedDirectivesModule,
+    MatButtonToggleModule
   ],
   exports: [
     MatButtonModule,
@@ -97,7 +101,9 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     MatSnackBarModule,
     MatRadioModule,
     RouterModule,
-    AutocompleteLibModule
+    AutocompleteLibModule,
+    SharedDirectivesModule,
+    MatButtonToggleModule
   ],
   providers: [
     MatDatepickerModule,

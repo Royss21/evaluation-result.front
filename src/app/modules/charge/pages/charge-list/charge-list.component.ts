@@ -66,7 +66,7 @@ export class ChargeListComponent {
       });
   }
 
-  private delete(id:number): void{
+  private _delete(id:number): void{
     this._chargeService
       .delete(id)
       .subscribe(() => {
@@ -90,7 +90,7 @@ export class ChargeListComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) this.delete(id);
+      if (result) this._delete(id);
     });
   }
 

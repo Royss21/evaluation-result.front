@@ -32,11 +32,11 @@ export class AreaModalComponent{
   @ViewChildren('ngAutoCompleteGerency') ngAutoCompleteGerency : any;
 
   constructor(
+    public _dialog: MatDialog,
     private _areaService: AreaService,
     private _gerencyService: GerencyService,
     private _areaBuilderService: AreaBuilderService,
     private _modalRef: MatDialogRef<AreaModalComponent>,
-    public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: IArea
   ) {
     this.areaFormGroup = _areaBuilderService.buildAreaForm(data);

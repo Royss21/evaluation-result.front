@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CustomValidators } from 'ngx-custom-validators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +13,25 @@ export class AuthBuilderService {
     return this._fb.group({
       username: [
         null,
-        [Validators.required, Validators.email]
+        [Validators.required]
       ],
       password: [
-        null,
-        [Validators.required]
+        null
+      ],
+      roleId: [
+        null
       ]
     })
+  }
+
+  public builderCodeForm(): FormGroup {
+    let codeFormControl = new FormControl(null, Validators.required);
+    let confirmCodeFormControl = new FormControl('', [
+      CustomValidators.equalTo(codeFormControl as any) as any
+    ]);
+    return this._fb.group({
+      code: codeFormControl,
+      confirmCode: confirmCodeFormControl
+    });
   }
 }

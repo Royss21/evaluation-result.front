@@ -1,0 +1,18 @@
+<mat-dialog-content>
+  <mat-selection-list #roles [multiple]="false">
+    <mat-list-option
+      *ngFor="let item of dataTest"
+      [value]="item"
+    >
+      {{ item.name }}
+    </mat-list-option>
+  </mat-selection-list>
+  <button
+    mat-raised-button
+    color="primary"
+    type="button"
+    (click)="testClick(roles.selectedOptions.hasValue() ? roles.selectedOptions.selected[0].value : null)"
+  >
+    Aceptar
+  </button>
+</mat-dialog-content>

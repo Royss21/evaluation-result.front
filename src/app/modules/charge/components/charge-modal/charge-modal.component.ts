@@ -85,9 +85,6 @@ export class ChargeModalComponent {
   }
 
   private save(charge: ICharge): void {
-
-    console.log("FORM VALUES: ", this.chargeFormGroup.value)
-
     if(!charge.id)
       this._chargeService.create(charge).subscribe(() => this.showConfirmMessage())
     else

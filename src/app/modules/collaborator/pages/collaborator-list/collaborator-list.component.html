@@ -41,7 +41,7 @@
           color="primary"
           type="button"
           class="btn-action-xs"
-          (click)="updateCollaborator(element)"
+          (click)="update(element)"
           >
           <mat-icon>edit</mat-icon>
         </button>
@@ -50,8 +50,8 @@
           color="warn"
           type="button"
           class="btn-action-xs"
+          (click)="confirmDeleted(element.id)"
           >
-          <!-- (click)="confirmDeleted(element.id)" -->
           <mat-icon>delete</mat-icon>
         </button>
       </div>

@@ -35,4 +35,9 @@ export class CollaboratorService {
   update(request: ICollaboratorCreate): Observable<boolean> {
     return this._apiService.put<boolean>(`${this._url}`, request);
   }
+
+  delete(id: string): Observable<boolean> {
+    return this._apiService
+        .delete<boolean>(`${this._url}/${id}`);
+  }
 }
