@@ -85,8 +85,9 @@
                 matInput
                 appOnlyNumber
                 required
-                [min]="0"
                 class="text-right"
+                [readonly]="isCompleted"
+                [min]="0"
               >
               <mat-error *ngIf="conduct.get('pointValueCalibrated')?.errors?.['required']">
                 El puntaje es <strong>requerido</strong>.

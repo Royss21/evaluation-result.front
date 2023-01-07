@@ -8,13 +8,15 @@ import { ComponentsModule } from '@components/components.module';
 import { EvaluationCollaboratorListComponent } from './pages/evaluation-collaborator-list/evaluation-collaborator-list.component';
 import { EvaluationCollaboratorComponent } from './evaluation-collaborator.component';
 import { RegisterCollaboratorModalComponent } from './components/register-collaborator-modal/register-collaborator-modal.component';
+import { FeedbackComponent } from './pages/feedback/feedback.component';
 
 
 @NgModule({
   declarations: [
     EvaluationCollaboratorListComponent,
     EvaluationCollaboratorComponent,
-    RegisterCollaboratorModalComponent
+    RegisterCollaboratorModalComponent,
+    FeedbackComponent
   ],
   imports: [
     CommonModule,
