@@ -46,7 +46,7 @@ export class AreaModalComponent{
 
   private _setDefaultValues(): void {
     this.defaultValueGerency = this.data.gerencyName;
-    this.modalTitle = AreaHelper.titleActionText.modalUdpate;
+    this.modalTitle = AreaHelper.titleActionText.modalUpdate;
   }
 
   private _getGerencies(): void {

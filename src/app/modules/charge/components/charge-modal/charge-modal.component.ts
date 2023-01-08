@@ -4,7 +4,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 
 import { ConstantsGeneral } from '@shared/constants';
 import { AreaService } from '@core/services/area/area.service';
-import { debounceTime, map, Observable, startWith } from 'rxjs';
 import { IArea } from '../../../area/interfaces/area.interface';
 import { ChargeService } from '@core/services/charge/charge.service';
 import { ICharge } from '@modules/charge/interfaces/charge.interface';

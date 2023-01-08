@@ -34,6 +34,14 @@ const routes: Routes = [
         loadChildren: () => import('../area/area.module').then(m => m.AreaModule)
       },
       {
+        path: 'user',
+        loadChildren: () => import('../user/user.module').then(m => m.UserModule)
+      },
+      {
+        path: 'role',
+        loadChildren: () => import('../role/role.module').then(m => m.RoleModule)
+      },
+      {
         path:'',
         redirectTo:'',
         pathMatch: 'full'

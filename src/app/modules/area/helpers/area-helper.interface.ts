@@ -12,6 +12,6 @@ export class AreaHelper {
   static titleActionText = {
     list: 'Listado de Áreas',
     modalCreate: 'Crear Área',
-    modalUdpate:  'Editar Área'
+    modalUpdate:  'Editar Área'
   }
 }
