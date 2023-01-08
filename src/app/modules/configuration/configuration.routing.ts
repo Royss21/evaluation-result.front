@@ -30,6 +30,10 @@ export const roots: Routes = [
         loadChildren: () => import('../corporate-objectives/corporate-objectives.module').then( m => m.CorporateObjectivesModule )
       },
       {
+        path:'weight-per-component',
+        loadChildren: () => import('../weight-per-component/weight-per-component.module').then( m => m.WeightPerComponentModule )
+      },
+      {
         path:'',
         redirectTo:'',
         pathMatch: 'full'

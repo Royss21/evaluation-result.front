@@ -22,7 +22,7 @@ export class ParameterRangeService {
   }
 
   getAllWithValues(): Observable<IParameterRangeWithValues[]> {
-    return this._apiService.get<IParameterRangeWithValues[]>(`${this.url}/GetAllWithValues`);
+    return this._apiService.get<IParameterRangeWithValues[]>(`${this.url}/get-all-values`);
   }
 
   create(request: IParameterRange): Observable<IParameterRange> {
@@ -38,7 +38,7 @@ export class ParameterRangeService {
         .delete<boolean>(`${this.url}/${id}`);
   }
 
-  getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<IParameterRange>> {    
+  getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<IParameterRange>> {
      return this._apiService
          .get<IPaginatedResponse<IParameterRange>>(`${this.url}/paging`, paginatedFilter);
   }
