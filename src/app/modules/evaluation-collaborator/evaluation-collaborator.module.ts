@@ -3,12 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { EvaluationCollaboratorRoutingModule } from './evaluation-collaborator.routing';
 import { RouterModule } from '@angular/router';
-import { SharedModule } from '@shared/modules/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { ComponentsModule } from '@components/components.module';
 import { EvaluationCollaboratorListComponent } from './pages/evaluation-collaborator-list/evaluation-collaborator-list.component';
 import { EvaluationCollaboratorComponent } from './evaluation-collaborator.component';
 import { RegisterCollaboratorModalComponent } from './components/register-collaborator-modal/register-collaborator-modal.component';
-import { FeedbackComponent } from './pages/feedback/feedback.component';
+import { EvaluationFeedbackComponent } from './pages/evaluation-feedback/evaluation-feedback.component';
+import { CoreModule } from '@core/core.module';
+import { EvaluatedComponentsComponent } from './components/evaluated-components/evaluated-components.component';
+import { EvaluationApprovalComponent } from './pages/evaluation-approval/evaluation-approval.component';
 
 
 @NgModule({
@@ -16,13 +19,16 @@ import { FeedbackComponent } from './pages/feedback/feedback.component';
     EvaluationCollaboratorListComponent,
     EvaluationCollaboratorComponent,
     RegisterCollaboratorModalComponent,
-    FeedbackComponent
+    EvaluationFeedbackComponent,
+    EvaluatedComponentsComponent,
+    EvaluationApprovalComponent
   ],
   imports: [
     CommonModule,
     EvaluationCollaboratorRoutingModule,
     RouterModule,
     SharedModule,
+    CoreModule,
     ComponentsModule
   ],
   exports: [

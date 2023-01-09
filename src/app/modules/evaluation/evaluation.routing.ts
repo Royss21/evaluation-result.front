@@ -4,7 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { EvaluationComponent } from '@modules/evaluation/evaluation.component';
 import { EvaluationAddComponent } from '@modules/evaluation/pages/evaluation-add/evaluation-add.component';
 import { EvaluationDetailComponent } from '@modules/evaluation/pages/evaluation-detail/evaluation-detail.component';
-import { EvaluationListComponent } from '@modules/evaluation/pages/evaluation-list/evaluation-list.component';
+import { EvaluationSectionComponent } from '@modules/evaluation/pages/evaluation-section/evaluation-section.component';
+import { ReviewStageListComponent } from './pages/review-stage-list/review-stage-list.component';
 
 const routes: Routes = [
   {
@@ -12,8 +13,8 @@ const routes: Routes = [
     component: EvaluationComponent,
     children: [
       {
-        path: 'list',
-        component: EvaluationListComponent
+        path: 'section',
+        component: EvaluationSectionComponent
       },
       {
         path: 'create',
@@ -22,6 +23,10 @@ const routes: Routes = [
       {
         path: ':evaluationId/detail',
         component: EvaluationDetailComponent
+      },
+      {
+        path: ':evaluationId/review-stage/:stageId',
+        component: ReviewStageListComponent
       },
       {
         path:':evaluationId/leader',
@@ -37,7 +42,7 @@ const routes: Routes = [
       },
       {
         path:'',
-        redirectTo:'list',
+        redirectTo:'section',
         pathMatch: 'full'
       },
     ]

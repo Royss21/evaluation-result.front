@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { TableComponent } from './table/table.component';
-import { SharedModule } from '@shared/modules/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 import { CardOptionComponent } from './card-option/card-option.component';
 import { SearchGlobalComponent } from './table/search-global/search-global.component';
 import { StatusChipComponent } from './status-chip/status-chip.component';
+import { InfoCollaboratorComponent } from './info-collaborator/info-collaborator.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { StatusChipComponent } from './status-chip/status-chip.component';
     SearchGlobalComponent,
     UploadFileComponent,
     CardOptionComponent,
-    StatusChipComponent
+    StatusChipComponent,
+    InfoCollaboratorComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { StatusChipComponent } from './status-chip/status-chip.component';
     SearchGlobalComponent,
     UploadFileComponent,
     CardOptionComponent,
-    StatusChipComponent
+    StatusChipComponent,
+    InfoCollaboratorComponent
   ]
 })
 export class ComponentsModule { }

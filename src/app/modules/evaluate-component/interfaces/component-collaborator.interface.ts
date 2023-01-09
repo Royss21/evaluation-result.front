@@ -1,4 +1,4 @@
-import { ICollaboratorInformation } from "./collaborator-information.interface";
+import { ICollaboratorInformation } from "../../../core/interfaces/collaborator-information.interface";
 
 export interface IComponentCollaborator extends ICollaboratorInformation{
 

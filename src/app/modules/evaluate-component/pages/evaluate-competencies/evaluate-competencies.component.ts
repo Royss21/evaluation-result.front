@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { ComponentCollaboratorService } from '@core/services/component-collaborator/component-collaborator.service';
-import { ICollaboratorInformation } from '@modules/evaluate-component/interfaces/collaborator-information.interface';
+import { ICollaboratorInformation } from '@core/interfaces/collaborator-information.interface';
 import { IUpdateStatus } from '@modules/evaluate-component/interfaces/update-status.interface';
 import { ComponentCollaboratorEvaluateBuilderService } from '@modules/evaluate-component/services/component-collaborator-evaluate-builder.service';
 import { ConstantsGeneral } from '@shared/constants';
@@ -91,7 +91,8 @@ export class EvaluateCompetenciesComponent implements OnInit {
       areaName: info?.areaName ?? "",
       chargeName :info?.chargeName ?? "",
       statusId :info?.statusId ?? 0,
-      statusName :info?.statusName ?? ""
+      statusName :info?.statusName ?? "",
+      documentNumber : ''
     };
   }
 
@@ -118,7 +119,8 @@ export class EvaluateCompetenciesComponent implements OnInit {
     {
       const updateStatus: IUpdateStatus = {
           id: this._componentCollaboratorId,
-          statusId: ConstantsGeneral.status.Pending
+          statusId: ConstantsGeneral.status.Pending,
+          isUpdateComponent: true
       }
 
       this._componentCollaboratorService.updateStatus(updateStatus)

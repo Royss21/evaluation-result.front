@@ -5,11 +5,11 @@ import { IPeriodInProgress } from '@modules/period/interfaces/period-in-progress
 import { IPeriod } from '@modules/period/interfaces/period.interface';
 
 @Component({
-  selector: 'app-evaluation-list',
-  templateUrl: './evaluation-list.component.html',
-  styleUrls: ['./evaluation-list.component.scss']
+  selector: 'app-evaluation-section',
+  templateUrl: './evaluation-section.component.html',
+  styleUrls: ['./evaluation-section.component.scss']
 })
-export class EvaluationListComponent {
+export class EvaluationSectionComponent {
 
   periodInProgress: IPeriodInProgress | null;
 

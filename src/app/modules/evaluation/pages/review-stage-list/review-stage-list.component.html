@@ -1,0 +1,46 @@
+<div fxLayout="row" >
+  <h2 class="fw-bold">{{title}}</h2>
+</div>
+
+<app-table
+  [listColumns]="columnsTable"
+  [behavior]="paginatedBehavior"
+  [paginated]="evaluateReviewPaginated$"
+  [templateColumnsContent]="columnContent"
+>
+  <ng-template
+    #columnContent
+    let-column='column'
+    let-element='element'
+  >
+    <div [ngSwitch]="column.columnMatch">
+      <div
+        fxLayout="row"
+        fxLayoutGap="10px"
+        *ngSwitchCase="'actions'"
+      >
+        <button
+          mat-mini-fab
+          color="primary"
+          type="button"
+          class="btn-action-xs"
+          (click)="goToReviewStage(element.id)"
+        >
+          <mat-icon>remove_red_eye</mat-icon>
+        </button>
+      </div>
+      <div
+        fxLayout="row"
+        fxLayoutGap="10px"
+        *ngSwitchCase="'statusId'"
+      >
+          <app-status-chip
+            [statusId]="element[column.columnMatch]"
+          ></app-status-chip>
+      </div>
+      <div *ngSwitchDefault>
+        {{ element[column.columnMatch] }}
+      </div>
+    </div>
+  </ng-template>
+</app-table>

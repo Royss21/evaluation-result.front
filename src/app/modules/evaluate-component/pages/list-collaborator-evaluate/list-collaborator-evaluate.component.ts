@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { ComponentCollaboratorService } from '@core/services/component-collaborator/component-collaborator.service';
@@ -30,7 +29,6 @@ export class ListCollaboratorEvaluateComponent implements OnInit {
   paginatedFilterCurrent: IComponentCollaboratorFilter;
 
   constructor(
-    public _dialog: MatDialog,
     private _componentCollaboratorService: ComponentCollaboratorService,
     private _route: ActivatedRoute,
     private _router: Router

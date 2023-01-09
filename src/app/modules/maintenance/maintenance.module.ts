@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MaintenanceRoutingModule } from './maintenance.routing';
 import { ComponentsModule } from '@components/components.module';
 import { OptionComponent } from './views/option/option.component';
-import { SharedModule } from "src/app/shared/modules/shared.module";
+import { SharedModule } from "@shared/shared.module";
 import { MaintenanceComponent } from '@modules/maintenance/maintenance.component';
 
 @NgModule({

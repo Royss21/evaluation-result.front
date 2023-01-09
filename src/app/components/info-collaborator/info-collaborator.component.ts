@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ICollaboratorInformation } from '@modules/evaluate-component/interfaces/collaborator-information.interface';
+import { ICollaboratorInformation } from '@core/interfaces/collaborator-information.interface';
 
 @Component({
   selector: 'app-info-collaborator',
@@ -8,6 +8,6 @@ import { ICollaboratorInformation } from '@modules/evaluate-component/interfaces
 })
 export class InfoCollaboratorComponent {
 
-  @Input() infoCollaborator: ICollaboratorInformation
+  @Input() infoCollaborator: ICollaboratorInformation | null = null;
 
 }

@@ -19,7 +19,7 @@ export class EvaluationDetailComponent {
   private _evaluationId: string;
 
   evaluationInProgress: IPeriodInProgress | null = null;
-  stagesRangeDate: IStageRangeDate[] | [] = [];
+  stagesRangeDate: IStageRangeDate[] = [];
   components: IComponentsRangeDate[] = [];
 
   constructor(
@@ -74,6 +74,8 @@ export class EvaluationDetailComponent {
 
         if([ConstantsGeneral.stages.evaluation, ConstantsGeneral.stages.calibration].includes(stageId))
           this._router.navigateByUrl(`/evaluation/${this._evaluationId}/evaluate-component/${ConstantsGeneral.components.competencies}`);
+        else if([ConstantsGeneral.stages.feedback, ConstantsGeneral.stages.approval].includes(stageId))
+           this._router.navigateByUrl(`/evaluation/${this._evaluationId}/review-stage/${stageId}`);
       })
 
   }

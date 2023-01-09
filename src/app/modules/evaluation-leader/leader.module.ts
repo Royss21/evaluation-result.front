@@ -7,7 +7,7 @@ import { LeaderListComponent } from './pages/leader-list/leader-list.component';
 import { LeaderImportModalComponent } from './components/leader-import-modal/leader-import-modal.component';
 import { RouterModule } from '@angular/router';
 import { AssignedCollaboratorsModalComponent } from './components/assigned-collaborators-modal/assigned-collaborators-modal.component';
-import { SharedModule } from '@shared/modules/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { ComponentsModule } from '@components/components.module';
 
 
