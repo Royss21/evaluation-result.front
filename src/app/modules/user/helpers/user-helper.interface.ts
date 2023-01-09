@@ -3,7 +3,6 @@ import { ElementRowTable } from "@components/table/models/table.model";
 
 export class UserHelper{
   static columnsTable: IElementRowTable[] =  [
-    new ElementRowTable('id','#'),
     new ElementRowTable('userName','Nombre de Usuario'),
     new ElementRowTable('names','Nombre'),
     new ElementRowTable('lastName','Apellidos'),

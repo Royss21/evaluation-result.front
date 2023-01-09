@@ -15,6 +15,10 @@ export class RoleService {
 
   constructor(private _apiService: ApiService) { }
 
+  getAll(): Observable<IRole[]> {
+    return this._apiService.get<IRole[]>(`${this._url}`);
+  }
+
   getPaginated(paginatedFilter: IPaginatedFilter): Observable<IPaginatedResponse<IRole>> {
     return this._apiService
       .get<IPaginatedResponse<IRole>>(`${this._url}/paging`, paginatedFilter);

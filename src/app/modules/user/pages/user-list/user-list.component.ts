@@ -9,6 +9,7 @@ import { UserHelper } from '@modules/user/helpers/user-helper.interface';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
+import { UserModalComponent } from '@modules/user/components/user-modal/user-modal.component';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -53,17 +54,16 @@ export class UserListComponent {
   }
 
   private openModal(user?: IUser): void {
+    const modalUser = this._dialog.open(UserModalComponent, {
+      data: user,
+      disableClose: true,
+      width: ConstantsGeneral.xlModal
+    });
 
-    // const modalGerency = this._dialog.open(UserModalComponent, {
-    //   data: gerency,
-    //   disableClose: true,
-    //   width: ConstantsGeneral.mdModal
-    // });
-
-    // modalGerency.afterClosed()
-    //   .subscribe(() => {
-    //     this.paginatedBehavior.next(this.paginatedFilterCurrent);
-    //   });
+    modalUser.afterClosed()
+      .subscribe(() => {
+        this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      });
   }
 
   createUser(): void{
@@ -74,7 +74,7 @@ export class UserListComponent {
     this.openModal(user);
   }
 
-  confirmDeleted(id: number): void {
+  confirmDeleted(id: string): void {
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseDelete,
       autoFocus: false,
@@ -85,7 +85,7 @@ export class UserListComponent {
     });
   }
 
-  private delete(id: number): void{
+  private delete(id: string): void{
     this._userService
       .delete(id)
       .subscribe(() => {

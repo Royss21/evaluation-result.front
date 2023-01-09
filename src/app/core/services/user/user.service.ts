@@ -29,7 +29,7 @@ export class UserService {
     return this._apiService.put<boolean>(`${this._url}`, request);
   }
 
-  delete(id: number): Observable<boolean> {
+  delete(id: string): Observable<boolean> {
     return this._apiService
         .delete<boolean>(`${this._url}/${id}`);
   }

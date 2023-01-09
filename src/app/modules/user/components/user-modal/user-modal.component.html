@@ -1,0 +1,255 @@
+
+<h2  mat-dialog-title>{{ modalTitle }}</h2>
+<form
+    class="p-3"
+    autocomplete="off"
+    [formGroup]="userFormGroup"
+    (ngSubmit)="confirmSave()"
+>
+    <mat-dialog-content>
+      <mat-card-subtitle class="fw-bold">Datos del usuario</mat-card-subtitle>
+      <div
+        fxLayout.xs="row wrap"
+        fxLayout.sm="row wrap"
+        fxLayout.md="row wrap"
+        fxLayout.lg="row wrap"
+        fxLayout.xl="row wrap"
+        fxLayoutAlign="space-center center"
+      >
+
+          <div
+            fxFlex.xl="20%"
+            fxFlex.lg="20%"
+            fxFlex.md="20%"
+            fxFlex.sm="20%"
+            fxFlex.xs="100%"
+          >
+              <mat-form-field fxFill appearance="outline">
+              <mat-label>Nombre</mat-label>
+              <input
+                matInput
+                StringOnly
+                type="text"
+                name="names"
+                maxlength="100"
+                autocomplete="off"
+                formControlName="names"
+              >
+                  <mat-error *ngIf="controlsForm['names'].hasError('required')">
+                      El nombre es <strong>requerido</strong>.
+                  </mat-error>
+                  <mat-error *ngIf="controlsForm['names'].hasError('maxlength')">
+                      Se ha excedido el límite de caracteres
+                  </mat-error>
+              </mat-form-field>
+          </div>
+          <div
+            fxFlex.xl="20%"
+            fxFlex.lg="20%"
+            fxFlex.md="20%"
+            fxFlex.sm="20%"
+            fxFlex.xs="100%"
+            class="p-1 pb-0 pt-0"
+          >
+            <mat-form-field fxFill appearance="outline">
+              <mat-label>Segundo nombre</mat-label>
+              <input
+                matInput
+                type="text"
+                StringOnly
+                maxlength="100"
+                name="middleName"
+                autocomplete="off"
+                formControlName="middleName"
+              >
+              <mat-error *ngIf="controlsForm['middleName'].hasError('required')">
+                El segundo nombre es <strong>requerido</strong>.
+              </mat-error>
+              <mat-error *ngIf="controlsForm['middleName'].hasError('maxlength')">
+                  Se ha excedido el límite de caracteres
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div
+            fxFlex.xl="40%"
+            fxFlex.lg="40%"
+            fxFlex.md="40%"
+            fxFlex.sm="40%"
+            fxFlex.xs="100%"
+            class="p-1 pb-0 pt-0"
+          >
+            <mat-form-field fxFill appearance="outline">
+              <mat-label>Apellidos</mat-label>
+              <input
+                matInput
+                StringOnly
+                type="text"
+                name="lastName"
+                maxlength="100"
+                autocomplete="off"
+                formControlName="lastName"
+              >
+              <mat-error *ngIf="controlsForm['lastName'].hasError('required')">
+                Los apellidos son <strong>requeridos</strong>.
+              </mat-error>
+              <mat-error *ngIf="controlsForm['lastName'].hasError('maxlength')">
+                Se ha excedido el límite de caracteres
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div
+            fxFlex.xl="40%"
+            fxFlex.lg="40%"
+            fxFlex.md="40%"
+            fxFlex.sm="40%"
+            fxFlex.xs="100%"
+            class="p-1 pb-0 pt-0"
+          >
+            <mat-form-field fxFill appearance="outline">
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                type="text"
+                name="email"
+                maxlength="100"
+                autocomplete="off"
+                formControlName="email"
+              >
+              <mat-error *ngIf="controlsForm['email'].hasError('required')">
+                El email es <strong>requerido</strong>.
+              </mat-error>
+              <mat-error *ngIf="controlsForm['email'].hasError('maxlength')">
+                Se ha excedido el límite de caracteres
+              </mat-error>
+              <mat-error *ngIf="controlsForm['email'].hasError('email')">
+                Debe ingresar un email válido
+            </mat-error>
+            </mat-form-field>
+          </div>
+      </div>
+      <mat-card-subtitle class="fw-bold">Credenciales de acceso</mat-card-subtitle>
+      <div
+        fxLayout.xs="row wrap"
+        fxLayout.sm="row wrap"
+        fxLayout.md="row wrap"
+        fxLayout.lg="row wrap"
+        fxLayout.xl="row wrap"
+        fxLayoutAlign="space-center center"
+      >
+        <div
+          fxFlex.xl="40%"
+          fxFlex.lg="40%"
+          fxFlex.md="40%"
+          fxFlex.sm="40%"
+          fxFlex.xs="100%"
+        >
+          <mat-form-field
+            fxFill
+            appearance="outline"
+          >
+          <mat-label>Nombre usuario</mat-label>
+          <input
+              name="userName"
+              formControlName="userName"
+              type="text"
+              autocomplete="off"
+              maxlength="100"
+              matInput
+          >
+              <mat-error *ngIf="controlsForm['userName'].hasError('required')">
+                  El nombre es <strong>requerido</strong>.
+              </mat-error>
+              <mat-error *ngIf="controlsForm['userName'].hasError('maxlength')">
+                Se ha excedido el límite de caracteres
+              </mat-error>
+          </mat-form-field>
+        </div>
+        <div
+          fxFlex.xl="40%"
+          fxFlex.lg="40%"
+          fxFlex.md="40%"
+          fxFlex.sm="40%"
+          fxFlex.xs="100%"
+          class="p-1 pb-0 pt-0"
+          *ngIf="!readonlyPassword"
+        >
+          <mat-form-field
+            fxFill
+            appearance="outline"
+          >
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            type="text"
+            maxlength="100"
+            name="password"
+            autocomplete="off"
+            formControlName="password"
+          >
+            <mat-error *ngIf="controlsForm['password'].hasError('required')">
+              La contraseña es <strong>requerida</strong>.
+            </mat-error>
+            <mat-error *ngIf="controlsForm['password'].hasError('maxlength')">
+              Se ha excedido el límite de caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-card-subtitle class="fw-bold">Asignación de roles</mat-card-subtitle>
+      <div
+        fxLayout.xs="row wrap"
+        fxLayout.sm="row wrap"
+        fxLayout.md="row wrap"
+        fxLayout.lg="row wrap"
+        fxLayout.xl="row wrap"
+      >
+        <div
+          fxFlex.xl="50%"
+          fxFlex.lg="50%"
+          fxFlex.md="50%"
+          fxFlex.sm="50%"
+          fxFlex.xs="100%"
+        >
+          <mat-form-field fxFill appearance="outline">
+            <mat-label>Roles</mat-label>
+            <mat-select
+              multiple
+              placeholder="Roles"
+              formControlName="rolesId"
+            >
+              <mat-option *ngFor="let role of roleList" [value]="role.id">{{role.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+      <button
+          mat-mini-fab
+          color="basic"
+          matTooltip="Cerrar"
+          type="button"
+          (click)="closeModal()"
+      >
+          <mat-icon>close</mat-icon>
+      </button>
+      <button
+          mat-mini-fab
+          color="primary"
+          matTooltip="Guardar"
+          type="button"
+          (click)="confirmSave(false)"
+      >
+          <mat-icon>save</mat-icon>
+      </button>
+      <button
+          mat-raised-button
+          color="primary"
+          matTooltip="Guardar y Cerrar"
+          type="submit"
+      >
+          <mat-icon>save</mat-icon> &nbsp;
+          <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-dialog-actions>
+</form>
