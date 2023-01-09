@@ -3,7 +3,6 @@ import { IElementRowTable } from "@components/table/interfaces/table.interface";
 
 export class ChargeHelper {
   static columnsTable: IElementRowTable[] =  [
-    new ElementRowTable('id','#'),
     new ElementRowTable('name','Nombre'),
     new ElementRowTable('areaName','Área'),
     new ElementRowTable('hierarchyName','Jerarquía'),

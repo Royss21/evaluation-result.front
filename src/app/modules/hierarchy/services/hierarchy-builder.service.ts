@@ -24,10 +24,6 @@ export class HierarchyBuilderService {
       levelId: [
         hierarchy?.levelId || null,
         [Validators.required]
-      ],
-      levelName: [
-        hierarchy?.levelName || null,
-        [Validators.required]
       ]
     });
   }

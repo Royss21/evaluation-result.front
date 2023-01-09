@@ -21,17 +21,23 @@ export class WeightPerComponentListComponent {
   public title = WeightPerComponentHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
 
-  weightPerComponentPaginated$: Observable<any>;
-  paginated$: Observable<any>;
-  weightPerComponentPaginatedBehavior: BehaviorSubject<any>;
-  paginatedBehavior: BehaviorSubject<any>;
-  columnsTable: IElementRowTable[];
-  paginatedFilterCurrent: IPaginatedFilter;
+  public paginated$: Observable<any>;
+  public columnsTable: IElementRowTable[];
+  public paginatedBehavior: BehaviorSubject<any>;
+  public paginatedFilterCurrent: IPaginatedFilter;
+  public weightPerComponentPaginated$: Observable<any>;
+  public weightPerComponentPaginatedBehavior: BehaviorSubject<any>;
 
   constructor(
     public _dialog: MatDialog,
     private _weightPerComponentService: WeightPerComponentService
-  ) { }
+  ) {
+    this.weightPerComponentPaginatedBehavior = new BehaviorSubject(null);
+    this.paginatedBehavior = new BehaviorSubject(null);
+    this.weightPerComponentPaginated$ = this.weightPerComponentPaginatedBehavior.asObservable();
+    this.paginated$ = this.paginatedBehavior.asObservable();
+    this.columnsTable = WeightPerComponentHelper.columnsTable;
+  }
 
   ngAfterContentInit() {
     this.callPaginated();
@@ -51,8 +57,8 @@ export class WeightPerComponentListComponent {
   private openModal(weightPerComponent?: IWeightPerComponent): void {
 
     const modalRef = this._dialog.open(WeightPerComponentModalComponent, {
-      data: weightPerComponent,
       disableClose: true,
+      data: weightPerComponent,
       width: ConstantsGeneral.mdModal
     });
 

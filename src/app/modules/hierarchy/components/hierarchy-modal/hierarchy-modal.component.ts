@@ -25,10 +25,6 @@ export class HierarchyModalComponent{
   public modalTitle: string = HierarchyHelper.titleActionText.modalCreate;
 
   public levelList: ILevel[] = [];
-  public keywordSearch: string = 'name';
-
-  public defaultValue: string = '';
-  @ViewChild('ngAutoCompleteLevel') ngAutoCompleteLevel : any;
 
   constructor(
     public _dialog: MatDialog,
@@ -39,10 +35,7 @@ export class HierarchyModalComponent{
     @Inject(MAT_DIALOG_DATA) public data: IHierarchy
   ) {
     this.hierarchyFormGroup = _hierarchyBuilderService.buildHierarchyForm(data);
-    if (data) {
-      this.defaultValue = data.levelName;
-      this.modalTitle = HierarchyHelper.titleActionText.modalUpdate;
-    }
+    data && (this.modalTitle = HierarchyHelper.titleActionText.modalUpdate);
     this._getLevels();
   }
 
@@ -52,20 +45,11 @@ export class HierarchyModalComponent{
     })
   }
 
-  public selectedLevel(level: ILevel): void {
-    if (typeof level !== 'string')
-      this.hierarchyFormGroup.controls['levelId'].setValue(level.id);
-  }
-
   private closeOrReset(): void{
     if(this.isCloseAfterSave)
       this.closeModal();
-    else {
-      this.defaultValue = '';
+    else
       this.hierarchyFormGroup.reset();
-      this.ngAutoCompleteLevel.close();
-      this.ngAutoCompleteLevel.clear();
-    }
   }
 
   private save(hierarchy: IHierarchy): void {

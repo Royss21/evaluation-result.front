@@ -37,31 +37,28 @@ export class CollaboratorBuilderService {
           Validators.maxLength(200)
         ]
       ],
+      documentTypeId: [
+        collaborator?.documentTypeId || null,
+        [ Validators.required]
+      ],
       documentNumber: [
         collaborator?.documentNumber || null,
         [
           Validators.required,
-          CustomValidations.NotEmpty,
-          Validators.maxLength(40)
+          CustomValidations.NotEmpty
         ]
       ],
       chargeId: [
-        collaborator?.chargeId || null,
-        [
-          Validators.required,
-        ]
+        { value: collaborator?.chargeId || null, disabled: true },
+        [ Validators.required]
       ],
-      chargeName: [
-        collaborator?.chargeName || null,
-        [Validators.required]
+      areaId: [
+        { value: collaborator?.areaId || null, disabled: true },
+        [ Validators.required]
       ],
-      areaName: [
-        collaborator?.areaName || null,
-        [Validators.required]
-      ],
-      gerencyName: [
-        collaborator?.gerencyName || null,
-        [Validators.required]
+      gerencyId: [
+        collaborator?.gerencyId || null,
+        [ Validators.required]
       ],
       email: [
         collaborator?.email || null,

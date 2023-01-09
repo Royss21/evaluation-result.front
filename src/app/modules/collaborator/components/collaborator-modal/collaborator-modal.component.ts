@@ -1,4 +1,4 @@
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 import { Component, Inject, ViewChildren } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -16,6 +16,8 @@ import { CollaboratorHelper } from '@modules/collaborator/helpers/collaborator.h
 import { CollaboratorBuilderService } from '../../services/collaborator-builder.service';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { ICollaborator } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
+import data from '../../../../../db/document-type/document-type.json'
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-collaborator-modal',
@@ -33,18 +35,10 @@ export class CollaboratorModalComponent {
   public chargeList: ICharge[] = [];
   public gerencyList: IGerency[] = [];
 
-  public defaultValueArea: string = '';
-  public defaultValueCharge: string = '';
-  public defaultValueGerency: string = '';
-
-  public isDisabledArea: boolean = true;
-  public isDisabledCharge: boolean = true;
-
-  public keywordSearch: string = 'name';
-
-  @ViewChildren('ngAutoCompleteArea') ngAutoCompleteArea : any;
-  @ViewChildren('ngAutoCompleteCharge') ngAutoCompleteCharge : any;
-  @ViewChildren('ngAutoCompleteGerency') ngAutoCompleteGerency : any;
+  public documenTypeList: any[] = [{"id": 1,"name": "DNI"},{"id": 2,"name": "Carnet de extranjería"},{"id": 3,"name": "Pasaporte"}];
+  public maskDocument: any = '';
+  public selectedDocumentType: number;
+  public maxLengthDocumentType: number = 8;
 
   constructor(
     public _dialog: MatDialog,
@@ -62,11 +56,11 @@ export class CollaboratorModalComponent {
   }
 
   private _setDefaultValues(): void {
-    this.defaultValueArea = this.data.areaName;
-    this.defaultValueCharge = this.data.chargeName;
-    this.defaultValueGerency = this.data.gerencyName;
-
     this.modalTitle = CollaboratorHelper.titleActionText.modalUdpate;
+    this._getAreas(this.data.gerencyId);
+    this._getCharges(this.data.areaId);
+    this.controlsForm['areaId'].enable();
+    this.controlsForm['chargeId'].enable();
   }
 
   private _getGerencies(): void {
@@ -89,28 +83,17 @@ export class CollaboratorModalComponent {
       });
   }
 
-  public selectedGerency(gerency: IGerency): void {
-    if (typeof gerency !== 'string') {
-      this.defaultValueArea = '';
-      this.isDisabledArea = false;
-      this._getAreas(gerency.id);
-      this.collaboratorFormGroup.controls['areaName'].setValue(null);
-      this.collaboratorFormGroup.controls['chargeName'].setValue(null);
-    }
+  public onChangeGerency(select: MatSelectChange) {
+    this._getAreas(select.value);
+    this.controlsForm['areaId'].enable();
+    this.controlsForm['areaId'].setValue(null);
+    this.controlsForm['chargeId'].setValue(null);
   }
 
-  public selectedArea(area: IArea): void {
-    if (typeof area !== 'string') {
-      this.defaultValueCharge = '';
-      this.isDisabledCharge = false;
-      this._getCharges(area.id);
-      this.collaboratorFormGroup.controls['chargeName'].setValue(null);
-    }
-  }
-
-  public selectedCharge(charge: ICharge): void {
-    if (typeof charge !== 'string')
-      this.collaboratorFormGroup.controls['chargeId'].setValue(charge.id);
+  public onChangeArea(select: MatSelectChange) {
+    this._getCharges(select.value);
+    this.controlsForm['chargeId'].enable();
+    this.controlsForm['chargeId'].setValue(null);
   }
 
   private save(collaborator: ICollaborator): void {
@@ -136,7 +119,7 @@ export class CollaboratorModalComponent {
   }
 
   confirmSave(isClose: boolean = true){
-    console.log("IS CLOSE: ", this.collaboratorFormGroup.value)
+
     CustomValidations.marcarFormGroupTouched(this.collaboratorFormGroup);
 
     if(this.collaboratorFormGroup.invalid)
@@ -167,5 +150,26 @@ export class CollaboratorModalComponent {
       this.closeModal();
     else
       this.collaboratorFormGroup.reset();
+  }
+
+  public maxCharacter() {
+    switch (this.selectedDocumentType) {
+      case 1: // DNI
+        this.maxLengthDocumentType = 8;
+        this.controlsForm['documentNumber'].setValidators(Validators.maxLength(8));
+        break;
+      case 2: // C.E
+      this.maxLengthDocumentType = 12;
+      this.controlsForm['documentNumber'].setValidators(Validators.maxLength(12));
+        break;
+      case 3: // PASAPORTE
+      this.maxLengthDocumentType = 12;
+      this.controlsForm['documentNumber'].setValidators(Validators.maxLength(12));
+        break;
+      default:
+        this.maxLengthDocumentType = 15;
+        this.controlsForm['documentNumber'].setValidators(Validators.maxLength(15));
+        break;
+    }
   }
 }

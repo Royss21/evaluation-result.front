@@ -55,7 +55,7 @@ export class CollaboratorListComponent {
 
   private openModal(collaborator?: ICollaborator): void {
     const collaboratorModal = this._dialog.open(CollaboratorModalComponent, {
-      width: ConstantsGeneral.lgModal,
+      width: ConstantsGeneral.xlModal,
       disableClose: true,
       data: collaborator
     });

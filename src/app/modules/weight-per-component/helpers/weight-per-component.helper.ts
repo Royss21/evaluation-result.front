@@ -3,16 +3,13 @@ import { IElementRowTable } from "@components/table/interfaces/table.interface";
 
 export class WeightPerComponentHelper{
   static columnsTable: IElementRowTable[] =  [
-    new ElementRowTable('id','#'),
-    new ElementRowTable('name','Nombre'),
-    new ElementRowTable('startDate','Fecha de Inicio'),
-    new ElementRowTable('endDate','Fecha de Fin'),
+    new ElementRowTable('hierarchyName','Nombre'),
     new ElementRowTable('actions','Acciones')
   ];
 
   static titleActionText = {
-    list: 'Listado de Pesos por componente',
-    modalCreate: 'Crear Peso por componente',
-    modalUdpate:  'Editar Peso por componente'
+    list: 'Jerarquías',
+    modalCreate: 'Asignar pesos por componente',
+    modalUpdate:  'Editar Peso por componente'
   }
 }

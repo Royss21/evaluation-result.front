@@ -6,7 +6,7 @@
     (ngSubmit)="confirmSave()"
 >
     <mat-dialog-content>
-
+      <mat-card-subtitle class="fw-bold">Datos personales del colaborador</mat-card-subtitle>
       <div
         fxLayout.xs="column"
         fxLayout.sm="row"
@@ -16,10 +16,10 @@
         fxLayoutGap="10px"
       >
         <div
-          fxFlex.xl="50"
-          fxFlex.lg="50"
-          fxFlex.md="50"
-          fxFlex.sm="50"
+          fxFlex.xl="20"
+          fxFlex.lg="20"
+          fxFlex.md="20"
+          fxFlex.sm="20"
           fxFlex.xs="100"
         >
           <mat-form-field fxFill appearance="outline">
@@ -42,10 +42,10 @@
           </mat-form-field>
         </div>
         <div
-          fxFlex.xl="50"
-          fxFlex.lg="50"
-          fxFlex.md="50"
-          fxFlex.sm="50"
+          fxFlex.xl="20"
+          fxFlex.lg="20"
+          fxFlex.md="20"
+          fxFlex.sm="20"
           fxFlex.xs="100"
         >
           <mat-form-field fxFill appearance="outline">
@@ -67,6 +67,32 @@
               </mat-error>
           </mat-form-field>
         </div>
+        <div
+          fxFlex.xl="40"
+          fxFlex.lg="40"
+          fxFlex.md="40"
+          fxFlex.sm="40"
+          fxFlex.xs="100"
+        >
+          <mat-form-field fxFill appearance="outline">
+            <mat-label>Apellidos</mat-label>
+          <input
+            matInput
+            StringOnly
+            type="text"
+            name="lastName"
+            maxlength="200"
+            autocomplete="off"
+            formControlName="lastName"
+          >
+            <mat-error *ngIf="controlsForm['lastName'].hasError('required')">
+              El apellido es <strong>requerido</strong>.
+            </mat-error>
+            <mat-error *ngIf="controlsForm['lastName'].hasError('maxlength')">
+              Se ha excedido el límite de caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
       </div>
       <div
         fxLayout.xs="column"
@@ -75,58 +101,57 @@
         fxLayout.lg="row"
         fxLayout.xl="row"
         fxLayoutGap="10px"
+      >
+
+        <div
+          fxFlex.xl="40"
+          fxFlex.lg="40"
+          fxFlex.md="40"
+          fxFlex.sm="40"
+          fxFlex.xs="40"
         >
-          <div
-            fxFlex.xl="50"
-            fxFlex.lg="50"
-            fxFlex.md="50"
-            fxFlex.sm="50"
-            fxFlex.xs="100"
-          >
-            <mat-form-field fxFill appearance="outline">
-              <mat-label>Apellidos</mat-label>
+          <mat-form-field fxFill appearance="outline">
+            <mat-label>Email</mat-label>
             <input
               matInput
-              StringOnly
               type="text"
-              name="lastName"
+              name="email"
               maxlength="200"
               autocomplete="off"
-              formControlName="lastName"
+              formControlName="email"
             >
-              <mat-error *ngIf="controlsForm['lastName'].hasError('required')">
-                El apellido es <strong>requerido</strong>.
+              <mat-error *ngIf="controlsForm['email'].hasError('required')">
+                El número de documento es <strong>requerido</strong>.
               </mat-error>
-              <mat-error *ngIf="controlsForm['lastName'].hasError('maxlength')">
+              <mat-error *ngIf="controlsForm['email'].hasError('maxlength')">
                 Se ha excedido el límite de caracteres
               </mat-error>
-            </mat-form-field>
-          </div>
-          <div
-            fxFlex.xl="50"
-            fxFlex.lg="50"
-            fxFlex.md="50"
-            fxFlex.sm="50"
-            fxFlex.xs="100"
-          >
-            <mat-form-field fxFill appearance="outline">
-              <mat-label>Email</mat-label>
-              <input
-                matInput
-                type="text"
-                name="email"
-                maxlength="200"
-                autocomplete="off"
-                formControlName="email"
-              >
-                <mat-error *ngIf="controlsForm['email'].hasError('required')">
-                  El número de documento es <strong>requerido</strong>.
-                </mat-error>
-                <mat-error *ngIf="controlsForm['email'].hasError('maxlength')">
-                  Se ha excedido el límite de caracteres
-                </mat-error>
-            </mat-form-field>
-          </div>
+              <mat-error *ngIf="controlsForm['email'].hasError('email')">
+                Debe ingresar un email válido
+              </mat-error>
+          </mat-form-field>
+        </div>
+        <div
+          fxFlex.xl="40"
+          fxFlex.lg="40"
+          fxFlex.md="40"
+          fxFlex.sm="40"
+          fxFlex.xs="100"
+        >
+          <mat-form-field fxFill appearance="outline">
+            <mat-label>Fecha cumpleaños</mat-label>
+            <input
+              matInput
+              formControlName="dateBirthday"
+              [matDatepicker]="dpDateBirthday"
+            >
+            <mat-datepicker-toggle
+              [for]="dpDateBirthday"
+              matSuffix
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dpDateBirthday></mat-datepicker>
+          </mat-form-field>
+        </div>
       </div>
       <div
         fxLayout.xs="column"
@@ -135,42 +160,58 @@
         fxLayout.lg="row"
         fxLayout.xl="row"
         fxLayoutGap="10px"
+      >
+        <div
+        fxFlex.xl="30"
+        fxFlex.lg="30"
+        fxFlex.md="30"
+        fxFlex.sm="30"
+        fxFlex.xs="100"
         >
-          <div
-            fxFlex.xl="50"
-            fxFlex.lg="50"
-            fxFlex.md="50"
-            fxFlex.sm="50"
-            fxFlex.xs="100"
-          >
-            <p>AQUI IRA EL TIPO DE DOCUMENTO</p>
-          </div>
-          <div
-            fxFlex.xl="50"
-            fxFlex.lg="50"
-            fxFlex.md="50"
-            fxFlex.sm="50"
-            fxFlex.xs="100"
-          >
-            <mat-form-field fxFill appearance="outline">
-              <mat-label>Número documento</mat-label>
-              <input
-                matInput
-                type="text"
-                maxlength="200"
-                autocomplete="off"
-                name="documentNumber"
-                formControlName="documentNumber"
+          <mat-form-field fxFill appearance="outline">
+            <mat-label>Tipo documento</mat-label>
+            <mat-select [(value)]="selectedDocumentType" formControlName="documentTypeId">
+              <mat-option
+                [value]="document.id"
+                (click)="maxCharacter()"
+                *ngFor="let document of documenTypeList"
               >
-                <mat-error *ngIf="controlsForm['documentNumber'].hasError('required')">
-                  El número de documento es <strong>requerido</strong>.
-                </mat-error>
-                <mat-error *ngIf="controlsForm['documentNumber'].hasError('maxlength')">
-                  Se ha excedido el límite de caracteres
-                </mat-error>
-            </mat-form-field>
-          </div>
+                {{document.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="controlsForm['documentTypeId'].hasError('required')">
+              El tipo de documento es <strong>requerido</strong>.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div
+          fxFlex.xl="30"
+          fxFlex.lg="30"
+          fxFlex.md="30"
+          fxFlex.sm="30"
+          fxFlex.xs="100"
+        >
+          <mat-form-field fxFill appearance="outline">
+            <mat-label>Número documento</mat-label>
+            <input
+              matInput
+              type="text"
+              maxlength="200"
+              autocomplete="off"
+              name="documentNumber"
+              formControlName="documentNumber"
+              maxLength="maxLengthDocumentType"
+            >
+              <mat-error *ngIf="controlsForm['documentNumber'].hasError('required')">
+                El número de documento es <strong>requerido</strong>.
+              </mat-error>
+              <mat-error *ngIf="controlsForm['documentNumber'].hasError('maxlength')">
+                Se ha excedido el límite de caracteres
+              </mat-error>
+          </mat-form-field>
+        </div>
       </div>
+      <mat-card-subtitle class="fw-bold">Datos del colaborador en la empresa</mat-card-subtitle>
       <div
         fxLayout.xs="column"
         fxLayout.sm="row"
@@ -178,41 +219,7 @@
         fxLayout.lg="row"
         fxLayout.xl="row"
         fxLayoutGap="10px"
-        >
-          <div
-            fxFlex.xl="33"
-            fxFlex.lg="33"
-            fxFlex.md="33"
-            fxFlex.sm="33"
-            fxFlex.xs="100"
-          >
-            <div class="ng-autocomplete">
-              <mat-label>Gerencia</mat-label>
-              <ng-autocomplete #ngAutoCompleteGerency
-                [data]="gerencyList"
-                notFoundText="No se escontraron resultados"
-                formControlName="gerencyName"
-                [initialValue]="defaultValueGerency"
-                placeholder="Ingresa un gerencia"
-                [searchKeyword]="keywordSearch"
-                (selected)='selectedGerency($event)'
-                [itemTemplate]="itemTemplateStaticGerency"
-                [notFoundTemplate]="notFoundTemplateGerency"
-              ></ng-autocomplete>
-
-              <ng-template #itemTemplateStaticGerency let-item>
-                <a [innerHTML]="item.name"></a>
-              </ng-template>
-
-              <ng-template #notFoundTemplateGerency let-notFound>
-                <div [innerHTML]="notFound"></div>
-              </ng-template>
-
-              <!-- <mat-error *ngIf="controlsForm['levelName'].hasError('required')">
-                El nivel es <strong>requerido</strong>.
-              </mat-error> -->
-            </div>
-          </div>
+      >
         <div
           fxFlex.xl="33"
           fxFlex.lg="33"
@@ -220,69 +227,56 @@
           fxFlex.sm="33"
           fxFlex.xs="100"
         >
-          <div class="ng-autocomplete">
+          <mat-form-field fxFill appearance="outline">
+            <mat-label>Gerencia</mat-label>
+            <mat-select formControlName="gerencyId" (selectionChange)="onChangeGerency($event)">
+              <mat-option *ngFor="let gerency of gerencyList" [value]="gerency.id">
+                {{gerency.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="controlsForm['gerencyId'].hasError('required')">
+              La gerencia es <strong>requerida</strong>.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div
+          fxFlex.xl="33"
+          fxFlex.lg="33"
+          fxFlex.md="33"
+          fxFlex.sm="33"
+          fxFlex.xs="100"
+        >
+          <mat-form-field fxFill appearance="outline">
             <mat-label>Área</mat-label>
-            <ng-autocomplete #ngAutoCompleteArea
-              [data]="areaList"
-              notFoundText="No se escontraron resultados"
-              formControlName="areaName"
-              [initialValue]="defaultValueArea"
-              placeholder="Ingresa un área"
-              [searchKeyword]="keywordSearch"
-              (selected)='selectedArea($event)'
-              [itemTemplate]="itemTemplateStaticArea"
-              [disabled]="isDisabledArea"
-              [notFoundTemplate]="notFoundTemplateArea"
-            ></ng-autocomplete>
-
-            <ng-template #itemTemplateStaticArea let-item>
-              <a [innerHTML]="item.name"></a>
-            </ng-template>
-
-            <ng-template #notFoundTemplateArea let-notFound>
-              <div [innerHTML]="notFound"></div>
-            </ng-template>
-
-            <!-- <mat-error *ngIf="controlsForm['levelName'].hasError('required')">
-              El nivel es <strong>requerido</strong>.
-            </mat-error> -->
-          </div>
+            <mat-select formControlName="areaId" (selectionChange)="onChangeArea($event)">
+              <mat-option *ngFor="let area of areaList" [value]="area.id">
+                {{area.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="controlsForm['areaId'].hasError('required')">
+              El área es <strong>requerida</strong>.
+            </mat-error>
+          </mat-form-field>
         </div>
         <div
-          fxFlex.xl="33"
-          fxFlex.lg="33"
-          fxFlex.md="33"
-          fxFlex.sm="33"
-          fxFlex.xs="100"
-        >
-          <div class="ng-autocomplete">
-            <mat-label>Cargo</mat-label>
-            <ng-autocomplete #ngAutoCompleteCharge
-              [data]="chargeList"
-              notFoundText="No se escontraron resultados"
-              formControlName="chargeName"
-              [initialValue]="defaultValueCharge"
-              placeholder="Ingresa un cargo"
-              [searchKeyword]="keywordSearch"
-              [disabled]="isDisabledCharge"
-              (selected)='selectedCharge($event)'
-              [itemTemplate]="itemTemplateStaticCharge"
-              [notFoundTemplate]="notFoundTemplateCharge"
-            ></ng-autocomplete>
-
-            <ng-template #itemTemplateStaticCharge let-item>
-              <a [innerHTML]="item.name"></a>
-            </ng-template>
-
-            <ng-template #notFoundTemplateCharge let-notFound>
-              <div [innerHTML]="notFound"></div>
-            </ng-template>
-
-            <!-- <mat-error *ngIf="controlsForm['levelName'].hasError('required')">
-              El nivel es <strong>requerido</strong>.
-            </mat-error> -->
-          </div>
-        </div>
+        fxFlex.xl="33"
+        fxFlex.lg="33"
+        fxFlex.md="33"
+        fxFlex.sm="33"
+        fxFlex.xs="100"
+      >
+        <mat-form-field fxFill appearance="outline">
+          <mat-label>Cargo</mat-label>
+          <mat-select formControlName="chargeId">
+            <mat-option *ngFor="let charge of chargeList" [value]="charge.id">
+              {{charge.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="controlsForm['chargeId'].hasError('required')">
+            El cargo es <strong>requerido</strong>.
+          </mat-error>
+        </mat-form-field>
+      </div>
       </div>
       <div
         class="mt-3"
@@ -292,31 +286,7 @@
         fxLayout.lg="row"
         fxLayout.xl="row"
         fxLayoutGap="10px"
-        >
-          <div
-            fxFlex.xl="33"
-            fxFlex.lg="33"
-            fxFlex.md="33"
-            fxFlex.sm="33"
-            fxFlex.xs="100"
-          >
-            <mat-form-field
-              fxFill
-              appearance="outline"
-            >
-              <mat-label>Fecha cumpleaños</mat-label>
-              <input
-                matInput
-                formControlName="dateBirthday"
-                [matDatepicker]="dpDateBirthday"
-              >
-              <mat-datepicker-toggle
-                [for]="dpDateBirthday"
-                matSuffix
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dpDateBirthday></mat-datepicker>
-            </mat-form-field>
-          </div>
+      >
         <div
           fxFlex.xl="33"
           fxFlex.lg="33"
@@ -382,11 +352,11 @@
             <mat-icon>close</mat-icon>
         </button>
         <button
-            mat-mini-fab
-            color="primary"
-            matTooltip="Guardar"
-            type="button"
-            (click)="confirmSave(false)"
+          mat-mini-fab
+          color="primary"
+          matTooltip="Guardar"
+          type="button"
+          (click)="confirmSave(false)"
         >
             <mat-icon>save</mat-icon>
         </button>

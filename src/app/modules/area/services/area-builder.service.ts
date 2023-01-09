@@ -24,10 +24,6 @@ export class AreaBuilderService {
       gerencyId: [
         area?.gerencyId || null,
         [Validators.required]
-      ],
-      gerencyName: [
-        area?.gerencyName || null,
-        [Validators.required]
       ]
     })
   }

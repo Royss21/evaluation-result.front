@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "DNI"
+    },
+    {
+      "id": 2,
+      "name": "Carnet de extranjería"
+    },
+    {
+      "id": 3,
+      "name": "Pasaporte"
+    }
+  ]
+}

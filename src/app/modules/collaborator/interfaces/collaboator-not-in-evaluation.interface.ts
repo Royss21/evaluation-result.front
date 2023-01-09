@@ -1,46 +1,47 @@
 export interface ICollaborator {
-  chargeId: number,
-  documentNumber: string,
-  middleName: string,
-  lastName: string,
-  name: string,
-  email: string,
-  code: string,
-  dateBirthday: Date,
-  dateAdmission: Date,
-  dateEgress: Date,
   id: string;
-  areaId: number,
-  gerencyId: number,
-  chargeName: string,
-  hierarchyName: string,
-  gerencyName: string,
-  areaName: string,
-  levelName: string
+  name: string;
+  code: string;
+  email: string;
+  areaId: number;
+  areaName: string;
+  chargeId: number;
+  lastName: string;
+  dateEgress: Date;
+  gerencyId: number;
+  levelName: string;
+  chargeName: string;
+  middleName: string;
+  dateBirthday: Date;
+  gerencyName: string;
+  dateAdmission: Date;
+  hierarchyName: string;
+  documentTypeId: number;
+  documentNumber: string;
 }
 
 export interface ICollaboratorNotInEvaluation{
-  id:string;
+  id: string;
+  name: string;
+  lastName: string;
+  areaName: string;
+  levelName: string;
   chargeName: string;
-  hierarchyName : string;
-  gerencyName : string;
-  areaName : string;
-  levelName : string;
-  documentNumber : string;
-  middleName : string;
-  name : string;
-  lastName : string;
+  middleName: string;
+  gerencyName: string;
+  hierarchyName: string;
+  documentNumber: string;
 }
 
 export interface ICollaboratorCreate {
-  chargeId: number,
-  documentNumber: string,
-  middleName: string,
-  lastName: string,
-  name: string,
-  email: string,
-  code: string,
-  dateBirthday: Date,
-  dateAdmission: Date,
-  dateEgress: Date
+  code: string;
+  name: string;
+  email: string;
+  dateEgress: Date;
+  chargeId: number;
+  lastName: string;
+  dateBirthday: Date;
+  middleName: string;
+  dateAdmission: Date;
+  documentNumber: string;
 }

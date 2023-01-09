@@ -1,6 +1,7 @@
 
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 import { ApiService } from '../api.service';
@@ -16,7 +17,8 @@ export class CollaboratorService {
   private _url = `${environment.serverUriApi}/collaborator`;
 
   constructor(
-    private _apiService: ApiService
+    private _apiService: ApiService,
+    private _http: HttpClient
   ) { }
 
   getAllCollaboratorNotInEvaluation(evaluationId: string): Observable<ICollaboratorNotInEvaluation[]> {
@@ -40,4 +42,5 @@ export class CollaboratorService {
     return this._apiService
         .delete<boolean>(`${this._url}/${id}`);
   }
+
 }

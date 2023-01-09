@@ -3,7 +3,6 @@ import { IElementRowTable } from "@components/table/interfaces/table.interface";
 
 export class AreaHelper {
   static columnsTable: IElementRowTable[] =  [
-    new ElementRowTable('id','#'),
     new ElementRowTable('name','Nombre'),
     new ElementRowTable('gerencyName','Gerencia'),
     new ElementRowTable('actions','Acciones'),

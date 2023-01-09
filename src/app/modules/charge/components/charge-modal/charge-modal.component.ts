@@ -29,12 +29,6 @@ export class ChargeModalComponent {
 
   public areaList: IArea[] = [];
   public hierarchyList: IHierarchy[] = [];
-  public keywordSearch: string = 'name';
-
-  public defaultValueArea: string = '';
-  public defaultValueHierarchy: string = '';
-  @ViewChildren('ngAutoCompleteArea') ngAutoCompleteArea : any;
-  @ViewChildren('ngAutoCompleteHierarchy') ngAutoCompleteHierarchy : any;
 
   constructor(
     private _areaService: AreaService,
@@ -46,15 +40,9 @@ export class ChargeModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: ICharge
   ) {
     this.chargeFormGroup = _chargeBuilderService.buildChargeForm(data);
-    data && this._setDefaultValues();
+    data && (this.modalTitle = ChargeHelper.titleActionText.modalUdpate);
     this._getHierarchies();
     this._getAreas();
-  }
-
-  private _setDefaultValues(): void {
-    this.defaultValueArea = this.data.areaName;
-    this.defaultValueHierarchy = this.data.hierarchyName;
-    this.modalTitle = ChargeHelper.titleActionText.modalUdpate;
   }
 
   private _getHierarchies(): void {
@@ -67,16 +55,6 @@ export class ChargeModalComponent {
     this._areaService.getAll().subscribe((res: IArea[]) => {
       this.areaList = res;
     });
-  }
-
-  public selectedArea(area: IArea): void {
-    if (typeof area !== 'string')
-      this.chargeFormGroup.controls['areaId'].setValue(area.id);
-  }
-
-  public selectedHierarchy(hierarchy: IHierarchy): void {
-    if (typeof hierarchy !== 'string')
-      this.chargeFormGroup.controls['hierarchyId'].setValue(hierarchy.id);
   }
 
   get controlsForm(): { [key: string]: AbstractControl } {

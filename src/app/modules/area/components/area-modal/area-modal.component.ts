@@ -26,10 +26,6 @@ export class AreaModalComponent{
   modalTitle: string = AreaHelper.titleActionText.modalCreate;
 
   public gerencyList: IGerency[] = [];
-  public keywordSearch: string = 'name';
-
-  public defaultValueGerency: string = '';
-  @ViewChildren('ngAutoCompleteGerency') ngAutoCompleteGerency : any;
 
   constructor(
     public _dialog: MatDialog,
@@ -40,24 +36,14 @@ export class AreaModalComponent{
     @Inject(MAT_DIALOG_DATA) public data: IArea
   ) {
     this.areaFormGroup = _areaBuilderService.buildAreaForm(data);
-    data && this._setDefaultValues();
+    data && (this.modalTitle = AreaHelper.titleActionText.modalUpdate);
     this._getGerencies();
-  }
-
-  private _setDefaultValues(): void {
-    this.defaultValueGerency = this.data.gerencyName;
-    this.modalTitle = AreaHelper.titleActionText.modalUpdate;
   }
 
   private _getGerencies(): void {
     this._gerencyService.getAll().subscribe((res: IGerency[]) => {
       this.gerencyList = res;
     });
-  }
-
-  public selectedGerency(gerency: IGerency): void {
-    if (typeof gerency !== 'string')
-      this.areaFormGroup.controls['gerencyId'].setValue(gerency.id);
   }
 
   get controlsForm(): { [key: string]: AbstractControl } {

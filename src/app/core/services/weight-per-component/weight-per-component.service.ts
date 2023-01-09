@@ -12,7 +12,7 @@ import { IWeightPerComponent } from '@modules/weight-per-component/interfaces/we
 })
 export class WeightPerComponentService {
 
-  private _url = `${environment.serverUriApi}/weight-per-component`
+  private _url = `${environment.serverUriApi}/hierarchy-component`;
 
   constructor(private _apiService: ApiService) { }
 

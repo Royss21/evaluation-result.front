@@ -3,7 +3,6 @@ import { ElementRowTable } from "@components/table/models/table.model";
 
 export class GerencyHelper{
   static columnsTable: IElementRowTable[] =  [
-    new ElementRowTable('id','#'),
     new ElementRowTable('name','Nombre'),
     new ElementRowTable('actions','Acciones'),
   ];

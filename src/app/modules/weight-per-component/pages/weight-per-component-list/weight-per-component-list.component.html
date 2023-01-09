@@ -13,9 +13,9 @@
 >
   <button
     mat-mini-fab
-    matTooltip="Crear nuevo peso por componente"
     color="primary"
     (click)="createWeightPerComponent()"
+    matTooltip="Crear nuevo peso por componente"
   >
     <mat-icon>add</mat-icon>
   </button>
@@ -23,8 +23,8 @@
 <app-table
   [listColumns]="columnsTable"
   [behavior]="paginatedBehavior"
-  [paginated]="weightPerComponentPaginated$"
   [templateColumnsContent]="columnContent"
+  [paginated]="weightPerComponentPaginated$"
 >
   <ng-template
     #columnContent
@@ -56,8 +56,10 @@
           <mat-icon>delete</mat-icon>
         </button>
       </div>
-      <div *ngSwitchDefault>
-        {{ element[column.columnMatch] }}
+      <div *ngSwitchCase="'name'">
+        <span class="fw-bolder text-muted fs-6  ">
+          Nivel: {{ element['levelName'] }} | {{ element['name'] }}
+        </span>
       </div>
     </div>
   </ng-template>
