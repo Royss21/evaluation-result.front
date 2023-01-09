@@ -1,3 +1,5 @@
+import { IElementRowTable } from "@components/table/interfaces/table.interface";
+import { ElementRowTable } from "@components/table/models/table.model";
 import { ConstantsGeneral } from "@shared/constants"
 import {  IEvaluationComponent, IEvaluationComponentStage } from "../interfaces/evaluation.interface"
 
@@ -62,4 +64,16 @@ export class EvaluationHelper {
       title: 'Etapa de Calibración'
     }
   ]
+
+  static columnsTableEvaluationReview: IElementRowTable[] =  [
+    new ElementRowTable('collaboratorName','Colaborador', true),
+    new ElementRowTable('documentNumber','Documento' , true),
+    new ElementRowTable('chargeName','Cargo' , true),
+    new ElementRowTable('areaName','Area' , true),
+    new ElementRowTable('gerencyName','Gerencia' , true),
+    new ElementRowTable('hierarchyName','Jerarquia' , true),
+    new ElementRowTable('levelName','Level' , true),
+    new ElementRowTable('statusId','Estado' , true),
+    new ElementRowTable('actions','Acciones' , true),
+  ];
 }

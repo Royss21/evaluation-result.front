@@ -1,0 +1,107 @@
+<div
+  fxLayout.xs="column"
+  fxLayout.sm="row wrap"
+  fxLayout.md="row wrap"
+  fxLayout.lg="row wrap"
+  fxLayout.xl="row wrap"
+  fxLayoutAlign.xl="space-between"
+  fxLayoutAlign.lg="space-between"
+  fxLayoutAlign.md="space-between"
+  fxLayoutAlign.sm="space-between"
+  fxLayoutAlign.xs="start"
+  fxLayoutGap="10"
+>
+  <div fxFlex="100">
+    <h3><strong>Datos del evaluado</strong></h3>
+  </div>
+
+  <div fxFlex="100">
+    <div
+      fxLayout.xs="column"
+      fxLayout.sm="row wrap"
+      fxLayout.md="row wrap"
+      fxLayout.lg="row wrap"
+      fxLayout.xl="row wrap"
+      fxLayoutAlign.xl="space-between"
+      fxLayoutAlign.lg="space-between"
+      fxLayoutAlign.md="space-between"
+      fxLayoutAlign.sm="space-between"
+      fxLayoutAlign.xs="start"
+      class="p-2 pb-3"
+    >
+      <div fxFlex="33.3333" class="mb-2">
+        <div fxLayout="column">
+          <div fxFlex="100" style="color: rgb(94, 93, 93); font-weight: bold;">
+            Nombre completo
+          </div>
+          <div fxFlex="100">
+            {{ infoCollaborator?.collaboratorName}}
+          </div>
+        </div>
+      </div>
+      <div fxFlex="33.3333" class="mb-2">
+        <div fxLayout="column" >
+          <div fxFlex="100" style="color: rgb(94, 93, 93); font-weight: bold;">
+            Documento
+          </div>
+          <div fxFlex="100" style="color: rgb(94, 93, 93); font-weight: bold;">
+            {{ infoCollaborator?.documentNumber }}
+          </div>
+        </div>
+      </div>
+      <div fxFlex="33.3333" class="mb-2">
+        <div fxLayout="column" >
+          <div fxFlex="100" style="color: rgb(94, 93, 93); font-weight: bold;">
+            Cargo
+          </div>
+          <div fxFlex="100">
+            {{ infoCollaborator?.chargeName }}
+          </div>
+        </div>
+      </div>
+      <div fxFlex="33.3333" class="mb-2">
+        <div fxLayout="column">
+          <div fxFlex="100" style="color: rgb(94, 93, 93); font-weight: bold;">
+            Area
+          </div>
+          <div fxFlex="100">
+            {{ infoCollaborator?.areaName }}
+          </div>
+        </div>
+      </div>
+
+      <div fxFlex="33.3333" class="mb-2">
+        <div fxLayout="column">
+          <div fxFlex="100" style="color: rgb(94, 93, 93); font-weight: bold;">
+            Gerencia
+          </div>
+          <div fxFlex="100">
+            {{ infoCollaborator?.gerencyName }}
+          </div>
+        </div>
+      </div>
+      <div fxFlex="33.3333" class="mb-2">
+        <div fxLayout="column">
+          <div fxFlex="100" style="color: rgb(94, 93, 93); font-weight: bold;">
+            Jerarquia
+          </div>
+          <div fxFlex="100">
+            {{ infoCollaborator?.hierarchyName }}
+          </div>
+        </div>
+      </div>
+      <div fxFlex="33.3333" class="mb-2">
+        <div fxLayout="column">
+          <div fxFlex="100" style="color: rgb(94, 93, 93); font-weight: bold;">
+            Nivel
+          </div>
+          <div fxFlex="100">
+            {{ infoCollaborator?.levelName }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

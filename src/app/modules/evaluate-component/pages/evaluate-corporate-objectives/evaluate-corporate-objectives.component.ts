@@ -7,7 +7,7 @@ import { ComponentCollaboratorService } from '@core/services/component-collabora
 import { ComponentCollaboratorEvaluateBuilderService } from '@modules/evaluate-component/services/component-collaborator-evaluate-builder.service';
 import { ConstantsGeneral } from '@shared/constants';
 import { CustomValidations } from '@shared/helpers/custom-validations';
-import { ICollaboratorInformation } from '@modules/evaluate-component/interfaces/collaborator-information.interface';
+import { ICollaboratorInformation } from '@core/interfaces/collaborator-information.interface';
 import { IComponentCollaboratorEvaluate } from '@modules/evaluate-component/interfaces/component-collaborator-evaluate.interface';
 import { Location } from '@angular/common';
 import { IUpdateStatus } from '@modules/evaluate-component/interfaces/update-status.interface';
@@ -79,7 +79,8 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
       areaName: info?.areaName ?? "",
       chargeName :info?.chargeName ?? "",
       statusId :info?.statusId ?? 0,
-      statusName :info?.statusName ?? ""
+      statusName :info?.statusName ?? "",
+      documentNumber: ''
     };
   }
 
@@ -105,7 +106,8 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
     {
       const updateStatus: IUpdateStatus = {
           id: this._componentCollaboratorId,
-          statusId: ConstantsGeneral.status.Pending
+          statusId: ConstantsGeneral.status.Pending,
+          isUpdateComponent: true
       }
 
       this._componentCollaboratorService.updateStatus(updateStatus)

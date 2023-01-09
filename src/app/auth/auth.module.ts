@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth.routing';
 import { AuthComponent } from '@auth/auth.component';
-import { SharedModule } from '@shared/modules/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { LoginComponent } from '@auth/pages/login/login.component';
 import { CheckRoleComponent } from './components/check-role/check-role.component';
 

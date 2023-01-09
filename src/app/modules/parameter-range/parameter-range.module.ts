@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ParameterRangeRoutingModule } from './parameter-range.routing';
-import { SharedModule } from '@shared/modules/shared.module';
+import { SharedModule } from '@shared/shared.module';
 
 import { ParameterRangeComponent } from './parameter-range.component';
 import { ParameterRangeListComponent } from './pages/parameter-range-list/parameter-range-list.component';

@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { LevelComponent } from './level.component';
 import { LevelRoutingModule } from './level.routing';
 import { ComponentsModule } from '@components/components.module';
-import { SharedModule } from "src/app/shared/modules/shared.module";
+import { SharedModule } from "@shared/shared.module";
 import { ChildComponent } from './pages/exampleForm/child/child.component';
 import { LevelListComponent } from './pages/level-list/level-list.component';
 import { ExampleFormComponent } from './pages/example-form/example-form.component';

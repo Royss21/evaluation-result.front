@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SharedModule } from '@shared/modules/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { EvaluateComponentRoutingModule } from './evaluate.routing';
 import { ComponentsModule } from '@components/components.module';
 
@@ -14,7 +14,6 @@ import { ObjectiveCardComponent } from './components/objective-card/objective-ca
 import { CompetencyCardComponent } from './components/competency-card/competency-card.component';
 import { ConductItemComponent } from './components/conduct-item/conduct-item.component';
 import { StatusComponent } from './components/status/status.component';
-import { InfoCollaboratorComponent } from './components/info-collaborator/info-collaborator.component';
 import { CoreModule } from '@core/core.module';
 
 
@@ -28,8 +27,7 @@ import { CoreModule } from '@core/core.module';
     ObjectiveCardComponent,
     CompetencyCardComponent,
     ConductItemComponent,
-    StatusComponent,
-    InfoCollaboratorComponent,
+    StatusComponent
 
   ],
   imports: [

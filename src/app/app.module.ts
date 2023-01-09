@@ -14,7 +14,7 @@ import { AppComponent } from './app.component';
 import { getPaginationEs } from './app.helpers';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 
-import { SharedModule } from '@shared/modules/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PopupChooseComponent } from './components/popup-choose/popup-choose.component';

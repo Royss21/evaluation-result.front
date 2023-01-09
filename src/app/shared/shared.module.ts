@@ -32,6 +32,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [],
@@ -69,7 +70,8 @@ import { SharedDirectivesModule } from '@shared/directives/shared-directives.mod
     RouterModule,
     AutocompleteLibModule,
     SharedDirectivesModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatTabsModule
   ],
   exports: [
     MatButtonModule,
@@ -103,7 +105,8 @@ import { SharedDirectivesModule } from '@shared/directives/shared-directives.mod
     RouterModule,
     AutocompleteLibModule,
     SharedDirectivesModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatTabsModule
   ],
   providers: [
     MatDatepickerModule,

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { RouterModule } from '@angular/router';
-import { SharedModule } from '@shared/modules/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { ComponentsModule } from '@components/components.module';
 import { WeightPerComponentRouting } from './weight-per-component.routing';
 import { WeightPerComponentComponent } from './weight-per-component.component';

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import { SharedModule } from '@shared/modules/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { ComponentsModule } from '@components/components.module';
 import { CollaboratorRoutingModule } from './collaborator.routing';
 import { CollaboratorComponent } from '@modules/collaborator/collaborator.component';

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormulaRoutingModule } from './formula.routing';
 
 import { FormulaComponent } from './formula.component';
-import { SharedModule } from '@shared/modules/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { ComponentsModule } from '@components/components.module';
 import { FormulaListComponent } from './pages/formula-list/formula-list.component';
 import { FormulaModalComponent } from './components/formula-modal/formula-modal.component';
