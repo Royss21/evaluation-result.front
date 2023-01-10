@@ -1,15 +1,12 @@
 export interface IWeightPerComponent {
-  id: number;
+  herarchyId: number;
   levelName: string;
   hierarchyName: string;
-  hierarchyComponents: IHierarchyComponents[];
+  components: Components[];
 }
 
-export interface IHierarchyComponents {
-  id: number;
-  weight: number;
+interface Components {
   componentId: number;
-  hierarchyId: number;
-  hierarchyName: string;
   componentName: string;
+  weight: number;
 }

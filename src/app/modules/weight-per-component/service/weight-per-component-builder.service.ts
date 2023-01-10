@@ -11,7 +11,7 @@ export class WeightPerComponentBuilderService {
 
   public buildWeightPerComponentForm(weightPerComponent: IWeightPerComponent): FormGroup {
     return this._fb.group({
-      id: [weightPerComponent?.id || 0],
+      hierarchyId: [weightPerComponent?.herarchyId || 0],
     });
   }
 }

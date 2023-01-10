@@ -37,7 +37,7 @@ export class WeightPerComponentModalComponent {
   }
 
   private save(weightPerComponent: IWeightPerComponent): void {
-    if(!weightPerComponent.id)
+    if(!weightPerComponent.herarchyId)
       this._weightPerComponentService.create(weightPerComponent).subscribe(() => this.showConfirmMessage())
     else
       this._weightPerComponentService.update(weightPerComponent).subscribe(() => this.showConfirmMessage())

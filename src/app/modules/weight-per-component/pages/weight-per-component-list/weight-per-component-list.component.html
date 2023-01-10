@@ -57,11 +57,20 @@
         </button>
       </div>
       <div *ngSwitchCase="'name'">
-        <span class="fw-bolder text-muted fs-6  ">
-          Nivel: {{ element['levelName'] }} | {{ element['name'] }}
+        <span class="fw-bolder text-muted">
+          Nivel: Nivel prueba | {{ element['hierarchyName'] }}
         </span>
+        <!-- Nivel: {{ element['levelName'] }} | {{ element['hierarchyName'] }} -->
+      </div>
+      <div *ngSwitchCase="'corporateGoals'">
+        <span *ngIf="element['components'][0]">{{ element['components'][0].weight | percent : '2.0' }}</span>
+      </div>
+      <div *ngSwitchCase="'areaObjectives'">
+        <span *ngIf="element['components'][1]">{{ element['components'][1].weight | percent : '2.0' }}</span>
+      </div>
+      <div *ngSwitchCase="'competences'">
+        <span *ngIf="element['components'][2]">{{ element['components'][2].weight | percent : '2.0' }}</span>
       </div>
     </div>
   </ng-template>
 </app-table>
-

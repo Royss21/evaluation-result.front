@@ -1,1 +1,121 @@
-<p>weight-per-component-modal works!</p>
+<h2  mat-dialog-title>{{ modalTitle }}</h2>
+<form
+    class="p-3"
+    autocomplete="off"
+    [formGroup]="weightPerComponentFormGroup"
+    (ngSubmit)="confirmSave()"
+>
+    <mat-dialog-content>
+
+        <div
+            fxLayout.xs="row wrap"
+            fxLayout.sm="row wrap"
+            fxLayout.md="row wrap"
+            fxLayout.lg="row wrap"
+            fxLayout.xl="row wrap"
+            fxLayoutAlign="space-center center"
+        >
+
+            <div
+                fxFlex.xl="33%"
+                fxFlex.lg="33%"
+                fxFlex.md="33%"
+                fxFlex.sm="33%"
+                fxFlex.xs="100%"
+            >
+                <mat-form-field
+                    fxFill
+                    appearance="outline"
+                >
+                <mat-label>Obj. corporativos</mat-label>
+                <!-- formControlName="name" -->
+                <input
+                    name=""
+                    type="text"
+                    autocomplete="off"
+                    maxlength="100"
+                    matInput
+                >
+                    <!-- <mat-error *ngIf="controlsForm['name'].hasError('required')">
+                        El nombre es <strong>requerido</strong>.
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+            <div
+                fxFlex.xl="33%"
+                fxFlex.lg="33%"
+                fxFlex.md="33%"
+                fxFlex.sm="33%"
+                fxFlex.xs="100%"
+                class="p-1 pb-0 pt-0"
+            >
+              <mat-form-field fxFill appearance="outline">
+                <mat-label>Obj. de área</mat-label>
+                <input
+                  name=""
+                  type="text"
+                  autocomplete="off"
+                  maxlength="100"
+                  matInput
+                >
+                <!-- <mat-error *ngIf="controlsForm['name'].hasError('required')">
+                  El nombre es <strong>requerido</strong>.
+                </mat-error> -->
+              </mat-form-field>
+            </div>
+            <div
+                fxFlex.xl="33%"
+                fxFlex.lg="33%"
+                fxFlex.md="33%"
+                fxFlex.sm="33%"
+                fxFlex.xs="100%"
+                class="p-1 pb-0 pt-0"
+            >
+              <mat-form-field fxFill appearance="outline">
+                <mat-label>Competencias</mat-label>
+                <input
+                  name=""
+                  type="text"
+                  autocomplete="off"
+                  maxlength="100"
+                  matInput
+                >
+                <!-- <mat-error *ngIf="controlsForm['name'].hasError('required')">
+                  El nombre es <strong>requerido</strong>.
+                </mat-error> -->
+              </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <button
+            mat-mini-fab
+            color="basic"
+            matTooltip="Cerrar"
+            type="button"
+            (click)="closeModal()"
+        >
+            <mat-icon>close</mat-icon>
+        </button>
+        <button
+            mat-mini-fab
+            color="primary"
+            matTooltip="Guardar"
+            type="button"
+            (click)="confirmSave(false)"
+        >
+            <mat-icon>save</mat-icon>
+        </button>
+        <button
+            mat-raised-button
+            color="primary"
+            matTooltip="Guardar y Cerrar"
+            type="submit"
+        >
+            <mat-icon>save</mat-icon> &nbsp;
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </mat-dialog-actions>
+</form>
+
+

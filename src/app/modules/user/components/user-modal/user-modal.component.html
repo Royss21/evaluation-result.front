@@ -157,7 +157,7 @@
               matInput
           >
               <mat-error *ngIf="controlsForm['userName'].hasError('required')">
-                  El nombre es <strong>requerido</strong>.
+                El nombre de usuario es <strong>requerido</strong>.
               </mat-error>
               <mat-error *ngIf="controlsForm['userName'].hasError('maxlength')">
                 Se ha excedido el límite de caracteres
@@ -219,6 +219,9 @@
             >
               <mat-option *ngFor="let role of roleList" [value]="role.id">{{role.name}}</mat-option>
             </mat-select>
+            <mat-error *ngIf="controlsForm['userName'].hasError('required')">
+              Debe seleccionar como mínimo un rol.
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
