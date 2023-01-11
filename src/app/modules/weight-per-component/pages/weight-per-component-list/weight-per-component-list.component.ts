@@ -10,6 +10,8 @@ import { WeightPerComponentService } from '@core/services/weight-per-component/w
 import { WeightPerComponentHelper } from '@modules/weight-per-component/helpers/weight-per-component.helper';
 import { IWeightPerComponent } from '@modules/weight-per-component/interfaces/weight-per-component.interface';
 import { WeightPerComponentModalComponent } from '@modules/weight-per-component/components/weight-per-component-modal/weight-per-component-modal.component';
+import { HierarchyService } from '@core/services/hierarchy/hierarchy.service';
+import { IHierarchy } from '../../../hierarchy/interfaces/hierarchy.interface';
 
 @Component({
   selector: 'app-weight-per-component-list',
@@ -30,6 +32,7 @@ export class WeightPerComponentListComponent {
 
   constructor(
     public _dialog: MatDialog,
+    private _hierarchyService: HierarchyService,
     private _weightPerComponentService: WeightPerComponentService
   ) {
     this.weightPerComponentPaginatedBehavior = new BehaviorSubject(null);
@@ -48,17 +51,16 @@ export class WeightPerComponentListComponent {
       .subscribe((paginatedFilter: IPaginatedFilter) => {
         if(paginatedFilter){
           this.paginatedFilterCurrent = paginatedFilter;
-          this._weightPerComponentService.getPaginated(paginatedFilter)
+          this._hierarchyService.getPaginated(paginatedFilter)
             .subscribe(paginated => this.weightPerComponentPaginatedBehavior.next(paginated));
         }
       });
   }
 
-  private openModal(weightPerComponent?: IWeightPerComponent): void {
-
+  public openModal(hierarchy?: IHierarchy): void {
     const modalRef = this._dialog.open(WeightPerComponentModalComponent, {
       disableClose: true,
-      data: weightPerComponent,
+      data: hierarchy,
       width: ConstantsGeneral.mdModal
     });
 
@@ -70,10 +72,6 @@ export class WeightPerComponentListComponent {
 
   createWeightPerComponent(): void{
     this.openModal();
-  }
-
-  updateWeightPerComponent(weightPerComponent: IWeightPerComponent): void{
-    this.openModal(weightPerComponent);
   }
 
   confirmDeleted(id: number): void {

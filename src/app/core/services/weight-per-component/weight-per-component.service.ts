@@ -16,11 +16,11 @@ export class WeightPerComponentService {
 
   constructor(private _apiService: ApiService) { }
 
-  create(request: IWeightPerComponent): Observable<IWeightPerComponent> {
+  create(request: any): Observable<IWeightPerComponent> {
     return this._apiService.post<IWeightPerComponent>(`${this._url}`, request);
   }
 
-  update(request: IWeightPerComponent): Observable<boolean> {
+  update(request: any): Observable<boolean> {
     return this._apiService.put<boolean>(`${this._url}`, request);
   }
 

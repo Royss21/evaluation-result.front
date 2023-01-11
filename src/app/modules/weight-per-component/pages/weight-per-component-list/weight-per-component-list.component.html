@@ -2,24 +2,6 @@
   <h2 class="fw-bold">{{ title }}</h2>
 </div>
 
-<div
-  fxLayout="row"
-  fxLayoutAlign.xs="end center"
-  fxLayoutAlign.sm="end center"
-  fxLayoutAlign.md="end center"
-  fxLayoutAlign.lg="end center"
-  fxLayoutAlign.xl="end center"
-  class="my-sm-3 my-md-0"
->
-  <button
-    mat-mini-fab
-    color="primary"
-    (click)="createWeightPerComponent()"
-    matTooltip="Crear nuevo peso por componente"
-  >
-    <mat-icon>add</mat-icon>
-  </button>
-</div>
 <app-table
   [listColumns]="columnsTable"
   [behavior]="paginatedBehavior"
@@ -42,7 +24,8 @@
           color="primary"
           type="button"
           class="btn-action-xs"
-          (click)="updateWeightPerComponent(element)"
+          matTooltip="Asignar pesos"
+          (click)="openModal(element)"
         >
           <mat-icon>edit</mat-icon>
         </button>
@@ -58,18 +41,17 @@
       </div>
       <div *ngSwitchCase="'name'">
         <span class="fw-bolder text-muted">
-          Nivel: Nivel prueba | {{ element['hierarchyName'] }}
+          {{ element['levelName'] }} | {{ element['name'] }}
         </span>
-        <!-- Nivel: {{ element['levelName'] }} | {{ element['hierarchyName'] }} -->
       </div>
       <div *ngSwitchCase="'corporateGoals'">
-        <span *ngIf="element['components'][0]">{{ element['components'][0].weight | percent : '2.0' }}</span>
+        <span *ngIf="element['hierarchyComponents'][0]">{{ element['hierarchyComponents'][0].weight | percent: '0.2-2':'en' }}</span>
       </div>
       <div *ngSwitchCase="'areaObjectives'">
-        <span *ngIf="element['components'][1]">{{ element['components'][1].weight | percent : '2.0' }}</span>
+        <span *ngIf="element['hierarchyComponents'][1]">{{ element['hierarchyComponents'][1].weight | percent: '0.2-2':'en' }}</span>
       </div>
       <div *ngSwitchCase="'competences'">
-        <span *ngIf="element['components'][2]">{{ element['components'][2].weight | percent : '2.0' }}</span>
+        <span *ngIf="element['hierarchyComponents'][2]">{{ element['hierarchyComponents'][2].weight | percent: '0.2-2':'en' }}</span>
       </div>
     </div>
   </ng-template>

@@ -5,7 +5,7 @@
     [formGroup]="weightPerComponentFormGroup"
     (ngSubmit)="confirmSave()"
 >
-    <mat-dialog-content>
+    <mat-dialog-content class="p-2">
 
         <div
             fxLayout.xs="row wrap"
@@ -28,17 +28,23 @@
                     appearance="outline"
                 >
                 <mat-label>Obj. corporativos</mat-label>
-                <!-- formControlName="name" -->
                 <input
-                    name=""
-                    type="text"
-                    autocomplete="off"
-                    maxlength="100"
-                    matInput
+                  matInput
+                  type="text"
+                  NumbersOnly
+                  maxlength="3"
+                  autocomplete="off"
+                  class="fs-6 text-end"
+                  name="weightCorporateObjectives"
+                  formControlName="weightCorporateObjectives"
                 >
-                    <!-- <mat-error *ngIf="controlsForm['name'].hasError('required')">
-                        El nombre es <strong>requerido</strong>.
-                    </mat-error> -->
+                  <span matSuffix class="fs-6 pl-3 pb-3">%</span>
+                  <mat-error *ngIf="controlsForm['weightCorporateObjectives'].hasError('required')">
+                    El peso es <strong>requerido</strong>.
+                  </mat-error>
+                  <mat-error *ngIf="controlsForm['weightCorporateObjectives'].hasError('max')">
+                    El peso máximo es <strong>100%</strong>.
+                  </mat-error>
                 </mat-form-field>
             </div>
             <div
@@ -52,15 +58,22 @@
               <mat-form-field fxFill appearance="outline">
                 <mat-label>Obj. de área</mat-label>
                 <input
-                  name=""
-                  type="text"
-                  autocomplete="off"
-                  maxlength="100"
                   matInput
+                  type="text"
+                  NumbersOnly
+                  maxlength="3"
+                  autocomplete="off"
+                  class="fs-6 text-end"
+                  name="weightAreaObjectives"
+                  formControlName="weightAreaObjectives"
                 >
-                <!-- <mat-error *ngIf="controlsForm['name'].hasError('required')">
-                  El nombre es <strong>requerido</strong>.
-                </mat-error> -->
+                <span matSuffix class="fs-6 pl-3 pb-3">%</span>
+                <mat-error *ngIf="controlsForm['weightAreaObjectives'].hasError('required')">
+                  El peso es <strong>requerido</strong>.
+                </mat-error>
+                <mat-error *ngIf="controlsForm['weightAreaObjectives'].hasError('max')">
+                  El peso máximo es <strong>100%</strong>.
+                </mat-error>
               </mat-form-field>
             </div>
             <div
@@ -74,16 +87,28 @@
               <mat-form-field fxFill appearance="outline">
                 <mat-label>Competencias</mat-label>
                 <input
-                  name=""
-                  type="text"
-                  autocomplete="off"
-                  maxlength="100"
                   matInput
+                  type="text"
+                  NumbersOnly
+                  maxlength="3"
+                  autocomplete="off"
+                  class="fs-6 text-end"
+                  name="weightCompetencies"
+                  formControlName="weightCompetencies"
                 >
-                <!-- <mat-error *ngIf="controlsForm['name'].hasError('required')">
-                  El nombre es <strong>requerido</strong>.
-                </mat-error> -->
+                <span matSuffix class="fs-6 pl-3 pb-3">%</span>
+                <mat-error *ngIf="controlsForm['weightCompetencies'].hasError('required')">
+                  El peso es <strong>requerido</strong>.
+                </mat-error>
+                <mat-error *ngIf="controlsForm['weightCompetencies'].hasError('max')">
+                  El peso máximo es <strong>100%</strong>.
+                </mat-error>
               </mat-form-field>
+            </div>
+            <div>
+              <mat-error *ngIf="weightPerComponentFormGroup.valid && isGreaterThanAHundred">
+                <span style="font-size: 11px;">El total de los pesos debe ser <strong>100%</strong>.</span>
+              </mat-error>
             </div>
         </div>
     </mat-dialog-content>
@@ -98,22 +123,12 @@
             <mat-icon>close</mat-icon>
         </button>
         <button
-            mat-mini-fab
-            color="primary"
-            matTooltip="Guardar"
-            type="button"
-            (click)="confirmSave(false)"
+          mat-mini-fab
+          color="primary"
+          matTooltip="Guardar"
+          type="submit"
         >
             <mat-icon>save</mat-icon>
-        </button>
-        <button
-            mat-raised-button
-            color="primary"
-            matTooltip="Guardar y Cerrar"
-            type="submit"
-        >
-            <mat-icon>save</mat-icon> &nbsp;
-            <mat-icon>cancel</mat-icon>
         </button>
     </mat-dialog-actions>
 </form>

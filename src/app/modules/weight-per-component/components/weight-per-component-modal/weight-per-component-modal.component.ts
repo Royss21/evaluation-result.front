@@ -10,6 +10,7 @@ import { WeightPerComponentHelper } from '@modules/weight-per-component/helpers/
 import { WeightPerComponentService } from '@core/services/weight-per-component/weight-per-component.service';
 import { IWeightPerComponent } from '@modules/weight-per-component/interfaces/weight-per-component.interface';
 import { WeightPerComponentBuilderService } from '@modules/weight-per-component/service/weight-per-component-builder.service';
+import { IHierarchy, IHierarchyComponents } from '@modules/hierarchy/interfaces/hierarchy.interface';
 @Component({
   selector: 'app-weight-per-component-modal',
   templateUrl: './weight-per-component-modal.component.html',
@@ -17,38 +18,63 @@ import { WeightPerComponentBuilderService } from '@modules/weight-per-component/
 })
 export class WeightPerComponentModalComponent {
 
-  private isCloseAfterSave: boolean = false;
   public weightPerComponentFormGroup: FormGroup;
-  public modalTitle: string = WeightPerComponentHelper.titleActionText.modalCreate;
+  public modalTitle: string = WeightPerComponentHelper.titleActionText.modalAssign;
 
   constructor(
     public _dialog: MatDialog,
     private _weightPerComponentService: WeightPerComponentService,
     private _weightPerComponentBuilderService: WeightPerComponentBuilderService,
     private _modalRef: MatDialogRef<WeightPerComponentModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IWeightPerComponent
+    @Inject(MAT_DIALOG_DATA) public data: IHierarchy
   ) {
-    this.weightPerComponentFormGroup = _weightPerComponentBuilderService.buildWeightPerComponentForm(data);
-    data && (this.modalTitle = WeightPerComponentHelper.titleActionText.modalUpdate);
+    this._createForm();
+  }
+
+  private _createForm(): void {
+    const components = this.data.hierarchyComponents;
+    const weightCorporateObjectives = (components.find(comp => comp.componentId === ConstantsGeneral.components.corporateObjectives)?.weight || 0) * 100;
+    const weightAreaObjectives = (components.find(comp => comp.componentId === ConstantsGeneral.components.areaObjectives)?.weight || 0) * 100;
+    const weightCompetencies = (components.find(comp => comp.componentId === ConstantsGeneral.components.competencies)?.weight || 0) * 100;
+
+    this.weightPerComponentFormGroup
+      = this._weightPerComponentBuilderService
+        .buildWeightPerComponentForm(weightCorporateObjectives, weightAreaObjectives, weightCompetencies);
   }
 
   get controlsForm(): { [key: string]: AbstractControl } {
     return this.weightPerComponentFormGroup.controls;
   }
 
-  private save(weightPerComponent: IWeightPerComponent): void {
-    if(!weightPerComponent.herarchyId)
-      this._weightPerComponentService.create(weightPerComponent).subscribe(() => this.showConfirmMessage())
-    else
-      this._weightPerComponentService.update(weightPerComponent).subscribe(() => this.showConfirmMessage())
+  get isGreaterThanAHundred(): boolean {
+    const totalWeight = (Number(this.controlsForm['weightCorporateObjectives'].value) +
+                         Number(this.controlsForm['weightAreaObjectives'].value) +
+                         Number(this.controlsForm['weightCompetencies'].value))
+
+    return (totalWeight > 100) || (totalWeight < 100);
   }
 
-  private closeOrReset(): void{
+  private save(formValues: any): void {
 
-    if(this.isCloseAfterSave)
-      this.closeModal();
-    else
-      this.weightPerComponentFormGroup.reset();
+    const components = this.data.hierarchyComponents;
+    let listComponents = [];
+
+    for (const item of components) {
+      switch (item.componentId) {
+        case ConstantsGeneral.components.corporateObjectives:
+          listComponents.push({hierarchyId: this.data.id, componentId: item.componentId, weight: formValues.weightCorporateObjectives / 100});
+          break;
+        case ConstantsGeneral.components.areaObjectives:
+          listComponents.push({hierarchyId: this.data.id, componentId: item.componentId, weight: formValues.weightAreaObjectives / 100});
+          break;
+        case ConstantsGeneral.components.competencies:
+          listComponents.push({hierarchyId: this.data.id, componentId: item.componentId, weight: formValues.weightCompetencies / 100});
+          break;
+        default:
+          break;
+      }
+    }
+    this._weightPerComponentService.create(listComponents).subscribe(() => this.showConfirmMessage())
   }
 
   private showConfirmMessage(): void {
@@ -58,7 +84,7 @@ export class WeightPerComponentModalComponent {
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
-      this.closeOrReset();
+      this.closeModal();
     });
   }
 
@@ -66,16 +92,14 @@ export class WeightPerComponentModalComponent {
     this._modalRef.close();
   }
 
-  confirmSave(isClose: boolean = true){
+  confirmSave(){
 
     CustomValidations.marcarFormGroupTouched(this.weightPerComponentFormGroup);
 
     if(this.weightPerComponentFormGroup.invalid)
       return;
 
-    this.isCloseAfterSave = isClose;
-
-    const weightPerComponent: IWeightPerComponent = { ...this.weightPerComponentFormGroup.getRawValue() } ;
+    const weightPerComponent = this.weightPerComponentFormGroup.value;
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
