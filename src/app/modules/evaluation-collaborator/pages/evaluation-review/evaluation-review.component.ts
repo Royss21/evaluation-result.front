@@ -13,13 +13,15 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { CustomValidations } from '@shared/helpers/custom-validations';
 import { IUpdateStatus } from '@modules/evaluate-component/interfaces/update-status.interface';
 import { ComponentCollaboratorService } from '@core/services/component-collaborator/component-collaborator.service';
+import { IEvaluation } from '@modules/evaluation/interfaces/evaluation.interface';
+import { EvaluationService } from '@core/services/evaluation/evaluation.service';
 
 @Component({
-  selector: 'app-evaluation-feedback',
-  templateUrl: './evaluation-feedback.component.html',
-  styleUrls: ['./evaluation-feedback.component.scss']
+  selector: 'app-evaluation-review',
+  templateUrl: './evaluation-review.component.html',
+  styleUrls: ['./evaluation-review.component.scss']
 })
-export class EvaluationFeedbackComponent implements OnInit {
+export class EvaluationReviewComponent implements OnInit {
 
   private _id:string;
   private _evaluationId: string;
@@ -30,6 +32,11 @@ export class EvaluationFeedbackComponent implements OnInit {
   comment : string = '';
   resultComponents:  IResultComponentCollaborator[] = [];
   commentFormGroup: FormGroup;
+  evaluations: IEvaluation[] = [];
+  isStageFeedback: boolean = false;
+  labelComment :string = '';
+  feedbackComment :string = '';
+  title: string ='';
 
   constructor(
     private _route: ActivatedRoute,
@@ -37,7 +44,8 @@ export class EvaluationFeedbackComponent implements OnInit {
     private _location: Location,
     private _fb: FormBuilder,
     private _evaluationCollaboratorService: EvaluationCollaboratorService,
-    private _componentCollaboratorService: ComponentCollaboratorService
+    private _componentCollaboratorService: ComponentCollaboratorService,
+    private _evaluationService: EvaluationService
   ) {
     this._getRouteParams();
     this._buildCommentForm(null);
@@ -114,14 +122,17 @@ export class EvaluationFeedbackComponent implements OnInit {
         console.log(data)
 
         this._setCollaboratorInformation(data);
+        this._id = data.id;
         this.resultComponents = data.resultComponents;
         this._statusId = data.statusId;
-        this._id = data.id;
         this._evaluationComponentStageId = data.evaluationComponentStageId;
-
+        this.isStageFeedback = data.stageId == ConstantsGeneral.stages.feedback;
+        this.labelComment = this.isStageFeedback ? 'Feedback' : 'Visto bueno';
+        this.feedbackComment = data.feedbackComment;
+        this.title = this.isStageFeedback ? 'Evaluación: Feedback' : 'Evaluación';
         const commentEvaluation: ICommentEvaluation = {
           componentCollaboratorCommentId: data.componentCollaboratorCommentId,
-          comment : data.feedbackComment
+          comment : this.isStageFeedback ? data.feedbackComment : data.approvalComment
         }
         this._buildCommentForm(commentEvaluation);
       })

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { EvaluationService } from '@core/services/evaluation/evaluation.service';
-import { IPeriodInProgress } from '@modules/period/interfaces/period-in-progress.interface';
+import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
 import { EvaluationBehaviorsService } from '@modules/evaluation/services/evaluation-behaviors.service';
 import { IComponentsRangeDate, IStageRangeDate } from '@modules/evaluation/interfaces/evaluation-detail.interface';
 
@@ -18,7 +18,7 @@ export class EvaluationDetailComponent {
   private unsubscribe$ = new Subject<any>();
   private _evaluationId: string;
 
-  evaluationInProgress: IPeriodInProgress | null = null;
+  evaluationInProgress: IPeriodEvaluation | null = null;
   stagesRangeDate: IStageRangeDate[] = [];
   components: IComponentsRangeDate[] = [];
 
@@ -62,7 +62,7 @@ export class EvaluationDetailComponent {
       .subscribe(detail => {
         this.components = detail.components;
         this.stagesRangeDate = detail.stagesEvaluation;
-        this.evaluationInProgress = { ...detail } as IPeriodInProgress;
+        this.evaluationInProgress = { ...detail } as IPeriodEvaluation;
       })
   }
 

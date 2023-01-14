@@ -5,7 +5,7 @@ import { ApiService } from '@core/services/api.service';
 import { IPeriod } from '@modules/period/interfaces/period.interface';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
-import { IPeriodInProgress } from '@modules/period/interfaces/period-in-progress.interface';
+import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +38,8 @@ export class PeriodService {
         .get<IPaginatedResponse<IPeriod>>(`${this.url}/paging`, paginatedFilter);
   }
 
-  getInProgress(): Observable<IPeriodInProgress> {
-    return this._apiService.get<IPeriodInProgress>(`${this.url}/in-progress`);
+  getInProgress(): Observable<IPeriodEvaluation> {
+    return this._apiService.get<IPeriodEvaluation>(`${this.url}/in-progress`);
   }
 
 }

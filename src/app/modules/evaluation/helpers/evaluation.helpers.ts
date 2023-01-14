@@ -1,7 +1,7 @@
 import { IElementRowTable } from "@components/table/interfaces/table.interface";
 import { ElementRowTable } from "@components/table/models/table.model";
 import { ConstantsGeneral } from "@shared/constants"
-import {  IEvaluationComponent, IEvaluationComponentStage } from "../interfaces/evaluation.interface"
+import { IEvaluationComponent, IEvaluationComponentStage } from "../interfaces/evaluation-create.interface";
 
 export class EvaluationHelper {
   static evaluationComponents: IEvaluationComponent[] = [

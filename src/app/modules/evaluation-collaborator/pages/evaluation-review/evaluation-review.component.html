@@ -1,0 +1,102 @@
+
+<div fxLayout="row" >
+  <h2 class="fw-bold">{{ title }}</h2>
+</div>
+
+<app-info-collaborator
+  [infoCollaborator]="collaboratorInformation"
+>
+</app-info-collaborator>
+
+<app-evaluated-components
+  [resultComponents]="resultComponents"
+>
+</app-evaluated-components>
+
+<form
+  autocomplete="off"
+  [formGroup]="commentFormGroup"
+  (ngSubmit)="confirmSave()"
+>
+  <div
+    fxLayout.xs="column"
+    fxLayout.sm="row wrap"
+    fxLayout.md="row wrap"
+    fxLayout.lg="row wrap"
+    fxLayout.xl="row wrap"
+    class="p-1 pb-0 pt-3 "
+    fxLayoutAlign="space-between  center"
+  >
+    <div
+      fxFlex="50"
+      class="p-1"
+      *ngIf="!isStageFeedback"
+    >
+      <mat-form-field fxFill appearance="outline">
+        <mat-label>Comentario de Feedback</mat-label>
+        <textarea
+            matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="5"
+            readonly
+        >{{ feedbackComment }}</textarea>
+      </mat-form-field>
+    </div>
+
+    <div
+      [fxFlex]="isStageFeedback ? 100 : 50"
+      class="p-1"
+    >
+      <mat-form-field fxFill appearance="outline">
+        <mat-label>Comentario de {{ labelComment }}</mat-label>
+        <textarea
+            matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="5"
+            formControlName="comment"
+            [readonly]="isStatusCompleted"
+
+        ></textarea>
+        <mat-error *ngIf="controlsForm['comment'].hasError('required')">
+          El comentario es <strong>requerido</strong>.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+  </div>
+  <div
+    fxLayout.xs="row wrap"
+    fxLayout.sm="row wrap"
+    fxLayout.md="row wrap"
+    fxLayout.lg="row wrap"
+    fxLayout.xl="row wrap"
+    fxLayoutAlign="center center"
+    fxLayoutAlign.xs="space-between center"
+    fxLayoutGap="10"
+    class="p-1 pb-0 pt-2"
+  >
+    <button
+      mat-mini-fab
+      color="basic"
+      matTooltip="Cancelar"
+      type="button"
+      (click)="cancel()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    <button
+      mat-mini-fab
+      color="primary"
+      matTooltip="Guardar feedback"
+      type="submit"
+      *ngIf="!isStatusCompleted"
+    >
+      <mat-icon>save</mat-icon>
+    </button>
+  </div>
+</form>
+

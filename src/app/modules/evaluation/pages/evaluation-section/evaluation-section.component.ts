@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PeriodService } from '@core/services/period/period.service';
-import { IPeriodInProgress } from '@modules/period/interfaces/period-in-progress.interface';
+import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
 import { IPeriod } from '@modules/period/interfaces/period.interface';
 
 @Component({
@@ -11,7 +11,7 @@ import { IPeriod } from '@modules/period/interfaces/period.interface';
 })
 export class EvaluationSectionComponent {
 
-  periodInProgress: IPeriodInProgress | null;
+  periodInProgress: IPeriodEvaluation | null;
 
   constructor(
     private _periodService: PeriodService,
@@ -42,8 +42,12 @@ export class EvaluationSectionComponent {
     this._router.navigateByUrl(`/evaluation/create`, { state: period });
   }
 
+  goToHistory(){
+    this._router.navigateByUrl(`/evaluation/history`);
+  }
+
   goEvaluationDetail(){
-    this._router.navigateByUrl(`/evaluation/${this.periodInProgress?.evaluationCurrent?.id}/detail`);
+    this._router.navigateByUrl(`/evaluation/${this.periodInProgress?.evaluation?.id}/detail`);
   }
 
 }

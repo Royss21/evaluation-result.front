@@ -52,7 +52,11 @@ export  class ConstantsGeneral{
       evaluation: 1,
       calibration: 2,
       feedback: 3,
-      approval: 4
+      approval: 4,
+      1: 'Evaluación',
+      2: 'Calibración',
+      3: 'Feedback',
+      4: 'Visto Bueno',
     }
 
 

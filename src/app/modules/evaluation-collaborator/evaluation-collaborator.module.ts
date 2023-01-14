@@ -8,7 +8,7 @@ import { ComponentsModule } from '@components/components.module';
 import { EvaluationCollaboratorListComponent } from './pages/evaluation-collaborator-list/evaluation-collaborator-list.component';
 import { EvaluationCollaboratorComponent } from './evaluation-collaborator.component';
 import { RegisterCollaboratorModalComponent } from './components/register-collaborator-modal/register-collaborator-modal.component';
-import { EvaluationFeedbackComponent } from './pages/evaluation-feedback/evaluation-feedback.component';
+import { EvaluationReviewComponent } from './pages/evaluation-review/evaluation-review.component';
 import { CoreModule } from '@core/core.module';
 import { EvaluatedComponentsComponent } from './components/evaluated-components/evaluated-components.component';
 import { EvaluationApprovalComponent } from './pages/evaluation-approval/evaluation-approval.component';
@@ -19,7 +19,7 @@ import { EvaluationApprovalComponent } from './pages/evaluation-approval/evaluat
     EvaluationCollaboratorListComponent,
     EvaluationCollaboratorComponent,
     RegisterCollaboratorModalComponent,
-    EvaluationFeedbackComponent,
+    EvaluationReviewComponent,
     EvaluatedComponentsComponent,
     EvaluationApprovalComponent
   ],

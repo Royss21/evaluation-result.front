@@ -17,13 +17,13 @@
         fxLayoutAlign="start"
       >
         <mat-card-title class="fs-6 fw-bold m-0">
-         {{ evaluationInProgress?.periodName }}
+         {{ periodEvaluation?.periodName }}
         </mat-card-title>
         <mat-card-title class="fs-6 fw-bold m-0">
-          {{ evaluationInProgress?.evaluationCurrent?.name }} en curso:
+          {{ periodEvaluation?.evaluation?.name }} en curso:
         </mat-card-title>
         <mat-card-subtitle class="m-0">
-          {{ evaluationInProgress?.evaluationCurrent?.rangeDate }}
+          {{ periodEvaluation?.evaluation?.rangeDate }}
         </mat-card-subtitle>
       </div>
     </div>
@@ -36,19 +36,19 @@
         <app-component-item
           [icon]="'/assets/images/objCorp.png'"
           [componentName]="'Objetivos corporativos'"
-          [isCreatedInEvaluation]="evaluationInProgress?.evaluationCurrent?.hasComponentCorporateObjectives || false"
+          [isCreatedInEvaluation]="periodEvaluation?.evaluation?.hasComponentCorporateObjectives || false"
         ></app-component-item>
 
         <app-component-item
           [icon]="'/assets/images/kpi.png'"
           [componentName]="'Objetivos de Áreas'"
-          [isCreatedInEvaluation]="evaluationInProgress?.evaluationCurrent?.hasComponentAreaObjectives || false"
+          [isCreatedInEvaluation]="periodEvaluation?.evaluation?.hasComponentAreaObjectives || false"
         ></app-component-item>
 
         <app-component-item
           [icon]="'/assets/images/comp.png'"
           [componentName]="'Competencias'"
-          [isCreatedInEvaluation]="evaluationInProgress?.evaluationCurrent?.hasComponentCompetencies || false"
+          [isCreatedInEvaluation]="periodEvaluation?.evaluation?.hasComponentCompetencies || false"
         ></app-component-item>
 
       </ul>

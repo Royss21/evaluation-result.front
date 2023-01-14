@@ -10,23 +10,23 @@
 >
 
   <div
-    fxFlex.xl="33.3333%"    
+    fxFlex.xl="33.3333%"
     fxFlex.lg="50%"
     fxFlex.md="50%"
     fxFlex.sm="100%"
     fxFlex.xs="100%"
-    *ngIf="periodInProgress?.evaluationCurrent"
+    *ngIf="periodInProgress?.evaluation"
     (click)="goEvaluationDetail()"
     class="cursor-pointer"
   >
     <app-evaluation-current-card
-      [evaluationInProgress]="periodInProgress"
+      [periodEvaluation]="periodInProgress"
     ></app-evaluation-current-card>
   </div>
 
-  
+
   <div
-    fxFlex.xl="33.3333%"    
+    fxFlex.xl="33.3333%"
     fxFlex.lg="50%"
     fxFlex.md="50%"
     fxFlex.sm="100%"
@@ -48,7 +48,7 @@
             type="button"
             (click)="goEvaluation()"
           >
-          <span class="text-primary">Crear</span>
+            <span class="text-primary">Crear</span>
             <mat-icon class="text-primary">arrow_right_alt</mat-icon>
           </button>
         </div>
@@ -58,9 +58,9 @@
       </div>
     </mat-card>
   </div>
-  
+
   <div
-    fxFlex.xl="33.3333%"    
+    fxFlex.xl="33.3333%"
     fxFlex.lg="50%"
     fxFlex.md="50%"
     fxFlex.sm="100%"
@@ -86,6 +86,41 @@
         </div>
         <div class="container-img">
           <img class="img-vatacion" src="../../../../../assets/images/configuracion 1.svg" width="120px" alt="vacation">
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div
+    fxFlex.xl="33.3333%"
+    fxFlex.lg="50%"
+    fxFlex.md="50%"
+    fxFlex.sm="100%"
+    fxFlex.xs="100%"
+  >
+    <mat-card class="">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="between center"
+      >
+        <div class="container-img">
+          <img class="img-vatacion" src="../../../../../assets/images/checklist.svg" width="120px" alt="vacation">
+        </div>
+        <div class="p-3">
+          <mat-card-title class="fs-6 fw-bold">
+            Historial de evaluaciones
+          </mat-card-title>
+          <p class="text-muted">
+            Ingresa a esta sección para visualizar todas las evaluaciones creadas anteriormente.
+          </p>
+          <button
+            mat-raised-button
+            type="button"
+            (click)="goToHistory()"
+          >
+            <span class="text-primary">Ir a historial</span>
+            <mat-icon class="text-primary">arrow_right_alt</mat-icon>
+          </button>
         </div>
       </div>
     </mat-card>

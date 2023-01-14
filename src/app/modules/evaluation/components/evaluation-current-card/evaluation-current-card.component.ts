@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IStageRangeDate } from '@modules/evaluation/interfaces/evaluation-detail.interface';
-import { IPeriodInProgress } from '@modules/period/interfaces/period-in-progress.interface';
+import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
 
 @Component({
   selector: 'app-evaluation-current-card',
@@ -9,7 +9,7 @@ import { IPeriodInProgress } from '@modules/period/interfaces/period-in-progress
 })
 export class EvaluationCurrentCardComponent implements OnInit {
 
-  @Input() evaluationInProgress: IPeriodInProgress | null;
+  @Input() periodEvaluation: IPeriodEvaluation | null;
   @Input() stagesRangeDate: IStageRangeDate[] = [];
 
   constructor() { }

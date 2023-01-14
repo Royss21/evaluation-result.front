@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { IEvaluationCreate } from '@modules/evaluation/interfaces/evaluation-create.interface';
 import { IEvaluationDetail } from '@modules/evaluation/interfaces/evaluation-detail.interface';
+import { IEvaluation } from '@modules/evaluation/interfaces/evaluation.interface';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';
 
@@ -19,6 +20,10 @@ export class EvaluationService {
 
   getDetail(id: string): Observable<IEvaluationDetail> {
     return this._apiService.get<IEvaluationDetail>(`${this.url}/${id}/detail`);
+  }
+
+  getAllDetail(): Observable<IEvaluationDetail[]> {
+    return this._apiService.get<IEvaluationDetail[]>(`${this.url}/all-detail`);
   }
 
   create(request: IEvaluationCreate): Observable<IEvaluationCreate> {

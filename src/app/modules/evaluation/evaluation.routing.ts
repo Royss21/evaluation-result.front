@@ -5,6 +5,7 @@ import { EvaluationComponent } from '@modules/evaluation/evaluation.component';
 import { EvaluationAddComponent } from '@modules/evaluation/pages/evaluation-add/evaluation-add.component';
 import { EvaluationDetailComponent } from '@modules/evaluation/pages/evaluation-detail/evaluation-detail.component';
 import { EvaluationSectionComponent } from '@modules/evaluation/pages/evaluation-section/evaluation-section.component';
+import { EvaluationHistoryComponent } from './pages/evaluation-history/evaluation-history.component';
 import { ReviewStageListComponent } from './pages/review-stage-list/review-stage-list.component';
 
 const routes: Routes = [
@@ -19,6 +20,10 @@ const routes: Routes = [
       {
         path: 'create',
         component: EvaluationAddComponent
+      },
+      {
+        path: 'history',
+        component: EvaluationHistoryComponent
       },
       {
         path: ':evaluationId/detail',

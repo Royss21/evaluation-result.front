@@ -3,6 +3,7 @@ import { ICollaboratorInformation } from "@core/interfaces/collaborator-informat
 export interface IResultEvaluationCollaborator extends ICollaboratorInformation{
 
   id: string;
+  evaluationId: string,
   evaluationComponentStageId: number;
   componentCollaboratorCommentId: number;
   stageId: number,

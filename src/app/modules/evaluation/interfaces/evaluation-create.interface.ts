@@ -1,4 +1,3 @@
-import { IEvaluationComponent, IEvaluationComponentStage } from "./evaluation.interface";
 
 export interface IEvaluationCreate {
   periodId: number;
@@ -11,4 +10,21 @@ export interface IEvaluationCreate {
   evaluationComponentStages: IEvaluationComponentStage[],
 }
 
+export interface IEvaluationComponent {
+  componentId: number
+  checked: boolean,
+  img: string,
+  title: string,
+  subtitle: string,
+  startDate: Date | null,
+  endDate: Date | null,
+}
+
+export interface IEvaluationComponentStage {
+  componentId: number | null;
+  stageId: number;
+  startDate: Date | null
+  endDate:Date | null;
+  title: string;
+}
 

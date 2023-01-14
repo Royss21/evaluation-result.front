@@ -1,10 +1,10 @@
-import { IEvaluationCurrent } from "@modules/evaluation/interfaces/evaluation-current.interface";
+import { IEvaluation } from "@modules/evaluation/interfaces/evaluation.interface";
 
-export interface IPeriodInProgress {
+export interface IPeriodEvaluation {
    periodId: number;
    periodName: string;
    startDate: Date;
    endDate: Date;
-   evaluationCurrent: IEvaluationCurrent | null;
+   evaluation: IEvaluation | null;
 }
 

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EvaluationHelper } from '@modules/evaluation/helpers/evaluation.helpers';
-import { IEvaluationComponent, IEvaluationComponentStage } from '@modules/evaluation/interfaces/evaluation.interface';
 import { ConstantsGeneral } from '@shared/constants';
 
 import { CustomValidations } from '@shared/helpers/custom-validations';
+import { IEvaluationComponent, IEvaluationComponentStage } from '../interfaces/evaluation-create.interface';
 
 @Injectable({
   providedIn: 'root'

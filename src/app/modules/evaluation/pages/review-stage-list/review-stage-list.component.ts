@@ -71,8 +71,8 @@ export class ReviewStageListComponent implements OnInit {
   }
 
   goToReviewStage(evaluationCollaboratorId:string ){
-    if(this._stageId == ConstantsGeneral.stages.feedback)
-      this._router.navigateByUrl(`/evaluation/${this._evaluationId}/collaborator/${evaluationCollaboratorId}/feedback`);
+    //if(this._stageId == ConstantsGeneral.stages.feedback)
+      this._router.navigateByUrl(`/evaluation/${this._evaluationId}/collaborator/${evaluationCollaboratorId}/review`);
   }
 
   ngOnDestroy(): void {

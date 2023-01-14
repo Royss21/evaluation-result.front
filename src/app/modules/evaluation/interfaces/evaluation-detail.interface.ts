@@ -1,6 +1,6 @@
-import { IPeriodInProgress } from "@modules/period/interfaces/period-in-progress.interface";
+import { IPeriodEvaluation } from "@modules/period/interfaces/period-in-progress.interface";
 
-export interface IEvaluationDetail extends IPeriodInProgress {
+export interface IEvaluationDetail extends IPeriodEvaluation {
 
   isEnableImportLeaders: boolean;
   components: IComponentsRangeDate []
@@ -18,7 +18,7 @@ export interface IComponentsRangeDate{
 }
 
 export interface IStageRangeDate{
-  
+
   stageId :number;
   stageName  :string;
   rangeDate  : string;
