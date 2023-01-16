@@ -1,47 +1,47 @@
-
-import { Injectable } from '@angular/core';
-import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
-import { ICorporateObjectives } from '@modules/corporate-objectives/interfaces/corporate-objectives.interface';
-import { ISubcomponentFilter } from '@shared/interfaces/subcomponent-filter.interface';
 import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+
 import { ApiService } from '../api.service';
+import { ISubcomponent } from '@shared/interfaces/subcomponent.interface';
+import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
+import { ISubcomponentFilter } from '@shared/interfaces/subcomponent-filter.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubcomponentService {
-  
-  private controller = 'subcomponent';
-  private url = `https://localhost:7253/api/${this.controller}`
+
+  private _url = `${environment.serverUriApi}/subcomponent`;
+
   constructor(
     private _apiService: ApiService
   ) { }
 
-  getById(id: number): Observable<ICorporateObjectives> {
-    const url = `${this.controller}/${id}`;
-    return this._apiService.get<ICorporateObjectives>(url);
+  getById(id: number): Observable<ISubcomponent> {
+    const url = `${this._url}/${id}`;
+    return this._apiService.get<ISubcomponent>(url);
   }
 
-  getAll(): Observable<ICorporateObjectives[]> {
-    const url = `${this.controller}`;
-    return this._apiService.get<ICorporateObjectives[]>(url);
+  getAll(): Observable<ISubcomponent[]> {
+    return this._apiService.get<ISubcomponent[]>(this._url);
   }
 
-  create(request: ICorporateObjectives): Observable<ICorporateObjectives> {
-    return this._apiService.post<ICorporateObjectives>(`${this.url}`, request);
+  create(request: ISubcomponent): Observable<ISubcomponent> {
+    return this._apiService.post<ISubcomponent>(`${this._url}`, request);
   }
 
-  update(request: ICorporateObjectives): Observable<boolean> {
-    return this._apiService.put<boolean>(`${this.url}`, request);
+  update(request: ISubcomponent): Observable<boolean> {
+    return this._apiService.put<boolean>(`${this._url}`, request);
   }
 
   delete(id: number): Observable<boolean> {
     return this._apiService
-        .delete<boolean>(`${this.url}/${id}`);
+        .delete<boolean>(`${this._url}/${id}`);
   }
 
-  getPaginated(paginatedFilter: ISubcomponentFilter): Observable<IPaginatedResponse<ICorporateObjectives>> {    
+  getPaginated(paginatedFilter: ISubcomponentFilter): Observable<IPaginatedResponse<ISubcomponent>> {
      return this._apiService
-         .get<IPaginatedResponse<ICorporateObjectives>>(`${this.url}/paging`, paginatedFilter);
+         .get<IPaginatedResponse<ISubcomponent>>(`${this._url}/paging`, paginatedFilter);
   }
 }

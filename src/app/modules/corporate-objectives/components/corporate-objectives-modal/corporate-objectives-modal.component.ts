@@ -1,15 +1,20 @@
 import { forkJoin } from 'rxjs';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import { ConstantsGeneral } from '@shared/constants';
 import { AreaService } from '@core/services/area/area.service';
 import { IArea } from '@modules/area/interfaces/area.interface';
+import { CustomValidations } from '@shared/helpers/custom-validations';
 import { FormulaService } from '@core/services/formula/formula.service';
 import { IFormula } from '@modules/formula/interfaces/formula.interface';
-import { CorporateObjectivesModalBuilderService } from './corporate-objectives-modal-builder.service';
+import { ISubcomponent } from '@shared/interfaces/subcomponent.interface';
+import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
+import { SubcomponentService } from '@core/services/subcomponent/subcomponent.service';
+import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
+import { CorporateObjectivesBuilderService } from '../../services/corporate-objectives-builder.service';
 import { CorporateObjectivesText } from '@modules/corporate-objectives/helpers/corporate-objectives.helper';
-import { ICorporateObjectives } from '@modules/corporate-objectives/interfaces/corporate-objectives.interface';
 
 @Component({
   selector: 'app-corporate-objectives-modal',
@@ -18,19 +23,35 @@ import { ICorporateObjectives } from '@modules/corporate-objectives/interfaces/c
 })
 export class CorporateObjectivesModalComponent implements OnInit {
 
-  modalTitle: string = '';
-  areas: IArea[] = [];
-  formulas: IFormula[] = [];
-  corporateObjectivesFormGroup: FormGroup;
+  private isCloseAfterSave: boolean = false;
+
+  public modalTitle: string = '';
+  public areaList: IArea[] = [];
+  public formulaList: IFormula[] = [];
+  public corporateObjectivesFormGroup: FormGroup;
 
   constructor(
-    private _corporateObjectivesBuilderService: CorporateObjectivesModalBuilderService,
-    private _formulaService: FormulaService,
+    public _dialog: MatDialog,
     private _areaService: AreaService,
-    @Inject(MAT_DIALOG_DATA) public data: ICorporateObjectives
+    private _formulaService: FormulaService,
+    private _subcomponentService: SubcomponentService,
+    private _modalRef: MatDialogRef<CorporateObjectivesModalComponent>,
+    private _corporateObjectivesBuilderService: CorporateObjectivesBuilderService,
+    @Inject(MAT_DIALOG_DATA) public data: ISubcomponent
   ) {
     this.modalTitle = data ? CorporateObjectivesText.modalUdpate : CorporateObjectivesText.modalCreate;
     this.corporateObjectivesFormGroup = _corporateObjectivesBuilderService.buildCorporateObjectivesForm(data);
+  }
+
+  ngOnInit(): void {
+    const areaGetAll = this._areaService.getAll();
+    const formulaGetAll = this._formulaService.getAll();
+
+    forkJoin([areaGetAll, formulaGetAll])
+      .subscribe(([areas, formulas]) => {
+        this.areaList = areas;
+        this.formulaList = formulas;
+      });
   }
 
   get areaControl(){
@@ -41,21 +62,54 @@ export class CorporateObjectivesModalComponent implements OnInit {
     return this.corporateObjectivesFormGroup.controls;
   }
 
-  // get nameAreas(): string[]{
-  //   return this.areas.map(a => a.name);
-  // }
+  closeModal(): void {
+    this._modalRef.close();
+  }
 
-  ngOnInit(): void {
+  private closeOrReset(): void{
+    if(this.isCloseAfterSave)
+      this.closeModal();
+    else
+      this.corporateObjectivesFormGroup.reset();
+  }
 
-    let areaGetAll = this._areaService.getAll();
-    let formulaGetAll = this._formulaService.getAll();
+  private showConfirmMessage(): void {
+    const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
+      data: ConstantsGeneral.confirmCreatePopup,
+      autoFocus: false
+    });
 
-    forkJoin([areaGetAll, formulaGetAll])
-      .subscribe(([areas, formulas]) => {
-          this.areas = areas;
-          this.formulas = formulas;
-      });
+    dialogRefConfirm.afterClosed().subscribe(() => {
+      this.closeOrReset();
+    });
+  }
 
+  private save(subcomponent: ISubcomponent): void {
+    if(!subcomponent.id)
+      this._subcomponentService.create(subcomponent).subscribe(() => this.showConfirmMessage())
+    else
+      this._subcomponentService.update(subcomponent).subscribe(() => this.showConfirmMessage())
+  }
+
+  confirmSave(isClose: boolean = true){
+    CustomValidations.marcarFormGroupTouched(this.corporateObjectivesFormGroup);
+
+    if(this.corporateObjectivesFormGroup.invalid)
+      return;
+
+    this.isCloseAfterSave = isClose;
+
+    const subComponent: ISubcomponent = { ...this.corporateObjectivesFormGroup.getRawValue() } ;
+    const dialogRef = this._dialog.open(PopupChooseComponent, {
+      data: ConstantsGeneral.chooseData,
+      autoFocus: false,
+      restoreFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result)
+        this.save(subComponent);
+    });
   }
 
 }

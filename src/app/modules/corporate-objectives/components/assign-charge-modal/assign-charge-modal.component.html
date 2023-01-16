@@ -1,0 +1,192 @@
+<button mat-icon-button class="close-button" mat-dialog-close>
+  <mat-icon [inline]="true" class="close-icon">highlight_off</mat-icon>
+</button>
+<h2  mat-dialog-title>{{ modalTitle }}</h2>
+
+<section
+  fxLayout.xs="row wrap"
+  fxLayout.sm="row wrap"
+  fxLayout.md="row wrap"
+  fxLayout.lg="row wrap"
+  fxLayout.xl="row wrap"
+  fxLayoutAlign="space-between center"
+>
+  <div
+    fxFlex.xl="50%"
+    fxFlex.lg="50%"
+    fxFlex.md="50%"
+    fxFlex.sm="50%"
+    fxFlex.xs="100%"
+  >
+    <mat-form-field fxFill appearance="outline">
+      <mat-label>Cargo</mat-label>
+      <mat-select [formControl]="chargeForm">
+        <mat-option *ngFor="let charge of chargeList" [value]="charge.id">
+          {{charge.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div
+    fxFlex.xl="20%"
+    fxFlex.lg="20%"
+    fxFlex.md="20%"
+    fxFlex.sm="20%"
+    fxFlex.xs="100%"
+  >
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="addItemSubcomponent()"
+    >
+      Agregar cargo
+    </button>
+  </div>
+</section>
+
+<form
+  class="p-3"
+  autocomplete="off"
+  [formGroup]="assignChargeFormGroup"
+>
+
+ <section *ngIf="itemsForm.controls.length > 0" formArrayName="itemSubcomponents">
+    <div *ngFor="let item of itemsForm.controls; let pointIndex=index">
+      <mat-divider *ngIf="pointIndex < itemsForm.controls.length" ></mat-divider>
+      <section
+        fxLayoutGap="5px"
+        fxLayout.xs="row wrap"
+        fxLayout.sm="row wrap"
+        fxLayout.md="row wrap"
+        fxLayout.lg="row wrap"
+        fxLayout.xl="row wrap"
+        fxLayoutAlign="space-between center"
+        [formGroupName]="pointIndex"
+      >
+        <div
+          fxFlex.xl="20%"
+          fxFlex.lg="20%"
+          fxFlex.md="20%"
+          fxFlex.sm="20%"
+          fxFlex.xs="20%"
+        >
+          <span class="fw-bolder text-muted" >{{item.get('chargeName')?.value}}</span>
+        </div>
+        <div
+          fxFlex.xl="15%"
+          fxFlex.lg="15%"
+          fxFlex.md="15%"
+          fxFlex.sm="15%"
+          fxFlex.xs="15%"
+          class="mt-4"
+        >
+          <mat-form-field fxFill appearance="outline">
+            <mat-label>P. Relativo</mat-label>
+            <input
+              #input1
+              matInput
+              type="text"
+              NumbersOnly
+              maxlength="3"
+              autocomplete="off"
+              class="fs-6 text-end"
+              formControlName="relativeWeight"
+            >
+              <span matSuffix class="fs-6 pl-3 pb-3">%</span>
+              <mat-error *ngIf="controlsForm['itemSubcomponents'].get([pointIndex])?.get('relativeWeight')?.hasError('required')">
+                El peso es <strong>requerido</strong>.
+              </mat-error>
+              <mat-error *ngIf="controlsForm['itemSubcomponents'].get([pointIndex])?.get('relativeWeight')?.hasError('max')">
+                El peso máximo es <strong>100%</strong>.
+              </mat-error>
+          </mat-form-field>
+        </div>
+        <div
+          fxFlex.xl="15%"
+          fxFlex.lg="15%"
+          fxFlex.md="15%"
+          fxFlex.sm="15%"
+          fxFlex.xs="15%"
+          class="mt-4"
+        >
+          <mat-form-field fxFill appearance="outline">
+            <mat-label>%. Mínimo</mat-label>
+            <input
+              #input1
+              matInput
+              NumbersOnly
+              type="text"
+              maxlength="3"
+              autocomplete="off"
+              class="fs-6 text-end"
+              formControlName="minimunPercentage"
+            >
+              <span matSuffix class="fs-6 pl-3 pb-3">%</span>
+              <mat-error *ngIf="controlsForm['itemSubcomponents'].get([pointIndex])?.get('minimunPercentage')?.hasError('required')">
+                El % es <strong>requerido</strong>.
+              </mat-error>
+              <mat-error *ngIf="controlsForm['itemSubcomponents'].get([pointIndex])?.get('minimunPercentage')?.hasError('max')">
+                El % máximo es <strong>100%</strong>.
+              </mat-error>
+          </mat-form-field>
+        </div>
+        <div
+          fxFlex.xl="15%"
+          fxFlex.lg="15%"
+          fxFlex.md="15%"
+          fxFlex.sm="15%"
+          fxFlex.xs="15%"
+          class="mt-4"
+        >
+          <mat-form-field fxFill appearance="outline">
+            <mat-label>%. Meta</mat-label>
+            <input
+              #input1
+              matInput
+              NumbersOnly
+              type="text"
+              maxlength="3"
+              autocomplete="off"
+              class="fs-6 text-end"
+              formControlName="maximunPercentage"
+            >
+              <span matSuffix class="fs-6 pl-3 pb-3">%</span>
+              <mat-error *ngIf="controlsForm['itemSubcomponents'].get([pointIndex])?.get('maximunPercentage')?.hasError('required')">
+                El % es <strong>requerido</strong>.
+              </mat-error>
+              <mat-error *ngIf="controlsForm['itemSubcomponents'].get([pointIndex])?.get('maximunPercentage')?.hasError('max')">
+                El % máximo es <strong>100%</strong>.
+              </mat-error>
+          </mat-form-field>
+        </div>
+        <div
+          fxFlex.xl="20%"
+          fxFlex.lg="20%"
+          fxFlex.md="20%"
+          fxFlex.sm="20%"
+          fxFlex.xs="20%"
+        >
+          <button
+            mat-mini-fab
+            color="primary"
+            type="button"
+            class="mr-1"
+            (click)="confirmSave(pointIndex, item)"
+          >
+            <mat-icon>save</mat-icon>
+          </button>
+          &nbsp;
+          <button
+            mat-mini-fab
+            color="warn"
+            type="button"
+            (click)="deleteItemSubcomponent(pointIndex, item)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </section>
+    </div>
+  </section>
+</form>

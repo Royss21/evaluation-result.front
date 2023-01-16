@@ -1,4 +1,7 @@
 
+<button mat-icon-button class="close-button" mat-dialog-close>
+  <mat-icon [inline]="true" class="close-icon">highlight_off</mat-icon>
+</button>
 <h2  mat-dialog-title>{{ modalTitle }}</h2>
 <mat-dialog-content>
 
@@ -21,21 +24,21 @@
       >
     </mat-form-field>
   </div>
-  
+
   <div
     fxLayout.xs="row"
     fxLayoutAlign="space-center center"
   >
     <!-- <ul>
       <li *ngFor="let collaborator of collaborators; let i = index">
-    
+
         <p *ngIf="(i + 1) !== collaborators.length">
           {{ collaborator.collaboratorName }}
-        </p> 
+        </p>
         <p *ngIf="(i + 1) === collaborators.length" #elementobserver>
           {{ collaborator.collaboratorName }}
-        </p> 
-    
+        </p>
+
       </li>
     </ul> -->
 
@@ -66,11 +69,11 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
-  <button 
-      mat-mini-fab 
-      color="basic" 
+  <button
+      mat-mini-fab
+      color="basic"
       matTooltip="Cerrar"
-      type="button" 
+      type="button"
       (click)="closeModal()"
   >
       <mat-icon>close</mat-icon>

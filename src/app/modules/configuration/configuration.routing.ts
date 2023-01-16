@@ -30,6 +30,14 @@ export const roots: Routes = [
         loadChildren: () => import('../corporate-objectives/corporate-objectives.module').then( m => m.CorporateObjectivesModule )
       },
       {
+        path:'area-objectives',
+        loadChildren: () => import('../area-objectives/area-objectives.module').then( m => m.AreaObjectivesModule )
+      },
+      {
+        path:'competences',
+        loadChildren: () => import('../competences/competences.module').then( m => m.CompetencesModule )
+      },
+      {
         path:'weight-per-component',
         loadChildren: () => import('../weight-per-component/weight-per-component.module').then( m => m.WeightPerComponentModule )
       },

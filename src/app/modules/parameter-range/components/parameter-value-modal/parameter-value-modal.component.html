@@ -1,4 +1,7 @@
 
+<button mat-icon-button class="close-button" mat-dialog-close>
+  <mat-icon [inline]="true" class="close-icon">highlight_off</mat-icon>
+</button>
 <h2  mat-dialog-title>Listado de Parametros</h2>
 
 <form
@@ -18,12 +21,12 @@
             fxLayoutAlign="space-center center"
         >
             <div
-                fxFlex.xl="50%"    
+                fxFlex.xl="50%"
                 fxFlex.lg="50%"
                 fxFlex.md="50%"
                 fxFlex.sm="50%"
                 fxFlex.xs="100%"
-                class="p-1 pb-0 pt-0" 
+                class="p-1 pb-0 pt-0"
             >
                 <mat-form-field
                     fxFill
@@ -49,12 +52,12 @@
             </div>
 
             <div
-                fxFlex.xl="50%"    
+                fxFlex.xl="50%"
                 fxFlex.lg="50%"
                 fxFlex.md="50%"
                 fxFlex.sm="50%"
-                fxFlex.xs="100%" 
-                class="p-1 pb-0 pt-0" 
+                fxFlex.xs="100%"
+                class="p-1 pb-0 pt-0"
             >
                 <mat-form-field
                     fxFill
@@ -94,27 +97,27 @@
             fxLayoutAlign="end center"
             class="pb-3"
         >
-            <button 
-                mat-mini-fab 
-                color="basic" 
+            <button
+                mat-mini-fab
+                color="basic"
                 matTooltip="Limpiar"
-                type="button" 
+                type="button"
                 (click)="clean()"
                 style="margin-right: 10px;"
             >
                 <mat-icon>brush</mat-icon>
             </button>
-            <button 
-                mat-mini-fab 
-                color="primary" 
+            <button
+                mat-mini-fab
+                color="primary"
                 matTooltip="Guardar"
-                type="submit" 
+                type="submit"
                 class="ml-2"
             >
                 <mat-icon>save</mat-icon>
             </button>
         </div>
-    
+
 
         <app-table
             [listColumns]="columnsTable"
@@ -143,7 +146,7 @@
                     >
                     <mat-icon>edit</mat-icon>
                     </button>
-                    
+
                     <button
                         mat-mini-fab
                         color="warn"
@@ -162,11 +165,11 @@
         </app-table>
     </mat-dialog-content>
     <mat-dialog-actions align="center">
-        <button 
-            mat-mini-fab 
-            color="basic" 
+        <button
+            mat-mini-fab
+            color="basic"
             matTooltip="Cerrar"
-            type="button" 
+            type="button"
             (click)="close()"
         >
             <mat-icon>close</mat-icon>

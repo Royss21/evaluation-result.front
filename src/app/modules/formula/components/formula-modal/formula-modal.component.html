@@ -1,4 +1,6 @@
-
+<button mat-icon-button class="close-button" mat-dialog-close>
+  <mat-icon [inline]="true" class="close-icon">highlight_off</mat-icon>
+</button>
 <h2  mat-dialog-title>{{ modalTitle }}</h2>
 <form
     class="p-3"
@@ -7,7 +9,7 @@
     (ngSubmit)="confirmSave()"
 >
     <mat-dialog-content>
-    
+
         <div
           fxLayout.xs="row wrap"
           fxLayout.sm="row wrap"
@@ -16,14 +18,14 @@
           fxLayout.xl="row wrap"
           fxLayoutAlign="space-center center"
         >
-        
+
             <div
-                fxFlex.xl="50%"    
+                fxFlex.xl="50%"
                 fxFlex.lg="50%"
                 fxFlex.md="50%"
                 fxFlex.sm="100%"
                 fxFlex.xs="100%"
-                class="p-1 pb-0 pt-0" 
+                class="p-1 pb-0 pt-0"
             >
                 <mat-form-field
                     fxFill
@@ -48,19 +50,19 @@
             </div>
 
             <div
-                fxFlex.xl="50%"    
+                fxFlex.xl="50%"
                 fxFlex.lg="50%"
                 fxFlex.md="50%"
                 fxFlex.sm="100%"
-                fxFlex.xs="100%" 
-                class="p-1 pb-0 pt-0" 
+                fxFlex.xs="100%"
+                class="p-1 pb-0 pt-0"
             >
                 <mat-form-field
                     fxFill
                     appearance="outline"
                 >
                 <mat-label>Descripción</mat-label>
-                    <textarea 
+                    <textarea
                         formControlName="description"
                         matInput
                         cdkTextareaAutosize
@@ -86,48 +88,48 @@
                     *ngIf="parametersConfigurated.length > 0; else notParametersConfigurated"
                 >
                     <div
-                        fxFlex.xl="100%"    
+                        fxFlex.xl="100%"
                         fxFlex.lg="100%"
                         fxFlex.md="100%"
                         fxFlex.sm="100%"
-                        fxFlex.xs="100%" 
+                        fxFlex.xs="100%"
                         style="margin: 0 0 10px 0;"
                         *ngFor="let parameter of parametersConfigurated; index as i"
                     >
                         <span style="font-weight: bold">{{i + 1}} - {{ parameter.name }} :</span>
                         <mat-chip-list>
-                            <mat-chip 
+                            <mat-chip
                                 *ngFor="let value of parameter.parametersValue"
                                 (click)="copyNameValue(value.name)"
                             >
                                 {{ value.name }} &nbsp; = {{value.value}}
-                                <mat-icon matChipRemove>file_copy</mat-icon> 
+                                <mat-icon matChipRemove>file_copy</mat-icon>
                             </mat-chip>
                         </mat-chip-list>
                     </div>
 
-                </div>  
+                </div>
                 <ng-template #notParametersConfigurated>
-                        No hay parametros configurados   
+                        No hay parametros configurados
                 </ng-template>
             </div>
             <div matBadge="4" matBadgeOverlap="false" style="font-size:11px">Nota: Solo puede usar la sentencia SI() y la condicional Y()</div>
             </div>
 
             <div
-                fxFlex.xl="100%"    
+                fxFlex.xl="100%"
                 fxFlex.lg="100%"
                 fxFlex.md="100%"
                 fxFlex.sm="100%"
                 fxFlex.xs="100%"
-                class="p-1 pb-0 pt-2" 
+                class="p-1 pb-0 pt-2"
             >
                 <mat-form-field
                     fxFill
                     appearance="outline"
                 >
                     <mat-label>Formula</mat-label>
-                    <textarea 
+                    <textarea
                         formControlName="formulaReal"
                         matInput
                         cdkTextareaAutosize
@@ -135,7 +137,7 @@
                         cdkAutosizeMinRows="1"
                         cdkAutosizeMaxRows="5"
                     ></textarea>
-                    
+
                     <mat-error *ngIf="controlsForm['formulaReal'].hasError('required')">
                         La formula es <strong>requerida</strong>.
                     </mat-error>
@@ -149,27 +151,27 @@
         </div>
     </mat-dialog-content>
     <mat-dialog-actions align="center">
-        <button 
-            mat-mini-fab 
-            color="basic" 
+        <button
+            mat-mini-fab
+            color="basic"
             matTooltip="Cerrar"
-            type="button" 
+            type="button"
             (click)="closeModal()"
         >
             <mat-icon>close</mat-icon>
         </button>
-        <button 
-            mat-mini-fab 
-            color="primary" 
+        <button
+            mat-mini-fab
+            color="primary"
             matTooltip="Guardar"
             type="button"
             (click)="confirmSave(false)"
         >
             <mat-icon>save</mat-icon>
         </button>
-        <button 
-            mat-raised-button 
-            color="primary" 
+        <button
+            mat-raised-button
+            color="primary"
             matTooltip="Guardar y Cerrar"
             type="submit"
         >

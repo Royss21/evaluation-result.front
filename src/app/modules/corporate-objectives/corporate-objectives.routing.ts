@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+
 import { CorporateObjectivesComponent } from "./corporate-objectives.component";
 import { CorporateObjectivesListComponent } from "./pages/corporate-objectives-list/corporate-objectives-list.component";
 

@@ -24,19 +24,10 @@
           color="primary"
           type="button"
           class="btn-action-xs"
-          matTooltip="Asignar pesos"
+          matTooltip="Editar pesos"
           (click)="openModal(element)"
         >
           <mat-icon>edit</mat-icon>
-        </button>
-        <button
-          mat-mini-fab
-          color="warn"
-          type="button"
-          class="btn-action-xs"
-          (click)="confirmDeleted(element.id)"
-        >
-          <mat-icon>delete</mat-icon>
         </button>
       </div>
       <div *ngSwitchCase="'name'">

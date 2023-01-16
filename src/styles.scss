@@ -4,6 +4,11 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 :root{
+  --color-primary: #3F51B5;
+  --color-warning: #FFC700;
+  --color-warning-opacity: rgba(255, 199, 0, .5);
+  --color-danger: #E44208;
+  --color-success: #2EC67A;
   --font-size-1: 12px;
   --font-size-2: 14px;
   --font-size-3: 17px;
@@ -12,6 +17,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --font-size-6: 21px;
   --font-size-7: 22px;
   --font-size-8: 24px;
+}
+
+.color-primary{
+  color: var(--color-primary)!important;
+}
+
+.color-warning{
+  color: var(--color-warning);
+}
+
+.color-danger {
+  color: var(--color-danger);
 }
 
 /****************************
@@ -418,7 +435,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: 12px;
   color: #fff;
   text-align: center;
-  background: #3F51B5;
+  background: var(--color-primary);
 }
 
 .btn-action-xs{
@@ -454,3 +471,44 @@ input[type=number] {
 .cursor-pointer{
   cursor: pointer;
 }
+
+.close-button {
+  float: right;
+  top: -16px;
+  right: -16px;
+}
+
+.close-icon {
+  -webkit-transition: 1s ease-in-out;
+  transition: 1s ease-in-out;
+  color: var(--color-primary);
+  font-size: 2rem !important;
+  padding: 2px;
+}
+
+.close-icon:hover {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: var(--color-primary) #ffffff;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+  }

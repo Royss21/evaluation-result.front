@@ -4,13 +4,12 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 
 import { ConstantsGeneral } from '@shared/constants';
 import { CustomValidations } from '@shared/helpers/custom-validations';
+import { IHierarchy } from '@modules/hierarchy/interfaces/hierarchy.interface';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { WeightPerComponentHelper } from '@modules/weight-per-component/helpers/weight-per-component.helper';
 import { WeightPerComponentService } from '@core/services/weight-per-component/weight-per-component.service';
-import { IWeightPerComponent } from '@modules/weight-per-component/interfaces/weight-per-component.interface';
 import { WeightPerComponentBuilderService } from '@modules/weight-per-component/service/weight-per-component-builder.service';
-import { IHierarchy, IHierarchyComponents } from '@modules/hierarchy/interfaces/hierarchy.interface';
 @Component({
   selector: 'app-weight-per-component-modal',
   templateUrl: './weight-per-component-modal.component.html',
@@ -62,19 +61,19 @@ export class WeightPerComponentModalComponent {
     for (const item of components) {
       switch (item.componentId) {
         case ConstantsGeneral.components.corporateObjectives:
-          listComponents.push({hierarchyId: this.data.id, componentId: item.componentId, weight: formValues.weightCorporateObjectives / 100});
+          listComponents.push({hierarchyId: this.data.id, componentId: item.componentId, weight: formValues.weightCorporateObjectives / 100, id: item.id});
           break;
         case ConstantsGeneral.components.areaObjectives:
-          listComponents.push({hierarchyId: this.data.id, componentId: item.componentId, weight: formValues.weightAreaObjectives / 100});
+          listComponents.push({hierarchyId: this.data.id, componentId: item.componentId, weight: formValues.weightAreaObjectives / 100, id: item.id});
           break;
         case ConstantsGeneral.components.competencies:
-          listComponents.push({hierarchyId: this.data.id, componentId: item.componentId, weight: formValues.weightCompetencies / 100});
+          listComponents.push({hierarchyId: this.data.id, componentId: item.componentId, weight: formValues.weightCompetencies / 100, id: item.id});
           break;
         default:
           break;
       }
     }
-    this._weightPerComponentService.create(listComponents).subscribe(() => this.showConfirmMessage())
+    this._weightPerComponentService.update(listComponents).subscribe(() => this.showConfirmMessage())
   }
 
   private showConfirmMessage(): void {
@@ -96,7 +95,7 @@ export class WeightPerComponentModalComponent {
 
     CustomValidations.marcarFormGroupTouched(this.weightPerComponentFormGroup);
 
-    if(this.weightPerComponentFormGroup.invalid)
+    if(this.weightPerComponentFormGroup.invalid || this.isGreaterThanAHundred)
       return;
 
     const weightPerComponent = this.weightPerComponentFormGroup.value;

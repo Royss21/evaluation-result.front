@@ -21,14 +21,13 @@ import { PopupChooseComponent } from './components/popup-choose/popup-choose.com
 import { PopupConfirmComponent } from './components/popup-confirm/popup-confirm.component';
 import { CorporateObjectivesComponent } from './modules/corporate-objectives/corporate-objectives.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
     PopupChooseComponent,
     PopupConfirmComponent,
-    CorporateObjectivesComponent
+    CorporateObjectivesComponent,
   ],
   imports: [
     BrowserModule,

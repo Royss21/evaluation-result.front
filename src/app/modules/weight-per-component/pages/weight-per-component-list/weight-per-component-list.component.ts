@@ -74,26 +74,6 @@ export class WeightPerComponentListComponent {
     this.openModal();
   }
 
-  confirmDeleted(id: number): void {
-    const dialogRef = this._dialog.open(PopupChooseComponent, {
-      data: ConstantsGeneral.chooseDelete,
-      autoFocus: false,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) this.delete(id);
-    });
-  }
-
-  private delete(id: number): void{
-    this._weightPerComponentService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
-  }
-
   ngOnDestroy(): void {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();

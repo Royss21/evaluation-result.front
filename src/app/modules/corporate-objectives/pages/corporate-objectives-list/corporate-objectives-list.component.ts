@@ -3,12 +3,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { ConstantsGeneral } from '@shared/constants';
+import { ISubcomponent } from '@shared/interfaces/subcomponent.interface';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
-import { SubcomponentService } from '@core/services/subcomponent/subcomponent.service';
 import { ISubcomponentFilter } from '@shared/interfaces/subcomponent-filter.interface';
+import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
+import { SubcomponentService } from '@core/services/subcomponent/subcomponent.service';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { CorporateObjectivesHelper } from '@modules/corporate-objectives/helpers/corporate-objectives.helper';
-import { ICorporateObjectives } from '@modules/corporate-objectives/interfaces/corporate-objectives.interface';
+import { AssignChargeModalComponent } from '@modules/corporate-objectives/components/assign-charge-modal/assign-charge-modal.component';
 import { CorporateObjectivesModalComponent } from '@modules/corporate-objectives/components/corporate-objectives-modal/corporate-objectives-modal.component';
 
 @Component({
@@ -53,12 +55,15 @@ export class CorporateObjectivesListComponent {
       });
   }
 
-  private openModal(corporateObjectives?: ICorporateObjectives): void {
+  private openModal(typeModal: number, subcomponent?: ISubcomponent): void {
 
-    const modalcorporateObjectives = this._dialog.open(CorporateObjectivesModalComponent, {
-      width: ConstantsGeneral.lgModal,
+    const modal: any = typeModal === 1 ? CorporateObjectivesModalComponent : AssignChargeModalComponent;
+    const widthModal = typeModal === 1 ? ConstantsGeneral.lgModal : ConstantsGeneral.xlModal;
+
+    const modalcorporateObjectives = this._dialog.open(modal, {
+      width: widthModal,
       disableClose: true,
-      data: corporateObjectives
+      data: subcomponent
     });
 
     modalcorporateObjectives.afterClosed()
@@ -68,31 +73,35 @@ export class CorporateObjectivesListComponent {
   }
 
   private delete(id:number): void{
-    // this._corporateObjectivesService
-    //   .delete(id)
-    //   .subscribe(() => {
-    //     this.paginatedBehavior.next(this.paginatedFilterCurrent);
-    //     this._dialog.closeAll();
-    //   });
+    this._subcomponentService
+      .delete(id)
+      .subscribe(() => {
+        this.paginatedBehavior.next(this.paginatedFilterCurrent);
+        this._dialog.closeAll();
+      });
   }
 
-  create(): void{
-    this.openModal();
+  public create(): void{
+    this.openModal( 1);
   }
 
-  update(corporateObjectives: ICorporateObjectives): void{
-    this.openModal(corporateObjectives);
+  public update(subcomponent: ISubcomponent): void{
+    this.openModal(1, subcomponent );
   }
 
-  confirmDeleted(id: number): void {
-    // const dialogRef = this._dialog.open(PopupChooseComponent, {
-    //   data: ConstantsGeneral.chooseDelete,
-    //   autoFocus: false,
-    // });
+  public assign(subcomponent: ISubcomponent): void {
+    this.openModal(2, subcomponent);
+  }
 
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) this.delete(id);
-    // });
+  public confirmDeleted(id: number): void {
+    const dialogRef = this._dialog.open(PopupChooseComponent, {
+      data: ConstantsGeneral.chooseDelete,
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) this.delete(id);
+    });
   }
 
   ngOnDestroy(): void {
