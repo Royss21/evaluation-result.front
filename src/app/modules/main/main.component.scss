@@ -10,7 +10,7 @@
 ::ng-deep {
 
   .mat-sidenav-inner-container {
-    overflow: auto;
+    overflow: hidden;
 
     &::-webkit-scrollbar {
       width: 0px;
@@ -35,11 +35,11 @@
 }
 
 mat-sidenav {
-  width: 200px ;
+  width: 220px;
   border: 0;
   visibility: visible !important;
   background: #3F51B5;
-  margin: 10px;
+  margin: 5px;
   border-radius: 4px;
 
   @media (min-width: 768px) {
@@ -48,11 +48,11 @@ mat-sidenav {
   @media (max-width: 767px) {
     width: 80%;
   }
-  
+
   &.onlyIcons {
     visibility: visible !important;
     box-shadow: initial !important;
-    transform: translate3d(-71%, 0, 0) !important;
+    transform: translate3d(-85%, 0, 0) !important;
   }
 }
 
@@ -65,9 +65,9 @@ mat-sidenav-content {
   padding: 10px 0;
   margin-left: 220px !important;
   margin-right: 10px !important;
-  
+
   &.sideBarIcon {
-    margin-left: 80px !important;
+    margin-left: 50px !important;
   }
 
   @media (max-width: 767px) {
@@ -78,7 +78,7 @@ mat-sidenav-content {
 
   .p-card{
     padding: 3rem !important;
-  
+
     @media (max-width: 767px) {
       padding: 0.5rem !important;
     }

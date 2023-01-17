@@ -27,7 +27,7 @@
     margin-left: 18px;
     color: white
   }
-  
+
 }
 
 .list-item-active {
@@ -60,3 +60,99 @@
 }
 
 
+.sidebar {
+  transition: all 0.3s ease-in-out;
+  background: var(--primary-color);
+  color: var(--gray-color);
+  position: fixed;
+  top: 64px;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 5;
+}
+.sidebar_list {
+  transition: all 0.3s ease-in-out;
+  padding: 1rem 1rem 1rem 1.7rem;
+  width: 210px;
+  background: var(--primary-color);
+  color: var(--gray-color);
+  ul {
+    transition: all 0.3s ease-in-out;
+    list-style: none;
+    padding: 0;
+    li {
+      margin: 1rem 0;
+      cursor: pointer;
+      &:hover {
+        color: #ffffff;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .sub-items {
+      transition: all 0.3s ease-in-out;
+      text-decoration: none;
+      color: var(--gray-color);
+      p {
+        margin-left: 3rem;
+        overflow-wrap: break-all !important;
+        cursor: pointer;
+        &:hover {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+}
+
+.divider {
+  background-color: #ffffff !important;
+}
+
+.isActive {
+  background: #ffffff;
+  color: var(--color-primary);
+  padding: 3px;
+  font-weight: 700;
+  border-radius: 5px;
+
+  :hover {
+    background: #ffffff;
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+}
+
+.hide-i-arrow {
+  visibility: hidden;
+}
+
+.show-i-arrow {
+  visibility: visible;
+}
+
+.hide-card {
+  display: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.show-card {
+  display: block;
+  transition: all 0.3s ease-in-out;
+}
+
+
+
+.resp-bk{
+  width: auto;
+  overflow-wrap: break-word !important;
+  @media screen and (max-width:991px) {
+    width: 0 !important ;
+
+  }
+}

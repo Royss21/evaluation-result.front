@@ -1,4 +1,24 @@
-<mat-nav-list class="navigation-list">
+<section class="sidebar" [ngClass]="responsivew ? '' : 'resp-bk' ">
+  <div class="sidebar_list">
+    <ul *ngFor="let item of options; let i = index">
+      <li (click)="goToPage(item.link, item.subCategories, i)" [ngClass]="getIndex == i ? 'isActive' : ''">
+        <a>
+          <mat-icon>{{item.icon}}</mat-icon>
+          <p class="mb-0 ms-3" [hidden]="!visibleSidebar">{{item.name}}</p>
+          <mat-icon *ngIf="item.subCategories.length" (click)="toggleOption(i)" >arrow_drop_down</mat-icon>
+        </a>
+      </li>
+      <mat-divider *ngIf="!(getIndex == i)" class="divider"></mat-divider>
+      <div *ngFor="let sub of item.subCategories" [ngClass]="getIndex == i ? 'show-card' : 'hide-card'">
+        <a class="sub-items"  (click)="goToSubPage(item.link, sub)">
+          <p>{{sub.name}}</p>
+        </a>
+      </div>
+    </ul>
+  </div>
+</section>
+
+<!-- <mat-nav-list class="navigation-list">
 
   <mat-list-item
     routerLinkActive="list-item-active"
@@ -16,13 +36,13 @@
     <span class="navigation-title">Evaluación</span>
   </mat-list-item>
 
-  <!-- <mat-list-item
+  <mat-list-item
       routerLinkActive="list-item-active"
       [routerLink]="'/maintenance'"
       [routerLinkActiveOptions]="{ exact: true}">
       <mat-icon>arrow_drop_down</mat-icon>
       <span class="navigation-title">Mantenimiento</span>
-  </mat-list-item> -->
+  </mat-list-item>
 
   <mat-list-item
       routerLinkActive="list-item-active"
@@ -48,7 +68,7 @@
 
 </mat-nav-list>
 
-<!-- <div class="userContainer">
+<div class="userContainer">
   <div class="userOptionsContainer">
     <div class="maskPhoto">
       <img src="assets/icons/24_home-alt.svguser-img.svg" alt="" />
@@ -57,5 +77,5 @@
   <div class="userInformationBox">
     <span>asdsadsasdassasasa</span>
   </div>
-</div>
- -->
+</div> -->
+
