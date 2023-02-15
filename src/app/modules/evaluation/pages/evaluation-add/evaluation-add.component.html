@@ -227,7 +227,14 @@
                 fxLayout.xl="column"
                 fxLayout.xs="column"
               >
-                <div class="mb-3"><span class="fs-8 fw-bolder">Etapas de la evaluación</span></div>
+                <div class="mb-3">
+                  <span class="fs-8 fw-bolder">Etapas de la evaluación</span>
+                  <p class="fs-8 fw-lighter">
+                    Se recomienda colocar las fechas de estas etapas una vez
+                    culminado la configuracion de fechas de los componentes
+                    seleccionados en la evaluación
+                  </p>
+                </div>
                 <mat-accordion formArrayName="evaluationComponentStages" multi #accordionEvaluation="matAccordion">
                   <ng-container *ngFor="let stage of evaluationComponentStages.controls; let i = index">
                     <mat-expansion-panel [formGroupName]="i" *ngIf=" stagesEvaluation.includes(stage.value.stageId)  ">
@@ -263,7 +270,7 @@
                               <input
                                 matInput
                                 formControlName="startDate"
-                                [min]="minDateComponentsEvaluation"
+                                [min]="(stage.value.stageId == 4) ?startDateStageApproval : endDateMax"
                                 [max]="maxDateComponentsEvaluation"
                                 [matDatepicker]="dpEvaluationStageStartDate"
                               >
@@ -272,6 +279,27 @@
                                 matSuffix
                               ></mat-datepicker-toggle>
                               <mat-datepicker #dpEvaluationStageStartDate></mat-datepicker>
+
+                              <mat-error *ngIf="stageFeedback.get('startDate')?.hasError('required') && stage.value.stageId == 3">
+                                La fecha inicia es <strong>requerido</strong>.
+                              </mat-error>
+
+                              <mat-error *ngIf="stageFeedback.get('startDate')?.hasError('matDatepickerMax') && stage.value.stageId == 3">
+                                La fecha inicia debe ser <strong>mayor a la fecha termino de la evaluación</strong>.
+                              </mat-error>
+
+                              <mat-error *ngIf="stageFeedback.get('startDate')?.hasError('matDatepickerMin') && stage.value.stageId == 3">
+                                La fecha inicia debe ser <strong>mayor a la fecha termino mayor de los componente</strong>.
+                              </mat-error>
+
+                              <mat-error *ngIf="stageApproval.get('startDate')?.hasError('required') && stage.value.stageId == 4">
+                                La fecha inicia es <strong>requerido</strong>.
+                              </mat-error>
+
+                              <mat-error *ngIf="stageApproval.get('startDate')?.hasError('matDatepickerMin') && stage.value.stageId == 4">
+                                La fecha inicia debe ser <strong>mayor a la fecha termina de la etapa de feedback</strong>.
+                              </mat-error>
+
                             </mat-form-field>
                           </div>
                           <div
@@ -288,6 +316,7 @@
                               <input
                                 matInput
                                 formControlName="endDate"
+
                                 [min]="minDateComponentsEvaluation"
                                 [max]="maxDateComponentsEvaluation"
                                 [matDatepicker]="dpEvaluationStageEndDate"
@@ -297,6 +326,21 @@
                                 [for]="dpEvaluationStageEndDate">
                               </mat-datepicker-toggle>
                               <mat-datepicker #dpEvaluationStageEndDate></mat-datepicker>
+
+                              <mat-error *ngIf="stageFeedback.get('endDate')?.hasError('required') && stage.value.stageId == 3">
+                                La fecha termina es <strong>requerido</strong>.
+                              </mat-error>
+                              <mat-error *ngIf="stageFeedback.get('endDate')?.hasError('invalidDate') && stage.value.stageId == 3">
+                                La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
+                              </mat-error>
+
+                              <mat-error *ngIf="stageApproval.get('endDate')?.hasError('required') && stage.value.stageId == 4">
+                                La fecha termina es <strong>requerido</strong>.
+                              </mat-error>
+                              <mat-error *ngIf="stageApproval.get('endDate')?.hasError('invalidDate') && stage.value.stageId == 4">
+                                La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
+                              </mat-error>
+
                             </mat-form-field>
                           </div>
                         </div>
@@ -356,6 +400,14 @@
                             matSuffix
                           ></mat-datepicker-toggle>
                           <mat-datepicker #dpCorpGoalsStartDate></mat-datepicker>
+
+                          <mat-error *ngIf="corpGoal.get('startDate')?.hasError('required') && component.value.componentId == 1">
+                            La fecha termina es <strong>requerido</strong>.
+                          </mat-error>
+                          <mat-error *ngIf="areaGoal.get('startDate')?.hasError('required') && component.value.componentId == 2">
+                            La fecha termina es <strong>requerido</strong>.
+                          </mat-error>
+
                         </mat-form-field>
                       </div>
                       <div
@@ -378,6 +430,21 @@
                             [for]="dpCorpGoalsEndDate">
                           </mat-datepicker-toggle>
                           <mat-datepicker #dpCorpGoalsEndDate></mat-datepicker>
+
+                          <mat-error *ngIf="corpGoal.get('endDate')?.hasError('required') && component.value.componentId == 1">
+                            La fecha termina es <strong>requerido</strong>.
+                          </mat-error>
+                          <mat-error *ngIf="corpGoal.get('endDate')?.hasError('invalidDate') && component.value.componentId == 1">
+                            La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
+                          </mat-error>
+
+                          <mat-error *ngIf="areaGoal.get('endDate')?.hasError('required') && component.value.componentId == 2">
+                            La fecha termina es <strong>requerido</strong>.
+                          </mat-error>
+                          <mat-error *ngIf="areaGoal.get('endDate')?.hasError('invalidDate') && component.value.componentId == 2">
+                            La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
+                          </mat-error>
+
                         </mat-form-field>
                       </div>
                     </div>
@@ -429,7 +496,7 @@
                           <input
                             matInput
                             formControlName="startDate"
-                            [min]="minDateComponentsEvaluation"
+                            [min]="(stage.value.stageId == 2) ?startDateStageCalibration : minDateComponentsEvaluation"
                             [max]="maxDateComponentsEvaluation"
                             [matDatepicker]="dpEvaluationStageStartDate"
                           >
@@ -438,6 +505,19 @@
                             matSuffix
                           ></mat-datepicker-toggle>
                           <mat-datepicker #dpEvaluationStageStartDate></mat-datepicker>
+
+                          <mat-error *ngIf="stageEvaluation.get('startDate')?.hasError('required') && stage.value.stageId == 1">
+                            La fecha inicia es <strong>requerido</strong>.
+                          </mat-error>
+
+                          <mat-error *ngIf="stageCalibration.get('startDate')?.hasError('required') && stage.value.stageId == 2">
+                            La fecha inicia es <strong>requerido</strong>.
+                          </mat-error>
+
+                          <mat-error *ngIf="stageCalibration.get('startDate')?.hasError('matDatepickerMin') && stage.value.stageId == 2">
+                            La fecha inicia debe ser <strong>mayor a la fecha termina de la etapa de evaluación</strong>.
+                          </mat-error>
+
                         </mat-form-field>
                       </div>
                       <div
@@ -463,6 +543,21 @@
                             [for]="dpEvaluationStageEndDate">
                           </mat-datepicker-toggle>
                           <mat-datepicker #dpEvaluationStageEndDate></mat-datepicker>
+
+                          <mat-error *ngIf="stageEvaluation.get('endDate')?.hasError('required') && stage.value.stageId == 1">
+                            La fecha termina es <strong>requerido</strong>.
+                          </mat-error>
+                          <mat-error *ngIf="stageEvaluation.get('endDate')?.hasError('invalidDate') && stage.value.stageId == 1">
+                            La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
+                          </mat-error>
+
+                          <mat-error *ngIf="stageCalibration.get('endDate')?.hasError('required') && stage.value.stageId == 2">
+                            La fecha termina es <strong>requerido</strong>.
+                          </mat-error>
+                          <mat-error *ngIf="stageCalibration.get('endDate')?.hasError('invalidDate') && stage.value.stageId == 2">
+                            La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
+                          </mat-error>
+
                         </mat-form-field>
                       </div>
                     </div>

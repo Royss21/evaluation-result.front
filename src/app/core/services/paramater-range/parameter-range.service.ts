@@ -3,6 +3,7 @@ import { IPaginatedResponse } from '@core/interfaces/paginated-response.interfac
 import { IParameterRangeWithValues } from '@modules/parameter-range/interfaces/parameter-range-with-values.interface';
 import { IParameterRange } from '@modules/parameter-range/interfaces/parameter-range.interface';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
 
 @Injectable({
@@ -11,7 +12,7 @@ import { ApiService } from '../api.service';
 export class ParameterRangeService {
 
   private controller = 'parameter-range';
-  private url = `https://localhost:7253/api/${this.controller}`
+  private _url = `${environment.serverUriApi}/${this.controller}`;
   constructor(
     private _apiService: ApiService
   ) { }
@@ -22,24 +23,24 @@ export class ParameterRangeService {
   }
 
   getAllWithValues(): Observable<IParameterRangeWithValues[]> {
-    return this._apiService.get<IParameterRangeWithValues[]>(`${this.url}/get-all-values`);
+    return this._apiService.get<IParameterRangeWithValues[]>(`${this._url}/get-all-values`);
   }
 
   create(request: IParameterRange): Observable<IParameterRange> {
-    return this._apiService.post<IParameterRange>(`${this.url}`, request);
+    return this._apiService.post<IParameterRange>(`${this._url}`, request);
   }
 
   update(request: IParameterRange): Observable<boolean> {
-    return this._apiService.put<boolean>(`${this.url}`, request);
+    return this._apiService.put<boolean>(`${this._url}`, request);
   }
 
   delete(id: number): Observable<boolean> {
     return this._apiService
-        .delete<boolean>(`${this.url}/${id}`);
+        .delete<boolean>(`${this._url}/${id}`);
   }
 
   getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<IParameterRange>> {
      return this._apiService
-         .get<IPaginatedResponse<IParameterRange>>(`${this.url}/paging`, paginatedFilter);
+         .get<IPaginatedResponse<IParameterRange>>(`${this._url}/paging`, paginatedFilter);
   }
 }

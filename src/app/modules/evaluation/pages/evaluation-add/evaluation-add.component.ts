@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
-import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { IPeriod } from '@modules/period/interfaces/period.interface';
@@ -11,8 +11,9 @@ import { PopupChooseComponent } from '@components/popup-choose/popup-choose.comp
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { EvaluationBuilderService } from '@modules/evaluation/services/evaluation-builder.service';
 import { Location } from '@angular/common';
-import { IEvaluationCreate } from '@modules/evaluation/interfaces/evaluation-create.interface';
+import { IEvaluationComponent, IEvaluationCreate } from '@modules/evaluation/interfaces/evaluation-create.interface';
 import { EvaluationService } from '@core/services/evaluation/evaluation.service';
+import { PeriodService } from '@core/services/period/period.service';
 
 @Component({
   selector: 'app-evaluation-add',
@@ -36,32 +37,44 @@ export class EvaluationAddComponent {
   periodValues: IPeriod;
   minDateEvaluation: Date;
   maxDateEvaluation: Date;
-  minDateComponentsEvaluation: Date
-  maxDateComponentsEvaluation: Date
+
+  minDateComponentsEvaluation: Date;
+  maxDateComponentsEvaluation: Date;
+  startDatePeriod: Date;
+  endDatePeriod: Date;
+  periodId: number;
+
+  startDateStageCalibration: Date;
+  startDateStageApproval: Date;
+  disableDate: boolean = false;
 
   constructor(
     private _router: Router,
     private _dialog: MatDialog,
     private _evaluationBuilderService: EvaluationBuilderService,
     private _location: Location,
-    private _evaluationService: EvaluationService
+    private _evaluationService: EvaluationService,
+    private _periodService: PeriodService,
   ) {
     this.evaluationFormGroup = this._evaluationBuilderService.buildEvaluationForm();
-    // this.corpGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals();
-    // this.areaGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals();
-    // this.competencesFormGroup = this._evaluationBuilderService.builderCompetences();
-    this.routeValidate();
+    this._getCurrentDatesPeriod();
     this._onChangesValuesForm();
   }
 
-  private routeValidate(): void {
-    if (this._router.getCurrentNavigation()?.extras.state) {
-      this.periodValues = this._router.getCurrentNavigation()?.extras?.state as IPeriod;
-      this.evaluationFormGroup.get('periodId')?.setValue(this.periodValues?.id);
-    } else
-      this._goBack();
+  private _getCurrentDatesPeriod(): void {
+      this._periodService.getCurrentDatePeriod()
+        .subscribe(period => {
+          this.periodId = period.id;
+          this.startDatePeriod = period?.startDate;
+          this.endDatePeriod = period?.endDate;
+          this.minDateEvaluation = this._toDate(period?.startDate);
+          this.maxDateEvaluation = this._toDate(period?.endDate);
+        });
   }
 
+  get controlsEvaluationForm(): { [key: string]: AbstractControl } {
+    return this.evaluationFormGroup.controls;
+  }
 
   get evaluationComponents() : FormArray {
     return this.evaluationFormGroup.get("evaluationComponents") as FormArray
@@ -71,8 +84,47 @@ export class EvaluationAddComponent {
     return this.evaluationFormGroup.get("evaluationComponentStages") as FormArray
   }
 
-  get one(): FormGroup{
-    return this.evaluationComponents.controls[0] as FormGroup;
+  get corpGoal() : FormGroup {
+    return this.evaluationComponents.controls[0] as FormGroup
+  }
+
+  get areaGoal() : FormGroup {
+    return this.evaluationComponents.controls[1] as FormGroup
+  }
+
+  get competencesGoal() : FormGroup {
+    return this.evaluationComponents.controls[2] as FormGroup
+  }
+
+  get stageFeedback() : FormGroup {
+    return this.evaluationComponentStages.controls[0] as FormGroup
+  }
+
+  get stageApproval() : FormGroup {
+    return this.evaluationComponentStages.controls[1] as FormGroup
+  }
+
+  get stageEvaluation() : FormGroup {
+    return this.evaluationComponentStages.controls[2] as FormGroup
+  }
+
+  get stageCalibration() : FormGroup {
+    return this.evaluationComponentStages.controls[3] as FormGroup
+  }
+
+  get endDateMax(){
+    var endDate =  [
+      this.corpGoal.get('endDate')?.value,
+      this.areaGoal.get('endDate')?.value,
+      this.stageCalibration.get('endDate')?.value,
+      this._toDate(this.startDatePeriod)
+    ].reduce((a, b) => {
+      return a > b ? a : b;
+    });
+
+    var ff = new Date(endDate);
+    ff?.setDate(ff.getDate() + 1);
+    return ff;
   }
 
   private _goBack(): void {
@@ -81,22 +133,21 @@ export class EvaluationAddComponent {
 
   private _save(evaluation : IEvaluationCreate){
     this._evaluationService.create(evaluation)
-      .subscribe(data =>{
-        console.log(data);
-        this._goBack();
+      .subscribe(evaluation =>{
+
       })
   }
 
   //TODO: ON CHANGES VALUES
   private _onChangesValuesForm(): void {
-    this.minDateEvaluation = this._toDate(this.periodValues?.startDate);
-    this.maxDateEvaluation = this._toDate(this.periodValues?.endDate);
 
     this.controlsEvaluationForm['startDate'].valueChanges.subscribe(value => {
       if (value) {
         this.minDateComponentsEvaluation = this._toDate(value);
         this._compareDates('evaluation')
       }
+      else
+        this.minDateEvaluation = this.startDatePeriod;
     });
 
     this.controlsEvaluationForm['endDate'].valueChanges.subscribe(value => {
@@ -104,83 +155,269 @@ export class EvaluationAddComponent {
         this.maxDateComponentsEvaluation = this._toDate(value);
         this._compareDates('evaluation')
       }
+      else
+        this.maxDateComponentsEvaluation = this.endDatePeriod;
     });
 
-    // this.controlsEvaluationForm['components'].valueChanges.subscribe(values => {
-    //   this._validateShowForm(values);
-    //   this.controlsCorpGoalsForm['startDate'].valueChanges.subscribe(value => {
-    //     value && this._compareDates('corpGoals')
-    //   });
+    this.evaluationComponents.valueChanges.subscribe(value =>{
+      if(value.some((item: any) => item.checked))
+      {
+        this.stageFeedback.get('startDate')?.enable();
+        this.stageFeedback.get('endDate')?.enable();
+      }
+      else
+      {
+        this.stageFeedback.get('startDate')?.disable();
+        this.stageFeedback.get('endDate')?.disable();
+        this.stageApproval.get('startDate')?.disable();
+        this.stageApproval.get('endDate')?.disable();
+      }
+    });
 
-    //   this.controlsCorpGoalsForm['endDate'].valueChanges.subscribe(value => {
-    //     value && this._compareDates('corpGoals')
-    //   });
+    //VALUE CHANGES CORPORATIVE GOAL
 
-    //   this.controlsAreaGoalsForm['startDate'].valueChanges.subscribe(value => {
-    //     value && this._compareDates('areaGoals')
-    //   });
+    this.corpGoal.get('checked')?.valueChanges.subscribe(value => {
+      if(value)
+      {
+        this.corpGoal.get('startDate')?.addValidators(Validators.required);
+        this.corpGoal.get('endDate')?.addValidators(Validators.required);
+      }
+      else
+      {
+        this.corpGoal.get('startDate')?.clearValidators();
+        this.corpGoal.get('endDate')?.clearValidators();
+        this.corpGoal.get('startDate')?.setValue(null);
+        this.corpGoal.get('endDate')?.setValue(null);
+      }
+    });
 
-    //   this.controlsAreaGoalsForm['endDate'].valueChanges.subscribe(value => {
-    //     value && this._compareDates('areaGoals')
-    //   });
+    this.corpGoal.get('startDate')?.valueChanges.subscribe(value => {
+      if(value)
+        this._compareDates('corpGoals');
+    });
 
-    //   this.controlsCompetencesArr.valueChanges.subscribe(value => {
-    //     value &&  this._compareDates('competences');
-    //   })
-    // });
+    this.corpGoal.get('endDate')?.valueChanges.subscribe(value => {
+      if(value)
+        this._compareDates('corpGoals');
+    });
+
+    //VALUE CHANGES AREA GOAL
+
+    this.areaGoal.get('checked')?.valueChanges.subscribe(value => {
+      if(value)
+      {
+        this.areaGoal.get('startDate')?.addValidators(Validators.required);
+        this.areaGoal.get('endDate')?.addValidators(Validators.required);
+      }
+      else
+      {
+        this.areaGoal.get('startDate')?.clearValidators();
+        this.areaGoal.get('endDate')?.clearValidators();
+        this.areaGoal.get('startDate')?.setValue(null);
+        this.areaGoal.get('endDate')?.setValue(null);
+      }
+    });
+
+
+    this.areaGoal.get('startDate')?.valueChanges.subscribe(value => {
+      if(value)
+        this._compareDates('areaGoals');
+    });
+
+    this.areaGoal.get('endDate')?.valueChanges.subscribe(value => {
+      if(value)
+        this._compareDates('areaGoals');
+    });
+
+
+    //VALUE CHANGES COMPETENCES GOAL
+
+    this.competencesGoal.get('checked')?.valueChanges.subscribe(value => {
+
+      if(value)
+      {
+        this.stageEvaluation.get('startDate')?.addValidators(Validators.required);
+        this.stageEvaluation.get('endDate')?.addValidators(Validators.required);
+
+        this.stageCalibration.get('startDate')?.addValidators(Validators.required);
+        this.stageCalibration.get('endDate')?.addValidators(Validators.required);
+      }
+      else{
+        this.stageEvaluation.get('startDate')?.clearValidators();
+        this.stageEvaluation.get('endDate')?.clearValidators();
+        this.stageEvaluation.get('startDate')?.setValue(null);
+        this.stageEvaluation.get('endDate')?.setValue(null);
+
+        this.stageCalibration.get('startDate')?.clearValidators();
+        this.stageCalibration.get('endDate')?.clearValidators();
+        this.stageCalibration.get('startDate')?.setValue(null);
+        this.stageCalibration.get('endDate')?.setValue(null);
+      }
+    });
+
+    //VALUE CHANGE STAGE APPROVAL
+
+    this.stageApproval.get('startDate')?.disable();
+    this.stageApproval.get('endDate')?.disable();
+
+    this.stageApproval.get('startDate')?.valueChanges.subscribe(value => {
+      if(value)
+        this._compareDates('stageApproval');
+    });
+
+    this.stageApproval.get('endDate')?.valueChanges.subscribe(value => {
+      if(value)
+        this._compareDates('stageApproval');
+    });
+
+    //VALUE CHANGE STAGE FEEDBACK
+
+    this.stageFeedback.get('startDate')?.disable();
+    this.stageFeedback.get('endDate')?.disable();
+
+    this.stageFeedback.get('startDate')?.valueChanges.subscribe(value => {
+      if(value)
+        this._compareDates('stageFeedback');
+    });
+
+    this.stageFeedback.get('endDate')?.valueChanges.subscribe(value => {
+      if(value){
+
+        const startDate = new Date(value);
+        startDate?.setDate(startDate.getDate() + 1);
+
+        this.startDateStageApproval = startDate;
+        this._compareDates('stageFeedback');
+        this.stageApproval.get('startDate')?.enable();
+        this.stageApproval.get('endDate')?.enable();
+      }
+      else{
+        this.stageApproval.get('startDate')?.disable();
+        this.stageApproval.get('endDate')?.disable();
+        this.stageApproval.get('startDate')?.setValue(null);
+        this.stageApproval.get('endDate')?.setValue(null);
+      }
+    });
+
+    //VALUE CHANGE STAGE EVALUATION
+
+    this.stageEvaluation.get('startDate')?.valueChanges.subscribe(value => {
+      if(value)
+        this._compareDates('stageEvaluation');
+    });
+
+    this.stageEvaluation.get('endDate')?.valueChanges.subscribe(value => {
+      if(value){
+
+        const startDate = new Date(value);
+        startDate?.setDate(startDate.getDate() + 1);
+
+        this._compareDates('stageEvaluation');
+        this.startDateStageCalibration = startDate;
+        this.stageCalibration.get('startDate')?.enable();
+        this.stageCalibration.get('endDate')?.enable();
+      }
+      else{
+        this.stageCalibration.get('startDate')?.disable();
+        this.stageCalibration.get('endDate')?.disable();
+        this.stageCalibration.get('startDate')?.setValue(null);
+        this.stageCalibration.get('endDate')?.setValue(null);
+      }
+    });
+
+    //VALUE CHANGE STAGE CALIBRATION
+
+    this.stageCalibration.get('startDate')?.disable();
+    this.stageCalibration.get('endDate')?.disable();
+    this.stageCalibration.get('startDate')?.valueChanges.subscribe(value => {
+      if(value)
+        this._compareDates('stageCalibration');
+    });
+
+    this.stageCalibration.get('endDate')?.valueChanges.subscribe(value => {
+      if(value)
+        this._compareDates('stageCalibration');
+    });
+
   }
 
   private _compareDates(nameForm: string) {
     switch (nameForm) {
       case 'evaluation':
+
         if (this._toDate(this.controlsEvaluationForm['startDate']?.value)?.getTime() >= this._toDate(this.controlsEvaluationForm['endDate']?.value)?.getTime())
           this.controlsEvaluationForm['endDate'].setErrors({'invalidDate': true});
         else
           this.controlsEvaluationForm['endDate'].setErrors(null);
-        break
 
+        break;
       case 'corpGoals':
-        if (this._toDate(this.controlsCorpGoalsForm['startDate']?.value)?.getTime() >= this._toDate(this.controlsCorpGoalsForm['endDate']?.value)?.getTime())
-          this.controlsCorpGoalsForm['endDate'].setErrors({'invalidDate': true});
-        else
-          this.controlsCorpGoalsForm['endDate'].setErrors(null);
-        break
 
-      case 'areaGoals':
-        if (this._toDate(this.controlsAreaGoalsForm['startDate']?.value)?.getTime() >= this._toDate(this.controlsAreaGoalsForm['endDate']?.value)?.getTime())
-          this.controlsAreaGoalsForm['endDate'].setErrors({'invalidDate': true});
+        const startDateCorp = this.corpGoal.get('startDate')?.value;
+        const endDateCorp = this.corpGoal.get('endDate')?.value;
+        if (this._toDate(startDateCorp)?.getTime() >= this._toDate(endDateCorp)?.getTime())
+          this.corpGoal.get('endDate')?.setErrors({'invalidDate': true});
         else
-          this.controlsAreaGoalsForm['endDate'].setErrors(null);
-        break
-      case 'competences':
-        this.controlsCompetencesArr.controls.forEach(comp => {
-          if (this._toDate(comp.get('startDate')?.value)?.getTime() >= this._toDate(comp.get('endDate')?.value)?.getTime()) {
-            comp.get('endDate')?.setErrors({'invalidDate': true});
-          } else
-            comp.get('endDate')?.setErrors(null);
-        });
-        break
+          this.corpGoal.get('endDate')?.setErrors(null);
+
+        break;
+      case 'areaGoals':
+
+        const startDateArea = this.areaGoal.get('startDate')?.value;
+        const endDateArea = this.areaGoal.get('endDate')?.value;
+        if (this._toDate(startDateArea)?.getTime() >= this._toDate(endDateArea)?.getTime())
+          this.areaGoal.get('endDate')?.setErrors({'invalidDate': true});
+        else
+          this.areaGoal.get('endDate')?.setErrors(null);
+
+        break;
+      case 'stageApproval':
+
+        const startDateAproval = this.stageApproval.get('startDate')?.value;
+        const endDateAproval = this.stageApproval.get('endDate')?.value;
+        if (this._toDate(startDateAproval)?.getTime() >= this._toDate(endDateAproval)?.getTime())
+          this.stageApproval.get('endDate')?.setErrors({'invalidDate': true});
+        else
+          this.stageApproval.get('endDate')?.setErrors(null);
+
+        break;
+      case 'stageFeedback':
+
+        const startDateFeedback = this.stageFeedback.get('startDate')?.value;
+        const endDateFeedback = this.stageFeedback.get('endDate')?.value;
+        if (this._toDate(startDateFeedback)?.getTime() >= this._toDate(endDateFeedback)?.getTime())
+          this.stageFeedback.get('endDate')?.setErrors({'invalidDate': true});
+        else
+          this.stageFeedback.get('endDate')?.setErrors(null);
+
+        break;
+
+      case 'stageEvaluation':
+
+        const startDateEvaluation = this.stageEvaluation.get('startDate')?.value;
+        const endDateEvaluation = this.stageEvaluation.get('endDate')?.value;
+        if (this._toDate(startDateEvaluation)?.getTime() >= this._toDate(endDateEvaluation)?.getTime())
+          this.stageEvaluation.get('endDate')?.setErrors({'invalidDate': true});
+        else
+          this.stageEvaluation.get('endDate')?.setErrors(null);
+
+      break;
+
+      case 'stageCalibration':
+
+        const startDateCalibration = this.stageCalibration.get('startDate')?.value;
+        const endDateCalibration = this.stageCalibration.get('endDate')?.value;
+        if (this._toDate(startDateCalibration)?.getTime() >= this._toDate(endDateCalibration)?.getTime())
+          this.stageCalibration.get('endDate')?.setErrors({'invalidDate': true});
+        else
+          this.stageCalibration.get('endDate')?.setErrors(null);
+
+      break;
+
       default:
         break;
     }
   }
-
-  // private _validateShowForm(values: any): void {
-  //   if (values[0]?.checked)
-  //     this.corpGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals(true);
-  //   else
-  //     this.corpGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals();
-
-  //   if (values[1]?.checked)
-  //     this.areaGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals(true);
-  //   else
-  //     this.areaGoalsFormGroup = this._evaluationBuilderService.builderCorpGoals();
-
-  //   if (values[2]?.checked)
-  //     this.competencesFormGroup = this._evaluationBuilderService.builderCompetences(true);
-  //   else
-  //     this.competencesFormGroup = this._evaluationBuilderService.builderCompetences();
-  // }
 
   private _toDate(date: Date | string, numberAdd: number = 0): Date {
     const dateLocal = (typeof date === 'string') ? new Date(date) : date;
@@ -203,18 +440,33 @@ export class EvaluationAddComponent {
   }
 
   confirmSave(): void {
+    console.log(this.endDateMax);
+    console.log(this.evaluationFormGroup);
 
-    console.log(this.evaluationFormGroup.valid);
-    console.log(this.evaluationFormGroup.getRawValue());
+    const evaluationCreate: IEvaluationCreate = { ...this.evaluationFormGroup.getRawValue() } ;
+    evaluationCreate.evaluationComponents = [ ...evaluationCreate.evaluationComponents.filter(ec => ec.checked)];
+    evaluationCreate.periodId = this.periodId;
 
     CustomValidations.marcarFormGroupTouched(this.evaluationFormGroup);
 
+    const dataPopup = { ...ConstantsGeneral.confirmCreatePopup };
+    dataPopup.iconColor = 'color-danger';
+    dataPopup.icon = 'highlight_off'
+
+    if(evaluationCreate.evaluationComponents.length <= 0)
+    {
+      dataPopup.text = 'Debe seleccionar un componente para crear la evaluación';
+      const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
+        data: dataPopup,
+        autoFocus: false
+      });
+
+      dialogRefConfirm.afterClosed().subscribe(() => {});
+      return;
+    }
+
     if(this.evaluationFormGroup.invalid)
       return;
-
-    const evaluationCreate: IEvaluationCreate = { ...this.evaluationFormGroup.getRawValue() } ;
-
-    evaluationCreate.evaluationComponents = [ ...evaluationCreate.evaluationComponents.filter(ec => ec.checked)];
 
     if(!evaluationCreate.evaluationComponents.some(ec => ec.componentId === ConstantsGeneral.components.competencies))
       evaluationCreate.evaluationComponentStages = [ ...evaluationCreate.evaluationComponentStages.filter(s => s.componentId !== ConstantsGeneral.components.competencies)];
@@ -241,93 +493,6 @@ export class EvaluationAddComponent {
       if (result)
         this._save(evaluationCreate);
     });
-    // this.showConfigCorpGoals   && CustomValidations.marcarFormGroupTouched(this.corpGoalsFormGroup);
-    // this.showConfigAreaGoals   && CustomValidations.marcarFormGroupTouched(this.areaGoalsFormGroup);
-    // this.showConfigCompetences && CustomValidations.marcarFormGroupTouched(this.competencesFormGroup);
-
-    // if (this.evaluationFormGroup.invalid || this.corpGoalsFormGroup.invalid
-    //   || this.areaGoalsFormGroup.invalid || this.competencesFormGroup.invalid )
-    // {
-    //   if (this.evaluationFormGroup.invalid)
-    //     this.accordionEvaluation.openAll();
-    //   if (this.showConfigCompetences && this.competencesFormGroup.invalid)
-    //     this.accordionCompetences.openAll();
-
-    //   return;
-    // }
-
-    // const dialogRef = this._dialog.open(PopupChooseComponent, {
-    //   data: ConstantsGeneral.chooseData,
-    //   autoFocus: false,
-    //   restoreFocus: false
-    // });
-
-    // let body = this.periodFormGroup.getRawValue() as IPeriod;
-
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     this._periodService
-    //     .create(body)
-    //     .pipe(takeUntil(this.unsubscribe$))
-    //     .subscribe(() => this.showConfirmMessage());
-    //   }
-    // });
-
-    //console.log("FORM : ",this.evaluationFormGroup)
   }
-
-
-  /********************************
-  ******SHOW CONDITIONAL VIEW******
-  ********************************/
-  public get showConfigCorpGoals(): any {
-    return this.evaluationFormGroup.controls['components'].value[0].checked;
-  }
-
-  public get showConfigAreaGoals(): any {
-    return this.evaluationFormGroup.controls['components'].value[1].checked;
-  }
-
-  public get showConfigCompetences(): any {
-    return this.evaluationFormGroup.controls['components'].value[2].checked;
-  }
-  /********************************
-  ****END SHOW CONDITIONAL VIEW****
-  ********************************/
-
-
-  /********************************
-  **********CONTROL ACCEESS********
-  ********************************/
-  public get controlsEvaluationForm(): { [key: string]: AbstractControl } {
-    return this.evaluationFormGroup.controls;
-  }
-
-  public get controlsCorpGoalsForm(): { [key: string]: AbstractControl } {
-    return this.corpGoalsFormGroup.controls;
-  }
-
-  public get controlsAreaGoalsForm(): { [key: string]: AbstractControl } {
-    return this.areaGoalsFormGroup.controls;
-  }
-
-  public get controlsComponentsArr() {
-    return this.evaluationFormGroup.get('components') as FormArray;
-  }
-
-  public get controlsCompetencesForm(): { [key: string]: AbstractControl } {
-    return this.competencesFormGroup.controls;
-  }
-
-  public get controlsCompetencesArr(): FormArray {
-    return this.competencesFormGroup.get('competences') as FormArray;
-  }
-
-  public get controlsEvaluationStagesArr(): FormArray {
-    return this.evaluationFormGroup.get('stages') as FormArray;
-  }
-  /********************************
-  ********END CONTROL ACCEESS******
-  ********************************/
 
 }

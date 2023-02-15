@@ -6,6 +6,7 @@ import { ILeaderImport } from '@modules/evaluation-leader/interfaces/leader-impo
 import { ILeaderPaged } from '@modules/evaluation-leader/interfaces/leader-paged.interface';
 import { IEvaluationLeader } from '@modules/evaluation-leader/interfaces/leader.interface';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
 
 @Injectable({
@@ -14,7 +15,7 @@ import { ApiService } from '../api.service';
 export class LeaderService {
 
   private controller = 'evaluation-leader';
-  private url = `https://localhost:7253/api/${this.controller}`
+  private _url = `${environment.serverUriApi}/${this.controller}`;
   constructor(
     private _apiService: ApiService
   ) { }
@@ -25,40 +26,40 @@ export class LeaderService {
   }
 
   getAll(): Observable<IEvaluationLeader[]> {
-    return this._apiService.get<IEvaluationLeader[]>(`${this.url}/get-all`);
+    return this._apiService.get<IEvaluationLeader[]>(`${this._url}/get-all`);
   }
 
   getCollaboratorsByLeader(evaluationLiderId: number, parameters: ILeaderCollaboratorFilter): Observable<ILeaderCollaboratorAssigned> {
-    return this._apiService.get<ILeaderCollaboratorAssigned>(`${this.url}/${evaluationLiderId}/collaborators`, parameters);
+    return this._apiService.get<ILeaderCollaboratorAssigned>(`${this._url}/${evaluationLiderId}/collaborators`, parameters);
   }
 
   existsPreviousImport(componentId: number): Observable<boolean> {
-    return this._apiService.get<boolean>(`${this.url}/component/${componentId}/exists-previous-import`);
+    return this._apiService.get<boolean>(`${this._url}/component/${componentId}/exists-previous-import`);
   }
 
   downloadTemplate(componentId: number): Observable<any> {
-    return this._apiService.getBlob(`${this.url}/component/${componentId}/download-template`);
+    return this._apiService.getBlob(`${this._url}/component/${componentId}/download-template`);
   }
 
   create(request: IEvaluationLeader): Observable<IEvaluationLeader> {
-    return this._apiService.post<IEvaluationLeader>(`${this.url}`, request);
+    return this._apiService.post<IEvaluationLeader>(`${this._url}`, request);
   }
 
   importLeader(request: ILeaderImport): Observable<any> {
-    return this._apiService.post(`${this.url}/import-leaders`, request, true)
+    return this._apiService.post(`${this._url}/import-leaders`, request, true)
   }
 
   update(request: IEvaluationLeader): Observable<boolean> {
-    return this._apiService.put<boolean>(`${this.url}`, request);
+    return this._apiService.put<boolean>(`${this._url}`, request);
   }
 
   delete(id: number): Observable<boolean> {
     return this._apiService
-        .delete<boolean>(`${this.url}/${id}`);
+        .delete<boolean>(`${this._url}/${id}`);
   }
 
-  getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<ILeaderPaged>> {    
+  getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<ILeaderPaged>> {
      return this._apiService
-         .get<IPaginatedResponse<ILeaderPaged>>(`${this.url}/paging`, paginatedFilter);
+         .get<IPaginatedResponse<ILeaderPaged>>(`${this._url}/paging`, paginatedFilter);
   }
 }

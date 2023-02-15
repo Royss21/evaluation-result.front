@@ -20,6 +20,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { PopupChooseComponent } from './components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from './components/popup-confirm/popup-confirm.component';
 import { CorporateObjectivesComponent } from './modules/corporate-objectives/corporate-objectives.component';
+import { HttpErrorInterceptor } from '@core/interceptors/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -53,11 +54,11 @@ import { CorporateObjectivesComponent } from './modules/corporate-objectives/cor
     //   useClass: AuthorizationInterceptor,
     //   multi: true,
     // },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: HttpErrorInterceptor,
-    //   multi: true
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    },
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
       useValue: {
