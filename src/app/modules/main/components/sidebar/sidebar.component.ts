@@ -58,7 +58,7 @@ export class SidebarComponent {
         },
         {
           link: 'weight-per-component',
-          name: 'Pesos por Componente'
+          name: 'Pesos por Jerarquía'
         },
       ]
     },

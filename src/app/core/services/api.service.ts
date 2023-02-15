@@ -9,12 +9,9 @@ import { IResponse } from '../interfaces/response.interface';
 })
 export class ApiService {
 
-  constructor(
-    private _httpClient: HttpClient
-    ) { }
+  constructor(private _httpClient: HttpClient) { }
 
   get<T>(url: string, parameters?: any): Observable<T> {
-
     return this._httpClient.get<IResponse<T>>(`${url}`, {
           params: parameters
         })
@@ -25,7 +22,6 @@ export class ApiService {
   }
 
   getBlob(url: string, parametros?: any): Observable<Blob> {
-
     return this._httpClient.get<Blob>(`${url}`, {
             params: parametros,
             responseType: 'blob' as 'json'
@@ -34,9 +30,7 @@ export class ApiService {
   }
 
   post<T>(url: string, body: any, esFormData = false): Observable<T> {
-
     const formData = new FormData();
-
     if(esFormData)
       Object.keys(body).forEach(key => formData.append(key, body[key]))
 
