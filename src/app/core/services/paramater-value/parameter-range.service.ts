@@ -3,6 +3,7 @@ import { IPaginatedResponse } from '@core/interfaces/paginated-response.interfac
 import { IParameterValueFilter } from '@modules/parameter-range/helpers/parameter-value-filter.interface';
 import { IParameterValue } from '@modules/parameter-range/interfaces/parameter-value.interface';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
 
 @Injectable({
@@ -11,7 +12,7 @@ import { ApiService } from '../api.service';
 export class ParameterValueService {
 
   private controller = 'parameter-value';
-  private url = `https://localhost:7253/api/${this.controller}`
+  private _url = `${environment.serverUriApi}/${this.controller}`;
   constructor(
     private _apiService: ApiService
   ) { }
@@ -27,20 +28,20 @@ export class ParameterValueService {
   }
 
   create(request: IParameterValue): Observable<IParameterValue> {
-    return this._apiService.post<IParameterValue>(`${this.url}`, request);
+    return this._apiService.post<IParameterValue>(`${this._url}`, request);
   }
 
   update(request: IParameterValue): Observable<boolean> {
-    return this._apiService.put<boolean>(`${this.url}`, request);
+    return this._apiService.put<boolean>(`${this._url}`, request);
   }
 
   delete(id: number): Observable<boolean> {
     return this._apiService
-        .delete<boolean>(`${this.url}/${id}`);
+        .delete<boolean>(`${this._url}/${id}`);
   }
 
-  getPaginated(paginatedFilter: IParameterValueFilter): Observable<IPaginatedResponse<IParameterValue>> {    
+  getPaginated(paginatedFilter: IParameterValueFilter): Observable<IPaginatedResponse<IParameterValue>> {
      return this._apiService
-         .get<IPaginatedResponse<IParameterValue>>(`${this.url}/paging`, paginatedFilter);
+         .get<IPaginatedResponse<IParameterValue>>(`${this._url}/paging`, paginatedFilter);
   }
 }

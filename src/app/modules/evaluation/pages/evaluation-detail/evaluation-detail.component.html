@@ -29,9 +29,7 @@
     fxFlex.sm="100%"
     fxFlex.xs="100%"
   >
-    <mat-card
-      *ngIf="evaluationInProgress?.evaluation?.hasComponentCompetencies"
-    >
+    <mat-card>
       <mat-card-content
         class="my-5"
         fxLayout="column"
@@ -61,7 +59,7 @@
     fxFlex.sm="100%"
     fxFlex.xs="100%"
   >
-    <mat-card *ngIf="evaluationInProgress?.evaluation?.hasComponentCompetencies">
+    <mat-card *ngIf="evaluationInProgress?.evaluation?.hasComponentCompetencies || evaluationInProgress?.evaluation?.hasComponentAreaObjectives">
       <mat-card-content
         class="my-5"
         fxLayout="column"
