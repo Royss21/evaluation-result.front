@@ -24,6 +24,11 @@ export class EvaluationService {
     return this._apiService.get<IEvaluationDetail>(`${this._url}/${id}/detail`);
   }
 
+
+  getEnabledComponents(id: string): Observable<IEvaluation> {
+    return this._apiService.get<IEvaluation>(`${this._url}/${id}/enabled-components`);
+  }
+
   getAllDetail(): Observable<IEvaluationDetail[]> {
     return this._apiService.get<IEvaluationDetail[]>(`${this._url}/all-detail`);
   }

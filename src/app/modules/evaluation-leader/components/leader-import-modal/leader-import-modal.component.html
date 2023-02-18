@@ -27,6 +27,7 @@
               type="button"
               class="mb-2"
               (click)="downloadTemplate(competenciesId)"
+              *ngIf="hasComponentCompentences"
             >
               <mat-icon>download</mat-icon>
               Lider de competencias
@@ -39,6 +40,7 @@
             type="button"
             class="mb-2"
             (click)="downloadTemplate(areaObjetivesId)"
+            *ngIf="hasComponentAreaObjectives"
           >
             <mat-icon>download</mat-icon>
             Lider de areas
@@ -70,8 +72,8 @@
           class="p-1 pb-0 pt-0"
         >
           <mat-radio-group aria-label="Seleccione una opcion" formControlName="typeImportLeaders">
-            <mat-radio-button [value]="1" (change)="changeTypeImport(1)">Lideres de competencias</mat-radio-button>
-            <mat-radio-button [value]="0" (change)="changeTypeImport(0)">Lideres de areas</mat-radio-button>
+            <mat-radio-button [value]="1" (change)="changeTypeImport(1)" *ngIf="hasComponentCompentences">Lideres de competencias</mat-radio-button>
+            <mat-radio-button [value]="0" (change)="changeTypeImport(0)" *ngIf="hasComponentAreaObjectives">Lideres de areas</mat-radio-button>
           </mat-radio-group>
         </div>
 

@@ -1,11 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { LeaderService } from '@core/services/evaluation-leader/leader.service';
+import { EvaluationService } from '@core/services/evaluation/evaluation.service';
 import { LeaderText } from '@modules/evaluation-leader/helpers/leader.helper';
 import { ILeaderImport } from '@modules/evaluation-leader/interfaces/leader-import.interface';
 import { ConstantsGeneral } from '@shared/constants';
+import { TypeImportLeader } from '@shared/constants/enums-general';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 import { downloadFile } from '@shared/helpers/function';
 import { LeaderImportModalBuilderService } from './leader-import-modal-builder.service';
@@ -20,10 +23,14 @@ export class LeaderImportModalComponent implements OnInit {
   leaderImportFormGroup: FormGroup;
   modalTitle:string = '';
   hasPreviousImport: boolean = false;
+  hasComponentAreaObjectives: boolean = false;
+  hasComponentCompentences: boolean = false;
 
   constructor(
     private _leaderImportBuilderService: LeaderImportModalBuilderService,
+    private _route: ActivatedRoute,
     private _leaderService: LeaderService,
+    private _evaluationService: EvaluationService,
     private _modalRef: MatDialogRef<LeaderImportModalComponent>,
     public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public evaluationId: string
@@ -33,15 +40,26 @@ export class LeaderImportModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.existsPreviousImport();
+    this._existsPreviousImport();
+    this._getEnabledComponents();
   }
 
-  private existsPreviousImport(componentId = ConstantsGeneral.components.competencies){
+  private _existsPreviousImport(componentId = ConstantsGeneral.components.competencies){
     this._leaderService.existsPreviousImport(componentId)
       .subscribe(value => this.hasPreviousImport = value);
   }
 
-  private save(leaderImport: ILeaderImport): void {
+  private _getEnabledComponents(){
+    this._evaluationService.getEnabledComponents(this.evaluationId)
+      .subscribe(value => {
+          this.hasComponentAreaObjectives = value.hasComponentAreaObjectives;
+          this.hasComponentCompentences = value.hasComponentCompetencies;
+
+          this.leaderImportFormGroup.get('typeImportLeaders')?.setValue( this.hasComponentCompentences ? TypeImportLeader.competencies : TypeImportLeader.areaObjectives );
+      });
+  }
+
+  private _save(leaderImport: ILeaderImport): void {
     this._leaderService.importLeader(leaderImport).subscribe(f => {
     });
   }
@@ -66,7 +84,7 @@ export class LeaderImportModalComponent implements OnInit {
       ? ConstantsGeneral.components.areaObjectives
       : ConstantsGeneral.components.competencies;
 
-    this.existsPreviousImport(componentId);
+    this._existsPreviousImport(componentId);
   }
 
   confirmSave(){
@@ -91,7 +109,7 @@ export class LeaderImportModalComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result)
-        this.save(leaderImport);
+        this._save(leaderImport);
     });
   }
 
