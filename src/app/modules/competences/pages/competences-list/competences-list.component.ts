@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -9,9 +10,6 @@ import { ISubcomponentFilter } from '@shared/interfaces/subcomponent-filter.inte
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { SubcomponentService } from '@core/services/subcomponent/subcomponent.service';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
-import { CorporateObjectivesHelper } from '@modules/corporate-objectives/helpers/corporate-objectives.helper';
-import { AssignChargeModalComponent } from '@modules/corporate-objectives/components/assign-charge-modal/assign-charge-modal.component';
-import { CorporateObjectivesModalComponent } from '@modules/corporate-objectives/components/corporate-objectives-modal/corporate-objectives-modal.component';
 import { CompetencesHelper } from '@modules/competences/helpers/competences-helper.interface';
 import { CompetencesModalComponent } from '@modules/competences/components/competences-modal/competences-modal.component';
 
@@ -33,6 +31,7 @@ export class CompetencesListComponent {
   competencesPaginatedBehavior: BehaviorSubject<any>;
 
   constructor(
+    private _router: Router,
     public _dialog: MatDialog,
     private _subcomponentService: SubcomponentService,
   ){
@@ -58,13 +57,10 @@ export class CompetencesListComponent {
       });
   }
 
-  private openModal(typeModal: number, subcomponent?: ISubcomponent): void {
+  private openModal(subcomponent?: ISubcomponent): void {
 
-    const modal: any = typeModal === 1 ? CompetencesModalComponent : CompetencesModalComponent;//TODO
-    const widthModal = typeModal === 1 ? ConstantsGeneral.mdModal : ConstantsGeneral.xlModal;
-
-    const modalcorporateObjectives = this._dialog.open(modal, {
-      width: widthModal,
+    const modalcorporateObjectives = this._dialog.open(CompetencesModalComponent, {
+      width: ConstantsGeneral.mdModal,
       disableClose: true,
       data: subcomponent
     });
@@ -85,15 +81,18 @@ export class CompetencesListComponent {
   }
 
   public create(): void{
-    this.openModal( 1);
+    this.openModal();
   }
 
   public update(subcomponent: ISubcomponent): void{
-    this.openModal(1, subcomponent );
+    this.openModal(subcomponent);
   }
 
   public assign(subcomponent: ISubcomponent): void {
-    this.openModal(2, subcomponent);
+    this._router.navigate([
+      `/configuration/competences/behaviours-by-level`,
+      { subcomponent: JSON.stringify(subcomponent) }
+    ]);
   }
 
   public confirmDeleted(id: number): void {

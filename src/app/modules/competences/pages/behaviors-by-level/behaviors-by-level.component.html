@@ -1,0 +1,61 @@
+<form
+  class="p-3"
+  autocomplete="off"
+  [formGroup]="conductFormGroup"
+>
+  <section class="grid-container">
+    <div *ngFor="let item of levelList" class="scroll-levels">
+      <h2>{{ item?.name }}</h2>
+      <div formArrayName="itemsConduct" class="mb-2">
+        <section
+          *ngFor="let conduct of itemsFormFiltered(item.id); let pointIndex=index"
+          fxLayout="column"
+          [formGroupName]="pointIndex"
+        >
+          <div fxLayout="row" fxLayoutAlign="end">
+            <button
+              mat-mini-fab
+              color="primary"
+              type="button"
+              class="btn-action-xs"
+              (click)="save(conduct)"
+            >
+              <mat-icon>save</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="warn"
+              type="button"
+              class="btn-action-xs"
+              (click)="deleteItemConduct(pointIndex, conduct)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <mat-form-field fxFill appearance="outline">
+            <mat-label>Descripción</mat-label>
+              <textarea
+                formControlName="description"
+                matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="3"
+                cdkAutosizeMaxRows="3"
+              ></textarea>
+              <mat-error *ngIf="controlsForm['itemsConduct'].get([pointIndex])?.get('description')?.hasError('required')">
+                Debe ingresar una descripción.
+              </mat-error>
+          </mat-form-field>
+        </section>
+      </div>
+      <button
+        mat-button
+        color="primary"
+        (click)="addItem(item)"
+        class="add-conduct"
+      >
+        Agregar conducta
+      </button>
+    </div>
+  </section>
+</form>

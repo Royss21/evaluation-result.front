@@ -1,0 +1,15 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 20px;
+}
+
+.add-conduct {
+  width: 100%;
+  background-color: #e2eeff;
+}
+
+.scroll-levels {
+  max-height: 500px;
+  overflow-y: scroll;
+}
