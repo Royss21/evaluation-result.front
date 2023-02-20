@@ -8,12 +8,14 @@ import { CompetencesComponent } from './competences.component';
 import { ComponentsModule } from '@components/components.module';
 import { CompetencesListComponent } from './pages/competences-list/competences-list.component';
 import { CompetencesModalComponent } from './components/competences-modal/competences-modal.component';
+import { BehaviorsByLevelComponent } from './pages/behaviors-by-level/behaviors-by-level.component';
 
 @NgModule({
   declarations: [
     CompetencesComponent,
     CompetencesListComponent,
-    CompetencesModalComponent
+    CompetencesModalComponent,
+    BehaviorsByLevelComponent
   ],
   imports: [
     CommonModule,

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { CustomValidations } from '@shared/helpers/custom-validations';
+import { IConductByLevel, IConductBySubcomponent } from '@shared/interfaces/conduct.interface';
 import { ISubcomponent } from '@shared/interfaces/subcomponent.interface';
 
 @Injectable({
@@ -31,6 +32,21 @@ export class CompetencesBuilderService {
         subcomponent?.componentId || ConstantsGeneral.components.competencies,
         [ Validators.required ]
       ]
+    });
+  }
+
+  public buildConductForm(): FormGroup {
+    return this._fb.group({
+      itemsConduct: this._fb.array([])
+    });
+  }
+
+  public buildItemsConductForm(conduct?: IConductBySubcomponent): FormGroup {
+    return this._fb.group({
+      id: [ conduct?.id || null ],
+      levelId: [ conduct?.levelId || null ],
+      description: [ conduct?.description || null, [ Validators.required ] ],
+      subcomponentId: [ conduct?.subcomponentId || null ],
     });
   }
 }
