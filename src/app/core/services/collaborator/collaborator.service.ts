@@ -8,6 +8,7 @@ import { ApiService } from '../api.service';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { ICollaborator, ICollaboratorCreate, ICollaboratorNotInEvaluation } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
+import { IIdentityDocument } from '@modules/collaborator/interfaces/identity-document';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,10 @@ export class CollaboratorService {
 
   create(request: ICollaboratorCreate): Observable<ICollaborator> {
     return this._apiService.post<ICollaborator>(`${this._url}`, request);
+  }
+
+  getAllIdentityDocument(): Observable<IIdentityDocument[]> {
+    return this._apiService.get<IIdentityDocument[]>(`${environment.serverUriApi}/identity-document`);
   }
 
   update(request: ICollaboratorCreate): Observable<boolean> {

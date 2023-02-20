@@ -18,6 +18,7 @@ import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.c
 import { ICollaborator } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
 import data from '../../../../../db/document-type/document-type.json'
 import { MatSelectChange } from '@angular/material/select';
+import { IIdentityDocument } from '@modules/collaborator/interfaces/identity-document';
 
 @Component({
   selector: 'app-collaborator-modal',
@@ -35,7 +36,7 @@ export class CollaboratorModalComponent {
   public chargeList: ICharge[] = [];
   public gerencyList: IGerency[] = [];
 
-  public documenTypeList: any[] = [{"id": 1,"name": "DNI"},{"id": 2,"name": "Carnet de extranjería"},{"id": 3,"name": "Pasaporte"}];
+  public documenTypeList: IIdentityDocument[] = [];
   public maskDocument: any = '';
   public selectedDocumentType: number;
   public maxLengthDocumentType: number = 8;
@@ -53,6 +54,8 @@ export class CollaboratorModalComponent {
     this.collaboratorFormGroup = _collaboratorBuilderService.buildCollaboratorForm(data);
     data && this._setDefaultValues();
     this._getGerencies();
+    this._getIdentityDocument();
+
   }
 
   private _setDefaultValues(): void {
@@ -66,6 +69,12 @@ export class CollaboratorModalComponent {
   private _getGerencies(): void {
     this._gerencyService.getAll().subscribe((gerencies: IGerency[]) => {
       this.gerencyList = gerencies;
+    });
+  }
+
+  private _getIdentityDocument(): void {
+    this._collaboratorService.getAllIdentityDocument().subscribe((identityDocuments: IIdentityDocument[]) => {
+      this.documenTypeList = identityDocuments;
     });
   }
 

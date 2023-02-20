@@ -37,8 +37,8 @@ export class CollaboratorBuilderService {
           Validators.maxLength(200)
         ]
       ],
-      documentTypeId: [
-        collaborator?.documentTypeId || null,
+      identityDocumentId: [
+        collaborator?.identityDocumentId || 1,
         [ Validators.required]
       ],
       documentNumber: [

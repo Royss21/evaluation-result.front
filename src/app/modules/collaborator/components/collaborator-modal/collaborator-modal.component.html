@@ -173,7 +173,7 @@
         >
           <mat-form-field fxFill appearance="outline">
             <mat-label>Tipo documento</mat-label>
-            <mat-select [(value)]="selectedDocumentType" formControlName="documentTypeId">
+            <mat-select [(value)]="selectedDocumentType" formControlName="identityDocumentId">
               <mat-option
                 [value]="document.id"
                 (click)="maxCharacter()"
@@ -182,7 +182,7 @@
                 {{document.name}}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="controlsForm['documentTypeId'].hasError('required')">
+            <mat-error *ngIf="controlsForm['identityDocumentId'].hasError('required')">
               El tipo de documento es <strong>requerido</strong>.
             </mat-error>
           </mat-form-field>
@@ -199,11 +199,10 @@
             <input
               matInput
               type="text"
-              maxlength="200"
               autocomplete="off"
               name="documentNumber"
               formControlName="documentNumber"
-              maxLength="maxLengthDocumentType"
+              [maxLength]="maxLengthDocumentType"
             >
               <mat-error *ngIf="controlsForm['documentNumber'].hasError('required')">
                 El número de documento es <strong>requerido</strong>.

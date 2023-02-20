@@ -16,7 +16,7 @@ export interface ICollaborator {
   gerencyName: string;
   dateAdmission: Date;
   hierarchyName: string;
-  documentTypeId: number;
+  identityDocumentId: number;
   documentNumber: string;
 }
 
