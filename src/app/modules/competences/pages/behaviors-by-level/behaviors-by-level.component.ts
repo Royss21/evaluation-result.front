@@ -12,6 +12,7 @@ import { ILevel } from '@modules/level/interfaces/level.interface';
 import { ISubcomponent } from '@shared/interfaces/subcomponent.interface';
 import { IConductByLevel, IConductBySubcomponent } from '@shared/interfaces/conduct.interface';
 import { CompetencesBuilderService } from '@modules/competences/services/competences-builder.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-behaviors-by-level',
@@ -29,8 +30,8 @@ export class BehaviorsByLevelComponent {
   public conductFormGroup: FormGroup;
 
   constructor(
-    private _fb: FormBuilder,
     private _dialog: MatDialog,
+    private _snackBar: MatSnackBar,
     private _levelService: LevelService,
     private _conductService: ConductService,
     private _activatedRoute: ActivatedRoute,
@@ -86,6 +87,12 @@ export class BehaviorsByLevelComponent {
   }
 
   public deleteItemConduct(pointIndex: number, item: any) {
+
+    if (!item.value.id) {
+      this.itemsForm.removeAt(pointIndex);
+      return;
+    }
+
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseDelete,
       autoFocus: false,
@@ -97,18 +104,20 @@ export class BehaviorsByLevelComponent {
 
   }
 
-  public save(conduct: any): void {
+  public save(pointIndex: number, conduct: any): void {
     const conductValues: IConductBySubcomponent = conduct.value as IConductBySubcomponent;
     if (!conductValues.description?.length || conductValues.description?.length === null)
       return
 
-    if (conductValues.id) {
-      this._conductService.update(conductValues).subscribe(() => {
-        console.log("UPDATED !!");
+    if (!conductValues.id) {
+      this._conductService.create(conductValues).subscribe((conduct: IConductBySubcomponent) => {
+        this.controlsForm['itemsConduct'].get([pointIndex])?.get('id')?.setValue(conduct.id);
+        this.controlsForm['itemsConduct'].get([pointIndex])?.get('subcomponentId')?.setValue(conduct.subcomponentId);
+        this.showConfirmMessage("La conducta se creó correctamente.");
       });
     } else {
-      this._conductService.create(conductValues).subscribe(() => {
-        console.log("CREATED !!");
+      this._conductService.update(conductValues).subscribe(() => {
+        this.showConfirmMessage("La conducta se editó correctamente.");
       });
     }
   }
@@ -118,6 +127,7 @@ export class BehaviorsByLevelComponent {
       .delete(id)
       .subscribe(() => {
         this.itemsForm.removeAt(pointIndex);
+        this.showConfirmMessage("La conducta se eliminó correctamente.");
       });
   }
 
@@ -125,8 +135,12 @@ export class BehaviorsByLevelComponent {
     return this.conductFormGroup.get('itemsConduct') as FormArray;
   }
 
-  itemsFormFiltered(id: number) {
-    return this.itemsForm.controls.filter( x => x.get("levelId")?.value === id);
+  private showConfirmMessage(message: string): void {
+    this._snackBar.open(message,'ok', {
+      duration: 2500,
+      verticalPosition: 'top',
+      panelClass: ['mat-toolbar', 'mat-primary']
+    });
   }
 
   get controlsForm(): { [key: string]: AbstractControl } {
