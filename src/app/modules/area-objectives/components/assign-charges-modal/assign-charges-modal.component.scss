@@ -3,11 +3,11 @@
     color: white;
   }
 
-  .mat-form-field-infix {
+  .table-custom .mat-form-field-infix {
     border: 0px !important;
   }
-  .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-      transform: none !important;
+  .table-custom .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+    transform: none !important;
   }
 
   .mat-dialog-container {
@@ -23,20 +23,19 @@ table thead th {
   color: var(--color-primary);
 }
 
-.mat-form-field{
+.table-custom tbody tr td .form-fiel-custom {
   width: 70px !important;
   height: 10px !important;
 }
 
-
-.mat-cell {
+.table-custom  .mat-cell {
   @media screen and (max-width:768px){
     margin-top: 20px !important;
     padding-right: 0;
   }
 }
 
-.mobile-container-assign {
+.table-custom .mobile-container-assign {
   margin-top: -20px !important;
 
   @media screen and (max-width:1400px){

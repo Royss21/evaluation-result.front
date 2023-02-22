@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
@@ -87,7 +87,7 @@ export class AssignChargesModalComponent implements OnInit {
         data: this.existChargePopPup,
         autoFocus: false
       });
-      return
+      return;
     }
 
     const item: ISubcomponentValue = {
@@ -168,11 +168,11 @@ export class AssignChargesModalComponent implements OnInit {
     });
   }
 
-  closeModal(): void {
+  private closeModal(): void {
     this._modalRef.close();
   }
 
-  confirmSave(pointIndex: number, item: any){
+  public confirmSave(pointIndex: number, item: any) {
 
     const pRelative = item.get('relativeWeight')?.value;
     const pMinimum = item.get('minimunPercentage')?.value;

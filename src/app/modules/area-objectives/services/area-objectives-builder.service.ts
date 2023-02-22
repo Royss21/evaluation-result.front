@@ -47,8 +47,8 @@ export class AreaObjectivesBuilderService {
 
   public buildItemsSubComponentValueForm(subcomponentValue?: ISubcomponentValue, idSubcomponent?: string): FormGroup {
     return this._fb.group({
-      id: [ subcomponentValue?.id || null],
-      subcomponentId: [ idSubcomponent || null],
+      id: [ subcomponentValue?.id || null ],
+      subcomponentId: [ idSubcomponent || null ],
       chargeId: [
         subcomponentValue?.chargeId || null,
         [ Validators.required ]

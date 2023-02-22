@@ -4,7 +4,7 @@
 <h2  mat-dialog-title>{{ modalTitle }}</h2>
 
 <section
-  fxLayout.xs="row wrap"
+  fxLayout.xs="column"
   fxLayout.sm="row wrap"
   fxLayout.md="row wrap"
   fxLayout.lg="row wrap"
@@ -50,7 +50,7 @@
   [formGroup]="assignChargeFormGroup"
 >
   <section class="content-padding-table">
-    <table *ngIf="itemsForm.controls.length > 0" formArrayName="itemSubcomponents">
+    <table class="table-custom" *ngIf="itemsForm.controls.length > 0" formArrayName="itemSubcomponents">
       <thead>
         <tr class="mat-header-row">
           <th class="mat-header-cell fw-bold">Cargo</th>
@@ -74,7 +74,7 @@
             <div class="mobile-container mobile-container-assign">
               <span class="mobile-label">Peso Relativo</span>
               <ng-container class="mobile-content">
-                <mat-form-field appearance="outline">
+                <mat-form-field class="form-fiel-custom" appearance="outline">
                   <input
                     #input1
                     matInput
@@ -94,7 +94,7 @@
             <div class="mobile-container mobile-container-assign">
               <span class="mobile-label">% Mínimo</span>
               <ng-container class="mobile-content">
-                <mat-form-field appearance="outline">
+                <mat-form-field class="form-fiel-custom" appearance="outline">
                   <input
                     #input1
                     matInput
@@ -114,7 +114,7 @@
             <div class="mobile-container mobile-container-assign">
               <span class="mobile-label">% Máximo</span>
               <ng-container class="mobile-content">
-                <mat-form-field appearance="outline">
+                <mat-form-field class="form-fiel-custom" appearance="outline">
                   <input
                     #input1
                     matInput
