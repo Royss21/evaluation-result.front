@@ -50,8 +50,8 @@ export class CorporateObjectivesBuilderService {
 
   public buildItemsSubComponentValueForm(subcomponentValue?: ISubcomponentValue, idSubcomponent?: string): FormGroup {
     return this._fb.group({
-      id: [ idSubcomponent || null],
-      subcomponentId: [subcomponentValue?.id || null],
+      id: [ subcomponentValue?.id || null ],
+      subcomponentId: [ idSubcomponent || null ],
       chargeId: [
         subcomponentValue?.chargeId || null,
         [ Validators.required ]

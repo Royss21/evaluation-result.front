@@ -369,16 +369,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
           display: inline-block;
         }
       }
-
-      .semaforo-absolute{
-        display: none;
-
-        @media screen and (max-width:768px){
-          display: block;
-          position: absolute;
-          right: 0;
-        }
-      }
     }
 
     &.custom-table-indicators{

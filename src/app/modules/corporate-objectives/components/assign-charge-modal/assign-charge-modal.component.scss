@@ -1,0 +1,54 @@
+::ng-deep {
+  .mat-simple-snackbar-action .mat-button-base .mat-button-wrapper {
+    color: white;
+  }
+
+  .table-custom .mat-form-field-infix {
+    border: 0px !important;
+  }
+  .table-custom .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+    transform: none !important;
+  }
+
+  .mat-dialog-container {
+    max-height: 85% !important;
+    overflow-y: scroll !important;
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
+    height: auto;
+  }
+}
+
+table thead th {
+  color: var(--color-primary);
+}
+
+.table-custom tbody tr td .form-fiel-custom {
+  width: 70px !important;
+  height: 10px !important;
+}
+
+.table-custom  .mat-cell {
+  @media screen and (max-width:768px){
+    margin-top: 20px !important;
+    padding-right: 0;
+  }
+}
+
+.table-custom .mobile-container-assign {
+  margin-top: -20px !important;
+
+  @media screen and (max-width:1400px){
+    margin-top: -20px !important;
+  }
+
+  @media screen and (max-width:768px){
+    margin-top: 0px !important;
+    padding-right: 0;
+    .mobile-content{
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
