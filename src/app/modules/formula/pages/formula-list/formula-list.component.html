@@ -59,6 +59,13 @@
             <mat-icon>delete</mat-icon>
           </button>
         </div>
+        <div
+          fxLayout="row"
+          fxLayoutGap="10px"
+          *ngSwitchCase="'formulaReal'"
+        >
+          {{ element[column.columnMatch] | slice:0:20 }}...
+        </div>
         <div *ngSwitchDefault>
           {{ element[column.columnMatch] }}
         </div>

@@ -107,6 +107,7 @@ export class ParameterValueModalComponent {
 
   confirmSave(){
 
+      console.log(this.parameterValueFormGroup)
     CustomValidations.marcarFormGroupTouched(this.parameterValueFormGroup);
 
     if(this.parameterValueFormGroup.invalid)
@@ -114,6 +115,7 @@ export class ParameterValueModalComponent {
 
     const parameterValue: IParameterValue = { ...this.parameterValueFormGroup.getRawValue() } ;
     parameterValue.parameterRangeId = this.data;
+    parameterValue.name = parameterValue.name.trim();
 
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,

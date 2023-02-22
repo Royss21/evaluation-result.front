@@ -33,8 +33,7 @@ export class AreaObjectivesBuilderService {
         [ Validators.required ]
       ],
       componentId: [
-        subcomponent?.componentId || ConstantsGeneral.components.areaObjectives,
-        [ Validators.required ]
+        ConstantsGeneral.components.areaObjectives
       ]
     });
   }

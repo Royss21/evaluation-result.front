@@ -4,5 +4,6 @@ export interface IParameterRangeWithValues{
     id?: string;
     name: string;
     description: string;
+    isInternalConfiguration: boolean;
     parametersValue: IParameterValue[];
 }

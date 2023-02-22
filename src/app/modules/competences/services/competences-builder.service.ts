@@ -29,8 +29,7 @@ export class CompetencesBuilderService {
         [Validators.maxLength(250)]
       ],
       componentId: [
-        subcomponent?.componentId || ConstantsGeneral.components.competencies,
-        [ Validators.required ]
+        ConstantsGeneral.components.competencies
       ]
     });
   }

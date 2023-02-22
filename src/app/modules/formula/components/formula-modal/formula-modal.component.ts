@@ -80,6 +80,46 @@ export class FormulaModalComponent implements OnInit {
     });
   }
 
+  private _returnCommaIntermediate(restoQuery : string) {
+      let contabilizarParentesisEntrada = 0;
+      let contabilizarParentesisSalida = 0;
+      for (let i = 1; i < restoQuery.length; i++) {
+          if (restoQuery.startsWith("SI") || restoQuery.startsWith("Y")) {
+              if (restoQuery[i] === '(')
+                  contabilizarParentesisEntrada++;
+              if (restoQuery[i] === ')')
+                  contabilizarParentesisSalida++;
+              if (contabilizarParentesisSalida >= contabilizarParentesisEntrada)
+                  return i + 1;
+          }
+          else
+              return restoQuery.indexOf(",");
+      }
+
+      return 0;
+  }
+
+  private _replaceConditionals(query :string) {
+      //const { retornarComaIntermedio } = configurar_configuraciones.funciones;
+      let listaCaracteresFuncion = [];
+      let posicionComas = [];
+      for (let i = 0; i < query.length; i++) {
+          listaCaracteresFuncion.push(query[i])
+          if (query[i] === 'Y') {
+              const caracteresFaltantes = query.substring(i + 2, query.length)
+              const indiceRetorno = this._returnCommaIntermediate(caracteresFaltantes)
+              posicionComas.push((i + 2) + (indiceRetorno))
+          }
+      }
+      for (let posicion of posicionComas) {
+          listaCaracteresFuncion[posicion] = " AND "
+      }
+      let dato = listaCaracteresFuncion.join("");
+      dato = dato.replace(/SI/g, "IIF");
+      dato = dato.replace(/Y/g, "");
+      return dato;
+  }
+
   ngOnInit(): void {
     this._parameterRangeService.getAllWithValues()
       .subscribe(data => {
@@ -105,7 +145,9 @@ export class FormulaModalComponent implements OnInit {
 
     this.isCloseAfterSave = isClose;
 
-    const formula: IFormula = { ...this.formulaFormGroup.getRawValue() } ;
+    const formula: IFormula = { ...this.formulaFormGroup.getRawValue() };
+    formula.formulaQuery = this._replaceConditionals(formula.formulaReal);
+
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,

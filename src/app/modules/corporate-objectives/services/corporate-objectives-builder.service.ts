@@ -37,8 +37,7 @@ export class CorporateObjectivesBuilderService {
         [ Validators.required ]
       ],
       componentId: [
-        subcomponent?.componentId || ConstantsGeneral.components.corporateObjectives,
-        [ Validators.required ]
+       ConstantsGeneral.components.corporateObjectives
       ]
     });
   }

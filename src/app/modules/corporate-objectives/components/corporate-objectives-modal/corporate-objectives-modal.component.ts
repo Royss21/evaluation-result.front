@@ -71,12 +71,14 @@ export class CorporateObjectivesModalComponent implements OnInit {
       this.closeModal();
     else
       this.corporateObjectivesFormGroup.reset();
+      this.corporateObjectivesFormGroup = this._corporateObjectivesBuilderService.buildCorporateObjectivesForm();
   }
 
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
+      restoreFocus: false
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -92,6 +94,7 @@ export class CorporateObjectivesModalComponent implements OnInit {
   }
 
   confirmSave(isClose: boolean = true){
+
     CustomValidations.marcarFormGroupTouched(this.corporateObjectivesFormGroup);
 
     if(this.corporateObjectivesFormGroup.invalid)

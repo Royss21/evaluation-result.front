@@ -59,8 +59,10 @@ export class AreaObjectivesModalComponent implements OnInit {
   private closeOrReset(): void{
     if(this.isCloseAfterSave)
       this.closeModal();
-    else
+    else{
       this.areaObjectivesFormGroup.reset();
+      this.areaObjectivesFormGroup = this._areaObjectivesBuilderService.buildAreaObjectivesForm();
+    }
   }
 
   private showConfirmMessage(): void {

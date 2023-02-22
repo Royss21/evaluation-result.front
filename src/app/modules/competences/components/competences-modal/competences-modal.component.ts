@@ -45,8 +45,10 @@ export class CompetencesModalComponent {
   private closeOrReset(): void{
     if(this.isCloseAfterSave)
       this.closeModal();
-    else
+    else{
       this.competencesFormGroup.reset();
+      this.competencesFormGroup = this._competencesBuilderService.buildCompetencesForm();
+    }
   }
 
   private showConfirmMessage(): void {

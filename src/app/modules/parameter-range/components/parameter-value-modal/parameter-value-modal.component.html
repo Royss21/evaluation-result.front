@@ -48,6 +48,12 @@
                     <mat-error *ngIf="controlsForm['name'].hasError('maxlength')">
                         Se ha excedido el límite de caracteres
                     </mat-error>
+                    <mat-error *ngIf="controlsForm['name'].hasError('startLetter')">
+                      El nombre debe <strong> iniciar con @</strong>.
+                    </mat-error>
+                    <mat-error *ngIf="controlsForm['name'].hasError('containSpaces')">
+                      El nombre <strong>no debe contener espacios</strong>.
+                    </mat-error>
                 </mat-form-field>
             </div>
 
@@ -80,39 +86,37 @@
             </div>
         </div>
 
-        <div
-            fxLayout="row"
-        >
+        <div fxLayout="row">
             <div matBadge="4" matBadgeOverlap="false" style="font-size:11px">
                 Nota: Se recomienda iniciar con '@' y usar '-' en vez de 'ESPACIO'
             </div>
         </div>
 
         <div
-            fxLayout.xs="row"
-            fxLayout.sm="row"
-            fxLayout.md="row"
-            fxLayout.lg="row"
-            fxLayout.xl="row"
-            fxLayoutAlign="end center"
-            class="pb-3"
+          fxLayout.xs="row"
+          fxLayout.sm="row"
+          fxLayout.md="row"
+          fxLayout.lg="row"
+          fxLayout.xl="row"
+          fxLayoutAlign="end center"
+          class="pb-3"
         >
             <button
-                mat-mini-fab
-                color="basic"
-                matTooltip="Limpiar"
-                type="button"
-                (click)="clean()"
-                style="margin-right: 10px;"
+              mat-mini-fab
+              color="basic"
+              matTooltip="Limpiar"
+              type="button"
+              (click)="clean()"
+              style="margin-right: 10px;"
             >
                 <mat-icon>brush</mat-icon>
             </button>
             <button
-                mat-mini-fab
-                color="primary"
-                matTooltip="Guardar"
-                type="submit"
-                class="ml-2"
+              mat-mini-fab
+              color="primary"
+              matTooltip="Guardar"
+              type="submit"
+              class="ml-2"
             >
                 <mat-icon>save</mat-icon>
             </button>
@@ -120,11 +124,11 @@
 
 
         <app-table
-            [listColumns]="columnsTable"
-            [behavior]="paginatedBehavior"
-            [paginated]="parameterValuePaginated$"
-            [templateColumnsContent]="columnContent"
-            [showFilterSearch]="false"
+          [listColumns]="columnsTable"
+          [behavior]="paginatedBehavior"
+          [paginated]="parameterValuePaginated$"
+          [templateColumnsContent]="columnContent"
+          [showFilterSearch]="false"
         >
             <ng-template
                 #columnContent
@@ -133,26 +137,26 @@
             >
                 <div [ngSwitch]="column.columnMatch">
                 <div
-                    fxLayout="row"
-                    fxLayoutGap="10px"
-                    *ngSwitchCase="'actions'"
+                  fxLayout="row"
+                  fxLayoutGap="10px"
+                  *ngSwitchCase="'actions'"
                 >
                     <button
-                        mat-mini-fab
-                        color="primary"
-                        type="button"
-                        class="btn-action-xs"
-                        (click)="edit(element)"
+                      mat-mini-fab
+                      color="primary"
+                      type="button"
+                      class="btn-action-xs"
+                      (click)="edit(element)"
                     >
                     <mat-icon>edit</mat-icon>
                     </button>
 
                     <button
-                        mat-mini-fab
-                        color="warn"
-                        type="button"
-                        class="btn-action-xs"
-                        (click)="confirmDeleted(element.id)"
+                      mat-mini-fab
+                      color="warn"
+                      type="button"
+                      class="btn-action-xs"
+                      (click)="confirmDeleted(element.id)"
                     >
                     <mat-icon>delete</mat-icon>
                     </button>

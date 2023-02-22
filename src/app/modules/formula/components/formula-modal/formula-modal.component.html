@@ -102,7 +102,7 @@
                                 *ngFor="let value of parameter.parametersValue"
                                 (click)="copyNameValue(value.name)"
                             >
-                                {{ value.name }} &nbsp; = {{value.value}}
+                                {{ value.name }} &nbsp; {{ (parameter.isInternalConfiguration) ? '' : ' = ' + value.value}}
                                 <mat-icon matChipRemove>file_copy</mat-icon>
                             </mat-chip>
                         </mat-chip-list>

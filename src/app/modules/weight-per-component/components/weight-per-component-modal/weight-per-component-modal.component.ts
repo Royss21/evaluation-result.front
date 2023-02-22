@@ -73,6 +73,8 @@ export class WeightPerComponentModalComponent {
           break;
       }
     }
+
+    console.log(listComponents)
     this._weightPerComponentService.update(listComponents).subscribe(() => this.showConfirmMessage())
   }
 
