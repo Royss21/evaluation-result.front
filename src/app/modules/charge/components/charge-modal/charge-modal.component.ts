@@ -31,12 +31,12 @@ export class ChargeModalComponent {
   public hierarchyList: IHierarchy[] = [];
 
   constructor(
+    public _dialog: MatDialog,
     private _areaService: AreaService,
     private _chargeService: ChargeService,
     private _hierarchyService: HierarchyService,
     private _chargeBuilderService: ChargeBuilderService,
     private _modalRef: MatDialogRef<ChargeModalComponent>,
-    public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: ICharge
   ) {
     this.chargeFormGroup = _chargeBuilderService.buildChargeForm(data);

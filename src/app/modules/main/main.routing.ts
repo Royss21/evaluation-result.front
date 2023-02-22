@@ -30,11 +30,14 @@ export const roots: Routes = [
         path:'maintenance',
         loadChildren: () => import('../maintenance/maintenance.module').then( m => m.MaintenanceModule )
       },
-
-      // {
-      //   path:'security',
-      //   loadChildren: () => import('../seguridad/seguridad.module').then( m => m.SeguridadModule )
-      // },
+      {
+        path:'security',
+        loadChildren: () => import('../security/security.module').then( m => m.SecurityModule )
+      },
+      {
+        path:'reports',
+        loadChildren: () => import('../reports/reports.module').then( m => m.ReportsModule )
+      },
       {
         path:'',
         redirectTo:'',

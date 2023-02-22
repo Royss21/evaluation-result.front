@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ChargeComponent } from '@modules/charge/charge.component';
-import { ChargeListComponent } from '@modules/charge/pages/charge-list/charge-list.component';
+import { AuditEntityComponent } from '@modules/audit-entity/audit-entity.component';
+import { AuditEntityListComponent } from '@modules/audit-entity/pages/audit-entity-list/audit-entity-list.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ChargeComponent,
+    component: AuditEntityComponent,
     children: [
       {
         path: '',
-        component: ChargeListComponent,
+        component: AuditEntityListComponent,
       },
       {
         path:'',
@@ -25,4 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ChargeRoutingModule { }
+export class AuditEntityRouting { }

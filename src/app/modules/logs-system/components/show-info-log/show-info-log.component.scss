@@ -1,0 +1,9 @@
+::ng-deep {
+  .mat-dialog-container {
+    max-height: 85% !important;
+    overflow-y: scroll !important;
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
+    height: auto;
+  }
+}

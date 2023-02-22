@@ -1,5 +1,5 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -95,6 +95,36 @@ export class SidebarComponent {
           link: 'role',
           name: 'Roles'
         },
+      ]
+    },
+    {
+      icon: 'lock',
+      link: 'security',
+      name: 'Seguridad',
+      subCategories: [
+        {
+          link: 'audit',
+          name: 'Auditoría'
+        },
+        {
+          link: 'logs-system',
+          name: 'Logs'
+        }
+      ]
+    },
+    {
+      icon: 'equalizer',
+      link: 'report',
+      name: 'Reportes',
+      subCategories: [
+        {
+          link: 'grade',
+          name: 'Reporte 1'
+        },
+        {
+          link: 'grade',
+          name: 'Reporte 2'
+        }
       ]
     }
   ]

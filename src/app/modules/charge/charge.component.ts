@@ -1,15 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
 @Component({
   selector: 'app-charge',
   templateUrl: './charge.component.html',
   styleUrls: ['./charge.component.scss']
 })
-export class ChargeComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+export class ChargeComponent {
 
 }

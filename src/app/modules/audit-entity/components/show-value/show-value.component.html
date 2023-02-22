@@ -1,0 +1,8 @@
+<button mat-icon-button class="close-button" mat-dialog-close>
+  <mat-icon [inline]="true" class="close-icon">highlight_off</mat-icon>
+</button>
+<h2  mat-dialog-title>{{ modalTitle }}</h2>
+
+<ng-container>
+  <pre class="text-break">{{ data.textValue | prettyJson | json }}</pre>
+</ng-container>

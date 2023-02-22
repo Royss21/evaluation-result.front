@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ChargeComponent } from '@modules/charge/charge.component';
-import { ChargeListComponent } from '@modules/charge/pages/charge-list/charge-list.component';
+import { ReportsComponent } from '@modules/reports/reports.component';
+import { ReportsOptionComponent } from '@modules/reports/views/reports-option/reports-option.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ChargeComponent,
+    component: ReportsComponent,
     children: [
       {
         path: '',
-        component: ChargeListComponent,
+        component: ReportsOptionComponent
       },
       {
         path:'',
@@ -25,4 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ChargeRoutingModule { }
+export class ReportsRouting { }

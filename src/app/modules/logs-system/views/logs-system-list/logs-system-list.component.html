@@ -1,0 +1,39 @@
+<div fxLayout="row" >
+  <h2 class="fw-bold">{{ title }}</h2>
+</div>
+
+<app-table
+  [listColumns]="columnsTable"
+  [behavior]="paginatedBehavior"
+  [paginated]="logSystemPaginated$"
+  [templateColumnsContent]="columnContent"
+>
+  <ng-template
+    #columnContent
+    let-column='column'
+    let-element='element'
+  >
+    <div [ngSwitch]="column.columnMatch">
+      <ng-container *ngSwitchCase="'typeException'">
+        <span class="select-column" (click)="showModalInfo(element['typeException'], 'Tipo Excepción')">{{element['typeException'] | truncateText:40}}</span>
+      </ng-container>
+      <ng-container *ngSwitchCase="'innerExceptionMessage'">
+        <span class="select-column" (click)="showModalInfo(element['innerExceptionMessage'], 'Mensaje Interno')">{{element['innerExceptionMessage'] | truncateText:40}}</span>
+      </ng-container>
+      <ng-container *ngSwitchCase="'stackTrace'">
+        <span class="select-column" (click)="showModalInfo(element['stackTrace'], 'Rastro de Pila')">{{element['stackTrace'] | truncateText:40}}</span>
+      </ng-container>
+      <ng-container *ngSwitchCase="'fullNameService'">
+        <span class="select-column" (click)="showModalInfo(element['fullNameService'], 'Servicio')">{{element['fullNameService'] | truncateText:40}}</span>
+      </ng-container>
+      <ng-container *ngSwitchCase="'createDate'">
+        {{element['createDate'] | date: 'dd/MM/yyyy HH:mm a' }}
+      </ng-container>
+      <div *ngSwitchDefault>
+        {{ element[column.columnMatch] }}
+      </div>
+    </div>
+  </ng-template>
+</app-table>
+
+

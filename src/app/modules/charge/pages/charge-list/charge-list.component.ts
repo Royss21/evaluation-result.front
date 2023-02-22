@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+
+import { ConstantsGeneral } from '@shared/constants';
+import { ChargeService } from '@core/services/charge/charge.service';
+import { ICharge } from '@modules/charge/interfaces/charge.interface';
+import { ChargeHelper } from '@modules/charge/helpers/charge-helper.interface';
+import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
-import { IElementRowTable } from '@components/table/interfaces/table.interface';
-import { ChargeService } from '@core/services/charge/charge.service';
 import { ChargeModalComponent } from '@modules/charge/components/charge-modal/charge-modal.component';
-import { ChargeHelper } from '@modules/charge/helpers/charge-helper.interface';
-import { ICharge } from '@modules/charge/interfaces/charge.interface';
-import { ConstantsGeneral } from '@shared/constants';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-charge-list',
@@ -98,6 +99,5 @@ export class ChargeListComponent {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 
 }

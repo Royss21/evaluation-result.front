@@ -28,7 +28,7 @@ import { HttpErrorInterceptor } from '@core/interceptors/http-error.interceptor'
     PageNotFoundComponent,
     PopupChooseComponent,
     PopupConfirmComponent,
-    CorporateObjectivesComponent,
+    CorporateObjectivesComponent
   ],
   imports: [
     BrowserModule,

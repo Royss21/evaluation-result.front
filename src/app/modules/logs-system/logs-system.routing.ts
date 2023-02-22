@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ChargeComponent } from '@modules/charge/charge.component';
-import { ChargeListComponent } from '@modules/charge/pages/charge-list/charge-list.component';
+
+import { LogsSystemComponent } from '@modules/logs-system/logs-system.component';
+import { LogsSystemListComponent } from '@modules/logs-system/views/logs-system-list/logs-system-list.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ChargeComponent,
+    component: LogsSystemComponent,
     children: [
       {
-        path: '',
-        component: ChargeListComponent,
+        path:'',
+        component: LogsSystemListComponent
       },
       {
         path:'',
@@ -25,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ChargeRoutingModule { }
+export class LogsSystemRouting { }

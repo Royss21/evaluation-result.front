@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
+import { SharedModule } from "@shared/shared.module";
 import { ComponentsModule } from '@components/components.module';
 import { OptionComponent } from './views/option/option.component';
 import { ConfigurationComponent } from './configuration.component';
-import { SharedModule } from "@shared/shared.module";
 import { ConfigurationRoutingModule } from './configuration.routing';
 
 @NgModule({
@@ -14,11 +14,11 @@ import { ConfigurationRoutingModule } from './configuration.routing';
     OptionComponent
   ],
   imports: [
-    ConfigurationRoutingModule,
     RouterModule,
     CommonModule,
     SharedModule,
-    ComponentsModule
+    ComponentsModule,
+    ConfigurationRoutingModule
   ],
   exports: [
     ConfigurationComponent,
