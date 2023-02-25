@@ -52,19 +52,15 @@ export class AuditEntityListComponent {
       });
   }
 
-  public showOldValue(text: string): void {
-    this.openModal(1,text);
+  public showModalInfo(auditElement: string, auditNameElement: string): void {
+    this.openModal(auditElement, auditNameElement);
   }
 
-  public showNewValue(text: string): void {
-    this.openModal( 2, text);
-  }
-
-  private openModal(typeValue: number, textValue?: string): void {
+  private openModal(auditElement: string, auditNameElement: string): void {
     const modalLevel = this._dialog.open(ShowValueComponent, {
       width: ConstantsGeneral.mdModal,
       disableClose: true,
-      data: { typeValue, textValue }
+      data: { textValue: auditElement, nameField: auditNameElement }
     });
 
     modalLevel.afterClosed()

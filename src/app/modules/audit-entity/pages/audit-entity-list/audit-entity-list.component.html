@@ -14,11 +14,14 @@
     let-element='element'
   >
     <div [ngSwitch]="column.columnMatch">
+      <ng-container *ngSwitchCase="'keyValues'">
+        <span class="select-column" (click)="showModalInfo(element['keyValues'], 'Valor clave')">{{element['oldValues'] | truncateText:40}}</span>
+      </ng-container>
       <ng-container *ngSwitchCase="'oldValues'">
-        <span class="select-column" (click)="showOldValue(element['oldValues'])">{{element['oldValues'] | truncateText:40}}</span>
+        <span class="select-column" (click)="showModalInfo(element['oldValues'], 'Valor anterior')">{{element['oldValues'] | truncateText:40}}</span>
       </ng-container>
       <ng-container *ngSwitchCase="'newValues'">
-        <span class="select-column" (click)="showNewValue(element['newValues'])">{{element['newValues'] | truncateText:40}}</span>
+        <span class="select-column" (click)="showModalInfo(element['newValues'], 'Valor nuevo')">{{element['newValues'] | truncateText:40}}</span>
       </ng-container>
       <ng-container *ngSwitchCase="'createDate'">
         {{element['createDate'] | date: 'dd/MM/yyyy HH:mm a' }}

@@ -2,22 +2,22 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { ApiService } from '@core/services/api.service';
+import { environment } from 'src/environments/environment';
 import { IPeriod } from '@modules/period/interfaces/period.interface';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PeriodService {
-  private controller = 'period';
-  private _url = `${environment.serverUriApi}/${this.controller}`;
+
+  private _url = `${environment.serverUriApi}/period`;
   constructor(private _apiService: ApiService) { }
 
   getPeriodById(id: number) {
-    const url = `${this.controller}/id`;
+    const url = `${this._url}/id`;
     return this._apiService.get<boolean>(url);
   }
 

@@ -114,16 +114,16 @@ export class SidebarComponent {
     },
     {
       icon: 'equalizer',
-      link: 'report',
+      link: 'reports',
       name: 'Reportes',
       subCategories: [
         {
-          link: 'grade',
-          name: 'Reporte 1'
+          link: 'final-exam',
+          name: 'Notas finales'
         },
         {
-          link: 'grade',
-          name: 'Reporte 2'
+          link: 'exam-progress',
+          name: 'Progreso de evaluaciones'
         }
       ]
     }

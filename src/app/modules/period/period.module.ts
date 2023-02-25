@@ -9,7 +9,6 @@ import { PeriodListComponent } from './page/period-list/period-list.component';
 import { ComponentsModule } from '@components/components.module';
 import { PeriodModalComponent } from './components/period-modal/period-modal.component';
 
-
 @NgModule({
   declarations: [
     PeriodListComponent,

@@ -13,9 +13,9 @@ export class ShowValueComponent {
   constructor(
     public _dialog: MatDialog,
     private _modalRef: MatDialogRef<ShowValueComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { id: number,  textValue: string }
+    @Inject(MAT_DIALOG_DATA) public data: { textValue: string, nameField: string }
   ) {
-    this.modalTitle = data.id === 1 ? "Valor anterior" : "Valor nuevo";
+    this.modalTitle = data.nameField;
   }
 
 }

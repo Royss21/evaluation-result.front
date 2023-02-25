@@ -4,6 +4,7 @@ import { IElementRowTable } from "@components/table/interfaces/table.interface";
 export class AuditEntityHelper {
   static columnsTable: IElementRowTable[] =  [
     new ElementRowTable('tableName','Nombre'),
+    new ElementRowTable('action','Acción'),
     new ElementRowTable('keyValues','Valor clave'),
     new ElementRowTable('oldValues','Valor anterior'),
     new ElementRowTable('newValues','Valor nuevo'),
