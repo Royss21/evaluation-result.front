@@ -103,6 +103,7 @@ export class ParameterValueModalComponent {
   clean(){
     this.parameterValueFormGroup.reset();
     this.formGroupDirective.resetForm();
+    this.parameterValueFormGroup = this._parameterValueBuilderService.buildParameterValueForm();
   }
 
   confirmSave(){

@@ -56,8 +56,10 @@ export class FormulaModalComponent implements OnInit {
 
     if(this.isCloseAfterSave)
       this.closeModal();
-    else
+    else{
       this.formulaFormGroup.reset();
+      this.formulaFormGroup = this._formulaBuilderService.buildFormulaForm();
+    }
   }
 
   private showConfirmMessage(): void {

@@ -25,8 +25,7 @@ export class AreaObjectivesBuilderService {
         ]
       ],
       description: [
-        subcomponent?.description || null,
-        [Validators.maxLength(250)]
+        subcomponent?.description || ''
       ],
       areaId:[
         subcomponent?.areaId || null,

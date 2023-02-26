@@ -50,8 +50,10 @@ export class LevelModalComponent {
 
     if(this.isCloseAfterSave)
       this.closeModal();
-    else
+    else{
       this.levelFormGroup.reset();
+      this.levelFormGroup = this._levelBuilderService.buildLevelForm();
+    }
   }
 
   private showConfirmMessage(): void {

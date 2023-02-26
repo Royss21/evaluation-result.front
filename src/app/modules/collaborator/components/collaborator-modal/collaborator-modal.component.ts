@@ -157,8 +157,10 @@ export class CollaboratorModalComponent {
 
     if(this._isCloseAfterSave)
       this.closeModal();
-    else
+    else{
       this.collaboratorFormGroup.reset();
+      this.collaboratorFormGroup = this._collaboratorBuilderService.buildCollaboratorForm();
+    }
   }
 
   public maxCharacter() {
