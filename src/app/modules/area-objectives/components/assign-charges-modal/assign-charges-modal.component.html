@@ -76,14 +76,15 @@
               <ng-container class="mobile-content">
                 <mat-form-field class="form-fiel-custom" appearance="outline">
                   <input
-                    #input1
-                    matInput
+
                     type="text"
-                    NumbersOnly
-                    maxlength="3"
-                    autocomplete="off"
-                    class="fs-6 text-end"
                     formControlName="relativeWeight"
+                    autocomplete="off"
+                    matInput
+                    appOnlyNumber
+                    maxlength="3"
+                    class="fs-6 text-right"
+                    
                   >
                   <span matSuffix class="fs-6 pl-3 pb-3">%</span>
                 </mat-form-field>
@@ -96,10 +97,10 @@
               <ng-container class="mobile-content">
                 <mat-form-field class="form-fiel-custom" appearance="outline">
                   <input
-                    #input1
+
                     matInput
                     type="text"
-                    NumbersOnly
+                    appOnlyNumber
                     maxlength="3"
                     autocomplete="off"
                     class="fs-6 text-end"
@@ -116,10 +117,10 @@
               <ng-container class="mobile-content">
                 <mat-form-field class="form-fiel-custom" appearance="outline">
                   <input
-                    #input1
+
                     matInput
                     type="text"
-                    NumbersOnly
+                    appOnlyNumber
                     maxlength="3"
                     autocomplete="off"
                     class="fs-6 text-end"

@@ -130,7 +130,7 @@ export class AssignChargesModalComponent implements OnInit {
 
   private _getCharges(): void {
     this._chargeService.getAll().subscribe(charges => {
-      this.chargeList = charges;
+      this.chargeList = charges.filter(c =>c.areaId === this.data.areaId);
     });
   }
 

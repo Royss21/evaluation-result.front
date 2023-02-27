@@ -44,6 +44,8 @@ export class AreaObjectivesBuilderService {
   }
 
   public buildItemsSubComponentValueForm(subcomponentValue?: ISubcomponentValue, idSubcomponent?: string): FormGroup {
+
+    console.log(subcomponentValue)
     return this._fb.group({
       id: [ subcomponentValue?.id || null ],
       subcomponentId: [ idSubcomponent || null ],
@@ -55,15 +57,15 @@ export class AreaObjectivesBuilderService {
         subcomponentValue?.chargeName || null,
       ],
       relativeWeight: [
-        [(subcomponentValue && subcomponentValue?.relativeWeight * 100) || null],
+        [(subcomponentValue && (subcomponentValue?.relativeWeight || 0) * 100)?.toFixed(0) ],
         [ Validators.required, Validators.max(100) ]
       ],
       minimunPercentage: [
-        [(subcomponentValue && subcomponentValue?.minimunPercentage * 100) || null],
+        [(subcomponentValue && (subcomponentValue?.minimunPercentage || 0) * 100)?.toFixed(0) ],
         [ Validators.required, Validators.max(100) ]
       ],
       maximunPercentage: [
-        [(subcomponentValue && subcomponentValue?.maximunPercentage * 100) || null],
+        [(subcomponentValue && (subcomponentValue?.maximunPercentage || 0) * 100)?.toFixed(0) ],
         [ Validators.required, Validators.max(100) ]
       ]
     });
