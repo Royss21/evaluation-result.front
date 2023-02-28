@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 
+import { IPopupConfirm } from '@components/popup-interface';
 import { ReportService } from '@core/services/report/report.service';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { ExcelReportService } from '@core/services/report/excel-report.service';
+import { EvaluationService } from '@core/services/evaluation/evaluation.service';
+import { IEvaluationFinished } from '../../../evaluation/interfaces/evaluation-finished.interface';
 import { FinalExamReportHelper } from '@modules/final-exam-report/helpers/final-exam-report-helper';
-import { IFinalExamPaginatedFilter } from '@modules/final-exam-report/interfaces/final-exam-report.interface';
+import { IFinalExamPaginatedFilter, IFinalExamReport } from '@modules/final-exam-report/interfaces/final-exam-report.interface';
+import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 
 @Component({
   selector: 'app-final-exam-report-list',
@@ -17,6 +23,9 @@ export class FinalExamReportListComponent {
   public title: string = FinalExamReportHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
 
+  public filterFormGroup: FormGroup;
+  public evaluationsList: IEvaluationFinished[] = [];
+
   public paginated$: Observable<any>;
   public columnsTable: IElementRowTable[];
   public finalExamPaginated$: Observable<any>;
@@ -24,15 +33,33 @@ export class FinalExamReportListComponent {
   public finalExamPaginatedBehavior: BehaviorSubject<any>;
   public paginatedFilterCurrent: IFinalExamPaginatedFilter;
 
+  private selectedEvaluationPopPup: IPopupConfirm = {
+    icon: 'warning_amber',
+    iconColor: 'color-danger',
+    text: 'Debe seleccionar una evaluación',
+    buttonLabelAccept: 'Aceptar'
+  };
+
   constructor(
+    private _fb: FormBuilder,
+    private _dialog: MatDialog,
     private _reportService: ReportService,
-    private _excelReportService: ExcelReportService,
+    private _evaluationService: EvaluationService,
+    private _excelReportService: ExcelReportService
   ){
+    this._getEvaluationsFinished();
+    this.filterFormGroup = this._buildFilterForm();
     this.finalExamPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
     this.finalExamPaginated$ = this.finalExamPaginatedBehavior.asObservable();
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = FinalExamReportHelper.columnsTable;
+  }
+
+  private _getEvaluationsFinished(): void {
+    this._evaluationService.getAllFinished().subscribe((evaluations: IEvaluationFinished[]) => {
+      this.evaluationsList = evaluations;
+    });
   }
 
   ngAfterContentInit() {
@@ -52,7 +79,24 @@ export class FinalExamReportListComponent {
       });
   }
 
+  private _showDialog(): void {
+    this._dialog.open(PopupConfirmComponent, {
+      data: this.selectedEvaluationPopPup,
+      autoFocus: false
+    });
+  }
+
+  private _validateFilter(): boolean {
+    return this.filterFormGroup.get('evaluationId')?.value === null;
+  }
+
   public downloadFinalExamReport() {
+
+    if (this._validateFilter()) {
+      this._showDialog();
+      return;
+    }
+
     const title = {
       name: "Reporte notas finales",
       down: "Reporte__notas_finales"
@@ -71,7 +115,7 @@ export class FinalExamReportListComponent {
     ];
     const data: any[] = [];
 
-    this.finalExamPaginated$.subscribe(((report: any) => {
+    this._reportService.getAllFinalExam(this.paginatedFilterCurrent.globalFilter, this.paginatedFilterCurrent.evaluationId).subscribe(((report: IFinalExamReport[]) => {
       report.forEach((finalExam: any, index: number) => {
         index++;
         index = Math.floor(index);
@@ -89,6 +133,12 @@ export class FinalExamReportListComponent {
       });
     }));
     this._excelReportService.downloadExcelReport(title, header, keys, data);
+  }
+
+  public _buildFilterForm(): FormGroup {
+    return this._fb.group({
+      evaluationId: [null],
+    })
   }
 
   ngOnDestroy(): void {

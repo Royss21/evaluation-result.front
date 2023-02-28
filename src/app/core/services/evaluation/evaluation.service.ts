@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { IEvaluationCreate } from '@modules/evaluation/interfaces/evaluation-create.interface';
 import { IEvaluationDetail } from '@modules/evaluation/interfaces/evaluation-detail.interface';
+import { IEvaluationFinished } from '@modules/evaluation/interfaces/evaluation-finished.interface';
 import { IEvaluation } from '@modules/evaluation/interfaces/evaluation.interface';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -24,7 +25,6 @@ export class EvaluationService {
     return this._apiService.get<IEvaluationDetail>(`${this._url}/${id}/detail`);
   }
 
-
   getEnabledComponents(id: string): Observable<IEvaluation> {
     return this._apiService.get<IEvaluation>(`${this._url}/${id}/enabled-components`);
   }
@@ -35,6 +35,10 @@ export class EvaluationService {
 
   create(request: IEvaluationCreate): Observable<IEvaluationCreate> {
     return this._apiService.post<IEvaluationCreate>(`${this._url}`, request);
+  }
+
+  getAllFinished(): Observable<IEvaluationFinished[]> {
+    return this._apiService.get<IEvaluationFinished[]>(`${this._url}/finished`);
   }
 
 }

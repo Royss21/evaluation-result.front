@@ -1,25 +1,47 @@
-<div fxLayout="row" >
-  <h2 class="fw-bold">{{ title }}</h2>
+<div
+  fxLayout="row wrap"
+  fxLayoutAlign="space-between center"
+>
+  <div>
+    <h2 class="fw-bold">{{ title }}</h2>
+  </div>
+  <div fxFlex.xs="100" fxLayoutAlign="center center">
+    <button
+      color="primary"
+      mat-raised-button
+      (click)="downloadFinalExamReport()"
+    >
+      <mat-icon>download</mat-icon>
+      Descargar
+    </button>
+</div>
 </div>
 
-<div
-  fxLayout="row"
-  fxLayoutAlign.xs="end center"
-  fxLayoutAlign.sm="end center"
-  fxLayoutAlign.md="end center"
-  fxLayoutAlign.lg="end center"
-  fxLayoutAlign.xl="end center"
-  class="my-sm-3 my-md-0"
->
-  <button
-    color="primary"
-    mat-raised-button
-    (click)="downloadFinalExamReport()"
+<form>
+  <div
+    fxLayout="row wrap"
+    class="padding-form-filter"
+    fxLayoutAlign="start center"
+    [formGroup]="filterFormGroup"
   >
-    <mat-icon>download</mat-icon>
-    Descargar
-  </button>
-</div>
+    <div
+      fxFlex.xs="100"
+      fxFlex.sm="100"
+      fxFlex.md="30"
+      fxFlex.lg="30"
+      fxFlex.xl="30"
+    >
+      <mat-form-field fxFill appearance="outline">
+        <mat-label>Evaluación</mat-label>
+        <mat-select formControlName="evaluationId">
+          <mat-option *ngFor="let evaluation of evaluationsList" [value]="evaluation.id">
+            {{evaluation.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</form>
 
 <app-table
   [listColumns]="columnsTable"

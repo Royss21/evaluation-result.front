@@ -1,1 +1,42 @@
-<p>exam-progress-report-list works!</p>
+<div fxLayout="row" >
+  <h2 class="fw-bold">{{ title }}</h2>
+</div>
+
+<div
+  fxLayout="row"
+  fxLayoutAlign.xs="end center"
+  fxLayoutAlign.sm="end center"
+  fxLayoutAlign.md="end center"
+  fxLayoutAlign.lg="end center"
+  fxLayoutAlign.xl="end center"
+  class="my-sm-3 my-md-0"
+>
+  <button
+    color="primary"
+    mat-raised-button
+    (click)="downloadProgressExamReport()"
+  >
+    <mat-icon>download</mat-icon>
+    Descargar
+  </button>
+</div>
+
+<app-table
+  [listColumns]="columnsTable"
+  [behavior]="paginatedBehavior"
+  [paginated]="progressExamPaginated$"
+  [templateColumnsContent]="columnContent"
+>
+  <ng-template
+    #columnContent
+    let-column='column'
+    let-element='element'
+  >
+    <div [ngSwitch]="column.columnMatch">
+      <div *ngSwitchDefault>
+        {{ element[column.columnMatch] }}
+      </div>
+    </div>
+  </ng-template>
+</app-table>
+

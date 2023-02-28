@@ -1,0 +1,8 @@
+.padding-form-filter {
+  padding-left: .8rem;
+  padding-right: .8rem;
+
+  @media screen and (max-width:768px){
+    margin-top: 10px;
+  }
+}

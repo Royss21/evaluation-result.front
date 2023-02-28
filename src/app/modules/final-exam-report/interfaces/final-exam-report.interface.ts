@@ -14,5 +14,5 @@ export interface IFinalExamReport {
 }
 
 export interface IFinalExamPaginatedFilter extends IPaginatedFilter {
-
+  evaluationId: string;
 }
