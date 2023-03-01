@@ -29,7 +29,7 @@ export class ExcelReportService {
   workbook: any;
   worksheet: any;
 
-  async downloadExcelReport(nameDoc: any, prmHeader: any, prmKeys: any, values: any) {
+  async downloadExcelReport(nameDoc: any, prmHeader: any, prmKeys: any, values: any[]) {
 
     try {
 
@@ -50,7 +50,7 @@ export class ExcelReportService {
       this.worksheet.getCell('A2:D2').font = {
         name: 'Calibri',
         family: 4,
-        size: 11,
+        size: 14,
         underline: false,
         bold: true,
       };
@@ -115,7 +115,7 @@ export class ExcelReportService {
           row.getCell(a.key).font = {
             name: 'Calibri',
             family: 4,
-            size: 8,
+            size: 11,
             underline: false,
             bold: false,
           };
@@ -142,7 +142,6 @@ export class ExcelReportService {
         })
         .catch((err: any) => {
           console.log(err);
-          // this.notifyService.notify('error', 'Hubo un error al descargar');
         });
 
     } catch (error) {

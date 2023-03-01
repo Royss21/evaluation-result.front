@@ -46,6 +46,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     overflow-x: auto;
   }
 
+  @media screen and (max-width:1400px) {
+    overflow-x: auto;
+  }
+
   table{
     width: 100%;
     background: transparent;
@@ -279,7 +283,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
             width: 100%;
             height: 54px;
             background: #fff;
-            box-shadow: 12px 3px 11px #2C282817;;
+            box-shadow: 12px 3px 11px #2C282817;
             z-index: -1;
           }
         }
@@ -451,7 +455,8 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 input[type=number] {
-  -moz-appearance:textfield;
+  appearance: textfield;
+  -moz-appearance: textfield;
   text-align: right !important;
 }
 
