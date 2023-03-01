@@ -334,7 +334,7 @@
                     >
                       <div fxFlex="100"><strong>Puntaje Competencia</strong></div>
                       <div fxFlex="100">
-                        {{ objetive.points * 100 | numberFormat }}
+                        {{ objetive.points | numberFormat }}
                       </div>
                     </div>
                   </div>
@@ -345,7 +345,7 @@
                     >
                       <div fxFlex="100"><strong>Puntaje Competencia Calibrado</strong></div>
                       <div fxFlex="100">
-                        {{ objetive.pointsCalibrated * 100 | numberFormat }}
+                        {{ objetive.pointsCalibrated | numberFormat }}
                       </div>
                     </div>
                   </div>
@@ -431,7 +431,7 @@
                 >
                   <div fxFlex="100"><strong>Total</strong></div>
                   <div fxFlex="100">
-                    {{ resultCompetencies.total * 100 | numberFormat }}
+                    {{ resultCompetencies.total * 100| numberFormat }}
                   </div>
                 </div>
               </div>

@@ -9,7 +9,8 @@ export class FinalExamReportHelper {
     new ElementRowTable('gerencyName','Gerencia'),
     new ElementRowTable('areaName','Área'),
     new ElementRowTable('levelName','Nivel'),
-    new ElementRowTable('finalResult','Resultado')
+    new ElementRowTable('finalResult','Resultado'),
+    new ElementRowTable('resultLabel','')
   ];
 
   static titleActionText = {

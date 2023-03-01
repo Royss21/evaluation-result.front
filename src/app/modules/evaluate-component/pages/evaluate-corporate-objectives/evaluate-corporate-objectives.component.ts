@@ -80,7 +80,7 @@ export class EvaluateCorporateObjectivesComponent implements OnInit {
       chargeName :info?.chargeName ?? "",
       statusId :info?.statusId ?? 0,
       statusName :info?.statusName ?? "",
-      documentNumber: ''
+      documentNumber: info?.documentNumber ?? "",
     };
   }
 

@@ -23,7 +23,6 @@ export class FinalExamReportListComponent {
   public title: string = FinalExamReportHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
 
-  public filterFormGroup: FormGroup;
   public evaluationsList: IEvaluationFinished[] = [];
 
   public paginated$: Observable<any>;
@@ -32,6 +31,8 @@ export class FinalExamReportListComponent {
   public paginatedBehavior: BehaviorSubject<any>;
   public finalExamPaginatedBehavior: BehaviorSubject<any>;
   public paginatedFilterCurrent: IFinalExamPaginatedFilter;
+
+  evaluationId:string;
 
   private selectedEvaluationPopPup: IPopupConfirm = {
     icon: 'warning_amber',
@@ -48,7 +49,6 @@ export class FinalExamReportListComponent {
     private _excelReportService: ExcelReportService
   ){
     this._getEvaluationsFinished();
-    this.filterFormGroup = this._buildFilterForm();
     this.finalExamPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
     this.finalExamPaginated$ = this.finalExamPaginatedBehavior.asObservable();
@@ -70,8 +70,10 @@ export class FinalExamReportListComponent {
     this.paginated$
       .subscribe((paginatedFilter: IFinalExamPaginatedFilter) => {
         if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._reportService.getFinalExamPaginated(paginatedFilter)
+
+          this.paginatedFilterCurrent = { ...paginatedFilter, evaluationId: this.evaluationId || '' };
+          console.log(this.paginatedFilterCurrent)
+          this._reportService.getFinalExamPaginated(this.paginatedFilterCurrent)
             .subscribe(paginated => {
               this.finalExamPaginatedBehavior.next(paginated);
             });
@@ -86,13 +88,10 @@ export class FinalExamReportListComponent {
     });
   }
 
-  private _validateFilter(): boolean {
-    return this.filterFormGroup.get('evaluationId')?.value === null;
-  }
 
   public downloadFinalExamReport() {
 
-    if (this._validateFilter()) {
+    if (!this.evaluationId || this.evaluationId === '') {
       this._showDialog();
       return;
     }
@@ -102,7 +101,7 @@ export class FinalExamReportListComponent {
       down: "Reporte__notas_finales"
     };
     const header = {
-      data: ["COLABORADOR", "NRO. DOCUMENTO", "JERARQUÍA", "GERENCIA", "ÁREA", "NIVEL", "RESULTADO"],
+      data: ["COLABORADOR", "NRO. DOCUMENTO", "JERARQUÍA", "GERENCIA", "ÁREA", "NIVEL", "RESULTADO", ""],
     };
     const keys = [
       { key: "collaboratorName", width: "30" },
@@ -111,11 +110,13 @@ export class FinalExamReportListComponent {
       { key: "gerencyName", width: "15" },
       { key: "areaName", width: "15" },
       { key: "levelName", width: "15" },
-      { key: "finalResult", width: "15" }
+      { key: "finalResult", width: "15" },
+      { key: "labelResult", width: "15" }
     ];
     const data: any[] = [];
 
     this._reportService.getAllFinalExam(this.paginatedFilterCurrent.globalFilter, this.paginatedFilterCurrent.evaluationId).subscribe(((report: IFinalExamReport[]) => {
+      console.log(report)
       report.forEach((finalExam: any, index: number) => {
         index++;
         index = Math.floor(index);
@@ -128,7 +129,8 @@ export class FinalExamReportListComponent {
           gerencyName: finalExam.gerencyName,
           areaName: finalExam.areaName,
           levelName: finalExam.levelName,
-          finalResult: finalExam.finalResult
+          finalResult: (finalExam.finalResult * 100),
+          labelResult: finalExam.labelResult
         });
       });
     }));
@@ -139,6 +141,11 @@ export class FinalExamReportListComponent {
     return this._fb.group({
       evaluationId: [null],
     })
+  }
+
+  changeEvaluation(){
+    this.paginatedFilterCurrent = { ...this.paginatedFilterCurrent, evaluationId: this.evaluationId };
+    this.paginatedBehavior.next(this.paginatedFilterCurrent);
   }
 
   ngOnDestroy(): void {

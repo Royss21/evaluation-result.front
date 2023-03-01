@@ -27,7 +27,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             tap(() => this._loader.hide()),
             tap(
                 (response) => {
-                    if (response instanceof HttpResponse && response.ok) {
+                  if (response instanceof HttpResponse && response.ok) {
+                      if(!(response.body instanceof Blob))
                         if (!response.body.ok)
                             this.showMessage(response.body.message);
                     }

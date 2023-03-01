@@ -17,31 +17,32 @@
 </div>
 </div>
 
-<form>
+
+<div
+  fxLayout="row wrap"
+  class="padding-form-filter"
+  fxLayoutAlign="start center"
+>
   <div
-    fxLayout="row wrap"
-    class="padding-form-filter"
-    fxLayoutAlign="start center"
-    [formGroup]="filterFormGroup"
+    fxFlex.xs="100"
+    fxFlex.sm="100"
+    fxFlex.md="30"
+    fxFlex.lg="30"
+    fxFlex.xl="30"
   >
-    <div
-      fxFlex.xs="100"
-      fxFlex.sm="100"
-      fxFlex.md="30"
-      fxFlex.lg="30"
-      fxFlex.xl="30"
-    >
-      <mat-form-field fxFill appearance="outline">
-        <mat-label>Evaluación</mat-label>
-        <mat-select formControlName="evaluationId">
-          <mat-option *ngFor="let evaluation of evaluationsList" [value]="evaluation.id">
-            {{evaluation.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+    <mat-form-field fxFill appearance="outline">
+      <mat-label>Evaluación</mat-label>
+      <mat-select
+        [(ngModel)]="evaluationId"
+        (selectionChange)="changeEvaluation()"
+      >
+        <mat-option *ngFor="let evaluation of evaluationsList" [value]="evaluation.id">
+          {{evaluation.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
-</form>
+</div>
 
 <app-table
   [listColumns]="columnsTable"
@@ -55,6 +56,13 @@
     let-element='element'
   >
     <div [ngSwitch]="column.columnMatch">
+      <div
+        fxLayout="row"
+        fxLayoutGap="10px"
+        *ngSwitchCase="'finalResult'"
+      >
+        {{ element[column.columnMatch] * 100 }}
+      </div>
       <div *ngSwitchDefault>
         {{ element[column.columnMatch] }}
       </div>
