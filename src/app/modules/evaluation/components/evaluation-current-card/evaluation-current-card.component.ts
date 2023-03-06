@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ICollaboratorLeaderEvaluate } from '@modules/evaluation-leader/interfaces/leader.interface copy';
 import { IStageRangeDate } from '@modules/evaluation/interfaces/evaluation-detail.interface';
+import { EvaluationBehaviorsService } from '@modules/evaluation/services/evaluation-behaviors.service';
 import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
+import { ConstantsGeneral } from '@shared/constants';
 
 @Component({
   selector: 'app-evaluation-current-card',
@@ -12,9 +15,24 @@ export class EvaluationCurrentCardComponent implements OnInit {
   @Input() periodEvaluation: IPeriodEvaluation | null;
   @Input() stagesRangeDate: IStageRangeDate[] = [];
 
-  constructor() { }
+  leaderFlag: ICollaboratorLeaderEvaluate;
+  constructor(public _evaluationBehavior: EvaluationBehaviorsService){}
 
-  ngOnInit(): void {
+  ngOnInit(){
+    if(localStorage.getItem('collaboratorId')){
+      this._evaluationBehavior.flagLeader$
+          .subscribe(data => {
+            console.log(data)
+            this.leaderFlag = data;
+          });
+    }
+  }
+
+  enableStage(stageId : number){
+    if(ConstantsGeneral.stages.feedback === stageId)
+      return this.leaderFlag .isLeaderStageFeedback;
+
+    return this.leaderFlag ? false : true;
   }
 
 }

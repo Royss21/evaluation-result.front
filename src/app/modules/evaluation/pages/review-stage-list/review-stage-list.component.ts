@@ -44,8 +44,8 @@ export class ReviewStageListComponent implements OnInit {
       this._evaluationId = params['evaluationId'];
 
       this.title = this._stageId == ConstantsGeneral.stages.feedback
-          ? "Revisar de evaluación: Etapa de feedback"
-          : "Revisar de evaluación: Etapa de visto bueno"
+          ? "Revisar evaluación: Etapa de feedback"
+          : "Revisar evaluación: Etapa de visto bueno"
     });
   }
 
@@ -62,6 +62,7 @@ export class ReviewStageListComponent implements OnInit {
             ...paginatedFilter,
             evaluationId: this._evaluationId,
             stageId: this._stageId,
+            evaluationCollaboratorId : localStorage.getItem('collaboratorId') || ''
           }
 
           this._evaluationCollaborator.getReviewEvaluationPaginated(this.paginatedFilterCurrent)

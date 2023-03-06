@@ -1,7 +1,7 @@
 <mat-dialog-content>
   <mat-selection-list #roles [multiple]="false">
     <mat-list-option
-      *ngFor="let item of dataTest"
+      *ngFor="let item of userRoles"
       [value]="item"
     >
       {{ item.name }}

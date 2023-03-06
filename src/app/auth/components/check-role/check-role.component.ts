@@ -10,30 +10,15 @@ import { IRole } from '@auth/interfaces/roles.interface';
 })
 export class CheckRoleComponent {
 
-  public dataTest = [
-    {
-      id: 1,
-      name: 'Supervisor'
-    },
-    {
-      id: 2,
-      name: 'Administrador'
-    },
-    {
-      id: 3,
-      name: 'Super Administrador'
-    },
-    {
-      id: 4,
-      name: 'Registrador'
-    },
-  ]
+  userRoles:IRole[] = [];
 
   constructor(
     public _dialog: MatDialog,
     private _modalRef: MatDialogRef<CheckRoleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IRole[]
   ) {
+
+    this.userRoles = data;
   }
 
   testClick(role: any): void {

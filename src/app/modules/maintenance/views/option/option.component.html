@@ -12,86 +12,17 @@
   fxLayoutAlign.sm="space-center center"
 >
   <app-card-option
+    *ngFor="let subMenu of subMenus"
+
     fxFlex.xl="25%"
     fxFlex.lg="25%"
     fxFlex.md="50%"
     fxFlex.sm="50%"
     fxFlex.xs="100%"
 
-    title="Colaboradores"
-    pathPage="collaborator"
+    [title]="subMenu.name"
+    [pathPage]="subMenu.link"
     icon="/assets/images/flow.svg"
   ></app-card-option>
 
-  <app-card-option
-    fxFlex.xl="25%"
-    fxFlex.lg="25%"
-    fxFlex.md="50%"
-    fxFlex.sm="50%"
-    fxFlex.xs="100%"
-
-    title="Gerencias"
-    pathPage="gerency"
-    icon="/assets/images/flow.svg"
-  ></app-card-option>
-
-  <app-card-option
-    fxFlex.xl="25%"
-    fxFlex.lg="25%"
-    fxFlex.md="50%"
-    fxFlex.sm="50%"
-    fxFlex.xs="100%"
-
-    title="Jerarquías"
-    pathPage="hierarchy"
-    icon="/assets/images/flow.svg"
-  ></app-card-option>
-
-  <app-card-option
-    fxFlex.xl="25%"
-    fxFlex.lg="25%"
-    fxFlex.md="50%"
-    fxFlex.sm="50%"
-    fxFlex.xs="100%"
-
-    title="Áreas"
-    pathPage="area"
-    icon="/assets/images/flow.svg"
-  ></app-card-option>
-
-  <app-card-option
-    fxFlex.xl="25%"
-    fxFlex.lg="25%"
-    fxFlex.md="50%"
-    fxFlex.sm="50%"
-    fxFlex.xs="100%"
-
-    title="Cargos"
-    pathPage="charge"
-    icon="/assets/images/flow.svg"
-  ></app-card-option>
-
-  <app-card-option
-    fxFlex.xl="25%"
-    fxFlex.lg="25%"
-    fxFlex.md="50%"
-    fxFlex.sm="50%"
-    fxFlex.xs="100%"
-
-    title="Usuarios"
-    pathPage="user"
-    icon="/assets/images/flow.svg"
-  ></app-card-option>
-
-  <app-card-option
-    fxFlex.xl="25%"
-    fxFlex.lg="25%"
-    fxFlex.md="50%"
-    fxFlex.sm="50%"
-    fxFlex.xs="100%"
-
-    title="Roles"
-    pathPage="role"
-    icon="/assets/images/flow.svg"
-  ></app-card-option>
 </div>

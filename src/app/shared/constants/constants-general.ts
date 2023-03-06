@@ -48,6 +48,12 @@ export  class ConstantsGeneral{
       competencies: 3
     }
 
+    static readonly ViewCollaborator ={
+      leader: 1,
+      collaborator: 2,
+    }
+
+
     static readonly stages ={
       evaluation: 1,
       calibration: 2,

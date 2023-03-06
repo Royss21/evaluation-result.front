@@ -21,6 +21,7 @@ import { PopupChooseComponent } from './components/popup-choose/popup-choose.com
 import { PopupConfirmComponent } from './components/popup-confirm/popup-confirm.component';
 import { CorporateObjectivesComponent } from './modules/corporate-objectives/corporate-objectives.component';
 import { HttpErrorInterceptor } from '@core/interceptors/http-error.interceptor';
+import { AuthorizationInterceptor } from '@core/interceptors/authorization.interceptor';
 
 @NgModule({
   declarations: [
@@ -49,11 +50,11 @@ import { HttpErrorInterceptor } from '@core/interceptors/http-error.interceptor'
       provide: MatPaginatorIntl,
       useValue: getPaginationEs()
     },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthorizationInterceptor,
-    //   multi: true,
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationInterceptor,
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,

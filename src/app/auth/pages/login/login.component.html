@@ -6,7 +6,7 @@
   <div class="left">
     <img src="https://pngimage.net/wp-content/uploads/2018/06/generic-company-logo-png-7.png" class="animation a6" alt="logo img" style="margin: 0 auto 10px;width: 150px">
     <div class="header">
-      <h2 class="animation a1">SISTEMA DE EVALUACIÓN DE COMPETENCIAS</h2>
+      <h2 class="animation a1">SISTEMA DE EVALUACIÓN DE DESEMPEñO</h2>
       <p class="animation a2">Evalúa el manejo de los conocimientos y las destrezas logradas, las mismas que son contrastadas con las unidades de competencia que conforman el perfil laboral.</p>
     </div>
     <form
@@ -38,7 +38,7 @@
         </mat-label>
         <input
           matInput
-          type="text"
+          type="password"
           maxlength="200"
           name="password"
           autocomplete="off"
@@ -55,7 +55,7 @@
         (click)="validUser()"
         *ngIf="!showPassword"
       >
-        Siguiente
+        Ingresar
       </button>
       <button
         color="primary"
@@ -63,8 +63,18 @@
         (click)="login()"
         *ngIf="showPassword"
       >
-        Ingresar
-        <mat-icon>login</mat-icon>
+        Iniciar Sesión
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+      <button
+        class="mt-2"
+        color="basic"
+        mat-raised-button
+        (click)="return()"
+        *ngIf="showPassword"
+      >
+        <mat-icon>arrow_back</mat-icon>
+         Atras
       </button>
       <!-- <div class="mt-4">
         <a class="forgot-password" href="#">¿Olvidó su contraseña?</a>
@@ -81,10 +91,12 @@
   <div class="left">
     <img src="https://pngimage.net/wp-content/uploads/2018/06/generic-company-logo-png-7.png" class="animation a6" alt="logo img" style="margin: 0 auto 10px;width: 150px">
     <div class="header">
-      <h2 class="animation a1">Form Login with random background</h2>
-      <p class="animation a2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultricies sit amet erat at finibus. Praesent justo justo, fringilla sed tellus in, pellentesque eleifend tortor.</p>
+      <h2 class="animation a1">Iniciar sesion</h2>
+      <p class="animation a2">
+        Esta ingresando al sistema como lider/colaborador. Por favor espere...
+      </p>
     </div>
-    <form
+    <!-- <form
       class="form"
       autocomplete="off"
       [formGroup]="codeForm"
@@ -103,16 +115,13 @@
           autocomplete="off"
           formControlName="code"
         >
-          <mat-error *ngIf="controlsCodeForm['code'].hasError('required')">Debe ingresar el código de
-            recuperación.
+          <mat-error *ngIf="controlsCodeForm['code'].hasError('required')">
+            Debe ingresar el código.
           </mat-error>
-          <mat-error *ngIf="controlsCodeForm['confirmCode'].hasError('equalTo')">El código ingresado no es
-            válido.
+          <mat-error *ngIf="controlsCodeForm['confirmCode'].hasError('equalTo')">
+            El código ingresado no es válido.
           </mat-error>
       </mat-form-field>
-      <div class="animation a5" style="margin: 20px">
-        <input type="checkbox" id="check" class="animation a5" name=""><label for="check" style="padding-left: 10px;color: #afafaf">Remember my password</label>
-      </div>
       <button
         mat-raised-button
         color="primary"
@@ -120,7 +129,7 @@
         Acceder
         <mat-icon>login</mat-icon>
       </button>
-    </form>
+    </form> -->
   </div>
   <div id="right"></div>
 </div>

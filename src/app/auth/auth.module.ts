@@ -8,7 +8,6 @@ import { SharedModule } from '@shared/shared.module';
 import { LoginComponent } from '@auth/pages/login/login.component';
 import { CheckRoleComponent } from './components/check-role/check-role.component';
 
-
 @NgModule({
   declarations: [
     AuthComponent,

@@ -13,87 +13,17 @@
   fxLayoutAlign.sm="space-center center"
 >
     <app-card-option
-        fxFlex.xl="25%"
-        fxFlex.lg="25%"
-        fxFlex.md="50%"
-        fxFlex.sm="50%"
-        fxFlex.xs="100%"
 
-        title="Niveles"
-        pathPage="level"
-        icon="/assets/images/flow.svg"
-    ></app-card-option>
+      *ngFor="let subMenu of subMenus"
+      fxFlex.xl="25%"
+      fxFlex.lg="25%"
+      fxFlex.md="50%"
+      fxFlex.sm="50%"
+      fxFlex.xs="100%"
 
-    <app-card-option
-        fxFlex.xl="25%"
-        fxFlex.lg="25%"
-        fxFlex.md="50%"
-        fxFlex.sm="50%"
-        fxFlex.xs="100%"
-
-        title="Formulas"
-        pathPage="formula"
-        icon="/assets/images/flow.svg"
-    ></app-card-option>
-
-    <app-card-option
-        fxFlex.xl="25%"
-        fxFlex.lg="25%"
-        fxFlex.md="50%"
-        fxFlex.sm="50%"
-        fxFlex.xs="100%"
-
-        title="Rango Parametros"
-        pathPage="parameter-range"
-        icon="/assets/images/flow.svg"
-    ></app-card-option>
-
-    <app-card-option
-        fxFlex.xl="25%"
-        fxFlex.lg="25%"
-        fxFlex.md="50%"
-        fxFlex.sm="50%"
-        fxFlex.xs="100%"
-
-        title="Objetivos corporativos"
-        pathPage="corporate-objectives"
-        icon="/assets/images/flow.svg"
-    ></app-card-option>
-
-    <app-card-option
-        fxFlex.xl="25%"
-        fxFlex.lg="25%"
-        fxFlex.md="50%"
-        fxFlex.sm="50%"
-        fxFlex.xs="100%"
-
-        title="Objetivos de área"
-        pathPage="area-objectives"
-        icon="/assets/images/flow.svg"
-    ></app-card-option>
-
-    <app-card-option
-        fxFlex.xl="25%"
-        fxFlex.lg="25%"
-        fxFlex.md="50%"
-        fxFlex.sm="50%"
-        fxFlex.xs="100%"
-
-        title="Competencias"
-        pathPage="competences"
-        icon="/assets/images/flow.svg"
-    ></app-card-option>
-
-    <app-card-option
-        fxFlex.xl="25%"
-        fxFlex.lg="25%"
-        fxFlex.md="50%"
-        fxFlex.sm="50%"
-        fxFlex.xs="100%"
-
-        title="Pesos por jerarquía"
-        pathPage="weight-per-component"
-        icon="/assets/images/flow.svg"
+      [title]="subMenu.name"
+      [pathPage]="subMenu.link"
+      icon="/assets/images/flow.svg"
     ></app-card-option>
 </div>
 
