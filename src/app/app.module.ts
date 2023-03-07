@@ -16,12 +16,12 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 
 import { SharedModule } from '@shared/shared.module';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { HttpErrorInterceptor } from '@core/interceptors/http-error.interceptor';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthorizationInterceptor } from '@core/interceptors/authorization.interceptor';
 import { PopupChooseComponent } from './components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from './components/popup-confirm/popup-confirm.component';
 import { CorporateObjectivesComponent } from './modules/corporate-objectives/corporate-objectives.component';
-import { HttpErrorInterceptor } from '@core/interceptors/http-error.interceptor';
-import { AuthorizationInterceptor } from '@core/interceptors/authorization.interceptor';
 
 @NgModule({
   declarations: [

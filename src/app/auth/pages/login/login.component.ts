@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { IRole } from '@auth/interfaces/roles.interface';
-import { AuthService } from '@core/services/auth/auth.service';
-import { CustomValidations } from '@shared/helpers/custom-validations';
-import { AuthBuilderService } from '@auth/services/auth-builder.service';
-import { CheckRoleComponent } from '@auth/components/check-role/check-role.component';
 import { ILogin } from '@auth/interfaces/login.interface';
 import { MainBehaviorsService } from '@modules/main/services';
+import { AuthService } from '@core/services/auth/auth.service';
+import { AuthBuilderService } from '@auth/services/auth-builder.service';
+import { CheckRoleComponent } from '@auth/components/check-role/check-role.component';
 
 @Component({
   selector: 'app-login',
