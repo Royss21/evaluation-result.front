@@ -33,11 +33,12 @@
       </div>
     </mat-card-content>
 
-    <div *ngIf="(infoComponent?.stages || []).length > 0">
-      <hr >
-      <app-stage-evaluate-item *ngFor="let stage of infoComponent?.stages "
-        [stageRangeDate]="stage"
-      ></app-stage-evaluate-item>
+    <div *ngIf="(infoComponent?.stages || []).length > 0 ">
+      <div *ngFor="let stage of infoComponent?.stages ">
+        <app-stage-evaluate-item *ngIf="!leaderFlag || enableStage(stage.stageId)"
+          [stageRangeDate]="stage"
+        ></app-stage-evaluate-item>
+      </div>
     </div>
   </div>
 

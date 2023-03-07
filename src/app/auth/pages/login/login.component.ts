@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 
@@ -9,13 +9,15 @@ import { AuthService } from '@core/services/auth/auth.service';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 import { AuthBuilderService } from '@auth/services/auth-builder.service';
 import { CheckRoleComponent } from '@auth/components/check-role/check-role.component';
+import { ILogin } from '@auth/interfaces/login.interface';
+import { MainBehaviorsService } from '@modules/main/services';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   private _code: string | null;
   private rolesList: IRole[] = [];
@@ -27,40 +29,111 @@ export class LoginComponent {
 
   public loginForm: FormGroup;
   public codeForm: FormGroup;
+  private _loginFrom : ILogin;
 
   constructor(
     public _dialog: MatDialog,
+    private _router: Router,
     public _authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    public _authBuilderService: AuthBuilderService
+    public _authBuilderService: AuthBuilderService,
+    private _mainBehaviorService: MainBehaviorsService
   ) {
+
     this._code = this.activatedRoute.snapshot.queryParamMap?.get('code');
-    if (this._code) {
-      this.isViewLogin = false;
-      this.isViewCode = true;
-    }
     this.loginForm = this._authBuilderService.builderLoginForm();
     this.codeForm = this._authBuilderService.builderCodeForm();
   }
 
+  ngOnInit(): void {
+
+    if (this._code) {
+      this.isViewLogin = false;
+      this.isViewCode = true;
+      this._authService.loginSessionCollaborator(this._code)
+      .subscribe(token => {
+
+        localStorage.setItem('token', token.token);
+        localStorage.setItem('refreshToken', token.refreshToken);
+        localStorage.setItem('name', token.name);
+        localStorage.setItem('evaluationId', token.evaluationId);
+        localStorage.setItem('logingCollaborator', "1");
+        localStorage.setItem('typeViewCollaborator', token.typeViewCollaborator.toString());
+        localStorage.setItem('collaboratorId', token.evaluationCollaboratorId);
+
+        this._mainBehaviorService.emitName(token.name);
+
+        if(ConstantsGeneral.ViewCollaborator.leader == token.typeViewCollaborator)
+        {
+          localStorage.setItem('isLeaderAreaObjetive', token.isLeaderAreaObjetive+"");
+          localStorage.setItem('isLeaderCompetence', token.isLeaderCompetence+"");
+          this._router.navigateByUrl(`/evaluation/${token.evaluationId}/detail`);
+        }
+        else
+          this._router.navigateByUrl(`/evaluation/${token.evaluationId}/collaborator/${ token.evaluationCollaboratorId}/review`);
+      })
+    }
+  }
+
   public validUser(): void {
 
+    console.log(this.loginForm)
     if(this.loginForm.invalid)
       return;
 
     this._authService.validateUser(this.controlsLoginForm['username'].value)
       .subscribe(resp => {
         this.rolesList = resp.roles;
-        this._openModal();
+
+        if(this.rolesList.length == 1){
+          this.showUsername = false;
+          this.showPassword = true;
+          this.loginForm.get('roleId')?.setValue(this.rolesList[0].id);
+          this.loginForm.get('password')?.setValidators(Validators.required);
+          this.loginForm.get('password')?.updateValueAndValidity();
+        }
+        else{
+          this._openModal();
+        }
       })
   }
 
   public login(): void {
-    console.log("VALUES: ", this.loginForm.value)
+
+    if(this.loginForm.invalid)
+      return;
+
+    var login = this.loginForm.getRawValue();
+    this._authService.loginSession(login)
+      .subscribe(s => {
+
+        localStorage.setItem('token', s.token);
+        localStorage.setItem('refreshToken', s.refreshToken);
+        localStorage.setItem('name', s.name);
+        localStorage.setItem('roleName', s.roleName);
+        localStorage.setItem('menus', JSON.stringify(s.menus));
+        localStorage.setItem('logingCollaborator', "0");
+
+        this._mainBehaviorService.emitMenu(s.menus);
+        this._mainBehaviorService.emitRoleName(s.roleName);
+        this._mainBehaviorService.emitName(s.name);
+
+        this._router.navigateByUrl(`/`);
+      })
   }
 
   public loginCode(): void {
+    console.log(this.codeForm)
+    console.log(this.codeForm.getRawValue())
+  }
 
+  return(){
+    this.showUsername = true;
+    this.showPassword = false;
+    this.loginForm.get('roleId')?.setValue(null);
+    this.loginForm.get('password')?.setValue(null);
+    this.loginForm.get('password')?.clearValidators();
+    this.loginForm.get('password')?.updateValueAndValidity();
   }
 
   private _openModal(): void {
@@ -75,8 +148,9 @@ export class LoginComponent {
       .subscribe((idRol) => {
         this.showUsername = false;
         this.showPassword = true;
-        this.controlsLoginForm['roleId'].setValue(idRol);
-        this.controlsLoginForm['password'].setValidators(Validators.required);
+        this.loginForm.get('roleId')?.setValue(idRol);
+        this.loginForm.get('password')?.setValidators(Validators.required);
+        this.loginForm.get('password')?.updateValueAndValidity();
       });
   }
 

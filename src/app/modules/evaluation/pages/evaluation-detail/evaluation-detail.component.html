@@ -28,6 +28,7 @@
     fxFlex.md="50%"
     fxFlex.sm="100%"
     fxFlex.xs="100%"
+    *ngIf="logingCollaborator === '0'"
   >
     <mat-card>
       <mat-card-content
@@ -53,6 +54,7 @@
   </div>
 
   <div
+   *ngIf="logingCollaborator === '0'"
     fxFlex.xl="33.3333%"
     fxFlex.lg="50%"
     fxFlex.md="50%"
@@ -81,6 +83,7 @@
   </div>
 
   <div
+   *ngIf="logingCollaborator === '0'"
     fxFlex.xl="33.3333%"
     fxFlex.lg="50%"
     fxFlex.md="50%"
@@ -95,6 +98,7 @@
   </div>
 
   <div
+    *ngIf="logingCollaborator === '0' || (isLeaderCompetence && leaderFlag?.isLeaderAreaObjetives)"
     fxFlex.xl="33.3333%"
     fxFlex.lg="50%"
     fxFlex.md="50%"
@@ -109,6 +113,7 @@
   </div>
 
   <div
+    *ngIf="logingCollaborator === '0' || isLeaderAreaObjetive"
     fxFlex.xl="33.3333%"
     fxFlex.lg="50%"
     fxFlex.md="50%"

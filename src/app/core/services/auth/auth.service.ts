@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ILogin } from '@auth/interfaces/login.interface';
-import { IRefreshToken, IToken } from '@auth/interfaces/token.interface';
+import { IRefreshToken, IToken, ITokenCollaborator } from '@auth/interfaces/token.interface';
 import { ApiService } from '@core/services/api.service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -19,7 +19,11 @@ export class AuthService {
   }
 
   loginSession(request: ILogin): Observable<IToken> {
-    return this._apiService.post<IToken>(`${this._url}/login-session`, request);
+    return this._apiService.post<IToken>(`${this._url}/login-sesion`, request);
+  }
+
+  loginSessionCollaborator(code: string): Observable<ITokenCollaborator> {
+    return this._apiService.post<ITokenCollaborator>(`${this._url}/login-sesion-collaborator/${code}`, {});
   }
 
   refreshToken(request: IRefreshToken): Observable<IToken> {

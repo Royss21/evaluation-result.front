@@ -14,7 +14,7 @@
     </div>
     <div class="optionsContainer">
       <div class="userInformationBox">
-        <span>Renato</span>
+        <span>{{ userName }}</span>
       </div>
       <div class="userOptionsContainer">
         <div>
@@ -30,8 +30,10 @@
             xPosition="before"
             class="qore_menu"
           >
-            <button mat-menu-item>Item 1</button>
-            <button  mat-menu-item class="logout">
+            <button
+              mat-menu-item
+              class="logout"
+              (click)="logout()">
               Cerrar sesión
             </button>
           </mat-menu>

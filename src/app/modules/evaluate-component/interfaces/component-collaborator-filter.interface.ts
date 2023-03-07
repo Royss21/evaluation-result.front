@@ -2,5 +2,6 @@ import { IPaginatedFilter } from "@components/table/interfaces/paginated-filter.
 
 export interface IComponentCollaboratorFilter extends IPaginatedFilter{
   evaluationId: string;
+  evaluationCollaboratorId: string | null;
   componentId: number;
 }

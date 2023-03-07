@@ -68,8 +68,10 @@ export class UserModalComponent {
 
     if(this.isCloseAfterSave)
       this.closeModal();
-    else
+    else{
       this.userFormGroup.reset();
+      this.userFormGroup = this._userBuilderService.buildUserForm();
+    }
   }
 
   private showConfirmMessage(): void {

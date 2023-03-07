@@ -7,6 +7,8 @@ import { EvaluationService } from '@core/services/evaluation/evaluation.service'
 import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
 import { EvaluationBehaviorsService } from '@modules/evaluation/services/evaluation-behaviors.service';
 import { IComponentsRangeDate, IStageRangeDate } from '@modules/evaluation/interfaces/evaluation-detail.interface';
+import { ICollaboratorLeaderEvaluate } from '@modules/evaluation-leader/interfaces/leader.interface copy';
+import { LeaderService } from '@core/services/evaluation-leader/leader.service';
 
 @Component({
   selector: 'app-evaluation-detail',
@@ -22,8 +24,14 @@ export class EvaluationDetailComponent {
   stagesRangeDate: IStageRangeDate[] = [];
   components: IComponentsRangeDate[] = [];
 
+  isLeaderAreaObjetive : boolean = false;
+  isLeaderCompetence : boolean = false;
+  logingCollaborator : string  = '';
+  leaderFlag: ICollaboratorLeaderEvaluate;
+
   constructor(
     private _evaluationService: EvaluationService,
+    private _leaderService: LeaderService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _evaluationBehavior: EvaluationBehaviorsService
@@ -32,6 +40,19 @@ export class EvaluationDetailComponent {
   }
 
   ngOnInit(){
+    this.logingCollaborator = localStorage.getItem('logingCollaborator')?.toString() || '';
+
+    if(this.logingCollaborator === '1')
+    {
+      this.isLeaderAreaObjetive = localStorage.getItem('isLeaderAreaObjetive') ? true : false;
+      this.isLeaderCompetence = localStorage.getItem('isLeaderCompetence') ? true : false;
+      this._leaderService.getComponentAndStageLeader(localStorage.getItem('collaboratorId') || '')
+        .subscribe(data => {
+          this.leaderFlag = data;
+          this._evaluationBehavior.setFlagLeader(data);
+        });
+    }
+    
     this._route.params.subscribe(params => {
       this._evaluationId = params['evaluationId'];
       this._getEvaluationDetail();
@@ -92,7 +113,5 @@ export class EvaluationDetailComponent {
   goToLeaders() {
     this._router.navigateByUrl(`/evaluation/${this._evaluationId}/leader`);
   }
-
-
 
 }

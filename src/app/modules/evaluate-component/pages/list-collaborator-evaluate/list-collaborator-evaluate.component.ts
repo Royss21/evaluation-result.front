@@ -67,6 +67,7 @@ export class ListCollaboratorEvaluateComponent implements OnInit {
             ...paginatedFilter,
             evaluationId: this._evaluationId,
             componentId: this._componentId,
+            evaluationCollaboratorId : localStorage.getItem('collaboratorId') || ''
           }
 
           this._componentCollaboratorService.getPaginated(this.paginatedFilterCurrent)

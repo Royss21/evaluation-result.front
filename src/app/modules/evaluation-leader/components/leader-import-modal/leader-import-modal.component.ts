@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
+import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { LeaderService } from '@core/services/evaluation-leader/leader.service';
 import { EvaluationService } from '@core/services/evaluation/evaluation.service';
 import { LeaderText } from '@modules/evaluation-leader/helpers/leader.helper';
@@ -59,8 +60,20 @@ export class LeaderImportModalComponent implements OnInit {
       });
   }
 
+  private _showConfirmMessage(): void {
+    const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
+      data: ConstantsGeneral.confirmCreatePopup,
+      autoFocus: false
+    });
+
+    dialogRefConfirm.afterClosed().subscribe(() => {
+      this.closeModal();
+    });
+  }
+
   private _save(leaderImport: ILeaderImport): void {
     this._leaderService.importLeader(leaderImport).subscribe(f => {
+      this._showConfirmMessage();
     });
   }
 

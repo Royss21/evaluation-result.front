@@ -4,4 +4,5 @@ export interface IEvaluationCollaboratorReviewFilter extends IPaginatedFilter{
 
   stageId: number;
   evaluationId: string;
+  evaluationCollaboratorId: string | null;
 }
