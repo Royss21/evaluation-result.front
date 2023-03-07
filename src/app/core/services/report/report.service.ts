@@ -28,7 +28,7 @@ export class ReportService {
   }
 
   getExamProgressPaginated(paginatedFilter: IProgressExamPaginatedFilter): Observable<IPaginatedResponse<IProgressExamReport>> {
-    return this._apiService.get<IPaginatedResponse<IProgressExamReport>>(`${this._url}/exam-progress`, paginatedFilter);
+    return this._apiService.get<IPaginatedResponse<IProgressExamReport>>(`${this._url}/paging-follow-evaluation`, paginatedFilter);
   }
 
   getAllProgressExam(globalFilter: string, evaluationId: string): Observable<IProgressExamReport[]> {

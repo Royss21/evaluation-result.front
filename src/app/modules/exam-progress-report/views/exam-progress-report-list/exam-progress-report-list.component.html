@@ -1,24 +1,21 @@
-<div fxLayout="row" >
-  <h2 class="fw-bold">{{ title }}</h2>
-</div>
-
 <div
-  fxLayout="row"
-  fxLayoutAlign.xs="end center"
-  fxLayoutAlign.sm="end center"
-  fxLayoutAlign.md="end center"
-  fxLayoutAlign.lg="end center"
-  fxLayoutAlign.xl="end center"
-  class="my-sm-3 my-md-0"
+  fxLayout="row wrap"
+  fxLayoutAlign="space-between center"
 >
-  <button
-    color="primary"
-    mat-raised-button
-    (click)="downloadProgressExamReport()"
-  >
-    <mat-icon>download</mat-icon>
-    Descargar
-  </button>
+  <div>
+    <h2 class="fw-bold">{{ title }}</h2>
+  </div>
+  <div fxFlex.xs="100" fxLayoutAlign="center center">
+    <button
+      color="primary"
+      mat-raised-button
+      disabled="isDisabledBtnDownload"
+      (click)="downloadProgressExamReport()"
+    >
+      <mat-icon>download</mat-icon>
+      Descargar
+    </button>
+</div>
 </div>
 
 <app-table

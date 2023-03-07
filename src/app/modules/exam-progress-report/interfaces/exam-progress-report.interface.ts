@@ -20,5 +20,5 @@ export interface IProgressExamReport {
 }
 
 export interface IProgressExamPaginatedFilter extends IPaginatedFilter {
-
+  evaluationId: string;
 }

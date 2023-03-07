@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject, concatMap } from 'rxjs';
 
 import { ReportService } from '@core/services/report/report.service';
+import { PeriodService } from '@core/services/period/period.service';
 import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { ExcelReportService } from '@core/services/report/excel-report.service';
+import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
 import { ProgressExamReportHelper } from '@modules/exam-progress-report/helpers/exam-progress-report-helper';
 import { IProgressExamPaginatedFilter, IProgressExamReport } from '@modules/exam-progress-report/interfaces/exam-progress-report.interface';
 @Component({
@@ -15,6 +17,8 @@ export class ExamProgressReportListComponent {
 
   public title: string = ProgressExamReportHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
+  private evaluationId: string;
+  public isDisabledBtnDownload: boolean = true;
 
   public paginated$: Observable<any>;
   public columnsTable: IElementRowTable[];
@@ -25,6 +29,7 @@ export class ExamProgressReportListComponent {
 
   constructor(
     private _reportService: ReportService,
+    private periodService: PeriodService,
     private _excelReportService: ExcelReportService,
   ){
     this.progressExamPaginatedBehavior = new BehaviorSubject(null);
@@ -39,16 +44,37 @@ export class ExamProgressReportListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IProgressExamPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._reportService.getExamProgressPaginated(paginatedFilter)
-            .subscribe(paginated => {
-              this.progressExamPaginatedBehavior.next(paginated);
-            });
+
+    this.periodService.getInProgress().pipe(
+      concatMap((period: IPeriodEvaluation) => {
+        if (period.evaluation){
+          this.isDisabledBtnDownload = false;
+          this.evaluationId = period.evaluation?.id;
         }
-      });
+        return this.paginated$
+      })
+    )
+    .subscribe((paginatedFilter: IProgressExamPaginatedFilter) => {
+      this.evaluationId && (paginatedFilter.evaluationId = this.evaluationId);
+      if(paginatedFilter){
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._reportService.getExamProgressPaginated(this.paginatedFilterCurrent)
+          .subscribe(paginated => {
+            this.progressExamPaginatedBehavior.next(paginated);
+          });
+      }
+    });
+
+
+    // this.paginated$.subscribe((paginatedFilter: IProgressExamPaginatedFilter) => {
+    //     if(paginatedFilter){
+    //       this.paginatedFilterCurrent = paginatedFilter;
+    //       this._reportService.getExamProgressPaginated(this.paginatedFilterCurrent)
+    //         .subscribe(paginated => {
+    //           this.progressExamPaginatedBehavior.next(paginated);
+    //         });
+    //     }
+    //   });
   }
 
   public downloadProgressExamReport() {
@@ -83,7 +109,7 @@ export class ExamProgressReportListComponent {
     ];
     const data: any[] = [];
 
-    this._reportService.getAllProgressExam(this.paginatedFilterCurrent.globalFilter, "")
+    this._reportService.getAllProgressExam(this.paginatedFilterCurrent.globalFilter, this.paginatedFilterCurrent.evaluationId)
       .subscribe((report: IProgressExamReport[]) => {
         report.forEach((progressExam: IProgressExamReport, index: number) => {
           index++;
