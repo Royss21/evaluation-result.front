@@ -1,4 +1,7 @@
 <section class="sidebar" [ngClass]="responsivew ? '' : 'resp-bk' ">
+  <div class="logo-sidebar">
+    <img src="/assets/images/logo_big.png" class="animation a6 logo" alt="logo img" width="150">
+  </div>
   <div class="sidebar_list">
     <div *ngIf="logingCollaborator === '0'">
       <ul *ngFor="let item of options; let i = index">
