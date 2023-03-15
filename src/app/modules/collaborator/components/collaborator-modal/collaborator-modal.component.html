@@ -207,8 +207,8 @@
               <mat-error *ngIf="controlsForm['documentNumber'].hasError('required')">
                 El número de documento es <strong>requerido</strong>.
               </mat-error>
-              <mat-error *ngIf="controlsForm['documentNumber'].hasError('maxlength')">
-                Se ha excedido el límite de caracteres
+              <mat-error *ngIf="controlsForm['documentNumber'].hasError('pattern')">
+                El formato ingresado no es correcto patt.
               </mat-error>
           </mat-form-field>
         </div>

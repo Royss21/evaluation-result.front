@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 import { ICollaborator } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
@@ -7,6 +7,8 @@ import { CustomValidations } from '@shared/helpers/custom-validations';
   providedIn: 'root'
 })
 export class CollaboratorBuilderService {
+
+  public maxLengthDocumentType: number = 8;
 
   constructor(private _fb: FormBuilder) { }
 
@@ -45,7 +47,8 @@ export class CollaboratorBuilderService {
         collaborator?.documentNumber || null,
         [
           Validators.required,
-          CustomValidations.NotEmpty
+          CustomValidations.NotEmpty,
+          collaborator?.identityDocumentId ? this._documentTypeValidator(collaborator?.identityDocumentId) : Validators.pattern("^[0-9]{8}")
         ]
       ],
       chargeId: [
@@ -77,4 +80,22 @@ export class CollaboratorBuilderService {
       dateEgress: [collaborator?.dateEgress || null]
     });
   }
+
+  private _documentTypeValidator(documentType?: number): ValidatorFn | undefined {
+    let validator;
+    switch (documentType) {
+      case 1: // DNI
+        this.maxLengthDocumentType = 8;
+        validator = Validators.pattern("^[0-9]{8}");
+        break;
+      case 2:  // PASAPORTE
+      case 3:  // C.E
+        this.maxLengthDocumentType = 12;
+        validator = Validators.pattern("^[a-zA-Z0-9]{12}");
+        break;
+    }
+    return validator;
+  }
 }
+
+

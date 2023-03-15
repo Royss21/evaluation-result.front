@@ -37,9 +37,8 @@ export class CollaboratorModalComponent {
   public gerencyList: IGerency[] = [];
 
   public documenTypeList: IIdentityDocument[] = [];
-  public maskDocument: any = '';
   public selectedDocumentType: number;
-  public maxLengthDocumentType: number = 8;
+  public maxLengthDocumentType: number;
 
   constructor(
     public _dialog: MatDialog,
@@ -55,7 +54,7 @@ export class CollaboratorModalComponent {
     data && this._setDefaultValues();
     this._getGerencies();
     this._getIdentityDocument();
-
+    this.maxLengthDocumentType = _collaboratorBuilderService.maxLengthDocumentType;
   }
 
   private _setDefaultValues(): void {
@@ -164,22 +163,16 @@ export class CollaboratorModalComponent {
   }
 
   public maxCharacter() {
+    this.controlsForm['documentNumber'].setValue(null);
     switch (this.selectedDocumentType) {
       case 1: // DNI
         this.maxLengthDocumentType = 8;
-        this.controlsForm['documentNumber'].setValidators(Validators.maxLength(8));
+        this.controlsForm['documentNumber'].setValidators([Validators.pattern("^[0-9]{8}")]);
         break;
-      case 2: // C.E
+      case 2:  // PASAPORTE
+      case 3:  // C.E
       this.maxLengthDocumentType = 12;
-      this.controlsForm['documentNumber'].setValidators(Validators.maxLength(12));
-        break;
-      case 3: // PASAPORTE
-      this.maxLengthDocumentType = 12;
-      this.controlsForm['documentNumber'].setValidators(Validators.maxLength(12));
-        break;
-      default:
-        this.maxLengthDocumentType = 15;
-        this.controlsForm['documentNumber'].setValidators(Validators.maxLength(15));
+      this.controlsForm['documentNumber'].setValidators([Validators.pattern("^[a-zA-Z0-9]{12}")]);
         break;
     }
   }
