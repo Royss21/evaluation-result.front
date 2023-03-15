@@ -51,7 +51,7 @@
   [formGroup]="assignChargeFormGroup"
 >
   <section class="content-padding-table">
-    <table class="table-custom" *ngIf="itemsForm.controls.length > 0" formArrayName="itemSubcomponents">
+    <table class="table-custom" formArrayName="itemSubcomponents">
       <thead>
         <tr class="mat-header-row">
           <th class="mat-header-cell fw-bold">Cargo</th>
@@ -156,6 +156,9 @@
               </ng-container>
             </div>
           </td>
+        </tr>
+        <tr *ngIf="itemsForm.controls.length <= 0">
+          <div class="text-center">No se encontró registros</div>
         </tr>
       </tbody>
     </table>

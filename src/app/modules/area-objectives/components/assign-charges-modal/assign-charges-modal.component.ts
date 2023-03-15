@@ -40,6 +40,13 @@ export class AssignChargesModalComponent implements OnInit {
     buttonLabelAccept: 'Aceptar'
   };
 
+  private errorItemPopPup: IPopupConfirm = {
+    icon: 'warning_amber',
+    iconColor: 'color-danger',
+    text: 'El valor de cada porcentaje no debe exceder de 100%.',
+    buttonLabelAccept: 'Aceptar'
+  };
+
   constructor(
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
@@ -178,17 +185,16 @@ export class AssignChargesModalComponent implements OnInit {
     const pMinimum = item.get('minimunPercentage')?.value;
     const pMaximum = item.get('maximunPercentage')?.value;
 
-    if (this._isNullOrEmpty(pRelative) || this._isNullOrEmpty(pMinimum) || this._isNullOrEmpty(pMaximum))
-      return;
-
-    if ((Number(pRelative) + Number(pMinimum) + Number(pMaximum)) !== 100)
-    {
+    if (item.get('relativeWeight').status == "INVALID" || item.get('minimunPercentage').status == "INVALID"  || item.get('maximunPercentage').status == "INVALID" ) {
       this._dialog.open(PopupConfirmComponent, {
-        data: this.isGreaterPopPup,
+        data: this.errorItemPopPup,
         autoFocus: false
       });
       return;
     }
+
+    if (this._isNullOrEmpty(pRelative) || this._isNullOrEmpty(pMinimum) || this._isNullOrEmpty(pMaximum))
+      return;
 
     const assignCharge: ISubcomponentValue = item.value as ISubcomponentValue;
     const dialogRef = this._dialog.open(PopupChooseComponent, {

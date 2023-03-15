@@ -34,6 +34,13 @@ export class AssignChargeModalComponent {
     buttonLabelAccept: 'Aceptar'
   };
 
+  private errorItemPopPup: IPopupConfirm = {
+    icon: 'warning_amber',
+    iconColor: 'color-danger',
+    text: 'El valor de cada porcentaje no debe exceder de 100%.',
+    buttonLabelAccept: 'Aceptar'
+  };
+
   constructor(
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
@@ -171,6 +178,14 @@ export class AssignChargeModalComponent {
     const pRelative = item.get('relativeWeight')?.value;
     const pMinimum = item.get('minimunPercentage')?.value;
     const pMaximum = item.get('maximunPercentage')?.value;
+
+    if (item.get('relativeWeight').status == "INVALID" || item.get('minimunPercentage').status == "INVALID"  || item.get('maximunPercentage').status == "INVALID" ) {
+      this._dialog.open(PopupConfirmComponent, {
+        data: this.errorItemPopPup,
+        autoFocus: false
+      });
+      return;
+    }
 
     if (this._isNullOrEmpty(pRelative) || this._isNullOrEmpty(pMinimum) || this._isNullOrEmpty(pMaximum))
       return;

@@ -50,7 +50,7 @@
   [formGroup]="assignChargeFormGroup"
 >
   <section class="content-padding-table">
-    <table class="table-custom" *ngIf="itemsForm.controls.length > 0" formArrayName="itemSubcomponents">
+    <table class="table-custom" formArrayName="itemSubcomponents">
       <thead>
         <tr class="mat-header-row">
           <th class="mat-header-cell fw-bold">Cargo</th>
@@ -84,7 +84,7 @@
                     appOnlyNumber
                     maxlength="3"
                     class="fs-6 text-right"
-                    
+
                   >
                   <span matSuffix class="fs-6 pl-3 pb-3">%</span>
                 </mat-form-field>
