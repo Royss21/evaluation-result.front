@@ -34,13 +34,6 @@ export class AssignChargeModalComponent {
     buttonLabelAccept: 'Aceptar'
   };
 
-  private isGreaterPopPup: IPopupConfirm = {
-    icon: 'warning_amber',
-    iconColor: 'color-danger',
-    text: 'La suma de los valores debe ser 100%',
-    buttonLabelAccept: 'Aceptar'
-  };
-
   constructor(
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
@@ -181,15 +174,6 @@ export class AssignChargeModalComponent {
 
     if (this._isNullOrEmpty(pRelative) || this._isNullOrEmpty(pMinimum) || this._isNullOrEmpty(pMaximum))
       return;
-
-    if ((Number(pRelative) + Number(pMinimum) + Number(pMaximum)) !== 100)
-    {
-      this._dialog.open(PopupConfirmComponent, {
-        data: this.isGreaterPopPup,
-        autoFocus: false
-      });
-      return;
-    }
 
     const assignCharge: ISubcomponentValue = item.value as ISubcomponentValue;
     const dialogRef = this._dialog.open(PopupChooseComponent, {
