@@ -1,104 +1,29 @@
-<section class="sidebar" [ngClass]="responsivew ? '' : 'resp-bk' ">
-  <div class="logo-sidebar">
-    <img src="/assets/images/logo_big.png" class="animation a6 logo" alt="logo img" width="150">
+<div class="sidebar close">
+  <div class="logo-details">
+    <span class="logo_name">LRC</span>
   </div>
-  <div class="sidebar_list">
-    <div *ngIf="logingCollaborator === '0'">
-      <ul *ngFor="let item of options; let i = index">
-        <li (click)="goToPage(item.link, item.subCategories, i)" [ngClass]="getIndex == i ? 'isActive' : ''">
+  <mat-divider class="divider"></mat-divider>
+  <section *ngIf="logingCollaborator === '0'">
+    <ul *ngFor="let item of options; let i = index" class="nav-links">
+      <li>
+        <div class="iocn-link">
           <a>
-            <mat-icon>{{item.icon}}</mat-icon>
-            <p class="mb-0 ms-3" [hidden]="!visibleSidebar">{{item.name}}</p>
-            <mat-icon *ngIf="item.subCategories.length" (click)="toggleOption(i)" >arrow_drop_down</mat-icon>
+            <mat-icon (click)="goToPage(item.link, item.subCategories, i)">{{item.icon}}</mat-icon>
+            <span (click)="goToPage(item.link, item.subCategories, i)" class="link_name">{{item.name}}</span>
           </a>
-        </li>
-        <mat-divider *ngIf="!(getIndex == i)" class="divider"></mat-divider>
-        <div *ngFor="let sub of item.subCategories" [ngClass]="getIndex == i ? 'show-card' : 'hide-card'">
-          <a class="sub-items"  (click)="goToSubPage(item.link, sub)">
-            <p>{{sub.name}}</p>
-          </a>
+          <mat-icon (click)="showSubMenu($event)" *ngIf="item.subCategories.length > 0" class='arrow'>arrow_drop_down</mat-icon>
+          <ul *ngIf="item.subCategories.length <= 0" class="sub-menu">
+            <li><a (click)="goToPage(item.link, item.subCategories, i)" class="link_name">{{item.name}}</a></li>
+          </ul>
         </div>
-      </ul>
-    </div>
-    <div *ngIf="logingCollaborator === '1'">
-      <ul *ngIf="typeViewCollaborator === '1'">
-        <li class="isActive" (click)="goToEvaluationDetail()">
-          <a>
-            <mat-icon>pinch</mat-icon>
-            <p class="mb-0 ms-3" [hidden]="!visibleSidebar">Evaluación detalle</p>
-          </a>
-        </li>
-      </ul>
-      <ul *ngIf="typeViewCollaborator === '2'">
-        <li class="isActive" (click)="goToReviewEvaluation()">
-          <a>
-            <mat-icon>pinch</mat-icon>
-            <p class="mb-0 ms-3" [hidden]="!visibleSidebar">Revision de Evaluacion</p>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- <mat-nav-list class="navigation-list">
-
-  <mat-list-item
-    routerLinkActive="list-item-active"
-    [routerLink]="'/period'"
-    [routerLinkActiveOptions]="{ exact: true}">
-    <mat-icon>arrow_drop_down</mat-icon>
-    <span class="navigation-title">Periodo</span>
-  </mat-list-item>
-
-  <mat-list-item
-    routerLinkActive="list-item-active"
-    [routerLink]="'/evaluation'"
-    [routerLinkActiveOptions]="{ exact: true}">
-    <mat-icon>arrow_drop_down</mat-icon>
-    <span class="navigation-title">Evaluación</span>
-  </mat-list-item>
-
-  <mat-list-item
-      routerLinkActive="list-item-active"
-      [routerLink]="'/maintenance'"
-      [routerLinkActiveOptions]="{ exact: true}">
-      <mat-icon>arrow_drop_down</mat-icon>
-      <span class="navigation-title">Mantenimiento</span>
-  </mat-list-item>
-
-  <mat-list-item
-      routerLinkActive="list-item-active"
-      [routerLink]="'/configuration'"
-      [routerLinkActiveOptions]="{ exact: true}">
-      <mat-icon>settings</mat-icon>
-      <span class="navigation-title">Configuracion</span>
-  </mat-list-item>
-
-  <mat-list-item
-      routerLinkActive="list-item-active"
-      [routerLink]="'/maintenance'"
-      [routerLinkActiveOptions]="{ exact: true}">
-      <mat-icon>settings</mat-icon>
-      <span class="navigation-title">Mantenimiento</span>
-  </mat-list-item>
-
-
-  <mat-list-item  class="d-md-none">
-    <mat-icon>arrow_drop_down</mat-icon>
-    <span class="navigation-title">cerrar</span>
-  </mat-list-item>
-
-</mat-nav-list>
-
-<div class="userContainer">
-  <div class="userOptionsContainer">
-    <div class="maskPhoto">
-      <img src="assets/icons/24_home-alt.svguser-img.svg" alt="" />
-    </div>
-  </div>
-  <div class="userInformationBox">
-    <span>asdsadsasdassasasa</span>
-  </div>
-</div> -->
-
+        <ul class="sub-menu">
+          <li class="link_name">{{item.name}}</li>
+          <li *ngFor="let sub of item.subCategories">
+            <a (click)="goToSubPage(item.link, sub)">{{sub.name}}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+  <div class="container-back"><mat-icon class="back" (click)="closeSidebar()">arrow_back</mat-icon></div>
+</div>

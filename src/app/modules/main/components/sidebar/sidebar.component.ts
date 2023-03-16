@@ -1,7 +1,8 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ElementRef } from '@angular/core';
 import { MainBehaviorsService } from '@modules/main/services';
 import { IMenu } from '@modules/main/interfaces/menu.interface';
+import { fromEvent, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,7 +13,6 @@ export class SidebarComponent implements OnInit {
 
   visibleSidebar: boolean = true;
   responsivew:boolean = true ;
-  getIndex:number = -1;
   logingCollaborator: string = '';
   typeViewCollaborator: string = '';
   options: any [] = [];
@@ -23,7 +23,6 @@ export class SidebarComponent implements OnInit {
     ) {}
 
   ngOnInit(){
-
     this.logingCollaborator = localStorage.getItem('logingCollaborator') ?? "";
     this.typeViewCollaborator = localStorage.getItem('typeViewCollaborator') ?? "";
 
@@ -43,21 +42,18 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  public toggleOption(index: number): void {
-    if (this.getIndex === index) {
-      let opt = document.querySelector('isActive');
-      opt?.classList.toggle('show-card');
-    }
+  showSubMenu(e: any) {
+    let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+    arrowParent.classList.toggle("showMenu");
+    this._mainBehaviorService.emitSiderbarToggle();
   }
 
   goToPage(link: string, subCategories: any, index:any) {
-
-    this.getIndex = index;
-    this._router.navigateByUrl(link);
+    this._router.navigateByUrl(`/${link}`);
   }
 
   goToSubPage(linkFather: string, item: any) {
-    this._router.navigateByUrl(`${linkFather}/${item.link}`);
+    this._router.navigateByUrl(`/${linkFather}/${item.link}`);
   }
 
   goToEvaluationDetail(){
@@ -69,5 +65,10 @@ export class SidebarComponent implements OnInit {
     const evaluationId = localStorage.getItem('evaluationId');
     const collaboratorId = localStorage.getItem('collaboratorId');
     this._router.navigateByUrl(`/evaluation/${evaluationId}/collaborator/${ collaboratorId}/review`);
+  }
+
+  closeSidebar(): void {
+    let sidebar = document.querySelector(".sidebar");
+    sidebar?.classList.toggle("close");
   }
 }

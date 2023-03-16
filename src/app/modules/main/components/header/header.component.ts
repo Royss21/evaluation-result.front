@@ -21,6 +21,8 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleSideBar() {
+    let sidebar = document.querySelector(".sidebar");
+    sidebar?.classList.toggle("close");
     this._mainBehaviorService.emitSiderbarToggle();
   }
 
