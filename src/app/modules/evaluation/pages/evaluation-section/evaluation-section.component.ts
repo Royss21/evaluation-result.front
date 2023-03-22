@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PeriodService } from '@core/services/period/period.service';
+import { EvaluationBehaviorsService } from '@modules/evaluation/services/evaluation-behaviors.service';
 import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
 import { IPeriod } from '@modules/period/interfaces/period.interface';
 
@@ -15,6 +16,7 @@ export class EvaluationSectionComponent {
 
   constructor(
     private _periodService: PeriodService,
+    public _evaluationBehavior: EvaluationBehaviorsService,
     private _router: Router
   ) {
 
@@ -22,6 +24,10 @@ export class EvaluationSectionComponent {
 
   ngOnInit(): void{
     this.getEvaluationInProgress();
+    this._evaluationBehavior.evaluationCurrent$
+      .subscribe(() => {
+        this.periodInProgress = null;
+      });
   }
 
   getEvaluationInProgress(): void{

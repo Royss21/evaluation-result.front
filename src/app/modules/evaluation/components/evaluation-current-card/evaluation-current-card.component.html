@@ -63,5 +63,19 @@
       </div>
     </div>
 
+    <div  *ngIf="showButtonDelete">
+      <hr>
+      <button
+        mat-mini-fab
+        color="warn"
+        type="button"
+        matTooltip="Eliminar fórmula"
+        class="btn-action-xs"
+        (click)="deleted()"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
   </div>
 </mat-card>

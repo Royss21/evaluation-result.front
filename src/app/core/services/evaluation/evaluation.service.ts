@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { IEvaluationCreate } from '@modules/evaluation/interfaces/evaluation-create.interface';
+import { IEvaluationCreate, IEvaluationRes } from '@modules/evaluation/interfaces/evaluation-create.interface';
 import { IEvaluationDetail } from '@modules/evaluation/interfaces/evaluation-detail.interface';
 import { IEvaluationFinished } from '@modules/evaluation/interfaces/evaluation-finished.interface';
 import { IEvaluation } from '@modules/evaluation/interfaces/evaluation.interface';
@@ -33,12 +33,16 @@ export class EvaluationService {
     return this._apiService.get<IEvaluationDetail[]>(`${this._url}/all-detail`);
   }
 
-  create(request: IEvaluationCreate): Observable<IEvaluationCreate> {
-    return this._apiService.post<IEvaluationCreate>(`${this._url}`, request);
+  create(request: IEvaluationCreate): Observable<IEvaluationRes> {
+    return this._apiService.post<IEvaluationRes>(`${this._url}`, request);
   }
 
   getAllFinished(): Observable<IEvaluationFinished[]> {
     return this._apiService.get<IEvaluationFinished[]>(`${this._url}/finished`);
+  }
+
+  delete(id: string): Observable<boolean> {
+    return this._apiService.delete<boolean>(`${this._url}/{${id}`);
   }
 
 }

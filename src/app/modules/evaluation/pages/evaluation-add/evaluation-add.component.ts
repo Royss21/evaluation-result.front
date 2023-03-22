@@ -134,8 +134,25 @@ export class EvaluationAddComponent {
   private _save(evaluation : IEvaluationCreate){
     this._evaluationService.create(evaluation)
       .subscribe(evaluation =>{
-
+        this._showConfirmMessage(evaluation.id);
       })
+  }
+
+  private _showConfirmMessage(evaluationId: string): void {
+    const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
+      data: {
+        icon: 'check_circle',
+        iconColor: 'color-primary',
+        text: 'Se ha creado la evaluación exitosamente',
+        buttonLabelAccept: 'Aceptar'
+      },
+      autoFocus: false,
+      restoreFocus: false
+    });
+
+    dialogRefConfirm.afterClosed().subscribe(() => {
+      this._router.navigateByUrl(`/evaluation/${evaluationId}/detail`);
+    });
   }
 
   //TODO: ON CHANGES VALUES

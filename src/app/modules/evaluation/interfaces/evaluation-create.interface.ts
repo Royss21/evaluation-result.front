@@ -10,6 +10,16 @@ export interface IEvaluationCreate {
   evaluationComponentStages: IEvaluationComponentStage[],
 }
 
+
+export interface IEvaluationRes {
+  id: string;
+  periodId: number;
+  name: string;
+  startDate: Date;
+  endDate: Date;
+  weight: number;
+}
+
 export interface IEvaluationComponent {
   componentId: number
   checked: boolean,

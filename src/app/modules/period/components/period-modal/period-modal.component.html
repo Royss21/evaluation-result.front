@@ -101,6 +101,11 @@
                 <mat-error *ngIf="controlsForm['endDate'].hasError('required')">
                   La fecha termina es <strong>requerido</strong>.
                 </mat-error>
+
+                <mat-error *ngIf="controlsForm['endDate']?.hasError('invalidDate')">
+                  La fecha termina <strong>debe ser mayor que fecha inicia</strong>.
+                </mat-error>
+
                 </mat-form-field>
             </div>
         </div>

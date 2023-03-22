@@ -13,9 +13,13 @@ export class EvaluationBehaviorsService {
   private _flagLeaderBehavior: BehaviorSubject<any> = new BehaviorSubject(null);
   flagLeader$: Observable<any>;
 
+  private _evaluationCurrentBehavior: BehaviorSubject<any> = new BehaviorSubject(null);
+  evaluationCurrent$: Observable<any>;
+
   constructor() {
     this.goToEvaluateStage$ = this._goToEvaluateStageBehavior.asObservable();
     this.flagLeader$ = this._flagLeaderBehavior.asObservable();
+    this.evaluationCurrent$ = this._evaluationCurrentBehavior.asObservable();
   }
 
   gotoEvaluateStage(stageId: number){
@@ -28,6 +32,10 @@ export class EvaluationBehaviorsService {
 
   setFlagLeader( flagLeader: ICollaboratorLeaderEvaluate){
     this._flagLeaderBehavior.next(flagLeader);
+  }
+
+  removeCardEvaluationCurrent(){
+    this._evaluationCurrentBehavior.next(null);
   }
 
 }

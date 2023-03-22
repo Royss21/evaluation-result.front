@@ -36,6 +36,10 @@ export class PeriodModalComponent {
     this.periodFormGroup = _periodBuilderService.buildPeriodForm(data);
   }
 
+  ngOnInit(){
+    this._onChangesValuesForm();
+  }
+
   get controlsForm(): { [key: string]: AbstractControl } {
     return this.periodFormGroup.controls;
   }
@@ -64,6 +68,39 @@ export class PeriodModalComponent {
     dialogRefConfirm.afterClosed().subscribe(() => {
       this.closeOrReset();
     });
+  }
+
+  private _onChangesValuesForm(): void {
+
+    this.controlsForm['startDate']?.valueChanges.subscribe(value => {
+      if(value)
+        this._compareDates();
+    });
+
+    this.controlsForm['endDate']?.valueChanges.subscribe(value => {
+      if(value)
+        this._compareDates();
+    });
+  }
+
+  private _compareDates() {
+
+    const startDateCorp = this.controlsForm['startDate']?.value;
+    const endDateCorp = this.controlsForm['endDate']?.value;
+
+    if (this._toDate(startDateCorp)?.getTime() >= this._toDate(endDateCorp)?.getTime())
+      this.controlsForm['endDate']?.setErrors({'invalidDate': true});
+    else
+      this.controlsForm['endDate']?.setErrors(null);
+  }
+
+  private _toDate(date: Date | string, numberAdd: number = 0): Date {
+    const dateLocal = (typeof date === 'string') ? new Date(date) : date;
+    if (numberAdd !== 0) {
+      dateLocal.setDate(dateLocal.getDate() + (numberAdd))
+      return dateLocal;
+    } else
+      return dateLocal;
   }
 
   closeModal(): void {
