@@ -16,10 +16,20 @@
     fxFlex.sm="100%"
     fxFlex.xs="100%"
   >
-    <app-evaluation-current-card
-      [periodEvaluation]="evaluationInProgress"
-      [stagesRangeDate]="stagesRangeDate"
-    ></app-evaluation-current-card>
+    <mat-card>
+      <div
+        fxLayout="column"
+        fxLayoutAlign="start"
+        fxLayoutGap="10px grid"
+        fxflexfill
+        class="p-3"
+      >
+        <app-evaluation-current-card
+          [periodEvaluation]="evaluationInProgress"
+          [stagesRangeDate]="stagesRangeDate"
+        ></app-evaluation-current-card>
+      </div>
+    </mat-card> 
   </div>
 
   <div

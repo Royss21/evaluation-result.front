@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
+import { EvaluationService } from '@core/services/evaluation/evaluation.service';
 import { PeriodService } from '@core/services/period/period.service';
 import { EvaluationBehaviorsService } from '@modules/evaluation/services/evaluation-behaviors.service';
 import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
@@ -16,6 +19,8 @@ export class EvaluationSectionComponent {
 
   constructor(
     private _periodService: PeriodService,
+    private _evaluationService: EvaluationService,
+    private _dialog: MatDialog,
     public _evaluationBehavior: EvaluationBehaviorsService,
     private _router: Router
   ) {
@@ -26,7 +31,8 @@ export class EvaluationSectionComponent {
     this.getEvaluationInProgress();
     this._evaluationBehavior.evaluationCurrent$
       .subscribe(() => {
-        this.periodInProgress = null;
+        if(this.periodInProgress?.evaluation)
+          this.periodInProgress.evaluation= null;
       });
   }
 
@@ -54,6 +60,28 @@ export class EvaluationSectionComponent {
 
   goEvaluationDetail(){
     this._router.navigateByUrl(`/evaluation/${this.periodInProgress?.evaluation?.id}/detail`);
+  }
+
+  deleted(){
+    this._evaluationService.delete(this.periodInProgress?.evaluation?.id || "")
+      .subscribe(() => {
+        this._showConfirmMessage();
+      })
+  }
+
+  private _showConfirmMessage(): void {
+    const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
+      data: {
+        icon: 'check_circle',
+        iconColor: 'color-primary',
+        text: 'Se ha eliminado la evaluación exitosamente.',
+        buttonLabelAccept: 'Aceptar'
+      },
+      autoFocus: false,
+      restoreFocus: false
+    });
+
+    dialogRefConfirm.afterClosed().subscribe(() => this._evaluationBehavior.removeCardEvaluationCurrent());
   }
 
 }

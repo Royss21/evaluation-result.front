@@ -16,13 +16,39 @@
     fxFlex.sm="100%"
     fxFlex.xs="100%"
     *ngIf="periodInProgress?.evaluation"
-    (click)="goEvaluationDetail()"
-    class="cursor-pointer"
+
   >
-    <app-evaluation-current-card
-      [periodEvaluation]="periodInProgress"
-      [showButtonDelete]="true"
-    ></app-evaluation-current-card>
+    <mat-card>
+      <div
+        fxLayout="column"
+        fxLayoutAlign="start"
+        fxLayoutGap="10px grid"
+        fxflexfill
+        class="p-3"
+      >
+        <app-evaluation-current-card
+          (click)="goEvaluationDetail()"
+          class="cursor-pointer"
+          [periodEvaluation]="periodInProgress"
+          [showButtonDelete]="true"
+        ></app-evaluation-current-card>
+
+        <div>
+          <hr>
+          <button
+            mat-mini-fab
+            color="warn"
+            type="button"
+            matTooltip="Eliminar fórmula"
+            class="btn-action-xs"
+            (click)="deleted()"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+      </div>  
+    </mat-card>
   </div>
 
 

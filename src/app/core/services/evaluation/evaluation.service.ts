@@ -42,7 +42,7 @@ export class EvaluationService {
   }
 
   delete(id: string): Observable<boolean> {
-    return this._apiService.delete<boolean>(`${this._url}/{${id}`);
+    return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
 
 }

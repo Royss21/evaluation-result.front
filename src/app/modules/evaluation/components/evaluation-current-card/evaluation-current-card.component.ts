@@ -22,8 +22,6 @@ export class EvaluationCurrentCardComponent implements OnInit {
   leaderFlag: ICollaboratorLeaderEvaluate;
   constructor(
     public _evaluationBehavior: EvaluationBehaviorsService,
-    private _evaluationService : EvaluationService,
-    private _dialog: MatDialog,
   ){}
 
   ngOnInit(){
@@ -35,27 +33,7 @@ export class EvaluationCurrentCardComponent implements OnInit {
     }
   }
 
-  deleted(){
-    this._evaluationService.delete(this.periodEvaluation?.evaluation?.id || "")
-      .subscribe(() => {
-        this._showConfirmMessage();
-      })
-  }
 
-  private _showConfirmMessage(): void {
-    const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
-      data: {
-        icon: 'check_circle',
-        iconColor: 'color-primary',
-        text: 'Se ha eliminado la evaluación exitosamente.',
-        buttonLabelAccept: 'Aceptar'
-      },
-      autoFocus: false,
-      restoreFocus: false
-    });
-
-    dialogRefConfirm.afterClosed().subscribe(() => this._evaluationBehavior.removeCardEvaluationCurrent());
-  }
 
   enableStage(stageId : number){
     if(ConstantsGeneral.stages.feedback === stageId)
