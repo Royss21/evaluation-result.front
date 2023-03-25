@@ -17,11 +17,8 @@
           Objetivos corporativos
           {{ resultCorporateObjectives.weightHierarchy * 100 | numberFormat }}%
         </ng-template>
-        <div
-          fxLayout="column"
-          class="p-3"
-        >
-          <ng-container *ngFor="let objetive of resultCorporateObjectives.resultObjectives; let i = index">
+        <div fxLayout="column" class="p-3">
+          <ng-container *ngFor="let objetive of resultCorporateObjectives.resultObjectives">
             <div fxLayout="column">
               <div fxLayout="row" fxLayoutAlign="start center" class="text-center mb-2">
                 <span class="fw-bold text-muted">{{ objetive.subcomponentName }}</span>
@@ -56,27 +53,24 @@
             </div>
           </ng-container>
           <div class="container-totals">
-              <div fxLayout="column" class="text-center">
-                <strong>Subtotal</strong>
-                <span>{{ resultCorporateObjectives.subTotal * 100 | numberFormat }}</span>
-              </div>
-              <div fxLayout="column" class="text-center">
-                <strong>Subtotal - Excedente</strong>
-                <span>{{ resultCorporateObjectives.excessSubtotal * 100 | numberFormat }}</span>
-              </div>
-              <div fxLayout="column" class="text-center">
-                <strong>Total</strong>
-                <span>{{ resultCorporateObjectives.total * 100 | numberFormat }}</span>
-              </div>
-              <div fxLayout="column" class="text-center">
-                <strong>Excedente</strong>
-                <span>{{ resultCorporateObjectives.excess * 100 | numberFormat }}</span>
-              </div>
+            <div fxLayout="column" class="text-center">
+              <strong>Subtotal</strong>
+              <span>{{ resultCorporateObjectives.subTotal * 100 | numberFormat }}</span>
+            </div>
+            <div fxLayout="column" class="text-center">
+              <strong>Subtotal - Excedente</strong>
+              <span>{{ resultCorporateObjectives.excessSubtotal * 100 | numberFormat }}</span>
+            </div>
+            <div fxLayout="column" class="text-center">
+              <strong>Total</strong>
+              <span>{{ resultCorporateObjectives.total * 100 | numberFormat }}</span>
+            </div>
+            <div fxLayout="column" class="text-center">
+              <strong>Excedente</strong>
+              <span>{{ resultCorporateObjectives.excess * 100 | numberFormat }}</span>
+            </div>
           </div>
-          <div
-            fxFlex="100"
-            class="mt-3"
-          >
+          <div fxFlex="100" class="mt-3">
             <mat-form-field fxFill appearance="outline">
               <mat-label>Comentario de evaluación</mat-label>
               <textarea
@@ -94,124 +88,58 @@
       </mat-tab>
       <mat-tab *ngIf="resultAreaObjectives">
         <ng-template mat-tab-label>
-          <img width="30" class="p-0" src="/assets/images/kpi.png">
+          <img width="30" class="p-0" src="/assets/images/kpi.png" alt="img kpi">
           Objetivos de area
           {{ resultAreaObjectives.weightHierarchy * 100 | numberFormat }}%
         </ng-template>
-        <div
-          fxLayout="column"
-          class="p-3"
-        >
-          <div
-            fxFlex="100"
-            *ngFor="let objetive of resultAreaObjectives.resultObjectives"
-          >
-            <div fxLayout="column" class="mt-3">
-              <div fxFlex="100" class="mb-2">
-                {{ objetive.subcomponentName }}
+        <div fxLayout="column" class="p-3">
+          <ng-container *ngFor="let objetive of resultAreaObjectives.resultObjectives">
+            <div fxLayout="column">
+              <div fxLayout="row" fxLayoutAlign="start center" class="text-center mb-2">
+                <span class="fw-bold text-muted">{{ objetive.subcomponentName }}</span>
               </div>
-              <div fxFlex="20">
-                <div fxLayout="row wrap">
-                  <div fxFlex="20">
-                    <div fxLayout="column" class="text-center">
-                      <div fxFlex="100">
-                        <strong>Peso Relativo</strong>
-                      </div>
-                      <div fxFlex="100">
-                        {{ objetive.weightRelative * 100 | numberFormat }}
-                      </div>
-                    </div>
+                <section class="container-items">
+                  <div fxLayout="column" class="text-center">
+                    <strong>Peso Relativo</strong>
+                    <span>{{ objetive.weightRelative * 100 | numberFormat }}</span>
                   </div>
-                  <div fxFlex="20">
-                    <div fxLayout="column" class="text-center">
-                      <div fxFlex="100">
-                        <strong>% Minimo</strong>
-                      </div>
-                      <div fxFlex="100">
-                        {{ objetive.minimunPercentage * 100 | numberFormat }}
-                      </div>
-                    </div>
+                  <div fxLayout="column" class="text-center">
+                    <strong>% Minimo</strong>
+                    <span>{{ objetive.minimunPercentage * 100 | numberFormat }}</span>
                   </div>
-                  <div fxFlex="20">
-                    <div fxLayout="column" class="text-center">
-                      <div fxFlex="100">
-                        <strong>Meta</strong>
-                      </div>
-                      <div fxFlex="100">
-                        {{ objetive.maximunPercentage * 100 | numberFormat }}
-                      </div>
-                    </div>
+                  <div fxLayout="column" class="text-center">
+                    <strong>Meta</strong>
+                    <span>{{ objetive.maximunPercentage * 100 | numberFormat }}</span>
                   </div>
-                  <div fxFlex="20">
-                    <div fxLayout="column" class="text-center">
-                      <div fxFlex="100">
-                        <strong>Resultado</strong>
-                      </div>
-                      <div fxFlex="100">
-                        {{ objetive.result * 100 | numberFormat }}
-                      </div>
-                    </div>
+                  <div fxLayout="column" class="text-center">
+                    <strong>Resultado</strong>
+                    <span>{{ objetive.result * 100 | numberFormat }}</span>
                   </div>
-                  <div fxFlex="20">
-                    <div fxLayout="column" class="text-center">
-                      <div fxFlex="100">
-                        <strong>% Cumplimiento</strong>
-                      </div>
-                      <div fxFlex="100">
-                        {{ objetive.compliance * 100 | numberFormat }}
-                      </div>
-                    </div>
+                  <div fxLayout="column" class="text-center">
+                    <strong>% Cumplimiento</strong>
+                    <span>{{ objetive.compliance * 100 | numberFormat }}</span>
                   </div>
-                  <div fxFlex="20">
-                    <div fxLayout="column" class="text-center">
-                      <div fxFlex="100">
-                        <strong>Puntos</strong>
-                      </div>
-                      <div fxFlex="100">
-                        {{ objetive.points * 100 | numberFormat }}
-                      </div>
-                    </div>
+                  <div fxLayout="column" class="text-center">
+                    <strong>Puntos</strong>
+                    <span>{{ objetive.points * 100 | numberFormat }}</span>
                   </div>
-                </div>
+                </section>
+                <hr class="mt-3"/>
+            </div>
+          </ng-container>
+          <div class="container-totals">
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <div fxLayout="column" class="text-center">
+                <strong>Subtotal</strong>
+                <span>{{ resultAreaObjectives.subTotal * 100 | numberFormat }}</span>
+              </div>
+              <div fxLayout="column" class="text-center">
+                <strong>Total</strong>
+                <span>{{ resultAreaObjectives.total * 100 | numberFormat }}</span>
               </div>
             </div>
           </div>
-          <mat-divider class="mt-4 mb-4"></mat-divider>
-          <div
-            fxFlex="100"
-          >
-            <div
-              fxLayout="row"
-              fxLayoutAlign="center center"
-            >
-              <div fxFlex="25">
-                <div
-                  fxLayout="column"
-                  class="text-center"
-                >
-                  <div fxFlex="100"><strong>Subtotal</strong></div>
-                  <div fxFlex="100">
-                    {{ resultAreaObjectives.subTotal * 100 | numberFormat }}
-                  </div>
-                </div>
-              </div>
-              <div fxFlex="25">
-                <div
-                  fxLayout="column"
-                  class="text-center"
-                >
-                  <div fxFlex="100"><strong>Total</strong></div>
-                  <div fxFlex="100">
-                    {{ resultAreaObjectives.total * 100 | numberFormat }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            fxFlex="100"
-            class="mt-3"
-          >
+          <div fxFlex="100" class="mt-3">
             <mat-form-field fxFill appearance="outline">
               <mat-label>Comentario de evaluación</mat-label>
               <textarea
@@ -229,214 +157,105 @@
       </mat-tab>
       <mat-tab *ngIf="resultCompetencies">
         <ng-template mat-tab-label>
-          <img width="30" class="p-0" src="/assets/images/comp.png">
+          <img width="30" class="p-0" src="/assets/images/comp.png" alt="img competences">
           Competencias
           {{ resultCompetencies.weightHierarchy * 100 | numberFormat }}%
         </ng-template>
-        <div
-          fxLayout="column"
-          class="p-3"
-        >
-          <div
-            fxFlex="100"
-            *ngFor="let objetive of resultCompetencies.resultObjectives"
-          >
+        <div fxLayout="column" class="p-3">
+          <ng-container *ngFor="let objetive of resultCompetencies.resultObjectives">
             <div fxLayout="column" class="mt-3">
-              <div fxFlex="100" class="mb-2">
-                {{ objetive.subcomponentName }}
+              <div fxLayout="row" fxLayoutAlign="start center" class="text-center mb-2">
+                <span class="fw-bold text-muted">{{ objetive.subcomponentName }}</span>
               </div>
-              <div
-                fxFlex="100"
-              >
-                <div
-                  fxLayout="row"
-                >
-                  <div fxFlex="50">
-                    <div
-                      fxLayout="column"
-                      class="text-center"
-                    >
-                      <div fxFlex="100"><strong>Puntaje Competencia</strong></div>
-                      <div fxFlex="100">
-                        {{ objetive.points | numberFormat }}
-                      </div>
-                    </div>
-                  </div>
-                  <div fxFlex="50">
-                    <div
-                      fxLayout="column"
-                      class="text-center"
-                    >
-                      <div fxFlex="100"><strong>Puntaje Competencia Calibrado</strong></div>
-                      <div fxFlex="100">
-                        {{ objetive.pointsCalibrated | numberFormat }}
-                      </div>
-                    </div>
-                  </div>
+
+              <div class="container-subtitle-competences">
+                <div fxLayout="column" class="text-center">
+                  <strong>Puntaje Competencia</strong>
+                  <span>{{ objetive.points | numberFormat }}</span>
+                </div>
+                <div fxLayout="column" class="text-center">
+                  <strong>Puntaje Competencia Calibrado</strong>
+                  <span>{{ objetive.pointsCalibrated | numberFormat }}</span>
                 </div>
               </div>
-              <div fxFlex="100">
-                <div
-                  fxLayout="row wrap"
-                >
-                  <div
-                    fxFlex="30"
-                    *ngFor="let conduct of objetive.resultConducts"
-                  >
-                    <div fxLayout="column" class="mt-3">
-                      <div fxFlex="100" class="mb-2">
-                        {{ conduct.conductDescription }}
+
+              <section class="container-conducts">
+                <ng-container *ngFor="let conduct of objetive.resultConducts">
+                  <div fxLayout="column" class="text-center my-2">
+                    <span>{{ conduct.conductDescription }}</span>
+                    <div class="mt-3" fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center center">
+                      <div fxLayout="column" class="text-center">
+                        <strong>Puntaje</strong>
+                        <span>{{ conduct.conductPoints | numberFormat }}</span>
                       </div>
-                      <div fxFlex="100">
-                        <div fxLayout="row wrap">
-                          <div fxFlex="50">
-                            <div fxLayout="column" class="text-center">
-                              <div fxFlex="100">
-                                <strong>Puntaje</strong>
-                              </div>
-                              <div fxFlex="100">
-                                {{ conduct.conductPoints | numberFormat }}
-                              </div>
-                            </div>
-                          </div>
-                          <div fxFlex="50">
-                            <div fxLayout="column" class="text-center">
-                              <div fxFlex="100">
-                                <strong>Calibrado</strong>
-                              </div>
-                              <div fxFlex="100">
-                                {{ conduct.conductPointsCalibrated | numberFormat }}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                      <div fxLayout="column" class="text-center">
+                        <strong>Calibrado</strong>
+                        <span>{{ conduct.conductPointsCalibrated | numberFormat }}</span>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                </ng-container>
+              </section>
+
+              <hr class="mt-3"/>
+            </div>
+          </ng-container>
+
+          <div class="container-totals-competences">
+            <div fxLayout="column" class="text-center">
+              <strong>Subtotal</strong>
+              <span>{{ resultCompetencies.subTotal * 100 | numberFormat }}</span>
+            </div>
+
+            <div fxLayout="column" class="text-center">
+              <strong>% Cumplimiento</strong>
+              <span>{{ resultCompetencies.complianceCompetence * 100 | numberFormat }}</span>
+            </div>
+
+            <div fxLayout="column" class="text-center">
+              <strong>Total</strong>
+              <span>{{ resultCompetencies.total * 100 | numberFormat }}</span>
+            </div>
+
+            <div fxLayout="column" class="text-center">
+              <strong>Subtotal Calibrado</strong>
+              <span>{{ resultCompetencies.subTotalCalibrated * 100 | numberFormat }}</span>
+            </div>
+
+            <div fxLayout="column" class="text-center">
+              <strong>% Cumplimiento Calibrado</strong>
+              <span>{{ resultCompetencies.complianceCompetenceCalibrated * 100 | numberFormat }}</span>
+            </div>
+
+            <div fxLayout="column" class="text-center">
+              <strong>Total Calibrado</strong>
+              <span>{{ resultCompetencies.totalCalibrated * 100 | numberFormat }}</span>
             </div>
           </div>
-          <mat-divider class="mt-4 mb-4"></mat-divider>
-          <div
-            fxFlex="100"
-          >
-            <div
-              fxLayout="row"
-              fxLayoutAlign="center center"
-              class="mb-3"
-            >
-              <div fxFlex="30">
-                <div
-                  fxLayout="column"
-                  class="text-center"
-                >
-                  <div fxFlex="100"><strong>Subtotal</strong></div>
-                  <div fxFlex="100">
-                    {{ resultCompetencies.subTotal * 100 | numberFormat }}
-                  </div>
-                </div>
-              </div>
-              <div fxFlex="40">
-                <div
-                  fxLayout="column"
-                  class="text-center"
-                >
-                  <div fxFlex="100"><strong>% Cumplimiento</strong></div>
-                  <div fxFlex="100">
-                    {{ resultCompetencies.complianceCompetence * 100 | numberFormat }}
-                  </div>
-                </div>
-              </div>
-              <div fxFlex="30">
-                <div
-                  fxLayout="column"
-                  class="text-center"
-                >
-                  <div fxFlex="100"><strong>Total</strong></div>
-                  <div fxFlex="100">
-                    {{ resultCompetencies.total * 100| numberFormat }}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              fxLayout="row"
-              fxLayoutAlign="center center"
-            >
-              <div fxFlex="40">
-                <div
-                  fxLayout="column"
-                  class="text-center"
-                >
-                  <div fxFlex="100"><strong>Subtotal Calibrado</strong></div>
-                  <div fxFlex="100">
-                    {{ resultCompetencies.subTotalCalibrated * 100 | numberFormat }}
-                  </div>
-                </div>
-              </div>
-              <div fxFlex="40">
-                <div
-                  fxLayout="column"
-                  class="text-center"
-                >
-                  <div fxFlex="100"><strong>% Cumplimiento Calibrado</strong></div>
-                  <div fxFlex="100">
-                    {{ resultCompetencies.complianceCompetenceCalibrated * 100 | numberFormat }}
-                  </div>
-                </div>
-              </div>
-              <div fxFlex="30">
-                <div
-                  fxLayout="column"
-                  class="text-center"
-                >
-                  <div fxFlex="100"><strong>Total Calibrado</strong></div>
-                  <div fxFlex="100">
-                    {{ resultCompetencies.totalCalibrated * 100 | numberFormat }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            fxFlex="100"
-            class="mt-3"
-          >
-            <div
-              fxLayout="row wrap"
-              fxLayoutGap="10"
-              class="p-3"
-            >
-              <div fxFlex="100">
-                <mat-form-field fxFill appearance="outline">
-                  <mat-label>Comentario de evaluación</mat-label>
-                  <textarea
-                      matInput
-                      cdkTextareaAutosize
-                      #autosize="cdkTextareaAutosize"
-                      cdkAutosizeMinRows="2"
-                      cdkAutosizeMaxRows="5"
-                      [readonly]="true"
 
-                  >{{ resultCompetencies.evaluationComment }}</textarea>
-                </mat-form-field>
-              </div>
-              <div fxFlex="100">
-                <mat-form-field fxFill appearance="outline">
-                  <mat-label>Comentario de calibración</mat-label>
-                  <textarea
-                      matInput
-                      cdkTextareaAutosize
-                      #autosize="cdkTextareaAutosize"
-                      cdkAutosizeMinRows="2"
-                      cdkAutosizeMaxRows="5"
-                      [readonly]="true"
-
-                  >{{ resultCompetencies.calibrationComment }}</textarea>
-                </mat-form-field>
-              </div>
-            </div>
+          <div fxFlex="100" class="mt-3">
+            <mat-form-field fxFill appearance="outline">
+              <mat-label>Comentario de evaluación</mat-label>
+              <textarea
+                  matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="2"
+                  cdkAutosizeMaxRows="5"
+                  [readonly]="true"
+              >{{ resultCompetencies.evaluationComment }}</textarea>
+            </mat-form-field>
+            <mat-form-field fxFill appearance="outline">
+              <mat-label>Comentario de calibración</mat-label>
+              <textarea
+                  matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="2"
+                  cdkAutosizeMaxRows="5"
+                  [readonly]="true"
+              >{{ resultCompetencies.calibrationComment }}</textarea>
+            </mat-form-field>
           </div>
         </div>
       </mat-tab>
