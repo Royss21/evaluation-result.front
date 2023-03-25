@@ -137,7 +137,7 @@ export class LoginComponent implements OnInit {
 
   private _openModal(): void {
     const modalCheckRol = this._dialog.open(CheckRoleComponent, {
-      width: ConstantsGeneral.mdModal,
+      width: ConstantsGeneral.lgModal,
       disableClose: true,
       panelClass: 'modal-check-role',
       data: this.rolesList,
