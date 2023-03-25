@@ -13,7 +13,7 @@
     <mat-tab-group animationDuration="500ms">
       <mat-tab *ngIf="resultCorporateObjectives">
         <ng-template mat-tab-label>
-          <img width="30" class="p-0" src="/assets/images/objCorp.png">
+          <img width="30" class="p-0" src="/assets/images/objCorp.png" alt="img obj corp">
           Objetivos corporativos
           {{ resultCorporateObjectives.weightHierarchy * 100 | numberFormat }}%
         </ng-template>
@@ -21,133 +21,57 @@
           fxLayout="column"
           class="p-3"
         >
-          <div
-            fxFlex="100"
-            *ngFor="let objetive of resultCorporateObjectives.resultObjectives"
-          >
-            <div fxLayout="column" class="mt-3">
-              <div fxFlex="100" class="mb-2">
-                {{ objetive.subcomponentName }}
+          <ng-container *ngFor="let objetive of resultCorporateObjectives.resultObjectives; let i = index">
+            <div fxLayout="column">
+              <div fxLayout="row" fxLayoutAlign="start center" class="text-center mb-2">
+                <span class="fw-bold text-muted">{{ objetive.subcomponentName }}</span>
               </div>
-              <div fxFlex="20">
-                <div fxLayout="row wrap">
-                  <div fxFlex="20">
-                    <div fxLayout="column" class="text-center">
-                      <div fxFlex="100">
-                        <strong>Peso Relativo</strong>
-                      </div>
-                      <div fxFlex="100">
-                        {{ objetive.weightRelative * 100 | numberFormat }}
-                      </div>
-                    </div>
+                <section class="container-items">
+                  <div fxLayout="column" class="text-center">
+                    <strong>Peso Relativo</strong>
+                    <span>{{ objetive.weightRelative * 100 | numberFormat }}</span>
                   </div>
-                  <div fxFlex="20">
-                    <div fxLayout="column" class="text-center">
-                      <div fxFlex="100">
-                        <strong>% Minimo</strong>
-                      </div>
-                      <div fxFlex="100">
-                        {{ objetive.minimunPercentage * 100 | numberFormat }}
-                      </div>
-                    </div>
+                  <div fxLayout="column" class="text-center">
+                    <strong>% Minimo</strong>
+                    <span>{{ objetive.minimunPercentage * 100 | numberFormat }}</span>
                   </div>
-                  <div fxFlex="20">
-                    <div fxLayout="column" class="text-center">
-                      <div fxFlex="100">
-                        <strong>Meta</strong>
-                      </div>
-                      <div fxFlex="100">
-                        {{ objetive.maximunPercentage * 100 | numberFormat }}
-                      </div>
-                    </div>
+                  <div fxLayout="column" class="text-center">
+                    <strong>Meta</strong>
+                    <span>{{ objetive.maximunPercentage * 100 | numberFormat }}</span>
                   </div>
-                  <div fxFlex="20">
-                    <div fxLayout="column" class="text-center">
-                      <div fxFlex="100">
-                        <strong>Resultado</strong>
-                      </div>
-                      <div fxFlex="100">
-                        {{ objetive.result * 100 | numberFormat }}
-                      </div>
-                    </div>
+                  <div fxLayout="column" class="text-center">
+                    <strong>Resultado</strong>
+                    <span>{{ objetive.result * 100 | numberFormat }}</span>
                   </div>
-                  <div fxFlex="20">
-                    <div fxLayout="column" class="text-center">
-                      <div fxFlex="100">
-                        <strong>% Cumplimiento</strong>
-                      </div>
-                      <div fxFlex="100">
-                        {{ objetive.compliance * 100 | numberFormat }}
-                      </div>
-                    </div>
+                  <div fxLayout="column" class="text-center">
+                    <strong>% Cumplimiento</strong>
+                    <span>{{ objetive.compliance * 100 | numberFormat }}</span>
                   </div>
-                  <div fxFlex="20">
-                    <div fxLayout="column" class="text-center">
-                      <div fxFlex="100">
-                        <strong>Puntos</strong>
-                      </div>
-                      <div fxFlex="100">
-                        {{ objetive.points * 100 | numberFormat }}
-                      </div>
-                    </div>
+                  <div fxLayout="column" class="text-center">
+                    <strong>Puntos</strong>
+                    <span>{{ objetive.points * 100 | numberFormat }}</span>
                   </div>
-                </div>
-              </div>
+                </section>
+                <hr class="mt-3"/>
             </div>
-          </div>
-          <mat-divider class="mt-4 mb-4"></mat-divider>
-          <div
-            fxFlex="100"
-          >
-            <div
-              fxLayout="row"
-              fxLayoutAlign="center center"
-            >
-              <div fxFlex="25">
-                <div
-                  fxLayout="column"
-                  class="text-center"
-                >
-                  <div fxFlex="100"><strong>Subtotal</strong></div>
-                  <div fxFlex="100">
-                    {{ resultCorporateObjectives.subTotal * 100 | numberFormat }}
-                  </div>
-                </div>
+          </ng-container>
+          <div class="container-totals">
+              <div fxLayout="column" class="text-center">
+                <strong>Subtotal</strong>
+                <span>{{ resultCorporateObjectives.subTotal * 100 | numberFormat }}</span>
               </div>
-              <div fxFlex="25">
-                <div
-                  fxLayout="column"
-                  class="text-center"
-                >
-                  <div fxFlex="100"><strong>Subtotal - Excedente</strong></div>
-                  <div fxFlex="100">
-                    {{ resultCorporateObjectives.excessSubtotal * 100 | numberFormat }}
-                  </div>
-                </div>
+              <div fxLayout="column" class="text-center">
+                <strong>Subtotal - Excedente</strong>
+                <span>{{ resultCorporateObjectives.excessSubtotal * 100 | numberFormat }}</span>
               </div>
-              <div fxFlex="25">
-                <div
-                  fxLayout="column"
-                  class="text-center"
-                >
-                  <div fxFlex="100"><strong>Total</strong></div>
-                  <div fxFlex="100">
-                    {{ resultCorporateObjectives.total * 100 | numberFormat }}
-                  </div>
-                </div>
+              <div fxLayout="column" class="text-center">
+                <strong>Total</strong>
+                <span>{{ resultCorporateObjectives.total * 100 | numberFormat }}</span>
               </div>
-              <div fxFlex="25">
-                <div
-                  fxLayout="column"
-                  class="text-center"
-                >
-                  <div fxFlex="100"><strong>Excedente</strong></div>
-                  <div fxFlex="100">
-                    {{ resultCorporateObjectives.excess * 100 | numberFormat }}
-                  </div>
-                </div>
+              <div fxLayout="column" class="text-center">
+                <strong>Excedente</strong>
+                <span>{{ resultCorporateObjectives.excess * 100 | numberFormat }}</span>
               </div>
-            </div>
           </div>
           <div
             fxFlex="100"
