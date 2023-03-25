@@ -7,6 +7,7 @@ import { IElementRowTable } from '@components/table/interfaces/table.interface';
 import { EvaluationCollaboratorService } from '@core/services/evaluation-collaborator/evaluation-collaborator.service';
 import { RegisterCollaboratorModalComponent } from '@modules/evaluation-collaborator/components/register-collaborator-modal/register-collaborator-modal.component';
 import { EvaluationCollaboratorHelper } from '@modules/evaluation-collaborator/helpers/evaluation-collaborator.helper';
+import { IEvaluationCollaboratorFilter } from '@modules/evaluation-collaborator/interfaces/evaluation-collaborator-filter.interface';
 import { ConstantsGeneral } from '@shared/constants';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
@@ -26,7 +27,7 @@ export class EvaluationCollaboratorListComponent implements OnInit {
   evaluationCollaboratorPaginatedBehavior: BehaviorSubject<any>;
   paginatedBehavior: BehaviorSubject<any>;
   columnsTable: IElementRowTable[];
-  paginatedFilterCurrent: IPaginatedFilter;
+  paginatedFilterCurrent: IEvaluationCollaboratorFilter;
   
 
   constructor(
@@ -53,8 +54,9 @@ export class EvaluationCollaboratorListComponent implements OnInit {
     this.paginated$
       .subscribe((paginatedFilter: IPaginatedFilter) => {
         if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._evaluationCollaboratorService.getPaginated(paginatedFilter)
+
+          this.paginatedFilterCurrent = {...paginatedFilter, evaluationId: this._evaluationId };
+          this._evaluationCollaboratorService.getPaginated(this.paginatedFilterCurrent)
             .subscribe(paginated => this.evaluationCollaboratorPaginatedBehavior.next(paginated));
         }
       });

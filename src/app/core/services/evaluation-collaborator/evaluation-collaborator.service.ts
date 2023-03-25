@@ -29,6 +29,7 @@ export class EvaluationCollaboratorService {
   }
 
   getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<IEvaluationCollaboratorPaged>> {
+    console.log(paginatedFilter)
      return this._apiService
          .get<IPaginatedResponse<IEvaluationCollaboratorPaged>>(`${this._url}/paging`, paginatedFilter);
   }
