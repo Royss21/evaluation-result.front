@@ -34,7 +34,11 @@ export class CollaboratorService {
   }
 
   getAllIdentityDocument(): Observable<IIdentityDocument[]> {
-    return this._apiService.get<IIdentityDocument[]>(`${environment.serverUriApi}/identity-document`);
+    return this._apiService.get<IIdentityDocument[]>(`${this._url}/identity-document`);
+  }
+
+  validateCurrentEvaluation(id: string): Observable<boolean> {
+    return this._apiService.get<boolean>(`${this._url}/validate-evaluation-current/${id}`);
   }
 
   update(request: ICollaboratorCreate): Observable<boolean> {

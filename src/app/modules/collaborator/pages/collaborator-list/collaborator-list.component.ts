@@ -75,14 +75,26 @@ export class CollaboratorListComponent {
   }
 
   confirmDeleted(id: string): void {
-    const dialogRef = this._dialog.open(PopupChooseComponent, {
-      data: ConstantsGeneral.chooseDelete,
-      autoFocus: false,
-    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) this._delete(id);
-    });
+    this._collaboratorService.validateCurrentEvaluation(id)
+      .subscribe(isTrue => {
+
+        const dataMessage = {...ConstantsGeneral.chooseDelete};
+
+        if(isTrue)
+          dataMessage.text = "El colaborador se encuentra en una evaluación en curso.\n ¿Estás seguro de eliminar el registro? ";
+
+        const dialogRef = this._dialog.open(PopupChooseComponent, {
+          data: dataMessage,
+          autoFocus: false,
+        });
+    
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) this._delete(id);
+        });
+      });
+
+    
   }
 
   private _delete(id: string): void{

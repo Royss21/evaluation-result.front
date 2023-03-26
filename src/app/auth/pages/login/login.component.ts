@@ -38,13 +38,13 @@ export class LoginComponent implements OnInit {
     public _authBuilderService: AuthBuilderService,
     private _mainBehaviorService: MainBehaviorsService
   ) {
-
     this._code = this.activatedRoute.snapshot.queryParamMap?.get('code');
     this.loginForm = this._authBuilderService.builderLoginForm();
     this.codeForm = this._authBuilderService.builderCodeForm();
   }
 
   ngOnInit(): void {
+
 
     if (this._code) {
       this.isViewLogin = false;
@@ -61,11 +61,12 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('collaboratorId', token.evaluationCollaboratorId);
 
         this._mainBehaviorService.emitName(token.name);
-
+          console.log(token)
         if(ConstantsGeneral.ViewCollaborator.leader == token.typeViewCollaborator)
         {
           localStorage.setItem('isLeaderAreaObjetive', token.isLeaderAreaObjetive+"");
           localStorage.setItem('isLeaderCompetence', token.isLeaderCompetence+"");
+          console.log('aaaaa')
           this._router.navigateByUrl(`/evaluation/${token.evaluationId}/detail`);
         }
         else

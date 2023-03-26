@@ -15,6 +15,10 @@ export class AdminGuard implements CanActivate, CanLoad {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
   {
+
+    // if(localStorage.getItem('logingCollaborator') == '1')
+    //   localStorage.clear();
+
     if(!localStorage.getItem('token'))
     {
       this.router.navigateByUrl('/auth');

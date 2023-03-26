@@ -83,6 +83,7 @@ export class FormulaModalComponent implements OnInit {
   }
 
   private _returnCommaIntermediate(restoQuery : string) {
+      const delimitador = restoQuery.includes(",") ? ',' : ';';
       let contabilizarParentesisEntrada = 0;
       let contabilizarParentesisSalida = 0;
       for (let i = 1; i < restoQuery.length; i++) {
@@ -95,7 +96,7 @@ export class FormulaModalComponent implements OnInit {
                   return i + 1;
           }
           else
-              return restoQuery.indexOf(",");
+              return restoQuery.indexOf(delimitador);
       }
 
       return 0;
@@ -119,6 +120,12 @@ export class FormulaModalComponent implements OnInit {
       let dato = listaCaracteresFuncion.join("");
       dato = dato.replace(/SI/g, "IIF");
       dato = dato.replace(/Y/g, "");
+      dato = dato.replace(/;/g, ",");
+      dato = dato.replace(/=/g, "");
+      dato = dato.replace(/\+/g, "");
+      dato = dato.replace(/-/g, "");
+
+
       return dato;
   }
 

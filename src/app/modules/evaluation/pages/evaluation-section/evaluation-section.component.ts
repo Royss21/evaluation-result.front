@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { EvaluationService } from '@core/services/evaluation/evaluation.service';
 import { PeriodService } from '@core/services/period/period.service';
 import { EvaluationBehaviorsService } from '@modules/evaluation/services/evaluation-behaviors.service';
 import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
 import { IPeriod } from '@modules/period/interfaces/period.interface';
+import { ConstantsGeneral } from '@shared/constants';
 
 @Component({
   selector: 'app-evaluation-section',
@@ -49,6 +51,7 @@ export class EvaluationSectionComponent {
       id: this.periodInProgress?.periodId || 0,
       startDate: this.periodInProgress?.startDate || new Date(),
       endDate: this.periodInProgress?.endDate || new Date(),
+      rangeDate: ''
     };
 
     this._router.navigateByUrl(`/evaluation/create`, { state: period });
@@ -63,10 +66,21 @@ export class EvaluationSectionComponent {
   }
 
   deleted(){
-    this._evaluationService.delete(this.periodInProgress?.evaluation?.id || "")
-      .subscribe(() => {
-        this._showConfirmMessage();
-      })
+
+    const dialogRef = this._dialog.open(PopupChooseComponent, {
+      data: ConstantsGeneral.chooseData,
+      autoFocus: false,
+      restoreFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result)
+        this._evaluationService.delete(this.periodInProgress?.evaluation?.id || "")
+          .subscribe(() => {
+            this._showConfirmMessage();
+          })
+    });
+
   }
 
   private _showConfirmMessage(): void {

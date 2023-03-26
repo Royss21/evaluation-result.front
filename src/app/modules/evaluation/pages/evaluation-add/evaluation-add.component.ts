@@ -34,7 +34,7 @@ export class EvaluationAddComponent {
   corpGoalsFormGroup: FormGroup;
   areaGoalsFormGroup: FormGroup;
   competencesFormGroup: FormGroup;
-  periodValues: IPeriod;
+  periodCurrent: IPeriod;
   minDateEvaluation: Date;
   maxDateEvaluation: Date;
 
@@ -64,7 +64,7 @@ export class EvaluationAddComponent {
   private _getCurrentDatesPeriod(): void {
       this._periodService.getCurrentDatePeriod()
         .subscribe(period => {
-          this.periodId = period.id;
+          this.periodCurrent = period;
           this.startDatePeriod = period?.startDate;
           this.endDatePeriod = period?.endDate;
           this.minDateEvaluation = this._toDate(period?.startDate);
@@ -462,7 +462,7 @@ export class EvaluationAddComponent {
 
     const evaluationCreate: IEvaluationCreate = { ...this.evaluationFormGroup.getRawValue() } ;
     evaluationCreate.evaluationComponents = [ ...evaluationCreate.evaluationComponents.filter(ec => ec.checked)];
-    evaluationCreate.periodId = this.periodId;
+    evaluationCreate.periodId = this.periodCurrent.id;
 
     CustomValidations.marcarFormGroupTouched(this.evaluationFormGroup);
 
