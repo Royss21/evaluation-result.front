@@ -10,14 +10,14 @@ import { IRole } from '@auth/interfaces/roles.interface';
 })
 export class CheckRoleComponent {
 
-  userRoles:IRole[] = [];
+  public userRoles:IRole[] = [];
+  private _roleId: number = 0;
 
   constructor(
     public _dialog: MatDialog,
     private _modalRef: MatDialogRef<CheckRoleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IRole[]
   ) {
-
     this.userRoles = data;
   }
 
@@ -25,7 +25,29 @@ export class CheckRoleComponent {
     if (role === null)
       return;
 
-    this._modalRef.close(role.id);
+
+  }
+
+  selectedTest(id: number) {
+    if (id === null)
+      return;
+
+    this._roleId = id;
+    const containers = document.querySelectorAll('.item-rol');
+
+    containers.forEach(container => {
+      container.addEventListener('click', () => {
+        containers.forEach(c => c.classList.remove('active'));
+        container.classList.add('active');
+      });
+    });
+  }
+
+  continueLogin() {
+    if (this._roleId  == 0)
+     return
+
+    this._modalRef.close(this._roleId);
   }
 
 

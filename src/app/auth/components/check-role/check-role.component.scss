@@ -1,0 +1,64 @@
+::ng-deep {
+  .mat-dialog-container {
+    max-height: 85% !important;
+    overflow-y: scroll !important;
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
+    height: auto;
+  }
+}
+
+.container-check-rol {
+  gap: 20px;
+  padding: 5px;
+  display: grid;
+  grid-auto-rows: minmax(150px, auto);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.item-rol {
+  display: flex;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #e2eeff;
+}
+
+.item-rol.active {
+  background-color: var(--color-primary);
+
+  .text-rol {
+    color: #fff;
+    line-break: auto;
+    text-overflow: ellipsis;
+  }
+
+  .icon-rol {
+    color: #fff;
+  }
+}
+
+.icon-rol {
+  font-size: 50px;
+  height: 50px;
+  width: 50px;
+}
+
+.container-btn-acept {
+  display: flex;
+  margin-top: 15px;
+  align-items: center;
+  justify-content: end;
+
+  button {
+    font-size: 16px;
+  }
+
+  @media (max-width: 480px) {
+    justify-content: end;
+  }
+}

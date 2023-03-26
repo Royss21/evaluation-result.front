@@ -1,18 +1,24 @@
-<mat-dialog-content>
-  <mat-selection-list #roles [multiple]="false">
-    <mat-list-option
-      *ngFor="let item of userRoles"
-      [value]="item"
+<h2  mat-dialog-title>Elige el rol con el que deseas ingresar</h2>
+<ng-container>
+  <section class="container-check-rol">
+    <ng-container *ngFor="let item of userRoles">
+      <ng-container>
+        <div class="item-rol" (click)="selectedTest(item.id)">
+          <mat-icon class="icon-rol">ads_click</mat-icon>
+          <h2 class="fw-bolder text-rol">{{ item.name }}</h2>
+          <span class="text-rol">{{ item.description }}</span>
+        </div>
+      </ng-container>
+    </ng-container>
+  </section>
+  <div class="container-btn-acept">
+    <button
+      mat-button
+      color="primary"
+      type="button"
+      (click)="continueLogin()"
     >
-      {{ item.name }}
-    </mat-list-option>
-  </mat-selection-list>
-  <button
-    mat-raised-button
-    color="primary"
-    type="button"
-    (click)="testClick(roles.selectedOptions.hasValue() ? roles.selectedOptions.selected[0].value : null)"
-  >
-    Aceptar
-  </button>
-</mat-dialog-content>
+      Seleccionar rol
+    </button>
+  </div>
+</ng-container>
