@@ -22,6 +22,6 @@ export class LeaderHelper{
 
 
 export class LeaderText{
-  static modalImport = 'Importar Lideres';
+  static modalImport = 'Importar Líderes';
   static modalCollaboratorAssigned = 'Colaboradores asignados';
-} 
+}
