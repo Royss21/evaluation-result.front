@@ -3,4 +3,6 @@ export interface IPeriod {
   name: string;
   startDate: Date;
   endDate: Date;
+
+  rangeDate: string | null;
 }

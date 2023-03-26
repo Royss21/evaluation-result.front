@@ -137,11 +137,35 @@ export class EvaluateCompetenciesComponent implements OnInit {
     if(this.evaluateFormGroup.invalid)
       return;
 
-      const evaluateComponent: IComponentCollaboratorEvaluate = { ...this.evaluateFormGroup.getRawValue() } ;
+      const evaluateComponent: IComponentCollaboratorEvaluate = { ...this.evaluateFormGroup.getRawValue() };
+ 
       evaluateComponent.componentCollaboratorDetailsEvaluate.forEach(cc =>
       {
           cc.valueResult = cc.valueResult > 0 ? (cc.valueResult / 100.00) : cc.valueResult;
       });
+
+      const conductsUncheck = evaluateComponent.componentCollaboratorDetailsEvaluate.reduce((acc, el) => {
+        return [...acc, ...el.componentCollaboratorConductsEvaluate.reduce((acc2, el2) => ([...acc2, el2.pointValue]), [] as any[])]
+      }, [] as any[]);
+
+      if(conductsUncheck.some(s => s === 0))
+      {
+        const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
+          data: { 
+            ...ConstantsGeneral.confirmCreatePopup, 
+            text : 'Aun hay conductas que faltan evaluar.',
+            iconColor: 'color-danger',
+            icon: 'highlight_off'
+          },
+
+          autoFocus: false,
+          restoreFocus: false
+        });
+    
+        dialogRefConfirm.afterClosed().subscribe(() => {});
+
+        return;
+      }
 
       const dialogRef = this._dialog.open(PopupChooseComponent, {
         data: ConstantsGeneral.chooseData,

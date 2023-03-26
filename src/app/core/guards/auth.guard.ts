@@ -9,12 +9,16 @@ export class AuthGuard implements CanActivate, CanLoad {
 
   constructor(private router: Router){
 
+    console.log(router)
   }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
+      if(state.url.includes("?code="))
+        localStorage.clear();
+        
       if(localStorage.getItem('token'))
       {
         this.router.navigateByUrl('/');
@@ -27,6 +31,7 @@ export class AuthGuard implements CanActivate, CanLoad {
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+      
       if(localStorage.getItem('token'))
       {
         this.router.navigateByUrl('/');
