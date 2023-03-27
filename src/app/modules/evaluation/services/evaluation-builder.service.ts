@@ -28,14 +28,7 @@ export class EvaluationBuilderService {
           Validators.maxLength(70)
         ]
       ],
-      weight: [
-        null,
-        [
-          Validators.required,
-          Validators.max(100),
-          Validators.min(0)
-        ]
-      ],
+      weight: [ 100 ],
       startDate: [
         null, [Validators.required]
       ],
