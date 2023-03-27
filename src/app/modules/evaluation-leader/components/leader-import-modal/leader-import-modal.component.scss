@@ -5,4 +5,34 @@
     margin-right: 10px;
   }
 
+  mat-radio-group mat-radio-button {
+    margin: 5px;
+  }
+
+}
+
+.container-form-group {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+
+  .to-reprocess {
+    margin-left: auto;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+
+    .to-reprocess {
+      margin-left: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(1, 1fr);
+
+    .to-reprocess {
+      margin-left: 0;
+    }
+  }
 }

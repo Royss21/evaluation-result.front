@@ -32,7 +32,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [],
@@ -71,7 +72,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     AutocompleteLibModule,
     SharedDirectivesModule,
     MatButtonToggleModule,
-    MatTabsModule
+    MatTabsModule,
+    MatProgressBarModule
   ],
   exports: [
     MatButtonModule,
@@ -106,7 +108,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     AutocompleteLibModule,
     SharedDirectivesModule,
     MatButtonToggleModule,
-    MatTabsModule
+    MatTabsModule,
+    MatProgressBarModule
   ],
   providers: [
     MatDatepickerModule,

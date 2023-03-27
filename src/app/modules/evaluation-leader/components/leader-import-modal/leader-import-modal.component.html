@@ -61,36 +61,23 @@
           class="p-1 pb-0 pt-0"
         >
           <app-upload-file
-            [acceptFiles]="'application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
+            [acceptFiles]="acceptFiles"
             formControlName="files"
           ></app-upload-file>
 
         </div>
 
-        <div
-          fxFlex="100%"
-          class="p-1 pb-0 pt-0"
-        >
-          <mat-radio-group aria-label="Seleccione una opcion" formControlName="typeImportLeaders">
-            <mat-radio-button [value]="1" color="primary" (change)="changeTypeImport(1)" *ngIf="hasComponentCompentences">Lideres de competencias</mat-radio-button>
-            <mat-radio-button [value]="0" color="primary" (change)="changeTypeImport(0)" *ngIf="hasComponentAreaObjectives">Lideres de areas</mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-        <div
-          fxFlex.xl="50%"
-          fxFlex.lg="50%"
-          fxFlex.md="50%"
-          fxFlex.sm="100%"
-          fxFlex.xs="100%"
-          class="p-1 pb-0 pt-0"
-          *ngIf="hasPreviousImport"
-        >
-          <mat-slide-toggle
-            formControlName="isToReprocess"
-            >Es importación para reprocesar
-          </mat-slide-toggle>
-        </div>
+        <section class="container-form-group">
+          <div>
+            <mat-radio-group aria-label="Seleccione una opcion" formControlName="typeImportLeaders">
+              <mat-radio-button [value]="1" color="primary" (change)="changeTypeImport(1)" *ngIf="hasComponentCompentences">Lideres de competencias</mat-radio-button>
+              <mat-radio-button [value]="0" color="primary" (change)="changeTypeImport(0)" *ngIf="hasComponentAreaObjectives">Lideres de areas</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="to-reprocess">
+            <mat-slide-toggle color="primary" formControlName="isToReprocess" >Es importación para reprocesar</mat-slide-toggle>
+          </div>
+        </section>
 
         </div>
     </mat-dialog-content>

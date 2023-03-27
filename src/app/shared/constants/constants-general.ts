@@ -1,6 +1,6 @@
 import { IPopupChoose, IPopupConfirm } from "@components/popup-interface";
 
-export  class ConstantsGeneral{
+export  class ConstantsGeneral {
     static xs: '300px';
     static sm: '768px';
     static md: '992px';
@@ -80,5 +80,4 @@ export  class ConstantsGeneral{
       Completed: 5,
       Finalized: 6,
     }
-
 }

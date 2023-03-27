@@ -1,40 +1,39 @@
-
-<div class="container-upload">
-  <div class="file-input-upload  ml-3">
-    <div style="text-align: center;" *ngIf="filesSelected.length <= 0">
-      <span style="font-size: 1rem; font-weight: bold;">Arrastre sus archivos aquí</span>
-      <p>( o haga clic para cargar )</p>
+<div
+  (change)="changeFn($event)"
+  (dragover)="dragOverFn($event)"
+  (dragleave)="dragLeaveFn($event)"
+  (drop)="dropFn($event)"
+  class="drop-container"
+>
+  <div class="drop">
+    <mat-icon class="mat-18">ligature</mat-icon>
+    <span class="mt-2 text">Arrastre su archivo aquí</span>
+    <p class="text">(Solo puede adjuntar un archivo)</p>
+    <div class="or-con">
+      <span class="line"></span>
+      <span class="or">O</span>
+      <span class="line"></span>
     </div>
+    <label for="file-upload">Buscar archivos</label>
     <input
       type="file"
-      class="upload"
+      id="file-upload"
+      class="file-input"
       [accept]="acceptFiles"
-      [multiple]="isMultiple"
-      (change)="changeFiles($event)"
-    />
-    <div class="file-list">
-      <mat-card class="card-file" *ngFor="let fileItem of filesSelected">
-        <img mat-card-image [src]="fileItem.imagen || fileItem.imagenBuffer" alt="image file">
-        <mat-card-content class="m-0">
-          <p>
-            {{ fileItem.name }}
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button
-            mat-mini-fab
-            color="warn"
-            type="button"
-            class="btn-action-xs"
-            (click)="deleteFile(fileItem.name)"
-            style="z-index: 10000"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+      [disabled]="existFile()"
+    >
+  </div>
+  <div *ngIf="filesSelected.length > 0 && !isLoading" class="container-file">
+    <span>{{filesSelected[0].name}}</span>
+    <span><mat-icon (click)="deleteFile()" class="icon-close">close</mat-icon></span>
+  </div>
+
+  <div class="mt-2" *ngIf="isLoading">
+    <mat-progress-bar
+      color="primary"
+      class="progress"
+      mode="indeterminate"
+    >
+  </mat-progress-bar>
   </div>
 </div>
-
-

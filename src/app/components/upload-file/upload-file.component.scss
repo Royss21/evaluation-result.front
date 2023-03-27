@@ -1,45 +1,97 @@
-
-.container-upload{
-  margin: 10px;
-  background-color: rgb(233 233 233 / 69%);
-  border-radius: 5px;
-
-  .file-input-upload {
-    position: relative;
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    align-content: center;
-    overflow: hidden;   
-    height: 350px;
-    width: 100%;
-    cursor: pointer !important;
-  
-    input.upload {
-      position: absolute;
-      top: 0;
-      right: 0;
-      margin: 0;
-      padding: 0;
-      font-size: 20px;
-      width: 100%;
-      height: 350px;
-      
-      opacity: 0;
-      filter: alpha(opacity=0);
-    }
-
-    .card-file{
-      width: 180px;
-      margin: 10px;
-    }
-  
-    .file-list{
-      padding: 10px;
-      display:flex;
-      justify-content:center;
-      flex-wrap: wrap;
-    }
-  }
+.drop-container {
+  background-color: #fff;
+  padding: 1.5rem;
+  width: 100%;
+  // display: inline-block;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 40px 15px rgba(0, 0, 0, 0.1);
 }
 
+.drop {
+  border-radius: 10px;
+  border: 3px dashed #aaaaaa;
+  display: grid;
+  width: 100%;
+  place-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+}
+
+.active {
+  border: 3px solid #4b4b4b;
+  background-color: #e2eeff;
+}
+
+.type-file-error {
+  border: 3px dashed red;
+}
+
+.drop {
+
+  mat-icon {
+    font-size: 60px;
+    color: var(--color-primary);
+  }
+
+  .text {
+    text-align: center;
+    font-weight: 500;
+    color: #443f46;
+  }
+
+  label {
+    background-color: var(--color-primary);
+    padding: 0.7rem 1.8rem;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+  }
+
+}
+
+.progress {
+  height: 5px;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.file-input {
+  display: none;
+}
+
+.line {
+  width: 80px;
+  height: 1px;
+  background-color: #949494;
+}
+
+.or-con {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem;
+}
+
+.or {
+  margin: 0 1rem;
+  font-weight: 500;
+  color: #443f46;
+}
+
+.container-file {
+  margin-top: 20px;
+  display: grid;
+  place-content: center;
+  grid-template-columns: repeat(2, 1fr);
+
+  .icon-close {
+    width: 25px;
+    height: 25px;
+    font-size: 25px;
+    cursor: pointer;
+  }
+
+}

@@ -46,5 +46,5 @@ export const AppConstants = {
 
     MimeType: {
         JSON: 'application/json'
-    }
+    },
 };

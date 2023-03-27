@@ -27,6 +27,8 @@ export class LeaderImportModalComponent implements OnInit {
   hasComponentAreaObjectives: boolean = false;
   hasComponentCompentences: boolean = false;
 
+  public acceptFiles = ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+
   constructor(
     private _leaderImportBuilderService: LeaderImportModalBuilderService,
     private _route: ActivatedRoute,

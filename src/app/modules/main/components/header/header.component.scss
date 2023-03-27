@@ -13,7 +13,7 @@ mat-toolbar-row {
 }
 .containerLogo {
 
-  width: 200px;
+  // width: 200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,4 +51,9 @@ mat-toolbar-row {
   .provider {
     line-height: normal;
   }
+}
+
+.logo-small {
+  height: 30px;
+  width: 100px;
 }
