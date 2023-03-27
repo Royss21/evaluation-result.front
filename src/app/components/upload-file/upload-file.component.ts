@@ -23,11 +23,6 @@ import { IFileItem } from './interfaces/file-item.interface';
 })
 export class UploadFileComponent implements ControlValueAccessor, Validator, OnInit {
 
-/*
-  FALTA VALIDAR CUANDO NO ES MULTIPLE, QUE SOLO PERMITA SBUIR 1 ARCHIVO Y MOSTRAR SOLO 1
-  FALTA AGREGAR EL SCROLL CUANDO HAY VARIOS ARCHIVOS
-*/
-
   public isLoading: boolean = false
 
   private drop: any;
