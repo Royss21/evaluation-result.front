@@ -3,14 +3,14 @@ import { IElementRowTable } from "@components/table/interfaces/table.interface";
 
 export class FinalExamReportHelper {
   static columnsTable: IElementRowTable[] =  [
-    new ElementRowTable('collaboratorName','Colaborador'),
-    new ElementRowTable('documentNumber','Nro. documento'),
-    new ElementRowTable('hierarchyName','Jerarquía'),
-    new ElementRowTable('gerencyName','Gerencia'),
-    new ElementRowTable('areaName','Área'),
-    new ElementRowTable('levelName','Nivel'),
-    new ElementRowTable('resultLabel','Desempeño'),
-    new ElementRowTable('finalResult','Nota')
+    new ElementRowTable('collaboratorName','Colaborador',true),
+    new ElementRowTable('documentNumber','Nro. documento',true),
+    new ElementRowTable('hierarchyName','Jerarquía',true),
+    new ElementRowTable('gerencyName','Gerencia',true),
+    new ElementRowTable('areaName','Área',true),
+    new ElementRowTable('levelName','Nivel',true),
+    new ElementRowTable('resultLabel','Desempeño',true),
+    new ElementRowTable('finalResult','Nota',true)
   ];
 
   static titleActionText = {

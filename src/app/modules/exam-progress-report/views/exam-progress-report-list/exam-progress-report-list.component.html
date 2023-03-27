@@ -9,7 +9,7 @@
     <button
       color="primary"
       mat-raised-button
-      disabled="isDisabledBtnDownload"
+      [disabled]="isDisabledBtnDownload"
       (click)="downloadProgressExamReport()"
     >
       <mat-icon>download</mat-icon>
@@ -29,11 +29,76 @@
     let-column='column'
     let-element='element'
   >
-    <div [ngSwitch]="column.columnMatch">
-      <div *ngSwitchDefault>
-        {{ element[column.columnMatch] }}
-      </div>
+  <div [ngSwitch]="column.columnMatch">
+    <div
+      fxLayout="row"
+      fxLayoutGap="10px"
+      class="text-center"
+      *ngSwitchCase="'resultObjectiveCorporate'"
+    >
+      {{ element[column.columnMatch] * 100 }}
     </div>
+    <div
+      fxLayout="row"
+      fxLayoutGap="10px"
+      *ngSwitchCase="'statusObjectiveCorporateId'"
+    >
+      <app-status-chip
+        [statusId]="element[column.columnMatch]"
+      ></app-status-chip>
+    </div>
+    
+    <div
+      fxLayout="row"
+      fxLayoutGap="10px"
+      class="text-center"
+      *ngSwitchCase="'resultObjectiveArea'"
+    >
+      {{ element[column.columnMatch] * 100 }}
+    </div>
+    <div
+      fxLayout="row"
+      fxLayoutGap="10px"
+      *ngSwitchCase="'statusObjectiveAreaId'"
+    >
+      <app-status-chip
+        [statusId]="element[column.columnMatch]"
+      ></app-status-chip>
+    </div>
+
+    <div
+      fxLayout="row"
+      fxLayoutGap="10px"
+      class="text-center"
+      *ngSwitchCase="'resultCompetence'"
+    >
+      {{ element[column.columnMatch] * 100 }}
+    </div>
+    <div
+      fxLayout="row"
+      fxLayoutGap="10px"
+      *ngSwitchCase="'statusCompetenceId'"
+    >
+      <app-status-chip
+        [statusId]="element[column.columnMatch]"
+      ></app-status-chip>
+    </div>
+
+    <div
+      fxLayout="row"
+      fxLayoutGap="10px"
+      *ngSwitchCase="'stageCurrentId'"
+    >
+      {{ stages[element[column.columnMatch]] }}
+    </div>
+
+    <div *ngSwitchDefault>
+      {{ element[column.columnMatch] }}
+    </div>
+
+    
+  </div>  
+
   </ng-template>
 </app-table>
 

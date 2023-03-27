@@ -1,5 +1,6 @@
 
 import { Injectable } from '@angular/core';
+import { IEvaluationComponentDates } from '@modules/evaluation/interfaces/evaluation-component-dates.interface';
 import { IEvaluationCreate, IEvaluationRes } from '@modules/evaluation/interfaces/evaluation-create.interface';
 import { IEvaluationDetail } from '@modules/evaluation/interfaces/evaluation-detail.interface';
 import { IEvaluationFinished } from '@modules/evaluation/interfaces/evaluation-finished.interface';
@@ -25,6 +26,10 @@ export class EvaluationService {
     return this._apiService.get<IEvaluationDetail>(`${this._url}/${id}/detail`);
   }
 
+  getDatesComponentes(id: string): Observable<IEvaluationComponentDates> {
+    return this._apiService.get<IEvaluationComponentDates>(`${this._url}/edit/${id}`);
+  }
+
   getEnabledComponents(id: string): Observable<IEvaluation> {
     return this._apiService.get<IEvaluation>(`${this._url}/${id}/enabled-components`);
   }
@@ -35,6 +40,10 @@ export class EvaluationService {
 
   create(request: IEvaluationCreate): Observable<IEvaluationRes> {
     return this._apiService.post<IEvaluationRes>(`${this._url}`, request);
+  }
+
+  update(request: IEvaluationCreate, id:string): Observable<IEvaluationRes> {
+    return this._apiService.put<IEvaluationRes>(`${this._url}/${id}`, request);
   }
 
   getAllFinished(): Observable<IEvaluationFinished[]> {

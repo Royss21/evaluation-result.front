@@ -40,6 +40,7 @@ export class AssignedCollaboratorsModalComponent implements OnInit, AfterViewIni
 
   ngAfterViewInit(): void {
     this.elementObserver.changes.subscribe(e => {
+      console.log('aaaa')
       if(e.last)
         this.observer.observe(e.last.nativeElement);
     });
@@ -72,8 +73,9 @@ export class AssignedCollaboratorsModalComponent implements OnInit, AfterViewIni
     }
 
     this.observer = new IntersectionObserver((entries) => {
-
-      if(entries[0].isIntersecting){        
+     
+      if(entries[0].isIntersecting){ 
+        console.log('a')       
         if(this.countCurrent < this.countTotal ){
           this.filterCurrent.pageIndex += 1;
           this.getCollaborators();

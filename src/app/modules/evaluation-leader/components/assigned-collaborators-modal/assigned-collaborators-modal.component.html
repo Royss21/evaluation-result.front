@@ -56,7 +56,7 @@
             <td colspan="4">No se ha encontrado datos</td>
           </tr>
           <ng-template #elseBody>
-            <tr *ngFor="let collaborator of collaborators">
+            <tr *ngFor="let collaborator of collaborators" >
                 <td>{{ collaborator.collaboratorName }}</td>
                 <td>{{ collaborator.documentNumber }}</td>
                 <td>{{ collaborator.stagesName }}</td>

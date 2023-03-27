@@ -8,6 +8,8 @@ import { ExcelReportService } from '@core/services/report/excel-report.service';
 import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
 import { ProgressExamReportHelper } from '@modules/exam-progress-report/helpers/exam-progress-report-helper';
 import { IProgressExamPaginatedFilter, IProgressExamReport } from '@modules/exam-progress-report/interfaces/exam-progress-report.interface';
+import { ComponentsModule } from '@components/components.module';
+import { ConstantsGeneral } from '@shared/constants';
 @Component({
   selector: 'app-exam-progress-report-list',
   templateUrl: './exam-progress-report-list.component.html',
@@ -26,6 +28,8 @@ export class ExamProgressReportListComponent {
   public paginatedBehavior: BehaviorSubject<any>;
   public progressExamPaginatedBehavior: BehaviorSubject<any>;
   public paginatedFilterCurrent: IProgressExamPaginatedFilter;
+  stages: any = ConstantsGeneral.stages;
+  status: any = ConstantsGeneral.status;
 
   constructor(
     private _reportService: ReportService,
@@ -45,36 +49,17 @@ export class ExamProgressReportListComponent {
 
   private callPaginated(): void {
 
-    this.periodService.getInProgress().pipe(
-      concatMap((period: IPeriodEvaluation) => {
-        if (period.evaluation){
-          this.isDisabledBtnDownload = false;
-          this.evaluationId = period.evaluation?.id;
+    this.paginated$
+      .subscribe((paginatedFilter: IProgressExamPaginatedFilter) => {
+        if(paginatedFilter){
+          this.paginatedFilterCurrent = { ...paginatedFilter, evaluationId: this.evaluationId || '' };
+          this._reportService.getExamProgressPaginated(this.paginatedFilterCurrent)
+            .subscribe(paginated => {
+              this.isDisabledBtnDownload = paginated.count <= 0;
+              this.progressExamPaginatedBehavior.next(paginated);
+            });
         }
-        return this.paginated$
-      })
-    )
-    .subscribe((paginatedFilter: IProgressExamPaginatedFilter) => {
-      this.evaluationId && (paginatedFilter.evaluationId = this.evaluationId);
-      if(paginatedFilter){
-        this.paginatedFilterCurrent = paginatedFilter;
-        this._reportService.getExamProgressPaginated(this.paginatedFilterCurrent)
-          .subscribe(paginated => {
-            this.progressExamPaginatedBehavior.next(paginated);
-          });
-      }
-    });
-
-
-    // this.paginated$.subscribe((paginatedFilter: IProgressExamPaginatedFilter) => {
-    //     if(paginatedFilter){
-    //       this.paginatedFilterCurrent = paginatedFilter;
-    //       this._reportService.getExamProgressPaginated(this.paginatedFilterCurrent)
-    //         .subscribe(paginated => {
-    //           this.progressExamPaginatedBehavior.next(paginated);
-    //         });
-    //     }
-    //   });
+      });
   }
 
   public downloadProgressExamReport() {
@@ -86,7 +71,7 @@ export class ExamProgressReportListComponent {
       data:
       [
         "ID COLABORADOR", "NRO. DOCUMENTO", "JERARQUÍA", "GERENCIA", "NIVEL", "ÁREA", "CARGO",
-        "ID EVALUACIÓN", "RESULTADO OBJ. CORP.", "RESULTADO OBJ. ÁREA", "RESULTADO COMPETENCIA",
+        "RESULTADO OBJ. CORP.", "RESULTADO OBJ. ÁREA", "RESULTADO COMPETENCIA",
         "ID ESTADO OBJ. CORP.", "ID ESTADO OBJ. ÁREA", "ID ESTADO COMPETENCIA", "ID ESTADO ACTUAL"
       ],
     };
@@ -115,6 +100,8 @@ export class ExamProgressReportListComponent {
           index++;
           index = Math.floor(index);
 
+          
+
           data.push({
             row: index,
             collaboratorName: progressExam.collaboratorName,
@@ -124,13 +111,13 @@ export class ExamProgressReportListComponent {
             areaName: progressExam.areaName,
             levelName: progressExam.levelName,
             chargeName: progressExam.chargeName,
-            resultObjectiveCorporate: progressExam.resultObjectiveCorporate,
-            resultObjectiveArea: progressExam.resultObjectiveArea,
-            resultCompetence: progressExam.resultCompetence,
-            statusObjectiveCorporateId: progressExam.statusObjectiveCorporateId,
-            statusObjectiveAreaId: progressExam.statusObjectiveAreaId,
-            statusCompetenceId: progressExam.statusCompetenceId,
-            stageCurrentId: progressExam.stageCurrentId
+            resultObjectiveCorporate: progressExam.resultObjectiveCorporate * 100,
+            resultObjectiveArea: progressExam.resultObjectiveArea * 100,
+            resultCompetence: progressExam.resultCompetence * 100,
+            statusObjectiveCorporateId: this.status[progressExam.statusObjectiveCorporateId] ,
+            statusObjectiveAreaId: this.status[progressExam.statusObjectiveAreaId],
+            statusCompetenceId: this.status[progressExam.statusCompetenceId],
+            stageCurrentId: this.stages[progressExam.stageCurrentId]
           });
         });
 
