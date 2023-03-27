@@ -34,7 +34,7 @@ export class CollaboratorService {
   }
 
   getAllIdentityDocument(): Observable<IIdentityDocument[]> {
-    return this._apiService.get<IIdentityDocument[]>(`${this._url}/identity-document`);
+    return this._apiService.get<IIdentityDocument[]>(`${environment.serverUriApi}/identity-document`);
   }
 
   validateCurrentEvaluation(id: string): Observable<boolean> {
