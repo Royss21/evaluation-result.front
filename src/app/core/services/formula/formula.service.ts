@@ -33,9 +33,14 @@ export class FormulaService {
     return this._apiService.put<boolean>(`${this._url}`, request);
   }
 
-  delete(id: number): Observable<boolean> {
+  delete(id: string): Observable<boolean> {
     return this._apiService
         .delete<boolean>(`${this._url}/${id}`);
+  }
+
+  validAssigned(id: string): Observable<boolean> {
+    return this._apiService
+        .get<boolean>(`${this._url}/validate-assigned/${id}`);
   }
 
   getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<IFormula>> {

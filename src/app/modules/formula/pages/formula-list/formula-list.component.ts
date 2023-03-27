@@ -66,7 +66,7 @@ export class FormulaListComponent {
       });
   }
 
-  private delete(id:number): void {
+  private delete(id: string): void {
     this._formulaService
       .delete(id)
       .subscribe(() => {
@@ -83,10 +83,19 @@ export class FormulaListComponent {
     this.openModal(formula);
   }
 
-  confirmDeleted(id: number): void {
+  confirmDeleted(id: string): void {
+
+    let message = ConstantsGeneral.chooseDelete;
+
+    this._formulaService.validAssigned(id).subscribe(isAssigned => {
+      if (isAssigned)
+        message.text = "La fórmula está asignada a uno o mas Objetivos Corporativos \n"
+        + "¿Estás seguro de eliminar el registro?"
+    });
+
     const dialogRef = this._dialog.open(PopupChooseComponent, {
-      data: ConstantsGeneral.chooseDelete,
-      autoFocus: false,
+      data: message,
+      autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe((result) => {
