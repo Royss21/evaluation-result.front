@@ -34,7 +34,7 @@ export class EvaluationAddComponent {
   corpGoalsFormGroup: FormGroup;
   areaGoalsFormGroup: FormGroup;
   competencesFormGroup: FormGroup;
-  periodCurrent: IPeriod;
+  periodCurrent: IPeriod | null;
   minDateEvaluation: Date;
   maxDateEvaluation: Date;
 
@@ -64,7 +64,7 @@ export class EvaluationAddComponent {
     this._getCurrentDatesPeriod();
     this._onChangesValuesForm();
     this._route.params.subscribe(params => {
-      this.evaluationId = params["id"];
+      this.evaluationId = params["id"] || null;
 
       if(this.evaluationId){
         this.textButton = 'Actualizar evaluación'
@@ -127,6 +127,7 @@ export class EvaluationAddComponent {
   }
 
   get isEvaluationEdit(){
+    console.log(this.evaluationId)
     return this.evaluationId !== null;
   }
 
@@ -522,7 +523,7 @@ export class EvaluationAddComponent {
   confirmSave(): void {
     const evaluationCreate: IEvaluationCreate = { ...this.evaluationFormGroup.getRawValue() } ;
     evaluationCreate.evaluationComponents = [ ...evaluationCreate.evaluationComponents.filter(ec => ec.checked)];
-    evaluationCreate.periodId = this.periodCurrent.id;
+    evaluationCreate.periodId = this.periodCurrent?.id || 0;
 
     CustomValidations.marcarFormGroupTouched(this.evaluationFormGroup);
 
