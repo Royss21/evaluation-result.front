@@ -57,6 +57,10 @@ export class EvaluationSectionComponent {
     this._router.navigateByUrl(`/evaluation/create`, { state: period });
   }
 
+  edit(){
+    this._router.navigateByUrl(`/evaluation/${this.periodInProgress?.evaluation?.id}/edit`);
+  }
+
   goToHistory(){
     this._router.navigateByUrl(`/evaluation/history`);
   }

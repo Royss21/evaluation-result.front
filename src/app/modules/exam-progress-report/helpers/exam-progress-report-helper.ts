@@ -3,20 +3,20 @@ import { IElementRowTable } from "@components/table/interfaces/table.interface";
 
 export class ProgressExamReportHelper {
   static columnsTable: IElementRowTable[] =  [
-    new ElementRowTable('collaboratorName','Colaborador'),
-    new ElementRowTable('documentNumber','Nro. documento'),
-    new ElementRowTable('hierarchyName','Jerarquía'),
-    new ElementRowTable('gerencyName','Gerencia'),
-    new ElementRowTable('levelName','Nivel'),
-    new ElementRowTable('areaName','Área'),
-    new ElementRowTable('chargeName','Cargo'),
-    new ElementRowTable('resultObjectiveCorporate','Resultado Obj. Corp.'),
-    new ElementRowTable('resultObjectiveArea','Resultado Obj. Área.'),
-    new ElementRowTable('resultCompetence','Resultado Competencia'),
-    new ElementRowTable('statusObjectiveCorporateId','ID Estado Obj. Corp.'),
-    new ElementRowTable('statusObjectiveAreaId','ID Estado Obj. Área'),
-    new ElementRowTable('statusCompetenceId','ID Estado Competencia'),
-    new ElementRowTable('stageCurrentId','ID Estado Actual')
+    new ElementRowTable('collaboratorName','Colaborador',true),
+    new ElementRowTable('documentNumber','Nro. documento',true),
+    new ElementRowTable('hierarchyName','Jerarquía',true),
+    new ElementRowTable('gerencyName','Gerencia',true),
+    new ElementRowTable('levelName','Nivel',true),
+    new ElementRowTable('areaName','Área',true),
+    new ElementRowTable('chargeName','Cargo',true),
+    new ElementRowTable('resultObjectiveCorporate','Nota O.C.',true),
+    new ElementRowTable('statusObjectiveCorporateId','',true),
+    new ElementRowTable('resultObjectiveArea','Nota O.A.',true),
+    new ElementRowTable('statusObjectiveAreaId','',true),
+    new ElementRowTable('resultCompetence','Nota Comp.',true),
+    new ElementRowTable('statusCompetenceId','',true),
+    new ElementRowTable('stageCurrentId','Estado Actual Comp.',true)
   ];
 
   static titleActionText = {

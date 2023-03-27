@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
@@ -7,13 +7,13 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 import { ConstantsGeneral } from '@shared/constants';
 import { IPeriod } from '@modules/period/interfaces/period.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
-import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { EvaluationBuilderService } from '@modules/evaluation/services/evaluation-builder.service';
 import { Location } from '@angular/common';
 import { IEvaluationComponent, IEvaluationCreate } from '@modules/evaluation/interfaces/evaluation-create.interface';
 import { EvaluationService } from '@core/services/evaluation/evaluation.service';
 import { PeriodService } from '@core/services/period/period.service';
+import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 
 @Component({
   selector: 'app-evaluation-add',
@@ -48,6 +48,9 @@ export class EvaluationAddComponent {
   startDateStageApproval: Date;
   disableDate: boolean = false;
 
+  evaluationId : string | null =  null;
+  textButton: string = 'Crear evaluación';
+
   constructor(
     private _router: Router,
     private _dialog: MatDialog,
@@ -55,10 +58,61 @@ export class EvaluationAddComponent {
     private _location: Location,
     private _evaluationService: EvaluationService,
     private _periodService: PeriodService,
+    private _route: ActivatedRoute
   ) {
     this.evaluationFormGroup = this._evaluationBuilderService.buildEvaluationForm();
     this._getCurrentDatesPeriod();
     this._onChangesValuesForm();
+    this._route.params.subscribe(params => {
+      this.evaluationId = params["id"];
+
+      if(this.evaluationId){
+        this.textButton = 'Actualizar evaluación'
+        this._evaluationService.getDatesComponentes(this.evaluationId ?? "")
+          .subscribe(data =>{
+
+            this.controlsEvaluationForm['name'].setValue(data.name);
+            this.controlsEvaluationForm['weight'].setValue(data.weight);
+            this.controlsEvaluationForm['startDate'].setValue(this._toDate(data.startDate));
+            this.controlsEvaluationForm['endDate'].setValue(this._toDate(data.endDate));
+
+            data.componentStagesDates.forEach(c =>{
+
+              if(!c.componentId){
+                if(c.stageId === ConstantsGeneral.stages.feedback){
+                  this.stageFeedback.get('startDate')?.setValue(this._toDate(c.startDate));
+                  this.stageFeedback.get('endDate')?.setValue(this._toDate(c.endDate));
+                }else if(c.stageId === ConstantsGeneral.stages.approval){
+                  this.stageApproval.get('startDate')?.setValue(this._toDate(c.startDate));
+                  this.stageApproval.get('endDate')?.setValue(this._toDate(c.endDate));
+                }
+              }
+
+              if(c.componentId === ConstantsGeneral.components.corporateObjectives){
+                this.corpGoal.get('checked')?.setValue(true);
+                this.corpGoal.get('startDate')?.setValue(this._toDate(c.startDate));
+                this.corpGoal.get('endDate')?.setValue(this._toDate(c.endDate));
+              }
+              else if(c.componentId === ConstantsGeneral.components.areaObjectives){
+                this.areaGoal.get('checked')?.setValue(true);
+                this.areaGoal.get('startDate')?.setValue(this._toDate(c.startDate));
+                this.areaGoal.get('endDate')?.setValue(this._toDate(c.endDate));
+              }
+              else if(c.componentId === ConstantsGeneral.components.competencies){
+                this.competencesGoal.get('checked')?.setValue(true);
+
+                if(c.stageId === ConstantsGeneral.stages.evaluation){
+                  this.stageEvaluation.get('startDate')?.setValue(this._toDate(c.startDate));
+                  this.stageEvaluation.get('endDate')?.setValue(this._toDate(c.endDate));
+                }else if(c.stageId === ConstantsGeneral.stages.calibration){
+                  this.stageCalibration.get('startDate')?.setValue(this._toDate(c.startDate));
+                  this.stageCalibration.get('endDate')?.setValue(this._toDate(c.endDate));
+                }
+              }
+            });
+          })
+      }
+    })
   }
 
   private _getCurrentDatesPeriod(): void {
@@ -70,6 +124,10 @@ export class EvaluationAddComponent {
           this.minDateEvaluation = this._toDate(period?.startDate);
           this.maxDateEvaluation = this._toDate(period?.endDate);
         });
+  }
+
+  get isEvaluationEdit(){
+    return this.evaluationId !== null;
   }
 
   get controlsEvaluationForm(): { [key: string]: AbstractControl } {
@@ -132,18 +190,34 @@ export class EvaluationAddComponent {
   }
 
   private _save(evaluation : IEvaluationCreate){
-    this._evaluationService.create(evaluation)
+    
+    if(this.evaluationId)
+      this._evaluationService.update(evaluation, this.evaluationId)
       .subscribe(evaluation =>{
         this._showConfirmMessage(evaluation.id);
       })
+    else
+      this._evaluationService.create(evaluation)
+        .subscribe(evaluation =>{
+          this._showConfirmMessage(evaluation.id);
+      })
   }
+  
 
   private _showConfirmMessage(evaluationId: string): void {
+
+    const dataConfirm = {...ConstantsGeneral.confirmCreatePopup};
+
+    if(this.evaluationId)
+      dataConfirm.text = "Se actualizó la evaluación correctamente";
+
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: {
         icon: 'check_circle',
         iconColor: 'color-primary',
-        text: 'Se ha creado la evaluación exitosamente',
+        text: this.evaluationId  
+          ? "Se actualizó la evaluación exitosamente"
+          : 'Se ha creado la evaluación exitosamente',
         buttonLabelAccept: 'Aceptar'
       },
       autoFocus: false,
@@ -445,21 +519,7 @@ export class EvaluationAddComponent {
       return dateLocal;
   }
 
-  showConfirmMessage() {
-    const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
-      data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
-    });
-
-    dialogRefConfirm.afterClosed().subscribe(() => {
-      this._goBack();
-    });
-  }
-
   confirmSave(): void {
-    console.log(this.endDateMax);
-    console.log(this.evaluationFormGroup);
-
     const evaluationCreate: IEvaluationCreate = { ...this.evaluationFormGroup.getRawValue() } ;
     evaluationCreate.evaluationComponents = [ ...evaluationCreate.evaluationComponents.filter(ec => ec.checked)];
     evaluationCreate.periodId = this.periodCurrent.id;

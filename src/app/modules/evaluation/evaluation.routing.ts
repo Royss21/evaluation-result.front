@@ -22,6 +22,10 @@ const routes: Routes = [
         component: EvaluationAddComponent
       },
       {
+        path: ':id/edit',
+        component: EvaluationAddComponent
+      },
+      {
         path: 'history',
         component: EvaluationHistoryComponent
       },

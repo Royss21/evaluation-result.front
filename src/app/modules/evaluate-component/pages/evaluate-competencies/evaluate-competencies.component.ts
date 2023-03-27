@@ -138,22 +138,35 @@ export class EvaluateCompetenciesComponent implements OnInit {
       return;
 
       const evaluateComponent: IComponentCollaboratorEvaluate = { ...this.evaluateFormGroup.getRawValue() };
- 
+      let conductsUncheck = [];
+      let textMessage = '';
+
       evaluateComponent.componentCollaboratorDetailsEvaluate.forEach(cc =>
       {
           cc.valueResult = cc.valueResult > 0 ? (cc.valueResult / 100.00) : cc.valueResult;
       });
 
-      const conductsUncheck = evaluateComponent.componentCollaboratorDetailsEvaluate.reduce((acc, el) => {
-        return [...acc, ...el.componentCollaboratorConductsEvaluate.reduce((acc2, el2) => ([...acc2, el2.pointValue]), [] as any[])]
-      }, [] as any[]);
-
+      if(evaluateComponent.stageId == ConstantsGeneral.stages.evaluation)
+      {
+        conductsUncheck = evaluateComponent.componentCollaboratorDetailsEvaluate.reduce((acc, el) => {
+          return [...acc, ...el.componentCollaboratorConductsEvaluate.reduce((acc2, el2) => ([...acc2, el2.pointValue]), [] as any[])]
+        }, [] as any[]);
+        textMessage =  'Aun hay conductas que faltan evaluar';
+      }
+      else
+      {
+        conductsUncheck = evaluateComponent.componentCollaboratorDetailsEvaluate.reduce((acc, el) => {
+          return [...acc, ...el.componentCollaboratorConductsEvaluate.reduce((acc2, el2) => ([...acc2, el2.pointValueCalibrated]), [] as any[])]
+        }, [] as any[]);
+        textMessage =  'Aun hay conductas que faltan calibrar. la nota calibrada tiene que ser mayor a 0';
+      }
+      
       if(conductsUncheck.some(s => s === 0))
       {
         const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
           data: { 
             ...ConstantsGeneral.confirmCreatePopup, 
-            text : 'Aun hay conductas que faltan evaluar.',
+            text : textMessage,
             iconColor: 'color-danger',
             icon: 'highlight_off'
           },
@@ -167,16 +180,16 @@ export class EvaluateCompetenciesComponent implements OnInit {
         return;
       }
 
-      const dialogRef = this._dialog.open(PopupChooseComponent, {
-        data: ConstantsGeneral.chooseData,
-        autoFocus: false,
-        restoreFocus: false
-      });
+      // const dialogRef = this._dialog.open(PopupChooseComponent, {
+      //   data: ConstantsGeneral.chooseData,
+      //   autoFocus: false,
+      //   restoreFocus: false
+      // });
 
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result)
-          this._save(evaluateComponent);
-      });
+      // dialogRef.afterClosed().subscribe((result) => {
+      //   if (result)
+      //     this._save(evaluateComponent);
+      // });
   }
 
 }
