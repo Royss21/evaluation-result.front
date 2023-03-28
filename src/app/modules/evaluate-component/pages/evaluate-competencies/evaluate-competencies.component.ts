@@ -160,12 +160,12 @@ export class EvaluateCompetenciesComponent implements OnInit {
         }, [] as any[]);
         textMessage =  'Aun hay conductas que faltan calibrar. la nota calibrada tiene que ser mayor a 0';
       }
-      
+
       if(conductsUncheck.some(s => s === 0))
       {
         const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
-          data: { 
-            ...ConstantsGeneral.confirmCreatePopup, 
+          data: {
+            ...ConstantsGeneral.confirmCreatePopup,
             text : textMessage,
             iconColor: 'color-danger',
             icon: 'highlight_off'
@@ -174,22 +174,22 @@ export class EvaluateCompetenciesComponent implements OnInit {
           autoFocus: false,
           restoreFocus: false
         });
-    
+
         dialogRefConfirm.afterClosed().subscribe(() => {});
 
         return;
       }
 
-      // const dialogRef = this._dialog.open(PopupChooseComponent, {
-      //   data: ConstantsGeneral.chooseData,
-      //   autoFocus: false,
-      //   restoreFocus: false
-      // });
+      const dialogRef = this._dialog.open(PopupChooseComponent, {
+        data: ConstantsGeneral.chooseData,
+        autoFocus: false,
+        restoreFocus: false
+      });
 
-      // dialogRef.afterClosed().subscribe((result) => {
-      //   if (result)
-      //     this._save(evaluateComponent);
-      // });
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result)
+          this._save(evaluateComponent);
+      });
   }
 
 }

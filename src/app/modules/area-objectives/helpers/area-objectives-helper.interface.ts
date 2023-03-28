@@ -7,7 +7,7 @@ export class AreaObjectivesHelper{
       new ElementRowTable('areaName','Area'),
       new ElementRowTable('chargeCount','# Cargos'),
       new ElementRowTable('chargeCountAssigned','# Cargos Asign.'),
-      new ElementRowTable('actions','Acciones'),
+      new ElementRowTable('actions','Acciones', true)
     ];
 
     static titleActions = {

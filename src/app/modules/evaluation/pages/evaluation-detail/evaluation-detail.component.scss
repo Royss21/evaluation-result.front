@@ -1,0 +1,15 @@
+.container-elements-evaluation {
+  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(400px, 1fr));
+
+  @media (max-width: 768px) {
+    gap: 10px;
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    gap: 10px;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

@@ -12,11 +12,11 @@ export class EvaluationCollaboratorHelper{
       new ElementRowTable('levelName','Nivel' , true),
       new ElementRowTable('isLeaderCompetencies','Evalua Comp.' , true),
       new ElementRowTable('isLeaderAreaObjectives','Evalua Obj. Area.' , true),
-      new ElementRowTable('actions','Acciones'),
+      new ElementRowTable('actions','Acciones', true)
     ];
 }
 
 
 export class EvaluationCollaboratorText{
   static modalRegisterCollaborator = 'Registrar colaborador en la evaluación';
-} 
+}

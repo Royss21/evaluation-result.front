@@ -6,7 +6,7 @@ export class FormulaHelper{
       new ElementRowTable('name','Nombre'),
       new ElementRowTable('description','Descripción'),
       new ElementRowTable('formulaReal','Formula'),
-      new ElementRowTable('actions','Acciones'),
+      new ElementRowTable('actions','Acciones', true)
     ];
 }
 
@@ -16,4 +16,4 @@ export class FormulaText{
   static modalUdpate =  'Editar Formula';
   //static saveText: 'Desea guardar el nivel?';
   //static saveAndCloseText: 'Desea guardar el nivel y cerrar?';
-} 
+}

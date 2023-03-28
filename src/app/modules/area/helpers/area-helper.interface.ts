@@ -5,7 +5,7 @@ export class AreaHelper {
   static columnsTable: IElementRowTable[] =  [
     new ElementRowTable('name','Nombre'),
     new ElementRowTable('gerencyName','Gerencia'),
-    new ElementRowTable('actions','Acciones'),
+    new ElementRowTable('actions','Acciones', true)
   ];
 
   static titleActionText = {

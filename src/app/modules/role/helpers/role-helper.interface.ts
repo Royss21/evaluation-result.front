@@ -5,7 +5,7 @@ export class RoleHelper{
   static columnsTable: IElementRowTable[] =  [
     new ElementRowTable('id','#'),
     new ElementRowTable('name','Nombre'),
-    new ElementRowTable('actions','Acciones'),
+    new ElementRowTable('actions','Acciones', true)
   ];
 
   static titleActionText = {

@@ -36,7 +36,7 @@
       class="text-center"
       *ngSwitchCase="'resultObjectiveCorporate'"
     >
-      {{ element[column.columnMatch] * 100 }}
+      {{ (element[column.columnMatch] * 100).toFixed(2) }}
     </div>
     <div
       fxLayout="row"
@@ -47,14 +47,14 @@
         [statusId]="element[column.columnMatch]"
       ></app-status-chip>
     </div>
-    
+
     <div
       fxLayout="row"
       fxLayoutGap="10px"
       class="text-center"
       *ngSwitchCase="'resultObjectiveArea'"
     >
-      {{ element[column.columnMatch] * 100 }}
+      {{ (element[column.columnMatch] * 100).toFixed(2) }}
     </div>
     <div
       fxLayout="row"
@@ -72,7 +72,7 @@
       class="text-center"
       *ngSwitchCase="'resultCompetence'"
     >
-      {{ element[column.columnMatch] * 100 }}
+      {{ (element[column.columnMatch] * 100).toFixed(2) }}
     </div>
     <div
       fxLayout="row"
@@ -96,8 +96,8 @@
       {{ element[column.columnMatch] }}
     </div>
 
-    
-  </div>  
+
+  </div>
 
   </ng-template>
 </app-table>

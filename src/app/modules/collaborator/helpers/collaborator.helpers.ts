@@ -8,7 +8,7 @@ export class CollaboratorHelper{
     new ElementRowTable('gerencyName','Gerencia'),
     new ElementRowTable('areaName','Área'),
     new ElementRowTable('chargeName','Cargo'),
-    new ElementRowTable('actions','Acciones'),
+    new ElementRowTable('actions','Acciones', true)
   ];
 
   static titleActionText = {

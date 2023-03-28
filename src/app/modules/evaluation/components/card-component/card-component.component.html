@@ -18,7 +18,8 @@
       fxLayoutAlign="center center"
     >
       <img src="/assets/images/objCorp.png" alt="objetics corp">
-      <mat-card-title class="fs-6">{{ infoComponent?.componentName || 'El componente esta deshabilitado' }}</mat-card-title>
+      <mat-card-title class="fs-6">{{ titleComponent }}</mat-card-title>
+      <p *ngIf="!isEnable" >El componente esta deshabilitado</p>
       <span class="text-center">
         {{ infoComponent?.rangeDate || '--------' }}
       </span>
@@ -41,6 +42,4 @@
       </div>
     </div>
   </div>
-
-
 </mat-card>

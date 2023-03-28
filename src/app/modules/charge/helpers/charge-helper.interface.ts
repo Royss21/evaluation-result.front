@@ -6,7 +6,7 @@ export class ChargeHelper {
     new ElementRowTable('name','Nombre'),
     new ElementRowTable('areaName','Área'),
     new ElementRowTable('hierarchyName','Jerarquía'),
-    new ElementRowTable('actions','Acciones'),
+    new ElementRowTable('actions','Acciones', true)
   ];
 
   static titleActionText = {

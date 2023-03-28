@@ -8,7 +8,7 @@ export class CorporateObjectivesHelper{
       new ElementRowTable('formulaName','Formula'),
       new ElementRowTable('chargeCount','# Cargos'),
       new ElementRowTable('chargeCountAssigned','# Cargos Asign.'),
-      new ElementRowTable('actions','Acciones'),
+      new ElementRowTable('actions','Acciones', true)
     ];
 }
 
@@ -16,4 +16,4 @@ export class CorporateObjectivesText{
 
   static modalCreate = 'Crear Objetivo Corporativo';
   static modalUdpate =  'Editar Objetivo Corporativo';
-} 
+}

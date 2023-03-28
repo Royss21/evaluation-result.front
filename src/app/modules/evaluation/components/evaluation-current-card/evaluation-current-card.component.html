@@ -1,62 +1,59 @@
-
+<mat-card>
+  <div
+    fxLayout="row"
+    fxLayoutGap="10px grid"
+    fxflexfill
+  >
+    <img src="/assets/images/flow.svg" alt="flow">
     <div
-      fxLayout="row"
-      fxLayoutGap="10px grid"
-      fxflexfill
+      fxLayout="column"
+      fxLayoutAlign="start"
     >
-      <img src="/assets/images/flow.svg" alt="flow">
-      <div
-        fxLayout="column"
-        fxLayoutAlign="start"
-      >
-        <mat-card-title class="fs-6 fw-bold m-0">
-         {{ periodEvaluation?.periodName }}
-        </mat-card-title>
-        <mat-card-title class="fs-6 fw-bold m-0">
-          {{ periodEvaluation?.evaluation?.name }} en curso:
-        </mat-card-title>
-        <mat-card-subtitle class="m-0">
-          {{ periodEvaluation?.evaluation?.rangeDate }}
-        </mat-card-subtitle>
-      </div>
+      <mat-card-title class="fs-6 fw-bold m-0">
+        {{ periodEvaluation?.periodName }}
+      </mat-card-title>
+      <mat-card-title class="fs-6 fw-bold m-0">
+        {{ periodEvaluation?.evaluation?.name }} en curso:
+      </mat-card-title>
+      <mat-card-subtitle class="m-0">
+        {{ periodEvaluation?.evaluation?.rangeDate }}
+      </mat-card-subtitle>
     </div>
+  </div>
 
 
-    <mat-card-content class="m-0 p-0">
-      <span class="fs-8 fw-bolder mb-2">Componentes habilitados: </span>
-      <ul class="p-0 mt-2">
+  <mat-card-content class="m-0 p-0">
+    <span class="fs-8 fw-bolder mb-2">Componentes habilitados: </span>
+    <ul class="p-0 mt-2">
 
-        <app-component-item
-          [icon]="'/assets/images/objCorp.png'"
-          [componentName]="'Objetivos corporativos'"
-          [isCreatedInEvaluation]="periodEvaluation?.evaluation?.hasComponentCorporateObjectives || false"
-        ></app-component-item>
+      <app-component-item
+        [icon]="'/assets/images/objCorp.png'"
+        [componentName]="'Objetivos corporativos'"
+        [isCreatedInEvaluation]="periodEvaluation?.evaluation?.hasComponentCorporateObjectives || false"
+      ></app-component-item>
 
-        <app-component-item
-          [icon]="'/assets/images/kpi.png'"
-          [componentName]="'Objetivos de Áreas'"
-          [isCreatedInEvaluation]="periodEvaluation?.evaluation?.hasComponentAreaObjectives || false"
-        ></app-component-item>
+      <app-component-item
+        [icon]="'/assets/images/kpi.png'"
+        [componentName]="'Objetivos de Áreas'"
+        [isCreatedInEvaluation]="periodEvaluation?.evaluation?.hasComponentAreaObjectives || false"
+      ></app-component-item>
 
-        <app-component-item
-          [icon]="'/assets/images/comp.png'"
-          [componentName]="'Competencias'"
-          [isCreatedInEvaluation]="periodEvaluation?.evaluation?.hasComponentCompetencies || false"
-        ></app-component-item>
+      <app-component-item
+        [icon]="'/assets/images/comp.png'"
+        [componentName]="'Competencias'"
+        [isCreatedInEvaluation]="periodEvaluation?.evaluation?.hasComponentCompetencies || false"
+      ></app-component-item>
 
-      </ul>
-    </mat-card-content>
+    </ul>
+  </mat-card-content>
 
-    <div *ngIf="stagesRangeDate.length > 0">
-      <hr>
-      <div  *ngFor="let stage of stagesRangeDate">
-        <app-stage-evaluate-item *ngIf="!leaderFlag || enableStage(stage.stageId)"
-          [stageRangeDate]="stage"
-        ></app-stage-evaluate-item>
-      </div>
+  <div *ngIf="stagesRangeDate.length > 0">
+    <hr>
+    <div *ngFor="let stage of stagesRangeDate">
+      <app-stage-evaluate-item *ngIf="!leaderFlag || enableStage(stage.stageId)"
+        [stageRangeDate]="stage"
+      ></app-stage-evaluate-item>
     </div>
+  </div>
+</mat-card>
 
-
-
-  <!-- </div>
-</mat-card> -->

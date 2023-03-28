@@ -20,15 +20,20 @@
 >
   <div
     fxLayout.xs="column"
-    fxLayout.sm="row wrap"
-    fxLayout.md="row wrap"
-    fxLayout.lg="row wrap"
-    fxLayout.xl="row wrap"
-    class="px-3 pb-0"
+    fxLayout.sm="column"
+    fxLayout.md="row"
+    fxLayout.lg="row"
+    fxLayout.xl="row"
+    class="px-3"
+    fxLayoutGap="5px"
     fxLayoutAlign="space-between  center"
   >
     <div
-      fxFlex="50"
+      fxFlex.xs="100"
+      fxFlex.sm="100"
+      fxFlex.md="50"
+      fxFlex.lg="50"
+      fxFlex.xl="50"
       *ngIf="!isStageFeedback"
     >
       <mat-form-field fxFill appearance="outline">
@@ -45,8 +50,11 @@
     </div>
 
     <div
-      [fxFlex]="isStageFeedback ? 100 : 50"
-      class="p-1"
+      fxFlex.xs="100"
+      fxFlex.sm="100"
+      fxFlex.md="50"
+      fxFlex.lg="50"
+      fxFlex.xl="50"
     >
       <mat-form-field fxFill appearance="outline">
         <mat-label>Comentario de {{ labelComment }}</mat-label>
@@ -76,7 +84,7 @@
     fxLayoutAlign="center center"
     fxLayoutAlign.xs="space-between center"
     fxLayoutGap="10"
-    class="p-1 pb-0 pt-2"
+    class="p-1 pb-0"
   >
     <button
       mat-mini-fab

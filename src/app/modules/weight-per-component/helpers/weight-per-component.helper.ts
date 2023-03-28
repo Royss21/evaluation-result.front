@@ -7,7 +7,7 @@ export class WeightPerComponentHelper{
     new ElementRowTable('corporateGoals','Obj. Corporativos'),
     new ElementRowTable('areaObjectives','Obj. de Área'),
     new ElementRowTable('competences','Competencias'),
-    new ElementRowTable('actions','Acciones')
+    new ElementRowTable('actions','Acciones', true)
   ];
 
   static titleActionText = {

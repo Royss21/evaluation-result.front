@@ -1,0 +1,11 @@
+
+.container-evaluation-hisotry {
+  gap: 10px;
+  display: grid;
+  grid-auto-rows: minmax(150px, auto);
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.item-history {
+  cursor: pointer;
+}

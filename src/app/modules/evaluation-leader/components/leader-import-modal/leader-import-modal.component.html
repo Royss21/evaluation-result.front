@@ -74,7 +74,7 @@
               <mat-radio-button [value]="0" color="primary" (change)="changeTypeImport(0)" *ngIf="hasComponentAreaObjectives">Lideres de areas</mat-radio-button>
             </mat-radio-group>
           </div>
-          <div class="to-reprocess">
+          <div *ngIf="hasPreviousImport" class="to-reprocess">
             <mat-slide-toggle color="primary" formControlName="isToReprocess" >Es importación para reprocesar</mat-slide-toggle>
           </div>
         </section>

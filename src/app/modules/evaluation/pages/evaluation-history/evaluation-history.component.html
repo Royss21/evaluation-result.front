@@ -1,22 +1,7 @@
-<div
-  fxLayout.xs="column"
-  fxLayout.sm="column"
-  fxLayout.md="row wrap"
-  fxLayout.lg="row wrap"
-  fxLayout.xl="row wrap"
-  fxLayoutAlign="start"
-  fxLayoutGap="10px grid"
-  fxflexfill
->
-
+<div class="container-evaluation-hisotry">
   <div
+    class="item-history"
     *ngFor="let evaluation  of evaluations"
-    fxFlex.xl="33.3333%"
-    fxFlex.lg="50%"
-    fxFlex.md="50%"
-    fxFlex.sm="100%"
-    fxFlex.xs="100%"
-    class="cursor-pointer"
     (click)="goEvaluationDetail(evaluation)"
   >
     <app-evaluation-current-card

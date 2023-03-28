@@ -11,6 +11,7 @@ import { ConstantsGeneral } from '@shared/constants';
 })
 export class CardComponentComponent {
 
+  @Input() titleComponent: String = "";
   @Input() infoComponent: IComponentsRangeDate | null;
   @Input() isEnable: boolean = false;
   @Input() isActive: boolean = false;

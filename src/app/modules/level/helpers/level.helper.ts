@@ -5,7 +5,7 @@ export class LevelHelper {
     static columnsTable: IElementRowTable[] =  [
       new ElementRowTable('name','Nombre'),
       new ElementRowTable('description','Descripción'),
-      new ElementRowTable('actions','Acciones'),
+      new ElementRowTable('actions','Acciones', true)
     ];
 }
 

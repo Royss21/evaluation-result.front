@@ -7,7 +7,7 @@ export class UserHelper{
     new ElementRowTable('names','Nombre'),
     new ElementRowTable('lastName','Apellidos'),
     new ElementRowTable('email','Correo'),
-    new ElementRowTable('actions','Acciones'),
+    new ElementRowTable('actions','Acciones', true)
   ];
 
   static titleActionText = {

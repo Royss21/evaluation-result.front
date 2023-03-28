@@ -121,7 +121,6 @@ export class FormulaModalComponent implements OnInit {
       dato = dato.replace(/SI/g, "IIF");
       dato = dato.replace(/Y/g, "");
       dato = dato.replace(/;/g, ",");
-      dato = dato.replace(/=/g, "");
       dato = dato.replace(/\+/g, "");
       dato = dato.replace(/-/g, "");
 

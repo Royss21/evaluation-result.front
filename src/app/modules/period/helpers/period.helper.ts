@@ -7,7 +7,7 @@ export class PeriodHelper{
     new ElementRowTable('name','Nombre'),
     new ElementRowTable('startDate','Fecha de Inicio'),
     new ElementRowTable('endDate','Fecha de Fin'),
-    new ElementRowTable('actions','Acciones')
+    new ElementRowTable('actions','Acciones', true)
   ];
 
   static titleActionText = {
