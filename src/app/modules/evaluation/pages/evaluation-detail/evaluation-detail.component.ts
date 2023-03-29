@@ -44,8 +44,10 @@ export class EvaluationDetailComponent {
 
     if(this.logingCollaborator === '1')
     {
-      this.isLeaderAreaObjetive = localStorage.getItem('isLeaderAreaObjetive') ? true : false;
-      this.isLeaderCompetence = localStorage.getItem('isLeaderCompetence') ? true : false;
+      this.isLeaderAreaObjetive = localStorage.getItem('isLeaderAreaObjetive') == 'true'?  true: false;
+      this.isLeaderCompetence = localStorage.getItem('isLeaderCompetence') == 'true'?  true: false;
+
+      console.log(this.isLeaderAreaObjetive, this.isLeaderCompetence, this.logingCollaborator)
       this._leaderService.getComponentAndStageLeader(localStorage.getItem('collaboratorId') || '')
         .subscribe(data => {
           this.leaderFlag = data;

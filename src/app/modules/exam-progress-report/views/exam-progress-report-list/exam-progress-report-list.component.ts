@@ -70,7 +70,7 @@ export class ExamProgressReportListComponent {
     const header = {
       data:
       [
-        "ID COLABORADOR", "NRO. DOCUMENTO", "JERARQUÍA", "GERENCIA", "NIVEL", "ÁREA", "CARGO",
+        "COLABORADOR", "NRO. DOCUMENTO", "JERARQUÍA", "GERENCIA", "NIVEL", "ÁREA", "CARGO",
         "RESULTADO OBJ. CORP.", "RESULTADO OBJ. ÁREA", "RESULTADO COMPETENCIA",
         "ESTADO OBJ. CORP.", "ESTADO OBJ. ÁREA", "ESTADO COMPETENCIA", "ESTADO ACTUAL"
       ],

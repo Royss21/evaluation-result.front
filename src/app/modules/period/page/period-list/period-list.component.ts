@@ -1,9 +1,10 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 
 import { ConstantsGeneral } from '@shared/constants';
+import { IPopupConfirm } from '@components/popup-interface';
 import { PeriodService } from '@core/services/period/period.service';
 import { PeriodHelper } from '@modules/period/helpers/period.helper';
 import { IPeriod } from '@modules/period/interfaces/period.interface';
@@ -29,6 +30,13 @@ export class PeriodListComponent {
   periodPaginatedBehavior: BehaviorSubject<any>;
   columnsTable: IElementRowTable[];
   paginatedFilterCurrent: IPaginatedFilter;
+
+  warningPopup: IPopupConfirm = {
+    icon:'warning_amber',
+    iconColor: 'color-warning',
+    text: 'Existe una evaluacion asignada a este periodo',
+    buttonLabelAccept: 'Aceptar'
+  }
 
   constructor(
     private _router: Router,
@@ -80,13 +88,22 @@ export class PeriodListComponent {
   }
 
   confirmDeleted(id: number): void {
-    const dialogRef = this._dialog.open(PopupChooseComponent, {
-      data: ConstantsGeneral.chooseDelete,
-      autoFocus: false,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) this.delete(id);
+    this._periodService.checkExistEvaluationInProgress(id).subscribe(isAssigned => {
+      if (isAssigned) {
+        this._dialog.open(PopupConfirmComponent, {
+          data: this.warningPopup,
+          autoFocus: false,
+        });
+      } else {
+        const dialogRef = this._dialog.open(PopupChooseComponent, {
+          data: ConstantsGeneral.chooseDelete,
+          autoFocus: false,
+        });
+    
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) this.delete(id);
+        });
+      }
     });
   }
 

@@ -87,13 +87,17 @@
                 required
                 class="text-right"
                 [readonly]="isCompleted"
-                [min]="0"
+                [min]="0" 
+                [max]="5" 
               >
               <mat-error *ngIf="conduct.get('pointValueCalibrated')?.errors?.['required']">
                 El puntaje es <strong>requerido</strong>.
               </mat-error>
               <mat-error *ngIf="conduct.get('pointValueCalibrated')?.errors?.['min']">
                 El puntaje minimo es <strong>1</strong>.
+              </mat-error>
+              <mat-error *ngIf="conduct.get('pointValueCalibrated')?.errors?.['max']">
+                El puntaje maximo es <strong>5</strong>.
               </mat-error>
             </mat-form-field>
           </div>

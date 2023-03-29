@@ -71,7 +71,7 @@
     ></app-card-component>
   </ng-container>
 
-  <ng-container *ngIf="logingCollaborator === '0' || (isLeaderCompetence && leaderFlag?.isLeaderAreaObjetives)">
+  <ng-container *ngIf="logingCollaborator === '0' || (isLeaderAreaObjetive && leaderFlag?.isLeaderAreaObjetives)">
     <app-card-component
       titleComponent="Objetivos de área"
       (emitNavigate)="goToEvaluate($event)"
@@ -80,8 +80,9 @@
     ></app-card-component>
   </ng-container>
 
-  <ng-container *ngIf="logingCollaborator === '0' || isLeaderAreaObjetive">
+  <ng-container >
     <app-card-component
+      *ngIf="logingCollaborator === '0' ||  isLeaderCompetence"
       titleComponent="Competencias"
       (emitNavigate)="goToEvaluate($event)"
       [infoComponent]="infoCompetence"

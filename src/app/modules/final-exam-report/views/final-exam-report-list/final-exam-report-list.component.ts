@@ -130,6 +130,7 @@ export class FinalExamReportListComponent {
           });
         });
 
+        console.log(data)
         this._excelReportService.downloadExcelReport(title, header, keys, data);
       });
   }

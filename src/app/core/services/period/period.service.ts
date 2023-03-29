@@ -47,4 +47,10 @@ export class PeriodService {
     return this._apiService.get<IPeriod>(`${this._url}/current-dates`);
   }
 
+  checkExistEvaluationInProgress(idPeriod: number): Observable<boolean> {
+    return this._apiService
+        .get<boolean>(`${this._url}/validate-assigned/${idPeriod}`);
+  }
+
+
 }
