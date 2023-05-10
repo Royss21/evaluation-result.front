@@ -15,10 +15,9 @@ import { ParameterValueModalComponent } from '@modules/parameter-range/component
 @Component({
   selector: 'app-parameter-range-list',
   templateUrl: './parameter-range-list.component.html',
-  styleUrls: ['./parameter-range-list.component.scss']
+  styleUrls: ['./parameter-range-list.component.scss'],
 })
 export class ParameterRangeListComponent {
-
   private unsubscribe$ = new Subject<any>();
 
   parameterRangePaginated$: Observable<any>;
@@ -30,11 +29,12 @@ export class ParameterRangeListComponent {
 
   constructor(
     public _dialog: MatDialog,
-    private _parameterRangeService: ParameterRangeService,
-  ){
+    private _parameterRangeService: ParameterRangeService
+  ) {
     this.parameterRangePaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
-    this.parameterRangePaginated$ = this.parameterRangePaginatedBehavior.asObservable();
+    this.parameterRangePaginated$ =
+      this.parameterRangePaginatedBehavior.asObservable();
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = ParameterRangeHelper.columnsTable;
   }
@@ -44,57 +44,60 @@ export class ParameterRangeListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._parameterRangeService.getPaginated(paginatedFilter)
-            .subscribe(paginated => this.parameterRangePaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._parameterRangeService
+          .getPaginated(paginatedFilter)
+          .subscribe((paginated) =>
+            this.parameterRangePaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
   private openModal(parameterRange?: IParameterRange): void {
+    const modalparameterRange = this._dialog.open(
+      ParameterRangeModalComponent,
+      {
+        width: ConstantsGeneral.mdModal,
+        disableClose: true,
+        data: parameterRange,
+      }
+    );
 
-    const modalparameterRange = this._dialog.open(ParameterRangeModalComponent, {
-      width: ConstantsGeneral.mdModal,
-      disableClose: true,
-      data: parameterRange
+    modalparameterRange.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
     });
-
-    modalparameterRange.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
   }
 
-  private delete(id:number): void{
-    this._parameterRangeService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
+  private delete(id: number): void {
+    this._parameterRangeService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
-  create(): void{
+  create(): void {
     this.openModal();
   }
 
-  viewListParameter(id: string){
-    const modalparameterValue = this._dialog.open(ParameterValueModalComponent, {
-      width: ConstantsGeneral.lgModal,
-      disableClose: true,
-      data: id
-    });
+  viewListParameter(id: string) {
+    const modalparameterValue = this._dialog.open(
+      ParameterValueModalComponent,
+      {
+        width: ConstantsGeneral.lgModal,
+        disableClose: true,
+        data: id,
+      }
+    );
 
-    modalparameterValue.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    modalparameterValue.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
-  update(parameterRange: IParameterRange): void{
+  update(parameterRange: IParameterRange): void {
     this.openModal(parameterRange);
   }
 
@@ -113,5 +116,4 @@ export class ParameterRangeListComponent {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

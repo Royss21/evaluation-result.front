@@ -17,10 +17,9 @@ import { PeriodModalComponent } from '@modules/period/components/period-modal/pe
 @Component({
   selector: 'app-period-list',
   templateUrl: './period-list.component.html',
-  styleUrls: ['./period-list.component.scss']
+  styleUrls: ['./period-list.component.scss'],
 })
 export class PeriodListComponent {
-
   public title = PeriodHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
 
@@ -32,17 +31,17 @@ export class PeriodListComponent {
   paginatedFilterCurrent: IPaginatedFilter;
 
   warningPopup: IPopupConfirm = {
-    icon:'warning_amber',
+    icon: 'warning_amber',
     iconColor: 'color-warning',
     text: 'Existe una evaluacion asignada a este periodo',
-    buttonLabelAccept: 'Aceptar'
-  }
+    buttonLabelAccept: 'Aceptar',
+  };
 
   constructor(
     private _router: Router,
     public _dialog: MatDialog,
-    private _periodService: PeriodService,
-  ){
+    private _periodService: PeriodService
+  ) {
     this.periodPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
     this.periodPaginated$ = this.periodPaginatedBehavior.asObservable();
@@ -55,70 +54,69 @@ export class PeriodListComponent {
   }
 
   private callPaginated() {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._periodService.getPaginated(paginatedFilter)
-          .subscribe(paginated => this.periodPaginatedBehavior.next(paginated));
-        }
-    });
-  }
-
-  private openModal(period?: IPeriod): void {
-
-    const modalPeriod = this._dialog.open(PeriodModalComponent, {
-      data: period,
-      disableClose: true,
-      width: ConstantsGeneral.mdModal
-    });
-
-    modalPeriod.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
-  }
-
-  createPeriod(): void{
-    this.openModal();
-  }
-
-  updatePeriod(period: IPeriod): void{
-    this.openModal(period);
-  }
-
-  confirmDeleted(id: number): void {
-    this._periodService.checkExistEvaluationInProgress(id).subscribe(isAssigned => {
-      if (isAssigned) {
-        this._dialog.open(PopupConfirmComponent, {
-          data: this.warningPopup,
-          autoFocus: false,
-        });
-      } else {
-        const dialogRef = this._dialog.open(PopupChooseComponent, {
-          data: ConstantsGeneral.chooseDelete,
-          autoFocus: false,
-        });
-    
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result) this.delete(id);
-        });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._periodService
+          .getPaginated(paginatedFilter)
+          .subscribe((paginated) =>
+            this.periodPaginatedBehavior.next(paginated)
+          );
       }
     });
   }
 
-  private delete(id: number): void{
+  private openModal(period?: IPeriod): void {
+    const modalPeriod = this._dialog.open(PeriodModalComponent, {
+      data: period,
+      disableClose: true,
+      width: ConstantsGeneral.mdModal,
+    });
+
+    modalPeriod.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
+  }
+
+  createPeriod(): void {
+    this.openModal();
+  }
+
+  updatePeriod(period: IPeriod): void {
+    this.openModal(period);
+  }
+
+  confirmDeleted(id: number): void {
     this._periodService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
+      .checkExistEvaluationInProgress(id)
+      .subscribe((isAssigned) => {
+        if (isAssigned) {
+          this._dialog.open(PopupConfirmComponent, {
+            data: this.warningPopup,
+            autoFocus: false,
+          });
+        } else {
+          const dialogRef = this._dialog.open(PopupChooseComponent, {
+            data: ConstantsGeneral.chooseDelete,
+            autoFocus: false,
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) this.delete(id);
+          });
+        }
       });
+  }
+
+  private delete(id: number): void {
+    this._periodService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

@@ -1,4 +1,3 @@
-
 export interface IEvaluationCreate {
   periodId: number;
   name: string;
@@ -6,10 +5,9 @@ export interface IEvaluationCreate {
   startDate: Date;
   endDate: Date;
   isEvaluationTest: boolean;
-  evaluationComponents: IEvaluationComponent[],
-  evaluationComponentStages: IEvaluationComponentStage[],
+  evaluationComponents: IEvaluationComponent[];
+  evaluationComponentStages: IEvaluationComponentStage[];
 }
-
 
 export interface IEvaluationRes {
   id: string;
@@ -21,20 +19,19 @@ export interface IEvaluationRes {
 }
 
 export interface IEvaluationComponent {
-  componentId: number
-  checked: boolean,
-  img: string,
-  title: string,
-  subtitle: string,
-  startDate: Date | null,
-  endDate: Date | null,
+  componentId: number;
+  checked: boolean;
+  img: string;
+  title: string;
+  subtitle: string;
+  startDate: Date | null;
+  endDate: Date | null;
 }
 
 export interface IEvaluationComponentStage {
   componentId: number | null;
   stageId: number;
-  startDate: Date | null
-  endDate:Date | null;
+  startDate: Date | null;
+  endDate: Date | null;
   title: string;
 }
-

@@ -7,24 +7,25 @@ import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress
 @Component({
   selector: 'app-evaluation-history',
   templateUrl: './evaluation-history.component.html',
-  styleUrls: ['./evaluation-history.component.scss']
+  styleUrls: ['./evaluation-history.component.scss'],
 })
 export class EvaluationHistoryComponent implements OnInit {
-
   evaluations: IEvaluationDetail[] = [];
 
   constructor(
     private _evaluationService: EvaluationService,
     private _router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this._evaluationService.getAllDetail()
-      .subscribe(evaluations => this.evaluations =  evaluations);
+    this._evaluationService
+      .getAllDetail()
+      .subscribe((evaluations) => (this.evaluations = evaluations));
   }
 
-  goEvaluationDetail(evaluationDetail: IEvaluationDetail){
-    this._router.navigateByUrl(`/evaluation/${evaluationDetail.evaluation?.id}/detail`);
+  goEvaluationDetail(evaluationDetail: IEvaluationDetail) {
+    this._router.navigateByUrl(
+      `/evaluation/${evaluationDetail.evaluation?.id}/detail`
+    );
   }
-
 }

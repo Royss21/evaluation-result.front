@@ -16,10 +16,9 @@ import { IComponentCollaboratorEvaluate } from '@modules/evaluate-component/inte
 @Component({
   selector: 'app-evaluate-competencies',
   templateUrl: './evaluate-competencies.component.html',
-  styleUrls: ['./evaluate-competencies.component.scss']
+  styleUrls: ['./evaluate-competencies.component.scss'],
 })
 export class EvaluateCompetenciesComponent implements OnInit {
-
   private _componentCollaboratorId: string;
 
   infoCollaborator: ICollaboratorInformation;
@@ -31,24 +30,30 @@ export class EvaluateCompetenciesComponent implements OnInit {
     private _componentCollaboratorService: ComponentCollaboratorService,
     private _formBuilder: ComponentCollaboratorEvaluateBuilderService,
     private _location: Location,
-    public _dialog: MatDialog,
+    public _dialog: MatDialog
   ) {
-    this.evaluateFormGroup = _formBuilder.buildComponentCollaboratorEvaluateForm(null, ConstantsGeneral.components.competencies);
+    this.evaluateFormGroup =
+      _formBuilder.buildComponentCollaboratorEvaluateForm(
+        null,
+        ConstantsGeneral.components.competencies
+      );
     this._setInformationCollaborator(null);
-   }
+  }
 
   ngOnInit(): void {
-    this._route.params.subscribe(params => {
+    this._route.params.subscribe((params) => {
       this._componentCollaboratorId = params['componentCollaboratorId'];
       this._getEvaluationData();
     });
   }
 
   get componentCollaboratorDetailsEvaluate() {
-    return this.evaluateFormGroup.controls["componentCollaboratorDetailsEvaluate"] as FormArray;
+    return this.evaluateFormGroup.controls[
+      'componentCollaboratorDetailsEvaluate'
+    ] as FormArray;
   }
 
-  get isStatusCompleted(){
+  get isStatusCompleted() {
     return this.infoCollaborator.statusId == ConstantsGeneral.status.Completed;
   }
 
@@ -56,24 +61,36 @@ export class EvaluateCompetenciesComponent implements OnInit {
     return this.evaluateFormGroup.controls;
   }
 
-
-  private _getEvaluationData(){
-    this._componentCollaboratorService.getEvaluationData(this._componentCollaboratorId)
-      .subscribe(data => {
-
+  private _getEvaluationData() {
+    this._componentCollaboratorService
+      .getEvaluationData(this._componentCollaboratorId)
+      .subscribe((data) => {
         this.stageCurrentId = data.stageId;
-        this.evaluateFormGroup = this._formBuilder.buildComponentCollaboratorEvaluateForm(data, ConstantsGeneral.components.competencies);
+        this.evaluateFormGroup =
+          this._formBuilder.buildComponentCollaboratorEvaluateForm(
+            data,
+            ConstantsGeneral.components.competencies
+          );
         this._setInformationCollaborator(data);
 
-        if(data.componentCollaboratorDetails.length > 0)
-        {
-          data.componentCollaboratorDetails.forEach(detail => {
+        if (data.componentCollaboratorDetails.length > 0) {
+          data.componentCollaboratorDetails.forEach((detail) => {
+            const detailGroup =
+              this._formBuilder.buildComponentCollaboratorDetailEvaluateForm(
+                detail,
+                false
+              );
 
-            const detailGroup = this._formBuilder.buildComponentCollaboratorDetailEvaluateForm(detail, false);
-
-            detail.componentCollaboratorConducts.forEach(conduct =>
-              (detailGroup.controls["componentCollaboratorConductsEvaluate"] as FormArray)
-                .push( this._formBuilder.buildComponentCollaboratorConductEvaluateForm(conduct))
+            detail.componentCollaboratorConducts.forEach((conduct) =>
+              (
+                detailGroup.controls[
+                  'componentCollaboratorConductsEvaluate'
+                ] as FormArray
+              ).push(
+                this._formBuilder.buildComponentCollaboratorConductEvaluateForm(
+                  conduct
+                )
+              )
             );
 
             this.componentCollaboratorDetailsEvaluate.push(detailGroup);
@@ -82,22 +99,23 @@ export class EvaluateCompetenciesComponent implements OnInit {
       });
   }
 
-  private _setInformationCollaborator(info: ICollaboratorInformation | null){
+  private _setInformationCollaborator(info: ICollaboratorInformation | null) {
     this.infoCollaborator = {
-      collaboratorName: info?.collaboratorName ?? "",
-      hierarchyName: info?.hierarchyName ?? "",
-      gerencyName: info?.gerencyName ?? "",
-      levelName: info?.levelName ?? "",
-      areaName: info?.areaName ?? "",
-      chargeName :info?.chargeName ?? "",
-      statusId :info?.statusId ?? 0,
-      statusName :info?.statusName ?? "",
-      documentNumber : info?.documentNumber ?? "",
+      collaboratorName: info?.collaboratorName ?? '',
+      hierarchyName: info?.hierarchyName ?? '',
+      gerencyName: info?.gerencyName ?? '',
+      levelName: info?.levelName ?? '',
+      areaName: info?.areaName ?? '',
+      chargeName: info?.chargeName ?? '',
+      statusId: info?.statusId ?? 0,
+      statusName: info?.statusName ?? '',
+      documentNumber: info?.documentNumber ?? '',
     };
   }
 
-  private _save(evaluate: IComponentCollaboratorEvaluate){
-    this._componentCollaboratorService.evaluate(evaluate)
+  private _save(evaluate: IComponentCollaboratorEvaluate) {
+    this._componentCollaboratorService
+      .evaluate(evaluate)
       .subscribe(() => this._showConfirmMessage());
   }
 
@@ -105,91 +123,103 @@ export class EvaluateCompetenciesComponent implements OnInit {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
-      this._location.back()
+      this._location.back();
     });
   }
 
-
-  cancel(){
-    if(this.infoCollaborator.statusId == ConstantsGeneral.status.InProgress)
-    {
+  cancel() {
+    if (this.infoCollaborator.statusId == ConstantsGeneral.status.InProgress) {
       const updateStatus: IUpdateStatus = {
-          id: this._componentCollaboratorId,
-          statusId: ConstantsGeneral.status.Pending,
-          isUpdateComponent: true
-      }
+        id: this._componentCollaboratorId,
+        statusId: ConstantsGeneral.status.Pending,
+        isUpdateComponent: true,
+      };
 
-      this._componentCollaboratorService.updateStatus(updateStatus)
-        .subscribe(() => this._location.back())
-    }
-    else
-      this._location.back();
+      this._componentCollaboratorService
+        .updateStatus(updateStatus)
+        .subscribe(() => this._location.back());
+    } else this._location.back();
   }
 
-  confirmFinalizedEvaluation(){
-
+  confirmFinalizedEvaluation() {
     CustomValidations.marcarFormGroupTouched(this.evaluateFormGroup);
 
-    if(this.evaluateFormGroup.invalid)
-      return;
+    if (this.evaluateFormGroup.invalid) return;
 
-      const evaluateComponent: IComponentCollaboratorEvaluate = { ...this.evaluateFormGroup.getRawValue() };
-      let conductsUncheck = [];
-      let textMessage = '';
+    const evaluateComponent: IComponentCollaboratorEvaluate = {
+      ...this.evaluateFormGroup.getRawValue(),
+    };
+    let conductsUncheck = [];
+    let textMessage = '';
 
-      evaluateComponent.componentCollaboratorDetailsEvaluate.forEach(cc =>
-      {
-          cc.valueResult = cc.valueResult > 0 ? (cc.valueResult / 100.00) : cc.valueResult;
-      });
+    evaluateComponent.componentCollaboratorDetailsEvaluate.forEach((cc) => {
+      cc.valueResult =
+        cc.valueResult > 0 ? cc.valueResult / 100.0 : cc.valueResult;
+    });
 
-      if(evaluateComponent.stageId == ConstantsGeneral.stages.evaluation)
-      {
-        conductsUncheck = evaluateComponent.componentCollaboratorDetailsEvaluate.reduce((acc, el) => {
-          return [...acc, ...el.componentCollaboratorConductsEvaluate.reduce((acc2, el2) => ([...acc2, el2.pointValue]), [] as any[])]
-        }, [] as any[]);
-        textMessage =  'Aun hay conductas que faltan evaluar';
-      }
-      else
-      {
-        conductsUncheck = evaluateComponent.componentCollaboratorDetailsEvaluate.reduce((acc, el) => {
-          return [...acc, ...el.componentCollaboratorConductsEvaluate.reduce((acc2, el2) => ([...acc2, el2.pointValueCalibrated]), [] as any[])]
-        }, [] as any[]);
-        textMessage =  'Aun hay conductas que faltan calibrar. la nota calibrada tiene que ser mayor a 0';
-      }
-
-      if(conductsUncheck.some(s => s === 0))
-      {
-        const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
-          data: {
-            ...ConstantsGeneral.confirmCreatePopup,
-            text : textMessage,
-            iconColor: 'color-danger',
-            icon: 'highlight_off'
+    if (evaluateComponent.stageId == ConstantsGeneral.stages.evaluation) {
+      conductsUncheck =
+        evaluateComponent.componentCollaboratorDetailsEvaluate.reduce(
+          (acc, el) => {
+            return [
+              ...acc,
+              ...el.componentCollaboratorConductsEvaluate.reduce(
+                (acc2, el2) => [...acc2, el2.pointValue],
+                [] as any[]
+              ),
+            ];
           },
+          [] as any[]
+        );
+      textMessage = 'Aun hay conductas que faltan evaluar';
+    } else {
+      conductsUncheck =
+        evaluateComponent.componentCollaboratorDetailsEvaluate.reduce(
+          (acc, el) => {
+            return [
+              ...acc,
+              ...el.componentCollaboratorConductsEvaluate.reduce(
+                (acc2, el2) => [...acc2, el2.pointValueCalibrated],
+                [] as any[]
+              ),
+            ];
+          },
+          [] as any[]
+        );
+      textMessage =
+        'Aun hay conductas que faltan calibrar. la nota calibrada tiene que ser mayor a 0';
+    }
 
-          autoFocus: false,
-          restoreFocus: false
-        });
+    if (conductsUncheck.some((s) => s === 0)) {
+      const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
+        data: {
+          ...ConstantsGeneral.confirmCreatePopup,
+          text: textMessage,
+          iconColor: 'color-danger',
+          icon: 'highlight_off',
+        },
 
-        dialogRefConfirm.afterClosed().subscribe(() => {});
-
-        return;
-      }
-
-      const dialogRef = this._dialog.open(PopupChooseComponent, {
-        data: ConstantsGeneral.chooseData,
         autoFocus: false,
-        restoreFocus: false
+        restoreFocus: false,
       });
 
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result)
-          this._save(evaluateComponent);
-      });
+      dialogRefConfirm.afterClosed().subscribe(() => {});
+
+      return;
+    }
+
+    const dialogRef = this._dialog.open(PopupChooseComponent, {
+      data: ConstantsGeneral.chooseData,
+      autoFocus: false,
+      restoreFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) this._save(evaluateComponent);
+    });
   }
-
 }

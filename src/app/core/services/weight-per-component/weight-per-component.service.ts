@@ -8,13 +8,12 @@ import { IPaginatedResponse } from '@core/interfaces/paginated-response.interfac
 import { IWeightPerComponent } from '@modules/weight-per-component/interfaces/weight-per-component.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WeightPerComponentService {
-
   private _url = `${environment.serverUriApi}/hierarchy-component`;
 
-  constructor(private _apiService: ApiService) { }
+  constructor(private _apiService: ApiService) {}
 
   create(request: any): Observable<IWeightPerComponent> {
     return this._apiService.post<IWeightPerComponent>(`${this._url}`, request);
@@ -25,12 +24,17 @@ export class WeightPerComponentService {
   }
 
   delete(idWeightPerComponent: number): Observable<boolean> {
-    return this._apiService
-        .delete<boolean>(`${this._url}/${idWeightPerComponent}`);
+    return this._apiService.delete<boolean>(
+      `${this._url}/${idWeightPerComponent}`
+    );
   }
 
-  getPaginated(paginatedFilter: IPaginatedFilter): Observable<IPaginatedResponse<IWeightPerComponent>> {
-    return this._apiService
-        .get<IPaginatedResponse<IWeightPerComponent>>(`${this._url}/paging`, paginatedFilter);
+  getPaginated(
+    paginatedFilter: IPaginatedFilter
+  ): Observable<IPaginatedResponse<IWeightPerComponent>> {
+    return this._apiService.get<IPaginatedResponse<IWeightPerComponent>>(
+      `${this._url}/paging`,
+      paginatedFilter
+    );
   }
 }

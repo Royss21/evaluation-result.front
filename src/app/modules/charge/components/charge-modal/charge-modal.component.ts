@@ -1,6 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { AreaService } from '@core/services/area/area.service';
@@ -18,11 +22,10 @@ import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.c
 @Component({
   selector: 'app-charge-modal',
   templateUrl: './charge-modal.component.html',
-  styleUrls: ['./charge-modal.component.scss']
+  styleUrls: ['./charge-modal.component.scss'],
 })
 export class ChargeModalComponent {
-
-  private isCloseAfterSave: boolean = false;
+  private isCloseAfterSave = false;
 
   public chargeFormGroup: FormGroup;
   public modalTitle: string = ChargeHelper.titleActionText.modalCreate;
@@ -62,24 +65,25 @@ export class ChargeModalComponent {
   }
 
   private save(charge: ICharge): void {
-    if(!charge.id)
-      this._chargeService.create(charge).subscribe(() => this.showConfirmMessage())
+    if (!charge.id)
+      this._chargeService
+        .create(charge)
+        .subscribe(() => this.showConfirmMessage());
     else
-      this._chargeService.update(charge).subscribe(() => this.showConfirmMessage())
+      this._chargeService
+        .update(charge)
+        .subscribe(() => this.showConfirmMessage());
   }
 
-  private closeOrReset(): void{
-
-    if(this.isCloseAfterSave)
-      this.closeModal();
-    else
-      this.chargeFormGroup.reset();
+  private closeOrReset(): void {
+    if (this.isCloseAfterSave) this.closeModal();
+    else this.chargeFormGroup.reset();
   }
 
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -91,26 +95,22 @@ export class ChargeModalComponent {
     this._modalRef.close();
   }
 
-  confirmSave(isClose: boolean = true){
-
+  confirmSave(isClose = true) {
     CustomValidations.marcarFormGroupTouched(this.chargeFormGroup);
 
-    if(this.chargeFormGroup.invalid)
-      return;
+    if (this.chargeFormGroup.invalid) return;
 
     this.isCloseAfterSave = isClose;
 
-    const charge: ICharge = { ...this.chargeFormGroup.getRawValue() } ;
+    const charge: ICharge = { ...this.chargeFormGroup.getRawValue() };
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(charge);
+      if (result) this.save(charge);
     });
   }
-
 }

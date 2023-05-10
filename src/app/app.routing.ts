@@ -4,28 +4,29 @@ import { AdminGuard } from '@core/guards/admin.guard';
 
 const routes: Routes = [
   {
-    path:'auth',
-    loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule)
-  },
-  {
-    path:'',
-    canActivate:[ AdminGuard ],
-    canLoad:[ AdminGuard ],
-    loadChildren: () => import('./modules/main/main.module').then( m => m.MainModule )
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: '',
-    redirectTo:'',
-    pathMatch:'full'
+    canActivate: [AdminGuard],
+    canLoad: [AdminGuard],
+    loadChildren: () =>
+      import('./modules/main/main.module').then((m) => m.MainModule),
   },
   {
-    path:'**',
-    redirectTo:''
-  }
-]
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
+];
 
 @NgModule({
-  imports:[ RouterModule.forRoot( routes ) ],
-  exports:[ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -1,11 +1,11 @@
-export interface ILeaderCollaborator{
-  collaboratorName: string; 
-  documentNumber: string; 
-  stagesName: string[]; 
+export interface ILeaderCollaborator {
+  collaboratorName: string;
+  documentNumber: string;
+  stagesName: string[];
   areaName: string;
 }
 
-export interface ILeaderCollaboratorAssigned{
-  collaborators: ILeaderCollaborator[],
-  countTotal: number
+export interface ILeaderCollaboratorAssigned {
+  collaborators: ILeaderCollaborator[];
+  countTotal: number;
 }

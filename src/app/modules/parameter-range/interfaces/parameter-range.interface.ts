@@ -1,5 +1,5 @@
-export interface IParameterRange{
-    id?: string;
-    name: string;
-    description: string;
+export interface IParameterRange {
+  id?: string;
+  name: string;
+  description: string;
 }

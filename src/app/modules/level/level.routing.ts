@@ -1,9 +1,9 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import { LevelComponent } from "./level.component";
-import { ExampleFormComponent } from "./pages/example-form/example-form.component";
-import { LevelListComponent } from "./pages/level-list/level-list.component";
+import { LevelComponent } from './level.component';
+import { ExampleFormComponent } from './pages/example-form/example-form.component';
+import { LevelListComponent } from './pages/level-list/level-list.component';
 
 export const roots: Routes = [
   {
@@ -11,24 +11,24 @@ export const roots: Routes = [
     component: LevelComponent,
     children: [
       {
-        path:'',
-        component: LevelListComponent
+        path: '',
+        component: LevelListComponent,
       },
       {
-        path:'prueba',
-        component: ExampleFormComponent
+        path: 'prueba',
+        component: ExampleFormComponent,
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
-  imports:[ RouterModule.forChild( roots ) ],
-  exports:[ RouterModule ]
+  imports: [RouterModule.forChild(roots)],
+  exports: [RouterModule],
 })
-export class LevelRoutingModule { }
+export class LevelRoutingModule {}

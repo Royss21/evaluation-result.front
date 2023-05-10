@@ -1,8 +1,23 @@
 import { MatSort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatPaginator } from '@angular/material/paginator';
-import { BehaviorSubject, map, merge, Observable, startWith, switchMap } from 'rxjs';
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  BehaviorSubject,
+  map,
+  merge,
+  Observable,
+  startWith,
+  switchMap,
+} from 'rxjs';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 
 import { TableTipeOrder } from './models/table.model';
 import { TypeOrderEnum } from './enums/type-order.enum';
@@ -13,32 +28,29 @@ import { IPaginatedResponse } from '@core/interfaces/paginated-response.interfac
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit, AfterViewInit {
-
   @Input() listColumns: IElementRowTable[] = [];
-  @Input() classWidthRow: string = '';
+  @Input() classWidthRow = '';
   @Input() templateColumnsContent: TemplateRef<any>;
   @Input() paginated: Observable<any> = new Observable<any>();
   @Input() behavior: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  @Input() showFilterSearch: boolean = true;
+  @Input() showFilterSearch = true;
   eventEmitterSearch: EventEmitter<string> = new EventEmitter<string>();
 
-  textSearch: string = '';
-  totalQuantity: number = 0 ;
+  textSearch = '';
+  totalQuantity = 0;
   dataList: any[] = [];
   displayColumns: string[] = [];
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(
-    private _liveAnnouncer: LiveAnnouncer,
-  ) { }
+  constructor(private _liveAnnouncer: LiveAnnouncer) {}
 
   ngOnInit(): void {
-    this.displayColumns = this.listColumns.map(col => col.columnMatch);
+    this.displayColumns = this.listColumns.map((col) => col.columnMatch);
   }
 
   ngAfterViewInit() {
@@ -46,41 +58,38 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   get quantityColumns(): number {
-    return this.listColumns.length
+    return this.listColumns.length;
   }
 
-  private listenTableChanges(){
+  private listenTableChanges() {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
     merge(this.sort.sortChange, this.paginator.page, this.eventEmitterSearch)
       .pipe(
         startWith({}),
         switchMap((valor) => {
-
-          if(typeof valor === 'string')
-          {
-            this.paginator.pageIndex =  this.textSearch != valor ? 0 : this.paginator.pageIndex;
+          if (typeof valor === 'string') {
+            this.paginator.pageIndex =
+              this.textSearch != valor ? 0 : this.paginator.pageIndex;
             this.textSearch = valor;
           }
 
           const paginatedFilter: IPaginatedFilter = {
-            start : (this.paginator.pageIndex + 1),
+            start: this.paginator.pageIndex + 1,
             rows: this.paginator.pageSize,
-            orderColumn: "",
+            orderColumn: '',
             typeOrder: 0,
-            globalFilter: this.textSearch || ''
-          }
+            globalFilter: this.textSearch || '',
+          };
 
-          if(!this.sort.active || this.sort.direction === "")
-          {
-            paginatedFilter.orderColumn = "createDate";
+          if (!this.sort.active || this.sort.direction === '') {
+            paginatedFilter.orderColumn = 'createDate';
             paginatedFilter.typeOrder = TypeOrderEnum.Descendant;
-          }
-          else
-          {
+          } else {
             paginatedFilter.orderColumn = this.sort.active;
-            paginatedFilter.typeOrder = this.sort.direction === TableTipeOrder.Ascendant
-                              ? TypeOrderEnum.Ascendant
-                              : TypeOrderEnum.Descendant;
+            paginatedFilter.typeOrder =
+              this.sort.direction === TableTipeOrder.Ascendant
+                ? TypeOrderEnum.Ascendant
+                : TypeOrderEnum.Descendant;
           }
 
           this.behavior.next(paginatedFilter);
@@ -88,10 +97,9 @@ export class TableComponent implements OnInit, AfterViewInit {
           return this.paginated;
         }),
         map((paginated: IPaginatedResponse<any>) => {
+          if (!paginated) return [];
 
-          if(!paginated)return [];
-
-          const{entities, count} = paginated;
+          const { entities, count } = paginated;
 
           if (!entities) return [];
 
@@ -99,11 +107,11 @@ export class TableComponent implements OnInit, AfterViewInit {
           return entities;
         })
       )
-      .subscribe(entity =>  {
-        if(entity.length > 0){
+      .subscribe((entity) => {
+        if (entity.length > 0) {
         }
 
-        this.dataList = entity
+        this.dataList = entity;
       });
   }
 
@@ -114,7 +122,4 @@ export class TableComponent implements OnInit, AfterViewInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-
 }
-
-

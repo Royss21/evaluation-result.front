@@ -6,7 +6,7 @@ import { EvaluateComponentRoutingModule } from './evaluate.routing';
 import { ComponentsModule } from '@components/components.module';
 
 import { ListCollaboratorEvaluateComponent } from './pages/list-collaborator-evaluate/list-collaborator-evaluate.component';
-import { EvaluateComponent} from './evaluate.component';
+import { EvaluateComponent } from './evaluate.component';
 import { EvaluateAreaObjectivesComponent } from './pages/evaluate-area-objectives/evaluate-area-objectives.component';
 import { EvaluateCorporateObjectivesComponent } from './pages/evaluate-corporate-objectives/evaluate-corporate-objectives.component';
 import { EvaluateCompetenciesComponent } from './pages/evaluate-competencies/evaluate-competencies.component';
@@ -15,7 +15,6 @@ import { CompetencyCardComponent } from './components/competency-card/competency
 import { ConductItemComponent } from './components/conduct-item/conduct-item.component';
 import { StatusComponent } from './components/status/status.component';
 import { CoreModule } from '@core/core.module';
-
 
 @NgModule({
   declarations: [
@@ -27,8 +26,7 @@ import { CoreModule } from '@core/core.module';
     ObjectiveCardComponent,
     CompetencyCardComponent,
     ConductItemComponent,
-    StatusComponent
-
+    StatusComponent,
   ],
   imports: [
     CommonModule,
@@ -36,14 +34,14 @@ import { CoreModule } from '@core/core.module';
     SharedModule,
     ComponentsModule,
     CoreModule,
-    EvaluateComponentRoutingModule
+    EvaluateComponentRoutingModule,
   ],
   exports: [
     ListCollaboratorEvaluateComponent,
     EvaluateComponent,
     EvaluateAreaObjectivesComponent,
     EvaluateCorporateObjectivesComponent,
-    EvaluateCompetenciesComponent
-  ]
+    EvaluateCompetenciesComponent,
+  ],
 })
-export class EvaluateComponentModule { }
+export class EvaluateComponentModule {}

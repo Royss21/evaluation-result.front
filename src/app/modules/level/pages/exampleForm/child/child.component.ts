@@ -1,5 +1,14 @@
 import { Component, forwardRef } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  FormGroup,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-child',
@@ -14,24 +23,21 @@ import { AbstractControl, ControlValueAccessor, FormControl, FormGroup, NG_VALID
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => ChildComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
 })
 export class ChildComponent implements ControlValueAccessor {
-
-  public formGroupTest: FormGroup = new FormGroup(
-    {
-      password: new FormControl('', [ Validators.required]),
-      confirmPassword: new FormControl(null),
-    }
-  );
+  public formGroupTest: FormGroup = new FormGroup({
+    password: new FormControl('', [Validators.required]),
+    confirmPassword: new FormControl(null),
+  });
 
   //@Input() formGroupTest : FormGroup;
 
   validate(control: AbstractControl<any, any>): ValidationErrors | null {
     this.formGroupTest.markAllAsTouched();
-    console.log('validate')
+    console.log('validate');
     return control.errors;
   }
 
@@ -44,12 +50,12 @@ export class ChildComponent implements ControlValueAccessor {
   }
 
   registerOnChange(fn: Function) {
-    console.log('registerOnChange')
+    console.log('registerOnChange');
     this.formGroupTest.valueChanges.subscribe((val) => fn(val));
   }
 
   registerOnTouched(fn: Function) {
-    console.log('registerOnTouched')
+    console.log('registerOnTouched');
     this.formGroupTest.valueChanges.subscribe((val) => fn(val));
   }
 }

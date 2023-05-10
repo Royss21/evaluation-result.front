@@ -14,10 +14,9 @@ import { LevelModalComponent } from '@modules/level/components/level-modal/level
 @Component({
   selector: 'app-level-list',
   templateUrl: './level-list.component.html',
-  styleUrls: ['./level-list.component.scss']
+  styleUrls: ['./level-list.component.scss'],
 })
 export class LevelListComponent {
-
   private unsubscribe$ = new Subject<any>();
 
   levelPaginated$: Observable<any>;
@@ -27,10 +26,7 @@ export class LevelListComponent {
   columnsTable: IElementRowTable[];
   paginatedFilterCurrent: IPaginatedFilter;
 
-  constructor(
-    public _dialog: MatDialog,
-    private _levelService: LevelService,
-  ){
+  constructor(public _dialog: MatDialog, private _levelService: LevelService) {
     this.levelPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
     this.levelPaginated$ = this.levelPaginatedBehavior.asObservable();
@@ -43,43 +39,42 @@ export class LevelListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._levelService.getPaginated(paginatedFilter)
-            .subscribe(paginated => this.levelPaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._levelService
+          .getPaginated(paginatedFilter)
+          .subscribe((paginated) =>
+            this.levelPaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
   private openModal(level?: ILevel): void {
     const modalLevel = this._dialog.open(LevelModalComponent, {
       width: ConstantsGeneral.mdModal,
       disableClose: true,
-      data: level
+      data: level,
     });
 
-    modalLevel.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    modalLevel.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
-  private delete(id:number): void{
-    this._levelService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
+  private delete(id: number): void {
+    this._levelService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
-  create(): void{
+  create(): void {
     this.openModal();
   }
 
-  update(level: ILevel): void{
+  update(level: ILevel): void {
     this.openModal(level);
   }
 
@@ -98,5 +93,4 @@ export class LevelListComponent {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

@@ -1,16 +1,15 @@
-import { IElementRowTable } from "@components/table/interfaces/table.interface";
-import { ElementRowTable } from "@components/table/models/table.model";
+import { IElementRowTable } from '@components/table/interfaces/table.interface';
+import { ElementRowTable } from '@components/table/models/table.model';
 
-export class GerencyHelper{
-  static columnsTable: IElementRowTable[] =  [
-    new ElementRowTable('name','Nombre'),
-    new ElementRowTable('actions','Acciones', true)
+export class GerencyHelper {
+  static columnsTable: IElementRowTable[] = [
+    new ElementRowTable('name', 'Nombre'),
+    new ElementRowTable('actions', 'Acciones', true),
   ];
 
   static titleActionText = {
     list: 'Listado de gerencias',
     modalCreate: 'Crear Gerencia',
-    modalUpdate: 'Editar Gerencia'
-  }
+    modalUpdate: 'Editar Gerencia',
+  };
 }
-

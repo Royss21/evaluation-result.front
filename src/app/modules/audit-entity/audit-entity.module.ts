@@ -9,19 +9,18 @@ import { AuditEntityListComponent } from './pages/audit-entity-list/audit-entity
 import { ShowValueComponent } from './components/show-value/show-value.component';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 
-
 @NgModule({
   declarations: [
     AuditEntityComponent,
     AuditEntityListComponent,
-    ShowValueComponent
+    ShowValueComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     ComponentsModule,
     SharedPipesModule,
-    AuditEntityRouting
-  ]
+    AuditEntityRouting,
+  ],
 })
-export class AuditEntityModule { }
+export class AuditEntityModule {}

@@ -1,10 +1,15 @@
-import { Directive, ElementRef, HostListener, Input, SimpleChanges } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+  SimpleChanges,
+} from '@angular/core';
 
 @Directive({
-  selector: '[appOnlyNumber]'
+  selector: '[appOnlyNumber]',
 })
 export class OnlyNumberDirective {
-
   //https://codeburst.io/digit-only-directive-in-angular-3db8a94d80c3
   private hasDecimalPoint = false;
   private hasNegativeSign = false;
@@ -71,7 +76,6 @@ export class OnlyNumberDirective {
 
   @HostListener('keydown', ['$event'])
   onKeyDown(e: KeyboardEvent): any {
-
     if (
       this.navigationKeys.indexOf(e.key) > -1 || // Allow: navigation keys: backspace, delete, arrows etc.
       ((e.key === 'a' || e.code === 'KeyA') && e.ctrlKey === true) || // Allow: Ctrl+A
@@ -139,7 +143,7 @@ export class OnlyNumberDirective {
   @HostListener('paste', ['$event'])
   onPaste(event: any): void {
     if (this.allowPaste === true) {
-      let pastedInput: string = '';
+      let pastedInput = '';
       if ((window as { [key: string]: any })['clipboardData']) {
         // Browser is IE
         pastedInput = (window as { [key: string]: any })[
@@ -300,5 +304,4 @@ export class OnlyNumberDirective {
       oldValue.substring(selectionEnd)
     );
   }
-
 }

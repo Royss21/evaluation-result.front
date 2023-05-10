@@ -1,5 +1,4 @@
-export interface IIdentityDocument
-{
+export interface IIdentityDocument {
   id: number;
-  name:string;
+  name: string;
 }

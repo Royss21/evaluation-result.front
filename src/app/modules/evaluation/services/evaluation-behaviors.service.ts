@@ -3,17 +3,18 @@ import { ICollaboratorLeaderEvaluate } from '@modules/evaluation-leader/interfac
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EvaluationBehaviorsService {
-
-  private _goToEvaluateStageBehavior: BehaviorSubject<any> = new BehaviorSubject(null);
+  private _goToEvaluateStageBehavior: BehaviorSubject<any> =
+    new BehaviorSubject(null);
   goToEvaluateStage$: Observable<any>;
 
   private _flagLeaderBehavior: BehaviorSubject<any> = new BehaviorSubject(null);
   flagLeader$: Observable<any>;
 
-  private _evaluationCurrentBehavior: BehaviorSubject<any> = new BehaviorSubject(null);
+  private _evaluationCurrentBehavior: BehaviorSubject<any> =
+    new BehaviorSubject(null);
   evaluationCurrent$: Observable<any>;
 
   constructor() {
@@ -22,20 +23,19 @@ export class EvaluationBehaviorsService {
     this.evaluationCurrent$ = this._evaluationCurrentBehavior.asObservable();
   }
 
-  gotoEvaluateStage(stageId: number){
+  gotoEvaluateStage(stageId: number) {
     this._goToEvaluateStageBehavior.next(stageId);
   }
 
-  resetValue(){
+  resetValue() {
     this._goToEvaluateStageBehavior.next(null);
   }
 
-  setFlagLeader( flagLeader: ICollaboratorLeaderEvaluate){
+  setFlagLeader(flagLeader: ICollaboratorLeaderEvaluate) {
     this._flagLeaderBehavior.next(flagLeader);
   }
 
-  removeCardEvaluationCurrent(){
+  removeCardEvaluationCurrent() {
     this._evaluationCurrentBehavior.next(null);
   }
-
 }

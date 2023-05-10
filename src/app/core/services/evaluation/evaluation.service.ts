@@ -1,7 +1,9 @@
-
 import { Injectable } from '@angular/core';
 import { IEvaluationComponentDates } from '@modules/evaluation/interfaces/evaluation-component-dates.interface';
-import { IEvaluationCreate, IEvaluationRes } from '@modules/evaluation/interfaces/evaluation-create.interface';
+import {
+  IEvaluationCreate,
+  IEvaluationRes,
+} from '@modules/evaluation/interfaces/evaluation-create.interface';
 import { IEvaluationDetail } from '@modules/evaluation/interfaces/evaluation-detail.interface';
 import { IEvaluationFinished } from '@modules/evaluation/interfaces/evaluation-finished.interface';
 import { IEvaluation } from '@modules/evaluation/interfaces/evaluation.interface';
@@ -10,28 +12,28 @@ import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EvaluationService {
-
   private controller = 'evaluation';
   private _url = `${environment.serverUriApi}/${this.controller}`;
 
-  constructor(
-    private _apiService: ApiService
-  ) { }
-
+  constructor(private _apiService: ApiService) {}
 
   getDetail(id: string): Observable<IEvaluationDetail> {
     return this._apiService.get<IEvaluationDetail>(`${this._url}/${id}/detail`);
   }
 
   getDatesComponentes(id: string): Observable<IEvaluationComponentDates> {
-    return this._apiService.get<IEvaluationComponentDates>(`${this._url}/edit/${id}`);
+    return this._apiService.get<IEvaluationComponentDates>(
+      `${this._url}/edit/${id}`
+    );
   }
 
   getEnabledComponents(id: string): Observable<IEvaluation> {
-    return this._apiService.get<IEvaluation>(`${this._url}/${id}/enabled-components`);
+    return this._apiService.get<IEvaluation>(
+      `${this._url}/${id}/enabled-components`
+    );
   }
 
   getAllDetail(): Observable<IEvaluationDetail[]> {
@@ -42,7 +44,7 @@ export class EvaluationService {
     return this._apiService.post<IEvaluationRes>(`${this._url}`, request);
   }
 
-  update(request: IEvaluationCreate, id:string): Observable<IEvaluationRes> {
+  update(request: IEvaluationCreate, id: string): Observable<IEvaluationRes> {
     return this._apiService.put<IEvaluationRes>(`${this._url}/${id}`, request);
   }
 
@@ -53,5 +55,4 @@ export class EvaluationService {
   delete(id: string): Observable<boolean> {
     return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
-
 }

@@ -1,7 +1,6 @@
-import { IEvaluationLeader } from "./leader.interface";
+import { IEvaluationLeader } from './leader.interface';
 
-export interface ILeaderPaged extends IEvaluationLeader{
-  
+export interface ILeaderPaged extends IEvaluationLeader {
   documentNumber: string;
   leaderName: string;
   componentId: number;

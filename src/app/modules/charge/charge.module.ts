@@ -9,16 +9,7 @@ import { ChargeModalComponent } from './components/charge-modal/charge-modal.com
 import { ChargeListComponent } from '@modules/charge/pages/charge-list/charge-list.component';
 
 @NgModule({
-  declarations: [
-    ChargeComponent,
-    ChargeListComponent,
-    ChargeModalComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ComponentsModule,
-    ChargeRoutingModule
-  ]
+  declarations: [ChargeComponent, ChargeListComponent, ChargeModalComponent],
+  imports: [CommonModule, SharedModule, ComponentsModule, ChargeRoutingModule],
 })
-export class ChargeModule { }
+export class ChargeModule {}

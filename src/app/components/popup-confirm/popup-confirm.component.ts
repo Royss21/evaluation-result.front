@@ -6,18 +6,16 @@ import { IPopupConfirm } from '../popup-interface';
   selector: 'app-popup-confirm',
   templateUrl: './popup-confirm.component.html',
   styleUrls: ['./popup-confirm.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class PopupConfirmComponent {
-
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: IPopupConfirm,
-    public dialogRef: MatDialogRef<any>,
-  ) { }
+    public dialogRef: MatDialogRef<any>
+  ) {}
 
   close() {
-    this.dialogRef.close(true)
+    this.dialogRef.close(true);
   }
-
 }

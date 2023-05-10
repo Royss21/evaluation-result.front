@@ -1,6 +1,10 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Component, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { IGerency } from '@modules/gerency/interfaces/gerency.interface';
 import { GerencyBuilderService } from '@modules/gerency/services/gerency-builder.service';
@@ -14,13 +18,12 @@ import { PopupChooseComponent } from '@components/popup-choose/popup-choose.comp
 @Component({
   selector: 'app-gerency-modal',
   templateUrl: './gerency-modal.component.html',
-  styleUrls: ['./gerency-modal.component.scss']
+  styleUrls: ['./gerency-modal.component.scss'],
 })
 export class GerencyModalComponent {
-
-  private isCloseAfterSave: boolean = false;
+  private isCloseAfterSave = false;
   public gerencyFormGroup: FormGroup;
-  public modalTitle: string = '';
+  public modalTitle = '';
 
   constructor(
     public _dialog: MatDialog,
@@ -29,28 +32,32 @@ export class GerencyModalComponent {
     private _modalRef: MatDialogRef<GerencyModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IGerency
   ) {
-    this.modalTitle = data ? GerencyHelper.titleActionText.modalUpdate : GerencyHelper.titleActionText.modalCreate;
+    this.modalTitle = data
+      ? GerencyHelper.titleActionText.modalUpdate
+      : GerencyHelper.titleActionText.modalCreate;
     this.gerencyFormGroup = _gerencyBuilderService.buildGerencyForm(data);
   }
 
-  private closeOrReset(): void{
-    if(this.isCloseAfterSave)
-      this.closeModal();
-    else
-      this.gerencyFormGroup.reset();
+  private closeOrReset(): void {
+    if (this.isCloseAfterSave) this.closeModal();
+    else this.gerencyFormGroup.reset();
   }
 
   private save(gerency: IGerency): void {
-    if(!gerency.id)
-      this._gerencyService.create(gerency).subscribe(() => this.showConfirmMessage())
+    if (!gerency.id)
+      this._gerencyService
+        .create(gerency)
+        .subscribe(() => this.showConfirmMessage());
     else
-      this._gerencyService.update(gerency).subscribe(() => this.showConfirmMessage())
+      this._gerencyService
+        .update(gerency)
+        .subscribe(() => this.showConfirmMessage());
   }
 
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -62,30 +69,26 @@ export class GerencyModalComponent {
     return this.gerencyFormGroup.controls;
   }
 
-  confirmSave(isClose: boolean = true){
-
+  confirmSave(isClose = true) {
     CustomValidations.marcarFormGroupTouched(this.gerencyFormGroup);
 
-    if(this.gerencyFormGroup.invalid)
-      return;
+    if (this.gerencyFormGroup.invalid) return;
 
     this.isCloseAfterSave = isClose;
 
-    const gerency: IGerency = { ...this.gerencyFormGroup.getRawValue() } ;
+    const gerency: IGerency = { ...this.gerencyFormGroup.getRawValue() };
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(gerency);
+      if (result) this.save(gerency);
     });
   }
 
   closeModal(): void {
     this._modalRef.close();
   }
-
 }

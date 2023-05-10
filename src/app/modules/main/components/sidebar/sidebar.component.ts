@@ -7,48 +7,51 @@ import { fromEvent, Subscription } from 'rxjs';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-
-  visibleSidebar: boolean = true;
-  responsivew:boolean = true ;
-  logingCollaborator: string = '';
-  typeViewCollaborator: string = '';
-  options: any [] = [];
+  visibleSidebar = true;
+  responsivew = true;
+  logingCollaborator = '';
+  typeViewCollaborator = '';
+  options: any[] = [];
 
   constructor(
     private _router: Router,
     private _mainBehaviorService: MainBehaviorsService
-    ) {}
+  ) {}
 
-  ngOnInit(){
-    this.logingCollaborator = localStorage.getItem('logingCollaborator') ?? "";
-    this.typeViewCollaborator = localStorage.getItem('typeViewCollaborator') ?? "";
+  ngOnInit() {
+    this.logingCollaborator = localStorage.getItem('logingCollaborator') ?? '';
+    this.typeViewCollaborator =
+      localStorage.getItem('typeViewCollaborator') ?? '';
 
-    if(this.logingCollaborator ===  '0'){
-      const menus: IMenu[] = localStorage.getItem('menus') ? JSON.parse(localStorage.getItem('menus') ||  "") :  [];
-      const menusPrincipal = menus.filter( f=> f.menuDadId == null);
-      this.options = menusPrincipal.map(m => ({
-          icon: m.icon,
-          link: m.url,
-          name: m.name,
-          subCategories: menus.filter(f => f.menuDadId == m.id)
-            .map(c => ({
-              link:  c.url,
-              name: c.name
-            }))
+    if (this.logingCollaborator === '0') {
+      const menus: IMenu[] = localStorage.getItem('menus')
+        ? JSON.parse(localStorage.getItem('menus') || '')
+        : [];
+      const menusPrincipal = menus.filter((f) => f.menuDadId == null);
+      this.options = menusPrincipal.map((m) => ({
+        icon: m.icon,
+        link: m.url,
+        name: m.name,
+        subCategories: menus
+          .filter((f) => f.menuDadId == m.id)
+          .map((c) => ({
+            link: c.url,
+            name: c.name,
+          })),
       }));
     }
   }
 
   showSubMenu(e: any) {
-    let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
-    arrowParent.classList.toggle("showMenu");
+    const arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
+    arrowParent.classList.toggle('showMenu');
     this._mainBehaviorService.emitSiderbarToggle();
   }
 
-  goToPage(link: string, subCategories: any, index:any) {
+  goToPage(link: string, subCategories: any, index: any) {
     this._router.navigateByUrl(`/${link}`);
   }
 
@@ -56,19 +59,21 @@ export class SidebarComponent implements OnInit {
     this._router.navigateByUrl(`/${linkFather}/${item.link}`);
   }
 
-  goToEvaluationDetail(){
+  goToEvaluationDetail() {
     const evaluationId = localStorage.getItem('evaluationId');
     this._router.navigateByUrl(`/evaluation/${evaluationId}/detail`);
   }
 
-  goToReviewEvaluation(){
+  goToReviewEvaluation() {
     const evaluationId = localStorage.getItem('evaluationId');
     const collaboratorId = localStorage.getItem('collaboratorId');
-    this._router.navigateByUrl(`/evaluation/${evaluationId}/collaborator/${ collaboratorId}/review`);
+    this._router.navigateByUrl(
+      `/evaluation/${evaluationId}/collaborator/${collaboratorId}/review`
+    );
   }
 
   closeSidebar(): void {
-    let sidebar = document.querySelector(".sidebar");
-    sidebar?.classList.toggle("close");
+    const sidebar = document.querySelector('.sidebar');
+    sidebar?.classList.toggle('close');
   }
 }

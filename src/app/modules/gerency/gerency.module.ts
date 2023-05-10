@@ -9,16 +9,7 @@ import { GerencyListComponent } from './pages/gerency-list/gerency-list.componen
 import { GerencyModalComponent } from '@modules/gerency/components/gerency-modal/gerency-modal.component';
 
 @NgModule({
-  declarations: [
-    GerencyComponent,
-    GerencyListComponent,
-    GerencyModalComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ComponentsModule,
-    GerencyRoutingModule
-  ]
+  declarations: [GerencyComponent, GerencyListComponent, GerencyModalComponent],
+  imports: [CommonModule, SharedModule, ComponentsModule, GerencyRoutingModule],
 })
-export class GerencyModule { }
+export class GerencyModule {}

@@ -4,11 +4,10 @@ import { ICharge } from '@modules/charge/interfaces/charge.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChargeBuilderService {
-
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) {}
 
   public buildChargeForm(charge: ICharge): FormGroup {
     return this._fb.group({
@@ -18,17 +17,11 @@ export class ChargeBuilderService {
         [
           Validators.required,
           CustomValidations.NotEmpty,
-          Validators.maxLength(100)
-        ]
+          Validators.maxLength(100),
+        ],
       ],
-      hierarchyId: [
-        charge?.hierarchyId || null,
-        [Validators.required]
-      ],
-      areaId: [
-        charge?.areaId || null,
-        [Validators.required]
-      ]
-    })
+      hierarchyId: [charge?.hierarchyId || null, [Validators.required]],
+      areaId: [charge?.areaId || null, [Validators.required]],
+    });
   }
 }

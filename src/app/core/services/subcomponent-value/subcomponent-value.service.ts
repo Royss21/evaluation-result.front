@@ -6,16 +6,15 @@ import { ApiService } from '../api.service';
 import { ISubcomponentValue } from '@shared/interfaces/subcomponent-value.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SubcomponentValueService {
-
   private _url = `${environment.serverUriApi}/subcomponent-value`;
 
-  constructor(private _apiService: ApiService) { }
+  constructor(private _apiService: ApiService) {}
 
   getAll(subComponentId: string): Observable<ISubcomponentValue[]> {
-    const url = `${this._url}/get-all/subcomponent/${subComponentId}`
+    const url = `${this._url}/get-all/subcomponent/${subComponentId}`;
     return this._apiService.get<ISubcomponentValue[]>(url);
   }
 
@@ -28,7 +27,6 @@ export class SubcomponentValueService {
   }
 
   delete(id: string): Observable<boolean> {
-    return this._apiService
-        .delete<boolean>(`${this._url}/${id}`);
+    return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
 }

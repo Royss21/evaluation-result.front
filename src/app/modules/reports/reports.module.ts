@@ -7,17 +7,8 @@ import { ReportsComponent } from './reports.component';
 import { ComponentsModule } from '@components/components.module';
 import { ReportsOptionComponent } from './views/reports-option/reports-option.component';
 
-
 @NgModule({
-  declarations: [
-    ReportsComponent,
-    ReportsOptionComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ReportsRouting,
-    ComponentsModule
-  ]
+  declarations: [ReportsComponent, ReportsOptionComponent],
+  imports: [CommonModule, SharedModule, ReportsRouting, ComponentsModule],
 })
-export class ReportsModule { }
+export class ReportsModule {}

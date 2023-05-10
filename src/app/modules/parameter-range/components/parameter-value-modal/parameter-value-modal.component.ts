@@ -1,7 +1,11 @@
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Component, Inject, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup, FormGroupDirective } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { CustomValidations } from '@shared/helpers/custom-validations';
@@ -18,15 +22,14 @@ import { IParameterValueFilter } from '@modules/parameter-range/helpers/paramete
 @Component({
   selector: 'app-parameter-value-modal',
   templateUrl: './parameter-value-modal.component.html',
-  styleUrls: ['./parameter-value-modal.component.scss']
+  styleUrls: ['./parameter-value-modal.component.scss'],
 })
 export class ParameterValueModalComponent {
-
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
   private unsubscribe$ = new Subject<any>();
 
-  customPatterns = { 'A': { pattern: new RegExp('\[a-zA-Z\]')} };
+  customPatterns = { A: { pattern: new RegExp('[a-zA-Z]') } };
   parameterValuePaginated$: Observable<any>;
   paginated$: Observable<any>;
   parameterValuePaginatedBehavior: BehaviorSubject<any>;
@@ -42,14 +45,16 @@ export class ParameterValueModalComponent {
     private _modalRef: MatDialogRef<ParameterValueModalComponent>,
     private _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: string
-  ){
+  ) {
     this.parameterValuePaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
-    this.parameterValuePaginated$ = this.parameterValuePaginatedBehavior.asObservable();
+    this.parameterValuePaginated$ =
+      this.parameterValuePaginatedBehavior.asObservable();
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = ParameterValueHelper.columnsTable;
 
-    this.parameterValueFormGroup = _parameterValueBuilderService.buildParameterValueForm();
+    this.parameterValueFormGroup =
+      _parameterValueBuilderService.buildParameterValueForm();
   }
 
   ngAfterContentInit() {
@@ -61,22 +66,22 @@ export class ParameterValueModalComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IParameterValueFilter) => {
-        if(paginatedFilter){
-
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._parameterValueService
-            .getPaginated({...paginatedFilter, parameterRangeId: this.data})
-            .subscribe(paginated => this.parameterValuePaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IParameterValueFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._parameterValueService
+          .getPaginated({ ...paginatedFilter, parameterRangeId: this.data })
+          .subscribe((paginated) =>
+            this.parameterValuePaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -85,60 +90,65 @@ export class ParameterValueModalComponent {
     });
   }
 
-  private delete(id:number): void{
-    this._parameterValueService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
+  private delete(id: number): void {
+    this._parameterValueService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
     });
   }
 
   private save(parameterValue: IParameterValue): void {
-    if(!parameterValue.id)
-      this._parameterValueService.create(parameterValue).subscribe(() => this.showConfirmMessage())
+    if (!parameterValue.id)
+      this._parameterValueService
+        .create(parameterValue)
+        .subscribe(() => this.showConfirmMessage());
     else
-      this._parameterValueService.update(parameterValue).subscribe(() => this.showConfirmMessage())
+      this._parameterValueService
+        .update(parameterValue)
+        .subscribe(() => this.showConfirmMessage());
   }
 
-  clean(){
+  clean() {
     this.parameterValueFormGroup.reset();
     this.formGroupDirective.resetForm();
-    this.parameterValueFormGroup = this._parameterValueBuilderService.buildParameterValueForm();
+    this.parameterValueFormGroup =
+      this._parameterValueBuilderService.buildParameterValueForm();
   }
 
-  confirmSave(){
-
-      console.log(this.parameterValueFormGroup)
+  confirmSave() {
+    console.log(this.parameterValueFormGroup);
     CustomValidations.marcarFormGroupTouched(this.parameterValueFormGroup);
 
-    if(this.parameterValueFormGroup.invalid)
-      return;
+    if (this.parameterValueFormGroup.invalid) return;
 
-    const parameterValue: IParameterValue = { ...this.parameterValueFormGroup.getRawValue() } ;
+    const parameterValue: IParameterValue = {
+      ...this.parameterValueFormGroup.getRawValue(),
+    };
     parameterValue.parameterRangeId = this.data;
     parameterValue.name = parameterValue.name.trim();
 
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(parameterValue);
-     });
+      if (result) this.save(parameterValue);
+    });
   }
 
-  edit(parameterValue: IParameterValue){
-    this.parameterValueFormGroup = this._parameterValueBuilderService.buildParameterValueForm(parameterValue);
+  edit(parameterValue: IParameterValue) {
+    this.parameterValueFormGroup =
+      this._parameterValueBuilderService.buildParameterValueForm(
+        parameterValue
+      );
   }
 
   confirmDeleted(id: number): void {
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseDelete,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -146,7 +156,7 @@ export class ParameterValueModalComponent {
     });
   }
 
-  close(){
+  close() {
     this._modalRef.close();
   }
 
@@ -154,5 +164,4 @@ export class ParameterValueModalComponent {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

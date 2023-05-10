@@ -6,22 +6,25 @@ import { ApiService } from '../api.service';
 import { IConductBySubcomponent } from '@shared/interfaces/conduct.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConductService {
-
   private _url = `${environment.serverUriApi}/conduct`;
 
-  constructor(
-    private _apiService: ApiService,
-  ) { }
+  constructor(private _apiService: ApiService) {}
 
   create(request: IConductBySubcomponent): Observable<IConductBySubcomponent> {
-    return this._apiService.post<IConductBySubcomponent>(`${this._url}`, request);
+    return this._apiService.post<IConductBySubcomponent>(
+      `${this._url}`,
+      request
+    );
   }
 
   update(request: IConductBySubcomponent): Observable<IConductBySubcomponent> {
-    return this._apiService.put<IConductBySubcomponent>(`${this._url}`, request);
+    return this._apiService.put<IConductBySubcomponent>(
+      `${this._url}`,
+      request
+    );
   }
 
   delete(id: string): Observable<boolean> {
@@ -29,7 +32,8 @@ export class ConductService {
   }
 
   conductBySubcomponent(id: string): Observable<IConductBySubcomponent[]> {
-    return this._apiService.get<IConductBySubcomponent[]>(`${this._url}/get-all/subcomponent/${id}`);
+    return this._apiService.get<IConductBySubcomponent[]>(
+      `${this._url}/get-all/subcomponent/${id}`
+    );
   }
-
 }

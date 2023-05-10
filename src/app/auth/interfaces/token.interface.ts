@@ -1,12 +1,12 @@
-import { IMenu } from "@modules/main/interfaces/menu.interface";
+import { IMenu } from '@modules/main/interfaces/menu.interface';
 
 export interface IToken {
   token: string;
   refreshToken: string;
   expiredIn: string;
   roleName: string;
-  name:string;
-  menus: IMenu[]
+  name: string;
+  menus: IMenu[];
 }
 
 export interface ITokenCollaborator {
@@ -14,7 +14,7 @@ export interface ITokenCollaborator {
   refreshToken: string;
   expiredIn: string;
   evaluationId: string;
-  name:string;
+  name: string;
   typeViewCollaborator: number;
   evaluationCollaboratorId: string;
   isLeaderCompetence: boolean;

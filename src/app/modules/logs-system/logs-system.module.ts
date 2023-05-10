@@ -13,14 +13,14 @@ import { ShowInfoLogComponent } from './components/show-info-log/show-info-log.c
   declarations: [
     LogsSystemComponent,
     LogsSystemListComponent,
-    ShowInfoLogComponent
+    ShowInfoLogComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     ComponentsModule,
     SharedPipesModule,
-    LogsSystemRouting
-  ]
+    LogsSystemRouting,
+  ],
 })
-export class LogsSystemModule { }
+export class LogsSystemModule {}

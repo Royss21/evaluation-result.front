@@ -1,17 +1,20 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { IRole } from '@auth/interfaces/roles.interface';
 
 @Component({
   selector: 'app-check-role',
   templateUrl: './check-role.component.html',
-  styleUrls: ['./check-role.component.scss']
+  styleUrls: ['./check-role.component.scss'],
 })
 export class CheckRoleComponent {
-
-  public userRoles:IRole[] = [];
-  private _roleId: number = 0;
+  public userRoles: IRole[] = [];
+  private _roleId = 0;
 
   constructor(
     public _dialog: MatDialog,
@@ -22,34 +25,26 @@ export class CheckRoleComponent {
   }
 
   testClick(role: any): void {
-    if (role === null)
-      return;
-
-
+    if (role === null) return;
   }
 
   selectedTest(id: number) {
-    if (id === null)
-      return;
+    if (id === null) return;
 
     this._roleId = id;
     const containers = document.querySelectorAll('.item-rol');
 
-    containers.forEach(container => {
+    containers.forEach((container) => {
       container.addEventListener('click', () => {
-        containers.forEach(c => c.classList.remove('active'));
+        containers.forEach((c) => c.classList.remove('active'));
         container.classList.add('active');
       });
     });
   }
 
   continueLogin() {
-    if (this._roleId  == 0)
-     return
+    if (this._roleId == 0) return;
 
     this._modalRef.close(this._roleId);
   }
-
-
-
 }

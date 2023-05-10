@@ -1,6 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { AreaService } from '@core/services/area/area.service';
@@ -16,13 +20,12 @@ import { AreaObjectivesBuilderService } from '@modules/area-objectives/services/
 @Component({
   selector: 'app-area-objectives-modal',
   templateUrl: './area-objectives-modal.component.html',
-  styleUrls: ['./area-objectives-modal.component.scss']
+  styleUrls: ['./area-objectives-modal.component.scss'],
 })
 export class AreaObjectivesModalComponent implements OnInit {
+  private isCloseAfterSave = false;
 
-  private isCloseAfterSave: boolean = false;
-
-  public modalTitle: string = '';
+  public modalTitle = '';
   public areaList: IArea[] = [];
   public areaObjectivesFormGroup: FormGroup;
 
@@ -34,17 +37,20 @@ export class AreaObjectivesModalComponent implements OnInit {
     private _modalRef: MatDialogRef<AreaObjectivesModalComponent>,
     private _areaObjectivesBuilderService: AreaObjectivesBuilderService
   ) {
-    this.modalTitle = data ? AreaObjectivesHelper.titleActions.modalUdpate : AreaObjectivesHelper.titleActions.modalCreate;
-    this.areaObjectivesFormGroup = _areaObjectivesBuilderService.buildAreaObjectivesForm(data);
+    this.modalTitle = data
+      ? AreaObjectivesHelper.titleActions.modalUdpate
+      : AreaObjectivesHelper.titleActions.modalCreate;
+    this.areaObjectivesFormGroup =
+      _areaObjectivesBuilderService.buildAreaObjectivesForm(data);
   }
 
   ngOnInit(): void {
-    this._areaService.getAll().subscribe(areas => {
+    this._areaService.getAll().subscribe((areas) => {
       this.areaList = areas;
     });
   }
 
-  get areaControl(){
+  get areaControl() {
     return this.areaObjectivesFormGroup.get('areaId') as FormControl;
   }
 
@@ -56,19 +62,19 @@ export class AreaObjectivesModalComponent implements OnInit {
     this._modalRef.close();
   }
 
-  private closeOrReset(): void{
-    if(this.isCloseAfterSave)
-      this.closeModal();
-    else{
+  private closeOrReset(): void {
+    if (this.isCloseAfterSave) this.closeModal();
+    else {
       this.areaObjectivesFormGroup.reset();
-      this.areaObjectivesFormGroup = this._areaObjectivesBuilderService.buildAreaObjectivesForm();
+      this.areaObjectivesFormGroup =
+        this._areaObjectivesBuilderService.buildAreaObjectivesForm();
     }
   }
 
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -77,31 +83,34 @@ export class AreaObjectivesModalComponent implements OnInit {
   }
 
   private save(subcomponent: ISubcomponent): void {
-    if(!subcomponent.id)
-      this._subcomponentService.create(subcomponent).subscribe(() => this.showConfirmMessage())
+    if (!subcomponent.id)
+      this._subcomponentService
+        .create(subcomponent)
+        .subscribe(() => this.showConfirmMessage());
     else
-      this._subcomponentService.update(subcomponent).subscribe(() => this.showConfirmMessage())
+      this._subcomponentService
+        .update(subcomponent)
+        .subscribe(() => this.showConfirmMessage());
   }
 
-  confirmSave(isClose: boolean = true){
+  confirmSave(isClose = true) {
     CustomValidations.marcarFormGroupTouched(this.areaObjectivesFormGroup);
 
-    if(this.areaObjectivesFormGroup.invalid)
-      return;
+    if (this.areaObjectivesFormGroup.invalid) return;
 
     this.isCloseAfterSave = isClose;
 
-    const subComponent: ISubcomponent = { ...this.areaObjectivesFormGroup.getRawValue() } ;
+    const subComponent: ISubcomponent = {
+      ...this.areaObjectivesFormGroup.getRawValue(),
+    };
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(subComponent);
+      if (result) this.save(subComponent);
     });
   }
-
 }

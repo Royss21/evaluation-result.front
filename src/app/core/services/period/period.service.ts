@@ -9,12 +9,11 @@ import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.
 import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PeriodService {
-
   private _url = `${environment.serverUriApi}/period`;
-  constructor(private _apiService: ApiService) { }
+  constructor(private _apiService: ApiService) {}
 
   getPeriodById(id: number) {
     const url = `${this._url}/id`;
@@ -30,13 +29,16 @@ export class PeriodService {
   }
 
   delete(idPeriod: number): Observable<boolean> {
-    return this._apiService
-        .delete<boolean>(`${this._url}/${idPeriod}`);
+    return this._apiService.delete<boolean>(`${this._url}/${idPeriod}`);
   }
 
-  getPaginated(paginatedFilter: IPaginatedFilter): Observable<IPaginatedResponse<IPeriod>> {
-    return this._apiService
-        .get<IPaginatedResponse<IPeriod>>(`${this._url}/paging`, paginatedFilter);
+  getPaginated(
+    paginatedFilter: IPaginatedFilter
+  ): Observable<IPaginatedResponse<IPeriod>> {
+    return this._apiService.get<IPaginatedResponse<IPeriod>>(
+      `${this._url}/paging`,
+      paginatedFilter
+    );
   }
 
   getInProgress(): Observable<IPeriodEvaluation> {
@@ -48,9 +50,8 @@ export class PeriodService {
   }
 
   checkExistEvaluationInProgress(idPeriod: number): Observable<boolean> {
-    return this._apiService
-        .get<boolean>(`${this._url}/validate-assigned/${idPeriod}`);
+    return this._apiService.get<boolean>(
+      `${this._url}/validate-assigned/${idPeriod}`
+    );
   }
-
-
 }

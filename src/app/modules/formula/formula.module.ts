@@ -9,21 +9,8 @@ import { FormulaListComponent } from './pages/formula-list/formula-list.componen
 import { FormulaModalComponent } from './components/formula-modal/formula-modal.component';
 
 @NgModule({
-  declarations: [
-    FormulaComponent,
-    FormulaListComponent,
-    FormulaModalComponent,
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ComponentsModule,
-    FormulaRoutingModule
-  ],
-  exports: [
-    FormulaComponent,
-    FormulaListComponent,
-    FormulaModalComponent,
-  ]
+  declarations: [FormulaComponent, FormulaListComponent, FormulaModalComponent],
+  imports: [CommonModule, SharedModule, ComponentsModule, FormulaRoutingModule],
+  exports: [FormulaComponent, FormulaListComponent, FormulaModalComponent],
 })
-export class FormulaModule { }
+export class FormulaModule {}

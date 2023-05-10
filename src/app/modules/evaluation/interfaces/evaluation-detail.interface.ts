@@ -1,27 +1,22 @@
-import { IPeriodEvaluation } from "@modules/period/interfaces/period-in-progress.interface";
+import { IPeriodEvaluation } from '@modules/period/interfaces/period-in-progress.interface';
 
 export interface IEvaluationDetail extends IPeriodEvaluation {
-
   isEnableImportLeaders: boolean;
-  components: IComponentsRangeDate []
-  stagesEvaluation: IStageRangeDate[]
+  components: IComponentsRangeDate[];
+  stagesEvaluation: IStageRangeDate[];
 }
 
-
-export interface IComponentsRangeDate{
-
-  componentId : number;
-  componentName  :string;
-  rangeDate  :string;
-  isActive  :boolean;
-  stages: IStageRangeDate[]
+export interface IComponentsRangeDate {
+  componentId: number;
+  componentName: string;
+  rangeDate: string;
+  isActive: boolean;
+  stages: IStageRangeDate[];
 }
 
-export interface IStageRangeDate{
-
-  stageId :number;
-  stageName  :string;
-  rangeDate  : string;
-  isActive  :boolean;
+export interface IStageRangeDate {
+  stageId: number;
+  stageName: string;
+  rangeDate: string;
+  isActive: boolean;
 }
-

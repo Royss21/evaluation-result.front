@@ -12,10 +12,9 @@ import { ShowInfoLogComponent } from '@modules/logs-system/components/show-info-
 @Component({
   selector: 'app-logs-system-list',
   templateUrl: './logs-system-list.component.html',
-  styleUrls: ['./logs-system-list.component.scss']
+  styleUrls: ['./logs-system-list.component.scss'],
 })
 export class LogsSystemListComponent {
-
   public title: string = LogSystemHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
 
@@ -26,10 +25,7 @@ export class LogsSystemListComponent {
   paginatedFilterCurrent: IPaginatedFilter;
   logSystemPaginatedBehavior: BehaviorSubject<any>;
 
-  constructor(
-    public _dialog: MatDialog,
-    private _auditService: AuditService,
-  ){
+  constructor(public _dialog: MatDialog, private _auditService: AuditService) {
     this.logSystemPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
     this.logSystemPaginated$ = this.logSystemPaginatedBehavior.asObservable();
@@ -42,14 +38,16 @@ export class LogsSystemListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._auditService.getPaginatedLog(paginatedFilter)
-            .subscribe(paginated => this.logSystemPaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._auditService
+          .getPaginatedLog(paginatedFilter)
+          .subscribe((paginated) =>
+            this.logSystemPaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
   public showModalInfo(logInfoElement: string, logNameElement: string): void {
@@ -60,18 +58,16 @@ export class LogsSystemListComponent {
     const modalLevel = this._dialog.open(ShowInfoLogComponent, {
       width: ConstantsGeneral.mdModal,
       disableClose: true,
-      data: { textValue: logInfoElement, nameField: logNameElement }
+      data: { textValue: logInfoElement, nameField: logNameElement },
     });
 
-    modalLevel.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    modalLevel.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

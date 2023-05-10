@@ -5,18 +5,14 @@ import { EvaluationBehaviorsService } from '@modules/evaluation/services/evaluat
 @Component({
   selector: 'app-stage-evaluate-item',
   templateUrl: './stage-evaluate-item.component.html',
-  styleUrls: ['./stage-evaluate-item.component.scss']
+  styleUrls: ['./stage-evaluate-item.component.scss'],
 })
-export class StageEvaluateItemComponent  {
-
+export class StageEvaluateItemComponent {
   @Input() stageRangeDate: IStageRangeDate;
 
-  constructor(
-    private _evaluationBehavior: EvaluationBehaviorsService
-  ) { }
+  constructor(private _evaluationBehavior: EvaluationBehaviorsService) {}
 
-  onClick(){
+  onClick() {
     this._evaluationBehavior.gotoEvaluateStage(this.stageRangeDate.stageId);
   }
-
 }

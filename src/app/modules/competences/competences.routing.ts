@@ -11,24 +11,24 @@ const routes: Routes = [
     component: CompetencesComponent,
     children: [
       {
-        path:'',
-        component: CompetencesListComponent
+        path: '',
+        component: CompetencesListComponent,
       },
       {
-        path:'behaviours-by-level',
-        component: BehaviorsByLevelComponent
+        path: 'behaviours-by-level',
+        component: BehaviorsByLevelComponent,
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class CompetencesRouting { }
+export class CompetencesRouting {}

@@ -8,18 +8,8 @@ import { ComponentsModule } from '@components/components.module';
 import { UserListComponent } from './pages/user-list/user-list.component';
 import { UserModalComponent } from './components/user-modal/user-modal.component';
 
-
 @NgModule({
-  declarations: [
-    UserComponent,
-    UserListComponent,
-    UserModalComponent
-  ],
-  imports: [
-    CommonModule,
-    UserRouting,
-    SharedModule,
-    ComponentsModule,
-  ]
+  declarations: [UserComponent, UserListComponent, UserModalComponent],
+  imports: [CommonModule, UserRouting, SharedModule, ComponentsModule],
 })
-export class UserModule { }
+export class UserModule {}

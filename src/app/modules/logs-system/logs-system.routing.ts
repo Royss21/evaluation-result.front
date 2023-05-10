@@ -10,20 +10,20 @@ const routes: Routes = [
     component: LogsSystemComponent,
     children: [
       {
-        path:'',
-        component: LogsSystemListComponent
+        path: '',
+        component: LogsSystemListComponent,
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class LogsSystemRouting { }
+export class LogsSystemRouting {}

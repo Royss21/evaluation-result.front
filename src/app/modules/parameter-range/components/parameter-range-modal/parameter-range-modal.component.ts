@@ -1,6 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { CustomValidations } from '@shared/helpers/custom-validations';
@@ -14,14 +18,13 @@ import { IParameterRange } from '@modules/parameter-range/interfaces/parameter-r
 @Component({
   selector: 'app-parameter-range-modal',
   templateUrl: './parameter-range-modal.component.html',
-  styleUrls: ['./parameter-range-modal.component.scss']
+  styleUrls: ['./parameter-range-modal.component.scss'],
 })
 export class ParameterRangeModalComponent {
-
-  private isCloseAfterSave: boolean = false;
+  private isCloseAfterSave = false;
 
   parameterRangeFormGroup: FormGroup;
-  modalTitle: string = '';
+  modalTitle = '';
 
   constructor(
     private _parameterRangeBuilderService: ParameterRangeModalBuilderService,
@@ -30,9 +33,11 @@ export class ParameterRangeModalComponent {
     public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: IParameterRange
   ) {
-
-    this.modalTitle = data ? ParameterRangeText.modalUdpate : ParameterRangeText.modalCreate;
-    this.parameterRangeFormGroup = _parameterRangeBuilderService.buildParameterRangeForm(data);
+    this.modalTitle = data
+      ? ParameterRangeText.modalUdpate
+      : ParameterRangeText.modalCreate;
+    this.parameterRangeFormGroup =
+      _parameterRangeBuilderService.buildParameterRangeForm(data);
   }
 
   get controlsForm(): { [key: string]: AbstractControl } {
@@ -40,27 +45,29 @@ export class ParameterRangeModalComponent {
   }
 
   private save(parameterRange: IParameterRange): void {
-    if(!parameterRange.id)
-      this._parameterRangeService.create(parameterRange).subscribe(() => this.showConfirmMessage())
+    if (!parameterRange.id)
+      this._parameterRangeService
+        .create(parameterRange)
+        .subscribe(() => this.showConfirmMessage());
     else
-      this._parameterRangeService.update(parameterRange).subscribe(() => this.showConfirmMessage())
+      this._parameterRangeService
+        .update(parameterRange)
+        .subscribe(() => this.showConfirmMessage());
   }
 
-  private closeOrReset(): void{
-
-    if(this.isCloseAfterSave)
-      this.closeModal();
-    else
-    {
+  private closeOrReset(): void {
+    if (this.isCloseAfterSave) this.closeModal();
+    else {
       this.parameterRangeFormGroup.reset();
-      this.parameterRangeFormGroup = this._parameterRangeBuilderService.buildParameterRangeForm();
+      this.parameterRangeFormGroup =
+        this._parameterRangeBuilderService.buildParameterRangeForm();
     }
   }
 
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -72,26 +79,24 @@ export class ParameterRangeModalComponent {
     this._modalRef.close();
   }
 
-  confirmSave(isClose: boolean = true){
-
+  confirmSave(isClose = true) {
     CustomValidations.marcarFormGroupTouched(this.parameterRangeFormGroup);
 
-    if(this.parameterRangeFormGroup.invalid)
-      return;
+    if (this.parameterRangeFormGroup.invalid) return;
 
     this.isCloseAfterSave = isClose;
 
-    const parameterRange: IParameterRange = { ...this.parameterRangeFormGroup.getRawValue() } ;
+    const parameterRange: IParameterRange = {
+      ...this.parameterRangeFormGroup.getRawValue(),
+    };
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(parameterRange);
+      if (result) this.save(parameterRange);
     });
   }
-
 }

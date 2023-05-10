@@ -8,8 +8,8 @@ import { LoginComponent } from '@auth/pages/login/login.component';
 const routes: Routes = [
   {
     path: '',
-    canLoad:[AuthGuard ],
-    canActivate:[AuthGuard ],
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
     component: AuthComponent,
     children: [
       {
@@ -17,16 +17,16 @@ const routes: Routes = [
         component: LoginComponent,
       },
       {
-        path:'',
-        redirectTo:'login',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {}

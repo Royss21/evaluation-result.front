@@ -15,14 +15,14 @@ import { AssignChargesModalComponent } from './components/assign-charges-modal/a
     AreaObjectivesComponent,
     AreaObjectivesListComponent,
     AreaObjectivesModalComponent,
-    AssignChargesModalComponent
+    AssignChargesModalComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     SharedModule,
     ComponentsModule,
-    AreaObjectivesRouting
-  ]
+    AreaObjectivesRouting,
+  ],
 })
-export class AreaObjectivesModule { }
+export class AreaObjectivesModule {}

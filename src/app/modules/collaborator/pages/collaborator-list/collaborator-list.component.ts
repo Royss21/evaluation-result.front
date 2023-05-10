@@ -14,10 +14,9 @@ import { PopupChooseComponent } from '@components/popup-choose/popup-choose.comp
 @Component({
   selector: 'app-collaborator-list',
   templateUrl: './collaborator-list.component.html',
-  styleUrls: ['./collaborator-list.component.scss']
+  styleUrls: ['./collaborator-list.component.scss'],
 })
 export class CollaboratorListComponent {
-
   private unsubscribe$ = new Subject<any>();
 
   paginated$: Observable<any>;
@@ -33,7 +32,8 @@ export class CollaboratorListComponent {
   ) {
     this.collaboratorPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
-    this.collaboratorPaginated$ = this.collaboratorPaginatedBehavior.asObservable();
+    this.collaboratorPaginated$ =
+      this.collaboratorPaginatedBehavior.asObservable();
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = CollaboratorHelper.columnsTable;
   }
@@ -43,67 +43,64 @@ export class CollaboratorListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._collaboratorService.getPaginated(paginatedFilter)
-            .subscribe(paginated => this.collaboratorPaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._collaboratorService
+          .getPaginated(paginatedFilter)
+          .subscribe((paginated) =>
+            this.collaboratorPaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
   private openModal(collaborator?: ICollaborator): void {
     const collaboratorModal = this._dialog.open(CollaboratorModalComponent, {
       width: ConstantsGeneral.xlModal,
       disableClose: true,
-      data: collaborator
+      data: collaborator,
     });
 
-    collaboratorModal.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    collaboratorModal.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
-  create(): void{
+  create(): void {
     this.openModal();
   }
 
-  update(collaborator: ICollaborator): void{
+  update(collaborator: ICollaborator): void {
     this.openModal(collaborator);
   }
 
   confirmDeleted(id: string): void {
+    this._collaboratorService
+      .validateCurrentEvaluation(id)
+      .subscribe((isTrue) => {
+        const dataMessage = { ...ConstantsGeneral.chooseDelete };
 
-    this._collaboratorService.validateCurrentEvaluation(id)
-      .subscribe(isTrue => {
-
-        const dataMessage = {...ConstantsGeneral.chooseDelete};
-
-        if(isTrue)
-          dataMessage.text = "El colaborador se encuentra en una evaluación en curso.\n ¿Estás seguro de eliminar el registro? ";
+        if (isTrue)
+          dataMessage.text =
+            'El colaborador se encuentra en una evaluación en curso.\n ¿Estás seguro de eliminar el registro? ';
 
         const dialogRef = this._dialog.open(PopupChooseComponent, {
           data: dataMessage,
           autoFocus: false,
         });
-    
+
         dialogRef.afterClosed().subscribe((result) => {
           if (result) this._delete(id);
         });
       });
-
-    
   }
 
-  private _delete(id: string): void{
-    this._collaboratorService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
+  private _delete(id: string): void {
+    this._collaboratorService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
   ngOnDestroy(): void {

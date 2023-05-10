@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
 import { IArea } from '@modules/area/interfaces/area.interface';
@@ -7,16 +6,13 @@ import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AreaService {
-
   private controller = 'area';
   private _url = `${environment.serverUriApi}/area`;
 
-  constructor(
-    private _apiService: ApiService
-  ) { }
+  constructor(private _apiService: ApiService) {}
 
   getById(id: number): Observable<IArea> {
     const url = `${this.controller}/${id}`;
@@ -28,7 +24,9 @@ export class AreaService {
   }
 
   getByIdGerency(gerencyId: number): Observable<IArea[]> {
-    return this._apiService.get<IArea[]>(`${this._url}/by-gerency/${gerencyId}`);
+    return this._apiService.get<IArea[]>(
+      `${this._url}/by-gerency/${gerencyId}`
+    );
   }
 
   create(request: IArea): Observable<IArea> {
@@ -40,12 +38,13 @@ export class AreaService {
   }
 
   delete(id: number): Observable<boolean> {
-    return this._apiService
-        .delete<boolean>(`${this._url}/${id}`);
+    return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
 
   getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<IArea>> {
-     return this._apiService
-         .get<IPaginatedResponse<IArea>>(`${this._url}/paging`, paginatedFilter);
+    return this._apiService.get<IPaginatedResponse<IArea>>(
+      `${this._url}/paging`,
+      paginatedFilter
+    );
   }
 }

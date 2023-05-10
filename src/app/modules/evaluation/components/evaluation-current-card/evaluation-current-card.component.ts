@@ -11,35 +11,28 @@ import { ConstantsGeneral } from '@shared/constants';
 @Component({
   selector: 'app-evaluation-current-card',
   templateUrl: './evaluation-current-card.component.html',
-  styleUrls: ['./evaluation-current-card.component.scss']
+  styleUrls: ['./evaluation-current-card.component.scss'],
 })
 export class EvaluationCurrentCardComponent implements OnInit {
-
-  @Input() showButtonDelete : boolean = false;
+  @Input() showButtonDelete = false;
   @Input() periodEvaluation: IPeriodEvaluation | null;
   @Input() stagesRangeDate: IStageRangeDate[] = [];
 
   leaderFlag: ICollaboratorLeaderEvaluate;
-  constructor(
-    public _evaluationBehavior: EvaluationBehaviorsService,
-  ){}
+  constructor(public _evaluationBehavior: EvaluationBehaviorsService) {}
 
-  ngOnInit(){
-    if(localStorage.getItem('collaboratorId')){
-      this._evaluationBehavior.flagLeader$
-          .subscribe(data => {
-            this.leaderFlag = data;
-          });
+  ngOnInit() {
+    if (localStorage.getItem('collaboratorId')) {
+      this._evaluationBehavior.flagLeader$.subscribe((data) => {
+        this.leaderFlag = data;
+      });
     }
   }
 
-
-
-  enableStage(stageId : number){
-    if(ConstantsGeneral.stages.feedback === stageId)
-      return this.leaderFlag .isLeaderStageFeedback;
+  enableStage(stageId: number) {
+    if (ConstantsGeneral.stages.feedback === stageId)
+      return this.leaderFlag.isLeaderStageFeedback;
 
     return this.leaderFlag ? false : true;
   }
-
 }

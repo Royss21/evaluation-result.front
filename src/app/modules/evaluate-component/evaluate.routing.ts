@@ -13,26 +13,26 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ListCollaboratorEvaluateComponent
+        component: ListCollaboratorEvaluateComponent,
       },
       {
         path: 'area-objectives/:componentCollaboratorId',
-        component: EvaluateAreaObjectivesComponent
+        component: EvaluateAreaObjectivesComponent,
       },
       {
         path: 'corporate-objectives/:componentCollaboratorId',
-        component: EvaluateCorporateObjectivesComponent
+        component: EvaluateCorporateObjectivesComponent,
       },
       {
         path: 'competencies/:componentCollaboratorId',
-        component: EvaluateCompetenciesComponent
+        component: EvaluateCompetenciesComponent,
       },
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class EvaluateComponentRoutingModule { }
+export class EvaluateComponentRoutingModule {}

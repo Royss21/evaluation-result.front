@@ -12,13 +12,13 @@ import { HierarchyListComponent } from '@modules/hierarchy/pages/hierarchy-list/
   declarations: [
     HierarchyComponent,
     HierarchyListComponent,
-    HierarchyModalComponent
+    HierarchyModalComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     ComponentsModule,
-    HierarchyRoutingModule
-  ]
+    HierarchyRoutingModule,
+  ],
 })
-export class HierarchyModule { }
+export class HierarchyModule {}

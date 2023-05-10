@@ -9,19 +9,19 @@ import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ComponentCollaboratorService {
-
   private controller = 'component-collaborator';
   private _url = `${environment.serverUriApi}/${this.controller}`;
-  constructor(
-    private _apiService: ApiService
-   ) { }
+  constructor(private _apiService: ApiService) {}
 
-  getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<IComponentCollaboratorPaged>> {
-    return this._apiService
-        .get<IPaginatedResponse<IComponentCollaboratorPaged>>(`${this._url}/paging`, paginatedFilter);
+  getPaginated(
+    paginatedFilter: any
+  ): Observable<IPaginatedResponse<IComponentCollaboratorPaged>> {
+    return this._apiService.get<
+      IPaginatedResponse<IComponentCollaboratorPaged>
+    >(`${this._url}/paging`, paginatedFilter);
   }
 
   evaluate(request: IComponentCollaboratorEvaluate): Observable<boolean> {
@@ -32,9 +32,9 @@ export class ComponentCollaboratorService {
     return this._apiService.put<boolean>(`${this._url}/status`, request);
   }
 
-
   getEvaluationData(id: string): Observable<IComponentCollaborator> {
-    return this._apiService
-        .get<IComponentCollaborator>(`${this._url}/${id}/evaluation-data`);
+    return this._apiService.get<IComponentCollaborator>(
+      `${this._url}/${id}/evaluation-data`
+    );
   }
 }

@@ -1,5 +1,5 @@
-export interface ILevel{
-    id: number;
-    name: string;
-    description: string;
+export interface ILevel {
+  id: number;
+  name: string;
+  description: string;
 }

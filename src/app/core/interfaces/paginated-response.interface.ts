@@ -1,4 +1,4 @@
-export interface IPaginatedResponse<T>{
-    count: number;
-    entities: T[]
+export interface IPaginatedResponse<T> {
+  count: number;
+  entities: T[];
 }

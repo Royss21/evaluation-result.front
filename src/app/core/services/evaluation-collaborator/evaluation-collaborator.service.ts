@@ -10,42 +10,56 @@ import { ApiService } from '../api.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EvaluationCollaboratorService {
-
   private controller = 'evaluation-collaborator';
   private _url = `${environment.serverUriApi}/${this.controller}`;
-  constructor(
-    private _apiService: ApiService
-   ) { }
+  constructor(private _apiService: ApiService) {}
 
-  create(request: IEvaluationCollaborator): Observable<IEvaluationCollaborator> {
-    return this._apiService.post<IEvaluationCollaborator>(`${this._url}`, request);
+  create(
+    request: IEvaluationCollaborator
+  ): Observable<IEvaluationCollaborator> {
+    return this._apiService.post<IEvaluationCollaborator>(
+      `${this._url}`,
+      request
+    );
   }
 
   delete(id: string): Observable<boolean> {
     return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
 
-  getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<IEvaluationCollaboratorPaged>> {
-    console.log(paginatedFilter)
-     return this._apiService
-         .get<IPaginatedResponse<IEvaluationCollaboratorPaged>>(`${this._url}/paging`, paginatedFilter);
+  getPaginated(
+    paginatedFilter: any
+  ): Observable<IPaginatedResponse<IEvaluationCollaboratorPaged>> {
+    console.log(paginatedFilter);
+    return this._apiService.get<
+      IPaginatedResponse<IEvaluationCollaboratorPaged>
+    >(`${this._url}/paging`, paginatedFilter);
   }
 
-  getReviewEvaluationPaginated(paginatedFilter: any): Observable<IPaginatedResponse<IEvaluationCollaboratorReviewPaged>> {
-    return this._apiService
-        .get<IPaginatedResponse<IEvaluationCollaboratorReviewPaged>>(`${this._url}/review-evaluation/paging`, paginatedFilter);
+  getReviewEvaluationPaginated(
+    paginatedFilter: any
+  ): Observable<IPaginatedResponse<IEvaluationCollaboratorReviewPaged>> {
+    return this._apiService.get<
+      IPaginatedResponse<IEvaluationCollaboratorReviewPaged>
+    >(`${this._url}/review-evaluation/paging`, paginatedFilter);
   }
 
-  getResultEvaluation(id: string, evaluationId: string ): Observable<IResultEvaluationCollaborator> {
-    return this._apiService
-        .get<IResultEvaluationCollaborator>(`${this._url}/${id}/result-evaluation/${evaluationId}`);
+  getResultEvaluation(
+    id: string,
+    evaluationId: string
+  ): Observable<IResultEvaluationCollaborator> {
+    return this._apiService.get<IResultEvaluationCollaborator>(
+      `${this._url}/${id}/result-evaluation/${evaluationId}`
+    );
   }
 
-  saveCommentEvaluation(request:  ICommentEvaluation){
-    return this._apiService.put<IEvaluationCollaborator>(`${this._url}/save-comment`, request);
+  saveCommentEvaluation(request: ICommentEvaluation) {
+    return this._apiService.put<IEvaluationCollaborator>(
+      `${this._url}/save-comment`,
+      request
+    );
   }
-
 }

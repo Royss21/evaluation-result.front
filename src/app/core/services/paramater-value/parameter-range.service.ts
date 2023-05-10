@@ -7,15 +7,12 @@ import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ParameterValueService {
-
   private controller = 'parameter-value';
   private _url = `${environment.serverUriApi}/${this.controller}`;
-  constructor(
-    private _apiService: ApiService
-  ) { }
+  constructor(private _apiService: ApiService) {}
 
   getById(id: number): Observable<IParameterValue> {
     const url = `${this.controller}/${id}`;
@@ -36,12 +33,15 @@ export class ParameterValueService {
   }
 
   delete(id: number): Observable<boolean> {
-    return this._apiService
-        .delete<boolean>(`${this._url}/${id}`);
+    return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
 
-  getPaginated(paginatedFilter: IParameterValueFilter): Observable<IPaginatedResponse<IParameterValue>> {
-     return this._apiService
-         .get<IPaginatedResponse<IParameterValue>>(`${this._url}/paging`, paginatedFilter);
+  getPaginated(
+    paginatedFilter: IParameterValueFilter
+  ): Observable<IPaginatedResponse<IParameterValue>> {
+    return this._apiService.get<IPaginatedResponse<IParameterValue>>(
+      `${this._url}/paging`,
+      paginatedFilter
+    );
   }
 }

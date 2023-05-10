@@ -10,20 +10,20 @@ const routes: Routes = [
     component: RoleComponent,
     children: [
       {
-        path:'',
-        component: RoleListComponent
+        path: '',
+        component: RoleListComponent,
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class RoleRouting { }
+export class RoleRouting {}

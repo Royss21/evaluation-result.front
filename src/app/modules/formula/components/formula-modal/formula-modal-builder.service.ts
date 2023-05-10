@@ -4,11 +4,10 @@ import { IFormula } from '@modules/formula/interfaces/formula.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FormulaModalBuilderService {
-
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) {}
 
   public buildFormulaForm(formula?: IFormula): FormGroup {
     return this._fb.group({
@@ -18,19 +17,19 @@ export class FormulaModalBuilderService {
         [
           Validators.required,
           CustomValidations.NotEmpty,
-          Validators.maxLength(100)
-        ]
+          Validators.maxLength(100),
+        ],
       ],
-      formulaReal: [ 
-        formula?.formulaReal || '', 
+      formulaReal: [
+        formula?.formulaReal || '',
         [
           Validators.required,
           CustomValidations.NotEmpty,
-          Validators.maxLength(500)
-        ]
+          Validators.maxLength(500),
+        ],
       ],
-      description: [ formula?.description || '', Validators.maxLength(250)],
-      formulaQuery: [ formula?.formulaQuery || ''],
+      description: [formula?.description || '', Validators.maxLength(250)],
+      formulaQuery: [formula?.formulaQuery || ''],
     });
   }
 }

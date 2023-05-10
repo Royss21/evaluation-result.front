@@ -13,17 +13,15 @@ import { CorporateObjectivesModalComponent } from './components/corporate-object
   declarations: [
     AssignChargeModalComponent,
     CorporateObjectivesListComponent,
-    CorporateObjectivesModalComponent
+    CorporateObjectivesModalComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     SharedModule,
     ComponentsModule,
-    CorporateObjectivesRoutingModule
+    CorporateObjectivesRoutingModule,
   ],
-  exports:[
-    CorporateObjectivesListComponent
-  ]
+  exports: [CorporateObjectivesListComponent],
 })
-export class CorporateObjectivesModule { }
+export class CorporateObjectivesModule {}

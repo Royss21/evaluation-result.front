@@ -16,10 +16,9 @@ import { IHierarchy } from '../../../hierarchy/interfaces/hierarchy.interface';
 @Component({
   selector: 'app-weight-per-component-list',
   templateUrl: './weight-per-component-list.component.html',
-  styleUrls: ['./weight-per-component-list.component.scss']
+  styleUrls: ['./weight-per-component-list.component.scss'],
 })
 export class WeightPerComponentListComponent {
-
   public title = WeightPerComponentHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
 
@@ -37,7 +36,8 @@ export class WeightPerComponentListComponent {
   ) {
     this.weightPerComponentPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
-    this.weightPerComponentPaginated$ = this.weightPerComponentPaginatedBehavior.asObservable();
+    this.weightPerComponentPaginated$ =
+      this.weightPerComponentPaginatedBehavior.asObservable();
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = WeightPerComponentHelper.columnsTable;
   }
@@ -47,30 +47,31 @@ export class WeightPerComponentListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._hierarchyService.getPaginated(paginatedFilter)
-            .subscribe(paginated => this.weightPerComponentPaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._hierarchyService
+          .getPaginated(paginatedFilter)
+          .subscribe((paginated) =>
+            this.weightPerComponentPaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
   public openModal(hierarchy?: IHierarchy): void {
     const modalRef = this._dialog.open(WeightPerComponentModalComponent, {
       disableClose: true,
       data: hierarchy,
-      width: ConstantsGeneral.mdModal
+      width: ConstantsGeneral.mdModal,
     });
 
-    modalRef.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    modalRef.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
-  createWeightPerComponent(): void{
+  createWeightPerComponent(): void {
     this.openModal();
   }
 
@@ -78,5 +79,4 @@ export class WeightPerComponentListComponent {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

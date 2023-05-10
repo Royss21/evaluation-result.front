@@ -5,21 +5,19 @@ import { CustomValidations } from '@shared/helpers/custom-validations';
 @Component({
   selector: 'app-example-form',
   templateUrl: './example-form.component.html',
-  styleUrls: ['./example-form.component.scss']
+  styleUrls: ['./example-form.component.scss'],
 })
 export class ExampleFormComponent {
-
   public formGroup: FormGroup;
 
   constructor() {
-
     this.formGroup = new FormGroup({
       username: new FormControl(''),
       // Nest group
       resetPassword: new FormGroup({
-        password: new FormControl('', [ Validators.required]),
+        password: new FormControl('', [Validators.required]),
         confirmPassword: new FormControl(),
-      })
+      }),
     });
   }
 
@@ -30,5 +28,4 @@ export class ExampleFormComponent {
   onSubmit() {
     CustomValidations.marcarFormGroupTouched(this.formGroup);
   }
-
 }

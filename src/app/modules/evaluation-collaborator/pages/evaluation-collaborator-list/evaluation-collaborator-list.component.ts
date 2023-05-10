@@ -14,76 +14,80 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 @Component({
   selector: 'app-evaluation-collaborator-list',
   templateUrl: './evaluation-collaborator-list.component.html',
-  styleUrls: ['./evaluation-collaborator-list.component.scss']
+  styleUrls: ['./evaluation-collaborator-list.component.scss'],
 })
 export class EvaluationCollaboratorListComponent implements OnInit {
-
   //validar/avisar si tiene evaluaciones terminadas
 
   private unsubscribe$ = new Subject<any>();
-  private _evaluationId: string = '';
+  private _evaluationId = '';
   evaluationCollaboratorPaginated$: Observable<any>;
   paginated$: Observable<any>;
   evaluationCollaboratorPaginatedBehavior: BehaviorSubject<any>;
   paginatedBehavior: BehaviorSubject<any>;
   columnsTable: IElementRowTable[];
   paginatedFilterCurrent: IEvaluationCollaboratorFilter;
-  
 
   constructor(
     public _dialog: MatDialog,
     private _evaluationCollaboratorService: EvaluationCollaboratorService,
     private _route: ActivatedRoute
-  ){
+  ) {
     this.evaluationCollaboratorPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
-    this.evaluationCollaboratorPaginated$ = this.evaluationCollaboratorPaginatedBehavior.asObservable();
+    this.evaluationCollaboratorPaginated$ =
+      this.evaluationCollaboratorPaginatedBehavior.asObservable();
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = EvaluationCollaboratorHelper.columnsTable;
   }
 
   ngOnInit(): void {
-    this._route.params.subscribe(params => this._evaluationId = params['evaluationId']);
+    this._route.params.subscribe(
+      (params) => (this._evaluationId = params['evaluationId'])
+    );
   }
-  
+
   ngAfterContentInit() {
     this._callPaginated();
   }
 
   private _callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-
-          this.paginatedFilterCurrent = {...paginatedFilter, evaluationId: this._evaluationId };
-          this._evaluationCollaboratorService.getPaginated(this.paginatedFilterCurrent)
-            .subscribe(paginated => this.evaluationCollaboratorPaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = {
+          ...paginatedFilter,
+          evaluationId: this._evaluationId,
+        };
+        this._evaluationCollaboratorService
+          .getPaginated(this.paginatedFilterCurrent)
+          .subscribe((paginated) =>
+            this.evaluationCollaboratorPaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
-  private _delete(id:string): void{
-    this._evaluationCollaboratorService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
+  private _delete(id: string): void {
+    this._evaluationCollaboratorService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
   openModal(): void {
+    const modalRegsiterCollaborator = this._dialog.open(
+      RegisterCollaboratorModalComponent,
+      {
+        disableClose: true,
+        data: this._evaluationId,
+        autoFocus: false,
+        restoreFocus: false,
+      }
+    );
 
-    const modalRegsiterCollaborator = this._dialog.open(RegisterCollaboratorModalComponent, {
-      disableClose: true,
-      data: this._evaluationId,
-      autoFocus: false,
-      restoreFocus: false
+    modalRegsiterCollaborator.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
     });
-
-    modalRegsiterCollaborator.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
   }
 
   confirmDeleted(id: string): void {
@@ -101,5 +105,4 @@ export class EvaluationCollaboratorListComponent implements OnInit {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

@@ -10,19 +10,19 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: CollaboratorListComponent
+        component: CollaboratorListComponent,
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class CollaboratorRoutingModule { }
+export class CollaboratorRoutingModule {}

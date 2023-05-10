@@ -10,20 +10,20 @@ const routes: Routes = [
     component: UserComponent,
     children: [
       {
-        path:'',
-        component: UserListComponent
+        path: '',
+        component: UserListComponent,
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class UserRouting { }
+export class UserRouting {}

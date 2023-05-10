@@ -11,19 +11,19 @@ const routes: Routes = [
     children: [
       {
         path: 'list',
-        component: FinalExamReportListComponent
+        component: FinalExamReportListComponent,
       },
       {
-        path:'',
-        redirectTo:'list',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: 'list',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class FinalExamReportRouting { }
+export class FinalExamReportRouting {}

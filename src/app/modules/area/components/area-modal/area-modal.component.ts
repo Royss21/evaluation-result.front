@@ -1,6 +1,10 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Component, Inject, ViewChildren } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { AreaService } from '@core/services/area/area.service';
@@ -16,11 +20,10 @@ import { GerencyService } from '@core/services/gerency/gerency.service';
 @Component({
   selector: 'app-area-modal',
   templateUrl: './area-modal.component.html',
-  styleUrls: ['./area-modal.component.scss']
+  styleUrls: ['./area-modal.component.scss'],
 })
-export class AreaModalComponent{
-
-  private isCloseAfterSave: boolean = false;
+export class AreaModalComponent {
+  private isCloseAfterSave = false;
 
   areaFormGroup: FormGroup;
   modalTitle: string = AreaHelper.titleActionText.modalCreate;
@@ -51,24 +54,21 @@ export class AreaModalComponent{
   }
 
   private save(area: IArea): void {
-    if(!area.id)
-      this._areaService.create(area).subscribe(() => this.showConfirmMessage())
+    if (!area.id)
+      this._areaService.create(area).subscribe(() => this.showConfirmMessage());
     else
-      this._areaService.update(area).subscribe(() => this.showConfirmMessage())
+      this._areaService.update(area).subscribe(() => this.showConfirmMessage());
   }
 
-  private closeOrReset(): void{
-
-    if(this.isCloseAfterSave)
-      this.closeModal();
-    else
-      this.areaFormGroup.reset();
+  private closeOrReset(): void {
+    if (this.isCloseAfterSave) this.closeModal();
+    else this.areaFormGroup.reset();
   }
 
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -80,26 +80,22 @@ export class AreaModalComponent{
     this._modalRef.close();
   }
 
-  confirmSave(isClose: boolean = true){
-
+  confirmSave(isClose = true) {
     CustomValidations.marcarFormGroupTouched(this.areaFormGroup);
 
-    if(this.areaFormGroup.invalid)
-      return;
+    if (this.areaFormGroup.invalid) return;
 
     this.isCloseAfterSave = isClose;
 
-    const area: IArea = { ...this.areaFormGroup.getRawValue() } ;
+    const area: IArea = { ...this.areaFormGroup.getRawValue() };
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(area);
+      if (result) this.save(area);
     });
   }
-
 }

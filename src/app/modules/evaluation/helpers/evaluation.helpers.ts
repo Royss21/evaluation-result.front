@@ -1,7 +1,10 @@
-import { IElementRowTable } from "@components/table/interfaces/table.interface";
-import { ElementRowTable } from "@components/table/models/table.model";
-import { ConstantsGeneral } from "@shared/constants"
-import { IEvaluationComponent, IEvaluationComponentStage } from "../interfaces/evaluation-create.interface";
+import { IElementRowTable } from '@components/table/interfaces/table.interface';
+import { ElementRowTable } from '@components/table/models/table.model';
+import { ConstantsGeneral } from '@shared/constants';
+import {
+  IEvaluationComponent,
+  IEvaluationComponentStage,
+} from '../interfaces/evaluation-create.interface';
 
 export class EvaluationHelper {
   static evaluationComponents: IEvaluationComponent[] = [
@@ -19,7 +22,8 @@ export class EvaluationHelper {
       checked: false,
       img: '/assets/images/group 1.png',
       title: 'Objetivos de Área (KPIs)',
-      subtitle: 'Objetivos establecidos para cada área, deben guardar relación con los objetivos corporativos y prioridades estratégicas.',
+      subtitle:
+        'Objetivos establecidos para cada área, deben guardar relación con los objetivos corporativos y prioridades estratégicas.',
       startDate: null,
       endDate: null,
     },
@@ -28,11 +32,12 @@ export class EvaluationHelper {
       checked: false,
       img: '/assets/images/comp.png',
       title: 'Competencias',
-      subtitle: 'Conjunto de conocimientos y habilidades que se potencian por la actitud.',
+      subtitle:
+        'Conjunto de conocimientos y habilidades que se potencian por la actitud.',
       startDate: null,
       endDate: null,
-    }
-  ]
+    },
+  ];
 
   static evaluationComponentStages: IEvaluationComponentStage[] = [
     {
@@ -54,26 +59,26 @@ export class EvaluationHelper {
       startDate: null,
       endDate: null,
       stageId: ConstantsGeneral.stages.evaluation,
-      title: 'Etapa de Evaluación'
+      title: 'Etapa de Evaluación',
     },
     {
-      componentId:ConstantsGeneral.components.competencies,
+      componentId: ConstantsGeneral.components.competencies,
       startDate: null,
       endDate: null,
       stageId: ConstantsGeneral.stages.calibration,
-      title: 'Etapa de Calibración'
-    }
-  ]
+      title: 'Etapa de Calibración',
+    },
+  ];
 
-  static columnsTableEvaluationReview: IElementRowTable[] =  [
-    new ElementRowTable('collaboratorName','Colaborador', true),
-    new ElementRowTable('documentNumber','Documento' , true),
-    new ElementRowTable('chargeName','Cargo' , true),
-    new ElementRowTable('areaName','Area' , true),
-    new ElementRowTable('gerencyName','Gerencia' , true),
-    new ElementRowTable('hierarchyName','Jerarquia' , true),
-    new ElementRowTable('levelName','Level' , true),
-    new ElementRowTable('statusId','Estado' , true),
-    new ElementRowTable('actions','Acciones' , true),
+  static columnsTableEvaluationReview: IElementRowTable[] = [
+    new ElementRowTable('collaboratorName', 'Colaborador', true),
+    new ElementRowTable('documentNumber', 'Documento', true),
+    new ElementRowTable('chargeName', 'Cargo', true),
+    new ElementRowTable('areaName', 'Area', true),
+    new ElementRowTable('gerencyName', 'Gerencia', true),
+    new ElementRowTable('hierarchyName', 'Jerarquia', true),
+    new ElementRowTable('levelName', 'Level', true),
+    new ElementRowTable('statusId', 'Estado', true),
+    new ElementRowTable('actions', 'Acciones', true),
   ];
 }

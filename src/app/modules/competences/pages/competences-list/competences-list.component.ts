@@ -16,10 +16,9 @@ import { CompetencesModalComponent } from '@modules/competences/components/compe
 @Component({
   selector: 'app-competences-list',
   templateUrl: './competences-list.component.html',
-  styleUrls: ['./competences-list.component.scss']
+  styleUrls: ['./competences-list.component.scss'],
 })
 export class CompetencesListComponent {
-
   public title: string = CompetencesHelper.titleActions.list;
   private unsubscribe$ = new Subject<any>();
 
@@ -33,11 +32,12 @@ export class CompetencesListComponent {
   constructor(
     private _router: Router,
     public _dialog: MatDialog,
-    private _subcomponentService: SubcomponentService,
-  ){
+    private _subcomponentService: SubcomponentService
+  ) {
     this.competencesPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
-    this.competencesPaginated$ = this.competencesPaginatedBehavior.asObservable();
+    this.competencesPaginated$ =
+      this.competencesPaginatedBehavior.asObservable();
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = CompetencesHelper.columnsTable;
   }
@@ -47,51 +47,55 @@ export class CompetencesListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: ISubcomponentFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._subcomponentService.getPaginated({ ...paginatedFilter, componentId: ConstantsGeneral.components.competencies })
-            .subscribe(paginated => this.competencesPaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: ISubcomponentFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._subcomponentService
+          .getPaginated({
+            ...paginatedFilter,
+            componentId: ConstantsGeneral.components.competencies,
+          })
+          .subscribe((paginated) =>
+            this.competencesPaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
   private openModal(subcomponent?: ISubcomponent): void {
+    const modalcorporateObjectives = this._dialog.open(
+      CompetencesModalComponent,
+      {
+        width: ConstantsGeneral.mdModal,
+        disableClose: true,
+        data: subcomponent,
+      }
+    );
 
-    const modalcorporateObjectives = this._dialog.open(CompetencesModalComponent, {
-      width: ConstantsGeneral.mdModal,
-      disableClose: true,
-      data: subcomponent
+    modalcorporateObjectives.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
     });
-
-    modalcorporateObjectives.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
   }
 
-  private delete(id:number): void{
-    this._subcomponentService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
+  private delete(id: number): void {
+    this._subcomponentService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
-  public create(): void{
+  public create(): void {
     this.openModal();
   }
 
-  public update(subcomponent: ISubcomponent): void{
+  public update(subcomponent: ISubcomponent): void {
     this.openModal(subcomponent);
   }
 
   public assign(subcomponent: ISubcomponent): void {
     this._router.navigate([
       `/configuration/competences/behaviours-by-level`,
-      { subcomponent: JSON.stringify(subcomponent) }
+      { subcomponent: JSON.stringify(subcomponent) },
     ]);
   }
 

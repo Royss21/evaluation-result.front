@@ -8,22 +8,15 @@ import { ComponentsModule } from '@components/components.module';
 import { SharedModule } from '@shared/shared.module';
 import { RouterModule } from '@angular/router';
 
-
 @NgModule({
-  declarations: [
-    SecurityComponent,
-    SecurityOptionComponent
-  ],
+  declarations: [SecurityComponent, SecurityOptionComponent],
   imports: [
     RouterModule,
     CommonModule,
     SharedModule,
     SecurityRouting,
-    ComponentsModule
+    ComponentsModule,
   ],
-  exports: [
-    SecurityComponent,
-    SecurityOptionComponent
-  ]
+  exports: [SecurityComponent, SecurityOptionComponent],
 })
-export class SecurityModule { }
+export class SecurityModule {}

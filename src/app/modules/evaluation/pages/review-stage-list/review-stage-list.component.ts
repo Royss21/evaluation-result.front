@@ -10,12 +10,11 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 @Component({
   selector: 'app-review-stage-list',
   templateUrl: './review-stage-list.component.html',
-  styleUrls: ['./review-stage-list.component.scss']
+  styleUrls: ['./review-stage-list.component.scss'],
 })
 export class ReviewStageListComponent implements OnInit {
-
   private unsubscribe$ = new Subject<any>();
-  private _evaluationId: string = '';
+  private _evaluationId = '';
   private _stageId: number;
 
   title: string;
@@ -30,22 +29,23 @@ export class ReviewStageListComponent implements OnInit {
     private _evaluationCollaborator: EvaluationCollaboratorService,
     private _route: ActivatedRoute,
     private _router: Router
-  ){
+  ) {
     this.evaluateReviewPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
-    this.evaluateReviewPaginated$ = this.evaluateReviewPaginatedBehavior.asObservable();
+    this.evaluateReviewPaginated$ =
+      this.evaluateReviewPaginatedBehavior.asObservable();
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = EvaluationHelper.columnsTableEvaluationReview;
   }
   ngOnInit(): void {
-
-    this._route.params.subscribe(params => {
+    this._route.params.subscribe((params) => {
       this._stageId = params['stageId'];
       this._evaluationId = params['evaluationId'];
 
-      this.title = this._stageId == ConstantsGeneral.stages.feedback
-          ? "Revisar evaluación: Etapa de feedback"
-          : "Revisar evaluación: Etapa de visto bueno"
+      this.title =
+        this._stageId == ConstantsGeneral.stages.feedback
+          ? 'Revisar evaluación: Etapa de feedback'
+          : 'Revisar evaluación: Etapa de visto bueno';
     });
   }
 
@@ -54,31 +54,36 @@ export class ReviewStageListComponent implements OnInit {
   }
 
   private _callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IEvaluationCollaboratorReviewFilter) => {
-        if(paginatedFilter){
-
-          this.paginatedFilterCurrent =  {
+    this.paginated$.subscribe(
+      (paginatedFilter: IEvaluationCollaboratorReviewFilter) => {
+        if (paginatedFilter) {
+          this.paginatedFilterCurrent = {
             ...paginatedFilter,
             evaluationId: this._evaluationId,
             stageId: this._stageId,
-            evaluationCollaboratorId : localStorage.getItem('collaboratorId') || ''
-          }
+            evaluationCollaboratorId:
+              localStorage.getItem('collaboratorId') || '',
+          };
 
-          this._evaluationCollaborator.getReviewEvaluationPaginated(this.paginatedFilterCurrent)
-              .subscribe(paginated => this.evaluateReviewPaginatedBehavior.next(paginated));
+          this._evaluationCollaborator
+            .getReviewEvaluationPaginated(this.paginatedFilterCurrent)
+            .subscribe((paginated) =>
+              this.evaluateReviewPaginatedBehavior.next(paginated)
+            );
         }
-      });
+      }
+    );
   }
 
-  goToReviewStage(evaluationCollaboratorId:string ){
+  goToReviewStage(evaluationCollaboratorId: string) {
     //if(this._stageId == ConstantsGeneral.stages.feedback)
-      this._router.navigateByUrl(`/evaluation/${this._evaluationId}/collaborator/${evaluationCollaboratorId}/review`);
+    this._router.navigateByUrl(
+      `/evaluation/${this._evaluationId}/collaborator/${evaluationCollaboratorId}/review`
+    );
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

@@ -10,19 +10,19 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: WeightPerComponentListComponent
+        component: WeightPerComponentListComponent,
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class WeightPerComponentRouting { }
+export class WeightPerComponentRouting {}

@@ -8,24 +8,24 @@ import { IPaginatedResponse } from '@core/interfaces/paginated-response.interfac
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GerencyService {
-
   private _url = `${environment.serverUriApi}/gerency`;
 
-  constructor(
-    private _apiService: ApiService
-  ) { }
+  constructor(private _apiService: ApiService) {}
 
   getAll(): Observable<IGerency[]> {
-    return this._apiService
-      .get<IGerency[]>(`${this._url}`);
+    return this._apiService.get<IGerency[]>(`${this._url}`);
   }
 
-  getPaginated(paginatedFilter: IPaginatedFilter): Observable<IPaginatedResponse<IGerency>> {
-    return this._apiService
-      .get<IPaginatedResponse<IGerency>>(`${this._url}/paging`, paginatedFilter);
+  getPaginated(
+    paginatedFilter: IPaginatedFilter
+  ): Observable<IPaginatedResponse<IGerency>> {
+    return this._apiService.get<IPaginatedResponse<IGerency>>(
+      `${this._url}/paging`,
+      paginatedFilter
+    );
   }
 
   create(request: IGerency): Observable<IGerency> {
@@ -37,7 +37,6 @@ export class GerencyService {
   }
 
   delete(id: number): Observable<boolean> {
-    return this._apiService
-        .delete<boolean>(`${this._url}/${id}`);
+    return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
 }

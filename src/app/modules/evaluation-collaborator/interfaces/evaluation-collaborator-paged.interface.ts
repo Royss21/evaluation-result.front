@@ -1,10 +1,9 @@
-import { IEvaluationCollaborator } from "./evaluation-collaborator.interfaces";
+import { IEvaluationCollaborator } from './evaluation-collaborator.interfaces';
 
-export interface IEvaluationCollaboratorPaged extends IEvaluationCollaborator{
-
-  id:string ;
-  collaboratorName: string; 
+export interface IEvaluationCollaboratorPaged extends IEvaluationCollaborator {
+  id: string;
+  collaboratorName: string;
   documentNumber: string;
-  isLeaderCompetencies: boolean; 
+  isLeaderCompetencies: boolean;
   isLeaderAreaObjectives: boolean;
 }

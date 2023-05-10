@@ -1,6 +1,10 @@
 import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 import { Component, Inject, ViewChildren } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { AreaService } from '@core/services/area/area.service';
@@ -16,18 +20,17 @@ import { CollaboratorHelper } from '@modules/collaborator/helpers/collaborator.h
 import { CollaboratorBuilderService } from '../../services/collaborator-builder.service';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { ICollaborator } from '@modules/collaborator/interfaces/collaboator-not-in-evaluation.interface';
-import data from '../../../../../db/document-type/document-type.json'
+import data from '../../../../../db/document-type/document-type.json';
 import { MatSelectChange } from '@angular/material/select';
 import { IIdentityDocument } from '@modules/collaborator/interfaces/identity-document';
 
 @Component({
   selector: 'app-collaborator-modal',
   templateUrl: './collaborator-modal.component.html',
-  styleUrls: ['./collaborator-modal.component.scss']
+  styleUrls: ['./collaborator-modal.component.scss'],
 })
 export class CollaboratorModalComponent {
-
-  private _isCloseAfterSave: boolean = false;
+  private _isCloseAfterSave = false;
 
   public collaboratorFormGroup: FormGroup;
   public modalTitle: string = CollaboratorHelper.titleActionText.modalCreate;
@@ -50,11 +53,13 @@ export class CollaboratorModalComponent {
     private _modalRef: MatDialogRef<CollaboratorModalComponent>,
     private _collaboratorBuilderService: CollaboratorBuilderService
   ) {
-    this.collaboratorFormGroup = _collaboratorBuilderService.buildCollaboratorForm(data);
+    this.collaboratorFormGroup =
+      _collaboratorBuilderService.buildCollaboratorForm(data);
     data && this._setDefaultValues();
     this._getGerencies();
     this._getIdentityDocument();
-    this.maxLengthDocumentType = _collaboratorBuilderService.maxLengthDocumentType;
+    this.maxLengthDocumentType =
+      _collaboratorBuilderService.maxLengthDocumentType;
   }
 
   private _setDefaultValues(): void {
@@ -72,23 +77,23 @@ export class CollaboratorModalComponent {
   }
 
   private _getIdentityDocument(): void {
-    this._collaboratorService.getAllIdentityDocument().subscribe((identityDocuments: IIdentityDocument[]) => {
-      this.documenTypeList = identityDocuments;
-    });
+    this._collaboratorService
+      .getAllIdentityDocument()
+      .subscribe((identityDocuments: IIdentityDocument[]) => {
+        this.documenTypeList = identityDocuments;
+      });
   }
 
   private _getAreas(gerencyId: number): void {
-    this._areaService.getByIdGerency(gerencyId)
-     .subscribe((areas: IArea[]) => {
-       this.areaList = areas;
-      });
+    this._areaService.getByIdGerency(gerencyId).subscribe((areas: IArea[]) => {
+      this.areaList = areas;
+    });
   }
 
   private _getCharges(areaId: number): void {
-    this._chargeService.getByAreaId(areaId)
-      .subscribe((charges: ICharge[]) => {
-        this.chargeList = charges;
-      });
+    this._chargeService.getByAreaId(areaId).subscribe((charges: ICharge[]) => {
+      this.chargeList = charges;
+    });
   }
 
   public onChangeGerency(select: MatSelectChange) {
@@ -105,10 +110,14 @@ export class CollaboratorModalComponent {
   }
 
   private save(collaborator: ICollaborator): void {
-    if(!collaborator.id)
-      this._collaboratorService.create(collaborator).subscribe(() => this.showConfirmMessage());
+    if (!collaborator.id)
+      this._collaboratorService
+        .create(collaborator)
+        .subscribe(() => this.showConfirmMessage());
     else
-      this._collaboratorService.update(collaborator).subscribe(() => this.showConfirmMessage());
+      this._collaboratorService
+        .update(collaborator)
+        .subscribe(() => this.showConfirmMessage());
   }
 
   get controlsForm(): { [key: string]: AbstractControl } {
@@ -118,7 +127,7 @@ export class CollaboratorModalComponent {
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -126,25 +135,24 @@ export class CollaboratorModalComponent {
     });
   }
 
-  confirmSave(isClose: boolean = true){
-
+  confirmSave(isClose = true) {
     CustomValidations.marcarFormGroupTouched(this.collaboratorFormGroup);
 
-    if(this.collaboratorFormGroup.invalid)
-      return;
+    if (this.collaboratorFormGroup.invalid) return;
 
     this._isCloseAfterSave = isClose;
 
-    const collaborator: ICollaborator = { ...this.collaboratorFormGroup.getRawValue() } ;
+    const collaborator: ICollaborator = {
+      ...this.collaboratorFormGroup.getRawValue(),
+    };
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(collaborator);
+      if (result) this.save(collaborator);
     });
   }
 
@@ -152,13 +160,12 @@ export class CollaboratorModalComponent {
     this._modalRef.close();
   }
 
-  private closeOrReset(): void{
-
-    if(this._isCloseAfterSave)
-      this.closeModal();
-    else{
+  private closeOrReset(): void {
+    if (this._isCloseAfterSave) this.closeModal();
+    else {
       this.collaboratorFormGroup.reset();
-      this.collaboratorFormGroup = this._collaboratorBuilderService.buildCollaboratorForm();
+      this.collaboratorFormGroup =
+        this._collaboratorBuilderService.buildCollaboratorForm();
     }
   }
 
@@ -167,12 +174,16 @@ export class CollaboratorModalComponent {
     switch (this.selectedDocumentType) {
       case 1: // DNI
         this.maxLengthDocumentType = 8;
-        this.controlsForm['documentNumber'].setValidators([Validators.pattern("^[0-9]{8}")]);
+        this.controlsForm['documentNumber'].setValidators([
+          Validators.pattern('^[0-9]{8}'),
+        ]);
         break;
-      case 2:  // PASAPORTE
-      case 3:  // C.E
-      this.maxLengthDocumentType = 12;
-      this.controlsForm['documentNumber'].setValidators([Validators.pattern("^[a-zA-Z0-9]{12}")]);
+      case 2: // PASAPORTE
+      case 3: // C.E
+        this.maxLengthDocumentType = 12;
+        this.controlsForm['documentNumber'].setValidators([
+          Validators.pattern('^[a-zA-Z0-9]{12}'),
+        ]);
         break;
     }
   }

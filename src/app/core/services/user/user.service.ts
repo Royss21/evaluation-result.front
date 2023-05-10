@@ -8,17 +8,18 @@ import { IPaginatedResponse } from '@core/interfaces/paginated-response.interfac
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-
   private _url = `${environment.serverUriApi}/user`;
 
-  constructor(private _apiService: ApiService) { }
+  constructor(private _apiService: ApiService) {}
 
   getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<IUser>> {
-    return this._apiService
-      .get<IPaginatedResponse<IUser>>(`${this._url}/paging`, paginatedFilter);
+    return this._apiService.get<IPaginatedResponse<IUser>>(
+      `${this._url}/paging`,
+      paginatedFilter
+    );
   }
 
   create(request: IUser): Observable<IUser> {
@@ -30,8 +31,6 @@ export class UserService {
   }
 
   delete(id: string): Observable<boolean> {
-    return this._apiService
-        .delete<boolean>(`${this._url}/${id}`);
+    return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
-
 }

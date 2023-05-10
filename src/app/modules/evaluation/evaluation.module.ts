@@ -18,7 +18,6 @@ import { ReviewStageListComponent } from './pages/review-stage-list/review-stage
 import { ComponentsModule } from '@components/components.module';
 import { EvaluationHistoryComponent } from './pages/evaluation-history/evaluation-history.component';
 
-
 @NgModule({
   declarations: [
     EvaluationSectionComponent,
@@ -31,7 +30,7 @@ import { EvaluationHistoryComponent } from './pages/evaluation-history/evaluatio
     EvaluationCurrentCardComponent,
     CardComponentComponent,
     ReviewStageListComponent,
-    EvaluationHistoryComponent
+    EvaluationHistoryComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +38,7 @@ import { EvaluationHistoryComponent } from './pages/evaluation-history/evaluatio
     SharedModule,
     CoreModule,
     ComponentsModule,
-    EvaluationRouting
-  ]
+    EvaluationRouting,
+  ],
 })
-export class EvaluationModule { }
+export class EvaluationModule {}

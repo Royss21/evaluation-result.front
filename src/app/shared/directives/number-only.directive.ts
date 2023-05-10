@@ -1,12 +1,17 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Output,
+} from '@angular/core';
 @Directive({
-  selector: '[NumbersOnly]'
+  selector: '[NumbersOnly]',
 })
 export class NumberOnlyDirective {
-
   @Output() numberChanged = new EventEmitter<number>();
 
-  constructor(private _el: ElementRef) { }
+  constructor(private _el: ElementRef) {}
 
   @HostListener('input', ['$event']) onChange(event: any) {
     const initalValue = this._el.nativeElement.value;
@@ -15,5 +20,4 @@ export class NumberOnlyDirective {
       this.numberChanged.emit(initalValue);
     }
   }
-
 }

@@ -4,10 +4,8 @@ import { ICollaboratorInformation } from '@core/interfaces/collaborator-informat
 @Component({
   selector: 'app-info-collaborator',
   templateUrl: './info-collaborator.component.html',
-  styleUrls: ['./info-collaborator.component.scss']
+  styleUrls: ['./info-collaborator.component.scss'],
 })
 export class InfoCollaboratorComponent {
-
   @Input() infoCollaborator: ICollaboratorInformation | null = null;
-
 }

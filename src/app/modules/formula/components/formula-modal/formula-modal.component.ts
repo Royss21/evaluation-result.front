@@ -1,7 +1,11 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { FormulaText } from '@modules/formula/helpers/formula.helper';
@@ -17,14 +21,13 @@ import { IParameterRangeWithValues } from '@modules/parameter-range/interfaces/p
 @Component({
   selector: 'app-formula-modal',
   templateUrl: './formula-modal.component.html',
-  styleUrls: ['./formula-modal.component.scss']
+  styleUrls: ['./formula-modal.component.scss'],
 })
 export class FormulaModalComponent implements OnInit {
-
-  private isCloseAfterSave: boolean = false;
+  private isCloseAfterSave = false;
 
   formulaFormGroup: FormGroup;
-  modalTitle: string = '';
+  modalTitle = '';
   parametersConfigurated: IParameterRangeWithValues[] = [];
 
   constructor(
@@ -36,7 +39,6 @@ export class FormulaModalComponent implements OnInit {
     public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: IFormula
   ) {
-
     this.modalTitle = data ? FormulaText.modalUdpate : FormulaText.modalCreate;
     this.formulaFormGroup = _formulaBuilderService.buildFormulaForm(data);
   }
@@ -46,17 +48,19 @@ export class FormulaModalComponent implements OnInit {
   }
 
   private save(formula: IFormula): void {
-    if(!formula.id)
-      this._formulaService.create(formula).subscribe(() => this.showConfirmMessage())
+    if (!formula.id)
+      this._formulaService
+        .create(formula)
+        .subscribe(() => this.showConfirmMessage());
     else
-      this._formulaService.update(formula).subscribe(() => this.showConfirmMessage())
+      this._formulaService
+        .update(formula)
+        .subscribe(() => this.showConfirmMessage());
   }
 
-  private closeOrReset(): void{
-
-    if(this.isCloseAfterSave)
-      this.closeModal();
-    else{
+  private closeOrReset(): void {
+    if (this.isCloseAfterSave) this.closeModal();
+    else {
       this.formulaFormGroup.reset();
       this.formulaFormGroup = this._formulaBuilderService.buildFormulaForm();
     }
@@ -66,7 +70,7 @@ export class FormulaModalComponent implements OnInit {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -74,82 +78,75 @@ export class FormulaModalComponent implements OnInit {
     });
   }
 
-  private notifyCopy(){
-    this._snackBar.open('Copiado','', {
+  private notifyCopy() {
+    this._snackBar.open('Copiado', '', {
       horizontalPosition: 'end',
       verticalPosition: 'bottom',
-      duration: 1000
+      duration: 1000,
     });
   }
 
-  private _returnCommaIntermediate(restoQuery : string) {
-      const delimitador = restoQuery.includes(",") ? ',' : ';';
-      let contabilizarParentesisEntrada = 0;
-      let contabilizarParentesisSalida = 0;
-      for (let i = 1; i < restoQuery.length; i++) {
-          if (restoQuery.startsWith("SI") || restoQuery.startsWith("Y")) {
-              if (restoQuery[i] === '(')
-                  contabilizarParentesisEntrada++;
-              if (restoQuery[i] === ')')
-                  contabilizarParentesisSalida++;
-              if (contabilizarParentesisSalida >= contabilizarParentesisEntrada)
-                  return i + 1;
-          }
-          else
-              return restoQuery.indexOf(delimitador);
-      }
+  private _returnCommaIntermediate(restoQuery: string) {
+    const delimitador = restoQuery.includes(',') ? ',' : ';';
+    let contabilizarParentesisEntrada = 0;
+    let contabilizarParentesisSalida = 0;
+    for (let i = 1; i < restoQuery.length; i++) {
+      if (restoQuery.startsWith('SI') || restoQuery.startsWith('Y')) {
+        if (restoQuery[i] === '(') contabilizarParentesisEntrada++;
+        if (restoQuery[i] === ')') contabilizarParentesisSalida++;
+        if (contabilizarParentesisSalida >= contabilizarParentesisEntrada)
+          return i + 1;
+      } else return restoQuery.indexOf(delimitador);
+    }
 
-      return 0;
+    return 0;
   }
 
-  private _replaceConditionals(query :string) {
-      //const { retornarComaIntermedio } = configurar_configuraciones.funciones;
-      let listaCaracteresFuncion = [];
-      let posicionComas = [];
-      for (let i = 0; i < query.length; i++) {
-          listaCaracteresFuncion.push(query[i])
-          if (query[i] === 'Y') {
-              const caracteresFaltantes = query.substring(i + 2, query.length)
-              const indiceRetorno = this._returnCommaIntermediate(caracteresFaltantes)
-              posicionComas.push((i + 2) + (indiceRetorno))
-          }
+  private _replaceConditionals(query: string) {
+    //const { retornarComaIntermedio } = configurar_configuraciones.funciones;
+    const listaCaracteresFuncion = [];
+    const posicionComas = [];
+    for (let i = 0; i < query.length; i++) {
+      listaCaracteresFuncion.push(query[i]);
+      if (query[i] === 'Y') {
+        const caracteresFaltantes = query.substring(i + 2, query.length);
+        const indiceRetorno =
+          this._returnCommaIntermediate(caracteresFaltantes);
+        posicionComas.push(i + 2 + indiceRetorno);
       }
-      for (let posicion of posicionComas) {
-          listaCaracteresFuncion[posicion] = " AND "
-      }
-      let dato = listaCaracteresFuncion.join("");
-      dato = dato.replace(/SI/g, "IIF");
-      dato = dato.replace(/Y/g, "");
-      dato = dato.replace(/;/g, ",");
-      dato = dato.replace(/\+/g, "");
-      dato = dato.replace(/-/g, "");
+    }
+    for (const posicion of posicionComas) {
+      listaCaracteresFuncion[posicion] = ' AND ';
+    }
+    let dato = listaCaracteresFuncion.join('');
+    dato = dato.replace(/SI/g, 'IIF');
+    dato = dato.replace(/Y/g, '');
+    dato = dato.replace(/;/g, ',');
+    dato = dato.replace(/\+/g, '');
+    dato = dato.replace(/-/g, '');
 
-
-      return dato;
+    return dato;
   }
 
   ngOnInit(): void {
-    this._parameterRangeService.getAllWithValues()
-      .subscribe(data => {
-        this.parametersConfigurated = data;
-      })
+    this._parameterRangeService.getAllWithValues().subscribe((data) => {
+      this.parametersConfigurated = data;
+    });
   }
 
   closeModal(): void {
     this._modalRef.close();
   }
 
-  copyNameValue(nameValue: string){
+  copyNameValue(nameValue: string) {
     navigator.clipboard.writeText(nameValue);
     this.notifyCopy();
   }
 
-  confirmSave(isClose: boolean = true){
-
+  confirmSave(isClose = true) {
     CustomValidations.marcarFormGroupTouched(this.formulaFormGroup);
 
-    if(this.formulaFormGroup.invalid)
-      return;
+    if (this.formulaFormGroup.invalid) return;
 
     this.isCloseAfterSave = isClose;
 
@@ -159,13 +156,11 @@ export class FormulaModalComponent implements OnInit {
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(formula);
+      if (result) this.save(formula);
     });
   }
-
 }

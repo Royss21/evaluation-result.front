@@ -1,4 +1,4 @@
-export interface IParameterRangeValue{
-    id?: string;
-    name: string;
+export interface IParameterRangeValue {
+  id?: string;
+  name: string;
 }

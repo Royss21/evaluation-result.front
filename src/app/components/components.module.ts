@@ -17,20 +17,16 @@ import { InfoCollaboratorComponent } from './info-collaborator/info-collaborator
     UploadFileComponent,
     CardOptionComponent,
     StatusChipComponent,
-    InfoCollaboratorComponent
+    InfoCollaboratorComponent,
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule
-  ],
+  imports: [CommonModule, SharedModule, RouterModule],
   exports: [
     TableComponent,
     SearchGlobalComponent,
     UploadFileComponent,
     CardOptionComponent,
     StatusChipComponent,
-    InfoCollaboratorComponent
-  ]
+    InfoCollaboratorComponent,
+  ],
 })
-export class ComponentsModule { }
+export class ComponentsModule {}

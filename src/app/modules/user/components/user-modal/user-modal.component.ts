@@ -1,6 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { IRole } from '@auth/interfaces/roles.interface';
@@ -16,16 +20,15 @@ import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.c
 @Component({
   selector: 'app-user-modal',
   templateUrl: './user-modal.component.html',
-  styleUrls: ['./user-modal.component.scss']
+  styleUrls: ['./user-modal.component.scss'],
 })
 export class UserModalComponent {
-
-  private isCloseAfterSave: boolean = false;
+  private isCloseAfterSave = false;
 
   public roleList: IRole[];
   public roles = new FormControl();
   public userFormGroup: FormGroup;
-  public readonlyPassword: boolean = false;
+  public readonlyPassword = false;
   public modalTitle: string = UserHelper.titleActionText.modalCreate;
 
   constructor(
@@ -48,9 +51,9 @@ export class UserModalComponent {
   }
 
   private _getRoles(): void {
-    this._roleService.getAll().subscribe(role => {
+    this._roleService.getAll().subscribe((role) => {
       this.roleList = role;
-    })
+    });
   }
 
   get controlsForm(): { [key: string]: AbstractControl } {
@@ -58,17 +61,15 @@ export class UserModalComponent {
   }
 
   private save(user: IUser): void {
-    if(!user.id)
-      this._userService.create(user).subscribe(() => this.showConfirmMessage())
+    if (!user.id)
+      this._userService.create(user).subscribe(() => this.showConfirmMessage());
     else
-      this._userService.update(user).subscribe(() => this.showConfirmMessage())
+      this._userService.update(user).subscribe(() => this.showConfirmMessage());
   }
 
-  private closeOrReset(): void{
-
-    if(this.isCloseAfterSave)
-      this.closeModal();
-    else{
+  private closeOrReset(): void {
+    if (this.isCloseAfterSave) this.closeModal();
+    else {
       this.userFormGroup.reset();
       this.userFormGroup = this._userBuilderService.buildUserForm();
     }
@@ -77,7 +78,7 @@ export class UserModalComponent {
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -89,26 +90,22 @@ export class UserModalComponent {
     this._modalRef.close();
   }
 
-  confirmSave(isClose: boolean = true){
-
+  confirmSave(isClose = true) {
     CustomValidations.marcarFormGroupTouched(this.userFormGroup);
 
-    if(this.userFormGroup.invalid)
-      return;
+    if (this.userFormGroup.invalid) return;
 
     this.isCloseAfterSave = isClose;
 
-    const user: IUser = { ...this.userFormGroup.getRawValue() } ;
+    const user: IUser = { ...this.userFormGroup.getRawValue() };
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(user);
+      if (result) this.save(user);
     });
   }
-
 }

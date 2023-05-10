@@ -1,6 +1,5 @@
 export interface IElementRowTable {
-    columnMatch: string;
-    columnTitle : string;
-    isNotSorted: boolean;
+  columnMatch: string;
+  columnTitle: string;
+  isNotSorted: boolean;
 }
-

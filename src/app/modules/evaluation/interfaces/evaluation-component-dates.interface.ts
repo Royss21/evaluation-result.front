@@ -1,13 +1,10 @@
-
 export interface IEvaluationComponentDates {
-
   name: string;
   weight: number;
   startDate: Date;
   endDate: Date;
-  componentStagesDates: IComponentStagesDates[],
+  componentStagesDates: IComponentStagesDates[];
 }
-
 
 export interface IComponentStagesDates {
   id: number;

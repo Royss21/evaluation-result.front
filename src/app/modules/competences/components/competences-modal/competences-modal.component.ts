@@ -1,6 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { PopupChooseComponent } from '@components/popup-choose/popup-choose.component';
 import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.component';
 import { SubcomponentService } from '@core/services/subcomponent/subcomponent.service';
@@ -13,13 +17,12 @@ import { ISubcomponent } from '@shared/interfaces/subcomponent.interface';
 @Component({
   selector: 'app-competences-modal',
   templateUrl: './competences-modal.component.html',
-  styleUrls: ['./competences-modal.component.scss']
+  styleUrls: ['./competences-modal.component.scss'],
 })
 export class CompetencesModalComponent {
+  private isCloseAfterSave = false;
 
-  private isCloseAfterSave: boolean = false;
-
-  public modalTitle: string = '';
+  public modalTitle = '';
   public competencesFormGroup: FormGroup;
 
   constructor(
@@ -29,10 +32,12 @@ export class CompetencesModalComponent {
     private _modalRef: MatDialogRef<CompetencesModalComponent>,
     private _competencesBuilderService: CompetencesBuilderService
   ) {
-    this.modalTitle = data ? CompetencesHelper.titleActions.modalUdpate : CompetencesHelper.titleActions.modalCreate;
-    this.competencesFormGroup = _competencesBuilderService.buildCompetencesForm(data);
+    this.modalTitle = data
+      ? CompetencesHelper.titleActions.modalUdpate
+      : CompetencesHelper.titleActions.modalCreate;
+    this.competencesFormGroup =
+      _competencesBuilderService.buildCompetencesForm(data);
   }
-
 
   get controlsForm(): { [key: string]: AbstractControl } {
     return this.competencesFormGroup.controls;
@@ -42,19 +47,19 @@ export class CompetencesModalComponent {
     this._modalRef.close();
   }
 
-  private closeOrReset(): void{
-    if(this.isCloseAfterSave)
-      this.closeModal();
-    else{
+  private closeOrReset(): void {
+    if (this.isCloseAfterSave) this.closeModal();
+    else {
       this.competencesFormGroup.reset();
-      this.competencesFormGroup = this._competencesBuilderService.buildCompetencesForm();
+      this.competencesFormGroup =
+        this._competencesBuilderService.buildCompetencesForm();
     }
   }
 
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -63,31 +68,34 @@ export class CompetencesModalComponent {
   }
 
   private save(subcomponent: ISubcomponent): void {
-    if(!subcomponent.id)
-      this._subcomponentService.create(subcomponent).subscribe(() => this.showConfirmMessage())
+    if (!subcomponent.id)
+      this._subcomponentService
+        .create(subcomponent)
+        .subscribe(() => this.showConfirmMessage());
     else
-      this._subcomponentService.update(subcomponent).subscribe(() => this.showConfirmMessage())
+      this._subcomponentService
+        .update(subcomponent)
+        .subscribe(() => this.showConfirmMessage());
   }
 
-  confirmSave(isClose: boolean = true){
+  confirmSave(isClose = true) {
     CustomValidations.marcarFormGroupTouched(this.competencesFormGroup);
 
-    if(this.competencesFormGroup.invalid)
-      return;
+    if (this.competencesFormGroup.invalid) return;
 
     this.isCloseAfterSave = isClose;
 
-    const subComponent: ISubcomponent = { ...this.competencesFormGroup.getRawValue() } ;
+    const subComponent: ISubcomponent = {
+      ...this.competencesFormGroup.getRawValue(),
+    };
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(subComponent);
+      if (result) this.save(subComponent);
     });
   }
-
 }

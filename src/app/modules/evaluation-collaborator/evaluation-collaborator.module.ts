@@ -13,7 +13,6 @@ import { CoreModule } from '@core/core.module';
 import { EvaluatedComponentsComponent } from './components/evaluated-components/evaluated-components.component';
 import { EvaluationApprovalComponent } from './pages/evaluation-approval/evaluation-approval.component';
 
-
 @NgModule({
   declarations: [
     EvaluationCollaboratorListComponent,
@@ -21,7 +20,7 @@ import { EvaluationApprovalComponent } from './pages/evaluation-approval/evaluat
     RegisterCollaboratorModalComponent,
     EvaluationReviewComponent,
     EvaluatedComponentsComponent,
-    EvaluationApprovalComponent
+    EvaluationApprovalComponent,
   ],
   imports: [
     CommonModule,
@@ -29,12 +28,12 @@ import { EvaluationApprovalComponent } from './pages/evaluation-approval/evaluat
     RouterModule,
     SharedModule,
     CoreModule,
-    ComponentsModule
+    ComponentsModule,
   ],
   exports: [
     EvaluationCollaboratorListComponent,
     EvaluationCollaboratorComponent,
-    RegisterCollaboratorModalComponent
-  ]
+    RegisterCollaboratorModalComponent,
+  ],
 })
-export class EvaluationCollaboratorModule { }
+export class EvaluationCollaboratorModule {}

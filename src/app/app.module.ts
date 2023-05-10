@@ -1,7 +1,7 @@
 import { AppRoutingModule } from './app.routing';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { FlexLayoutModule } from "@angular/flex-layout";
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserModule } from '@angular/platform-browser';
 import { registerLocaleData } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -29,7 +29,7 @@ import { CorporateObjectivesComponent } from './modules/corporate-objectives/cor
     PageNotFoundComponent,
     PopupChooseComponent,
     PopupConfirmComponent,
-    CorporateObjectivesComponent
+    CorporateObjectivesComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,16 +39,16 @@ import { CorporateObjectivesComponent } from './modules/corporate-objectives/cor
     NgxMaskModule.forRoot(),
     FlexLayoutModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     {
       provide: LOCALE_ID,
-      useValue: 'es-PE'
+      useValue: 'es-PE',
     },
     {
       provide: MatPaginatorIntl,
-      useValue: getPaginationEs()
+      useValue: getPaginationEs(),
     },
     {
       provide: HTTP_INTERCEPTORS,
@@ -58,18 +58,18 @@ import { CorporateObjectivesComponent } from './modules/corporate-objectives/cor
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
-      multi: true
+      multi: true,
     },
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
       useValue: {
         duration: 3000,
         horizontalPosition: 'center',
-        verticalPosition: 'bottom'
-      }
+        verticalPosition: 'bottom',
+      },
     },
   ],
   entryComponents: [PopupChooseComponent, PopupConfirmComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

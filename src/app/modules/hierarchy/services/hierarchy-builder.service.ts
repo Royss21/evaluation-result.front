@@ -4,11 +4,10 @@ import { IHierarchy } from '@modules/hierarchy/interfaces/hierarchy.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HierarchyBuilderService {
-
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) {}
 
   public buildHierarchyForm(hierarchy: IHierarchy): FormGroup {
     return this._fb.group({
@@ -18,13 +17,10 @@ export class HierarchyBuilderService {
         [
           Validators.required,
           CustomValidations.NotEmpty,
-          Validators.maxLength(100)
-        ]
+          Validators.maxLength(100),
+        ],
       ],
-      levelId: [
-        hierarchy?.levelId || null,
-        [Validators.required]
-      ]
+      levelId: [hierarchy?.levelId || null, [Validators.required]],
     });
   }
 }

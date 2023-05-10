@@ -1,6 +1,15 @@
 import { Component, Inject } from '@angular/core';
-import { AbstractControl, FormArray, FormGroup, FormControl } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  AbstractControl,
+  FormArray,
+  FormGroup,
+  FormControl,
+} from '@angular/forms';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -17,11 +26,10 @@ import { CorporateObjectivesBuilderService } from '@modules/corporate-objectives
 @Component({
   selector: 'app-assign-charge-modal',
   templateUrl: './assign-charge-modal.component.html',
-  styleUrls: ['./assign-charge-modal.component.scss']
+  styleUrls: ['./assign-charge-modal.component.scss'],
 })
 export class AssignChargeModalComponent {
-
-  public modalTitle: string = '';
+  public modalTitle = '';
 
   public chargeForm = new FormControl(null);
   public assignChargeFormGroup: FormGroup;
@@ -31,14 +39,14 @@ export class AssignChargeModalComponent {
     icon: 'warning_amber',
     iconColor: 'color-danger',
     text: 'El cargo seleccionado se encuentra asignado.',
-    buttonLabelAccept: 'Aceptar'
+    buttonLabelAccept: 'Aceptar',
   };
 
   private errorItemPopPup: IPopupConfirm = {
     icon: 'warning_amber',
     iconColor: 'color-danger',
     text: 'El valor de cada porcentaje no debe exceder de 100%.',
-    buttonLabelAccept: 'Aceptar'
+    buttonLabelAccept: 'Aceptar',
   };
 
   constructor(
@@ -51,8 +59,9 @@ export class AssignChargeModalComponent {
     private _corporateObjectivesBuilderService: CorporateObjectivesBuilderService
   ) {
     this._getCharges();
-    this.assignChargeFormGroup = _corporateObjectivesBuilderService.buildSubComponentValueForm();
-    this.modalTitle = `${data.name} - Asignar cargos`
+    this.assignChargeFormGroup =
+      _corporateObjectivesBuilderService.buildSubComponentValueForm();
+    this.modalTitle = `${data.name} - Asignar cargos`;
   }
 
   ngOnInit(): void {
@@ -60,49 +69,60 @@ export class AssignChargeModalComponent {
   }
 
   subcomponentsPUSH(subcomponentValue: ISubcomponentValue) {
-    const fb = this._corporateObjectivesBuilderService.buildItemsSubComponentValueForm(subcomponentValue, this.data.id)
+    const fb =
+      this._corporateObjectivesBuilderService.buildItemsSubComponentValueForm(
+        subcomponentValue,
+        this.data.id
+      );
     this.itemsForm.push(fb);
   }
 
   private _loadSobcomponentsValue(): void {
-    this._subcomponentValueService.getAll(this.data.id).subscribe(resp => {
+    this._subcomponentValueService.getAll(this.data.id).subscribe((resp) => {
       if (resp.length) {
         resp.forEach((subComponent: ISubcomponentValue) => {
-          this.subcomponentsPUSH(subComponent)
+          this.subcomponentsPUSH(subComponent);
         });
       }
     });
   }
 
   private _validateExistCharge(): boolean {
-    return this.itemsForm.controls.find(item => item.get('chargeId')?.value === this.chargeForm.value)?.value;
+    return this.itemsForm.controls.find(
+      (item) => item.get('chargeId')?.value === this.chargeForm.value
+    )?.value;
   }
 
   public addItemSubcomponent(): void {
-
-    if (!this.chargeForm.value)
-      return;
+    if (!this.chargeForm.value) return;
 
     if (this._validateExistCharge()) {
       this._dialog.open(PopupConfirmComponent, {
         data: this.existChargePopPup,
-        autoFocus: false
+        autoFocus: false,
       });
       return;
     }
 
     const item: ISubcomponentValue = {
       chargeId: Number(this.chargeForm.value),
-      chargeName: String(this.chargeList.find(charge => charge.id === this.chargeForm?.value)?.name),
+      chargeName: String(
+        this.chargeList.find((charge) => charge.id === this.chargeForm?.value)
+          ?.name
+      ),
     } as ISubcomponentValue;
 
-    this.itemsForm.push(this._corporateObjectivesBuilderService.buildItemsSubComponentValueForm(item, this.data.id));
+    this.itemsForm.push(
+      this._corporateObjectivesBuilderService.buildItemsSubComponentValueForm(
+        item,
+        this.data.id
+      )
+    );
 
     this.chargeForm.setValue(null);
   }
 
   public deleteItemSubcomponent(pointIndex: number, item: any) {
-
     if (!item.value.id) {
       this.itemsForm.removeAt(pointIndex);
       return;
@@ -116,22 +136,23 @@ export class AssignChargeModalComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) this.delete(String(item.value.id), pointIndex, dialogRef);
     });
-
   }
 
-  private delete(id: string, pointIndex: number, dialogRef: MatDialogRef<PopupChooseComponent, any>): void{
-    this._subcomponentValueService
-      .delete(id)
-      .subscribe(() => {
-        this.itemsForm.removeAt(pointIndex);
-        dialogRef.close();
-        this.showConfirmMessage("El cargo se retiró correctamente.");
-      });
+  private delete(
+    id: string,
+    pointIndex: number,
+    dialogRef: MatDialogRef<PopupChooseComponent, any>
+  ): void {
+    this._subcomponentValueService.delete(id).subscribe(() => {
+      this.itemsForm.removeAt(pointIndex);
+      dialogRef.close();
+      this.showConfirmMessage('El cargo se retiró correctamente.');
+    });
   }
 
   private _getCharges(): void {
-    this._chargeService.getAll().subscribe(charges => {
-      this.chargeList = charges.filter(c =>c.areaId === this.data.areaId);
+    this._chargeService.getAll().subscribe((charges) => {
+      this.chargeList = charges.filter((c) => c.areaId === this.data.areaId);
     });
   }
 
@@ -143,29 +164,41 @@ export class AssignChargeModalComponent {
     return this.assignChargeFormGroup.controls;
   }
 
-  private save(pointIndex: number, subcomponentValue: ISubcomponentValue): void {
+  private save(
+    pointIndex: number,
+    subcomponentValue: ISubcomponentValue
+  ): void {
     subcomponentValue.relativeWeight = subcomponentValue.relativeWeight / 100;
-    subcomponentValue.minimunPercentage = subcomponentValue.minimunPercentage / 100;
-    subcomponentValue.maximunPercentage = subcomponentValue.maximunPercentage / 100;
+    subcomponentValue.minimunPercentage =
+      subcomponentValue.minimunPercentage / 100;
+    subcomponentValue.maximunPercentage =
+      subcomponentValue.maximunPercentage / 100;
 
-    if(!subcomponentValue.id)
-      this._subcomponentValueService.create(subcomponentValue).subscribe((subValue: ISubcomponentValue) => {
-        this.controlsForm['itemSubcomponents'].get([pointIndex])?.get('id')?.setValue(subValue.id);
-        this.controlsForm['itemSubcomponents'].get([pointIndex])?.get('subcomponentId')?.setValue(subValue.subcomponentId);
-        this.showConfirmMessage("El cargo se asignó correctamente.");
-      });
+    if (!subcomponentValue.id)
+      this._subcomponentValueService
+        .create(subcomponentValue)
+        .subscribe((subValue: ISubcomponentValue) => {
+          this.controlsForm['itemSubcomponents']
+            .get([pointIndex])
+            ?.get('id')
+            ?.setValue(subValue.id);
+          this.controlsForm['itemSubcomponents']
+            .get([pointIndex])
+            ?.get('subcomponentId')
+            ?.setValue(subValue.subcomponentId);
+          this.showConfirmMessage('El cargo se asignó correctamente.');
+        });
     else
       this._subcomponentValueService.update(subcomponentValue).subscribe(() => {
-        this.showConfirmMessage("El cargo se editó correctamente.");
+        this.showConfirmMessage('El cargo se editó correctamente.');
       });
   }
 
-
   private showConfirmMessage(message: string): void {
-    this._snackBar.open(message,'ok', {
+    this._snackBar.open(message, 'ok', {
       duration: 2500,
       verticalPosition: 'top',
-      panelClass: ['mat-toolbar', 'mat-primary']
+      panelClass: ['mat-toolbar', 'mat-primary'],
     });
   }
 
@@ -174,32 +207,38 @@ export class AssignChargeModalComponent {
   }
 
   public confirmSave(pointIndex: number, item: any) {
-
     const pRelative = item.get('relativeWeight')?.value;
     const pMinimum = item.get('minimunPercentage')?.value;
     const pMaximum = item.get('maximunPercentage')?.value;
 
-    if (item.get('relativeWeight').status == "INVALID" || item.get('minimunPercentage').status == "INVALID"  || item.get('maximunPercentage').status == "INVALID" ) {
+    if (
+      item.get('relativeWeight').status == 'INVALID' ||
+      item.get('minimunPercentage').status == 'INVALID' ||
+      item.get('maximunPercentage').status == 'INVALID'
+    ) {
       this._dialog.open(PopupConfirmComponent, {
         data: this.errorItemPopPup,
-        autoFocus: false
+        autoFocus: false,
       });
       return;
     }
 
-    if (this._isNullOrEmpty(pRelative) || this._isNullOrEmpty(pMinimum) || this._isNullOrEmpty(pMaximum))
+    if (
+      this._isNullOrEmpty(pRelative) ||
+      this._isNullOrEmpty(pMinimum) ||
+      this._isNullOrEmpty(pMaximum)
+    )
       return;
 
     const assignCharge: ISubcomponentValue = item.value as ISubcomponentValue;
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(pointIndex, assignCharge);
+      if (result) this.save(pointIndex, assignCharge);
     });
   }
 

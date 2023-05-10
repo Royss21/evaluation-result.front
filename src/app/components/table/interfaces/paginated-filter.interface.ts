@@ -1,6 +1,6 @@
-import { TypeOrderEnum } from "../enums/type-order.enum";
+import { TypeOrderEnum } from '../enums/type-order.enum';
 
-export interface IPaginatedFilter{
+export interface IPaginatedFilter {
   start: number;
   rows: number;
   orderColumn: string;

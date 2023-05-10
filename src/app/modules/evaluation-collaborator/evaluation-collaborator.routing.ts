@@ -10,24 +10,24 @@ export const routes: Routes = [
     component: EvaluationCollaboratorComponent,
     children: [
       {
-        path:'',
-        component: EvaluationCollaboratorListComponent
+        path: '',
+        component: EvaluationCollaboratorListComponent,
       },
       {
-        path:':id/review',
-        component: EvaluationReviewComponent
+        path: ':id/review',
+        component: EvaluationReviewComponent,
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
-  imports:[ RouterModule.forChild( routes ) ],
-  exports:[ RouterModule ]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class EvaluationCollaboratorRoutingModule { }
+export class EvaluationCollaboratorRoutingModule {}

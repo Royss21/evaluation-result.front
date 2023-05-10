@@ -1,6 +1,10 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { LevelService } from '@core/services/level/level.service';
@@ -16,12 +20,11 @@ import { HierarchyBuilderService } from '@modules/hierarchy/services/hierarchy-b
 @Component({
   selector: 'app-hierarchy-modal',
   templateUrl: './hierarchy-modal.component.html',
-  styleUrls: ['./hierarchy-modal.component.scss']
+  styleUrls: ['./hierarchy-modal.component.scss'],
 })
-export class HierarchyModalComponent{
-
+export class HierarchyModalComponent {
   public hierarchyFormGroup: FormGroup;
-  private isCloseAfterSave: boolean = false;
+  private isCloseAfterSave = false;
   public modalTitle: string = HierarchyHelper.titleActionText.modalCreate;
 
   public levelList: ILevel[] = [];
@@ -42,27 +45,29 @@ export class HierarchyModalComponent{
   private _getLevels(): void {
     this._levelService.getAll().subscribe((res: ILevel[]) => {
       this.levelList = res;
-    })
+    });
   }
 
-  private closeOrReset(): void{
-    if(this.isCloseAfterSave)
-      this.closeModal();
-    else
-      this.hierarchyFormGroup.reset();
+  private closeOrReset(): void {
+    if (this.isCloseAfterSave) this.closeModal();
+    else this.hierarchyFormGroup.reset();
   }
 
   private save(hierarchy: IHierarchy): void {
-    if(!hierarchy.id)
-      this._hierarchyService.create(hierarchy).subscribe(() => this.showConfirmMessage())
+    if (!hierarchy.id)
+      this._hierarchyService
+        .create(hierarchy)
+        .subscribe(() => this.showConfirmMessage());
     else
-      this._hierarchyService.update(hierarchy).subscribe(() => this.showConfirmMessage())
+      this._hierarchyService
+        .update(hierarchy)
+        .subscribe(() => this.showConfirmMessage());
   }
 
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -74,30 +79,26 @@ export class HierarchyModalComponent{
     return this.hierarchyFormGroup.controls;
   }
 
-  confirmSave(isClose: boolean = true){
-
+  confirmSave(isClose = true) {
     CustomValidations.marcarFormGroupTouched(this.hierarchyFormGroup);
 
-    if(this.hierarchyFormGroup.invalid)
-      return;
+    if (this.hierarchyFormGroup.invalid) return;
 
     this.isCloseAfterSave = isClose;
 
-    const hierarchy: IHierarchy = { ...this.hierarchyFormGroup.getRawValue() } ;
+    const hierarchy: IHierarchy = { ...this.hierarchyFormGroup.getRawValue() };
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(hierarchy);
+      if (result) this.save(hierarchy);
     });
   }
 
   closeModal(): void {
     this._modalRef.close();
   }
-
 }

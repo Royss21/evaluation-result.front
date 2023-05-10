@@ -11,20 +11,19 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: AreaListComponent
+        component: AreaListComponent,
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AreaRoutingModule { }
+export class AreaRoutingModule {}

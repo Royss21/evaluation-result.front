@@ -1,4 +1,4 @@
-export enum TypeImportLeader{
+export enum TypeImportLeader {
   areaObjectives,
-  competencies
+  competencies,
 }

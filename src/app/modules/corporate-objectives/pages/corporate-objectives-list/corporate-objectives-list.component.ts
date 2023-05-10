@@ -16,10 +16,9 @@ import { CorporateObjectivesModalComponent } from '@modules/corporate-objectives
 @Component({
   selector: 'app-corporate-objectives-list',
   templateUrl: './corporate-objectives-list.component.html',
-  styleUrls: ['./corporate-objectives-list.component.scss']
+  styleUrls: ['./corporate-objectives-list.component.scss'],
 })
 export class CorporateObjectivesListComponent {
-
   private unsubscribe$ = new Subject<any>();
 
   corporateObjectivesPaginated$: Observable<any>;
@@ -31,11 +30,12 @@ export class CorporateObjectivesListComponent {
 
   constructor(
     public _dialog: MatDialog,
-    private _subcomponentService: SubcomponentService,
-  ){
+    private _subcomponentService: SubcomponentService
+  ) {
     this.corporateObjectivesPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
-    this.corporateObjectivesPaginated$ = this.corporateObjectivesPaginatedBehavior.asObservable();
+    this.corporateObjectivesPaginated$ =
+      this.corporateObjectivesPaginatedBehavior.asObservable();
     this.paginated$ = this.paginatedBehavior.asObservable();
     this.columnsTable = CorporateObjectivesHelper.columnsTable;
   }
@@ -45,48 +45,53 @@ export class CorporateObjectivesListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: ISubcomponentFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._subcomponentService.getPaginated({ ...paginatedFilter, componentId: ConstantsGeneral.components.corporateObjectives })
-            .subscribe(paginated => this.corporateObjectivesPaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: ISubcomponentFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._subcomponentService
+          .getPaginated({
+            ...paginatedFilter,
+            componentId: ConstantsGeneral.components.corporateObjectives,
+          })
+          .subscribe((paginated) =>
+            this.corporateObjectivesPaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
   private openModal(typeModal: number, subcomponent?: ISubcomponent): void {
-
-    const modal: any = typeModal === 1 ? CorporateObjectivesModalComponent : AssignChargeModalComponent;
-    const widthModal = typeModal === 1 ? ConstantsGeneral.lgModal : ConstantsGeneral.xlModal;
+    const modal: any =
+      typeModal === 1
+        ? CorporateObjectivesModalComponent
+        : AssignChargeModalComponent;
+    const widthModal =
+      typeModal === 1 ? ConstantsGeneral.lgModal : ConstantsGeneral.xlModal;
 
     const modalcorporateObjectives = this._dialog.open(modal, {
       width: widthModal,
       disableClose: true,
-      data: subcomponent
+      data: subcomponent,
     });
 
-    modalcorporateObjectives.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    modalcorporateObjectives.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
-  private delete(id:number): void{
-    this._subcomponentService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
+  private delete(id: number): void {
+    this._subcomponentService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
-  public create(): void{
-    this.openModal( 1);
+  public create(): void {
+    this.openModal(1);
   }
 
-  public update(subcomponent: ISubcomponent): void{
-    this.openModal(1, subcomponent );
+  public update(subcomponent: ISubcomponent): void {
+    this.openModal(1, subcomponent);
   }
 
   public assign(subcomponent: ISubcomponent): void {
@@ -108,5 +113,4 @@ export class CorporateObjectivesListComponent {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

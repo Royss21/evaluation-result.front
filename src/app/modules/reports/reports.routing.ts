@@ -10,27 +10,33 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ReportsOptionComponent
+        component: ReportsOptionComponent,
       },
       {
-        path:'final-exam',
-        loadChildren: () => import('../final-exam-report/final-exam-report.module').then( m => m.FinalExamReportModule )
+        path: 'final-exam',
+        loadChildren: () =>
+          import('../final-exam-report/final-exam-report.module').then(
+            (m) => m.FinalExamReportModule
+          ),
       },
       {
-        path:'exam-progress',
-        loadChildren: () => import('../exam-progress-report/exam-progress-report.module').then( m => m.ExamProgressReportModule )
+        path: 'exam-progress',
+        loadChildren: () =>
+          import('../exam-progress-report/exam-progress-report.module').then(
+            (m) => m.ExamProgressReportModule
+          ),
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ReportsRouting { }
+export class ReportsRouting {}

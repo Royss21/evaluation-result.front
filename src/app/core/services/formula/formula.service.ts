@@ -6,15 +6,12 @@ import { environment } from 'src/environments/environment';
 import { ApiService } from '../api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FormulaService {
-
   private controller = 'formula';
   private _url = `${environment.serverUriApi}/${this.controller}`;
-  constructor(
-    private _apiService: ApiService
-   ) { }
+  constructor(private _apiService: ApiService) {}
 
   getById(id: number): Observable<IFormula> {
     const url = `${this.controller}/${id}`;
@@ -34,17 +31,19 @@ export class FormulaService {
   }
 
   delete(id: string): Observable<boolean> {
-    return this._apiService
-        .delete<boolean>(`${this._url}/${id}`);
+    return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
 
   validAssigned(id: string): Observable<boolean> {
-    return this._apiService
-        .get<boolean>(`${this._url}/validate-assigned/${id}`);
+    return this._apiService.get<boolean>(
+      `${this._url}/validate-assigned/${id}`
+    );
   }
 
   getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<IFormula>> {
-     return this._apiService
-         .get<IPaginatedResponse<IFormula>>(`${this._url}/paging`, paginatedFilter);
+    return this._apiService.get<IPaginatedResponse<IFormula>>(
+      `${this._url}/paging`,
+      paginatedFilter
+    );
   }
 }

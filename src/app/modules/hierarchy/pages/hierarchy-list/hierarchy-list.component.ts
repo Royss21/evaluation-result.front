@@ -13,10 +13,9 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 @Component({
   selector: 'app-hierarchy-list',
   templateUrl: './hierarchy-list.component.html',
-  styleUrls: ['./hierarchy-list.component.scss']
+  styleUrls: ['./hierarchy-list.component.scss'],
 })
 export class HierarchyListComponent {
-
   public title: string = HierarchyHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
 
@@ -29,7 +28,7 @@ export class HierarchyListComponent {
 
   constructor(
     public _dialog: MatDialog,
-    private _hierarchyService: HierarchyService,
+    private _hierarchyService: HierarchyService
   ) {
     this.hierarchyPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
@@ -43,40 +42,38 @@ export class HierarchyListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._hierarchyService.getPaginated(paginatedFilter)
-            .subscribe(paginated => this.hierarchyPaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._hierarchyService
+          .getPaginated(paginatedFilter)
+          .subscribe((paginated) =>
+            this.hierarchyPaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
   private openModal(hierarchy?: IHierarchy): void {
-
     const modalHierarchy = this._dialog.open(HierarchyModalComponent, {
       disableClose: true,
       data: hierarchy,
-      width: ConstantsGeneral.mdModal
+      width: ConstantsGeneral.mdModal,
     });
 
-    modalHierarchy.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    modalHierarchy.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
-  private delete(id: number): void{
-    this._hierarchyService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
+  private delete(id: number): void {
+    this._hierarchyService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
-  createHierarchy(): void{
+  createHierarchy(): void {
     this.openModal();
   }
 
@@ -99,5 +96,4 @@ export class HierarchyListComponent {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

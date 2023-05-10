@@ -7,13 +7,15 @@ import { IPopupChoose } from '../popup-interface';
   selector: 'app-popup-choose',
   templateUrl: './popup-choose.component.html',
   styleUrls: ['./popup-choose.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class PopupChooseComponent {
-
-  constructor(public dialogRef: MatDialogRef<any>, @Inject(MAT_DIALOG_DATA) public data: IPopupChoose) { }
+  constructor(
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: IPopupChoose
+  ) {}
 
   goConfirm() {
-    this.dialogRef.close(true)
+    this.dialogRef.close(true);
   }
 }

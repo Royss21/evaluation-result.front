@@ -7,40 +7,36 @@ import { ConstantsGeneral } from '@shared/constants';
 @Component({
   selector: 'app-card-component',
   templateUrl: './card-component.component.html',
-  styleUrls: ['./card-component.component.scss']
+  styleUrls: ['./card-component.component.scss'],
 })
 export class CardComponentComponent {
-
-  @Input() titleComponent: String = "";
+  @Input() titleComponent = '';
   @Input() infoComponent: IComponentsRangeDate | null;
-  @Input() isEnable: boolean = false;
-  @Input() isActive: boolean = false;
+  @Input() isEnable = false;
+  @Input() isActive = false;
   @Output() emitNavigate = new EventEmitter<number>();
 
-
   leaderFlag: ICollaboratorLeaderEvaluate;
-  constructor(public _evaluationBehavior: EvaluationBehaviorsService){}
+  constructor(public _evaluationBehavior: EvaluationBehaviorsService) {}
 
-  ngOnInit(){
-    if(localStorage.getItem('collaboratorId')){
-      this._evaluationBehavior.flagLeader$
-          .subscribe(data => {
-            console.log(data)
-            this.leaderFlag = data;
-          });
+  ngOnInit() {
+    if (localStorage.getItem('collaboratorId')) {
+      this._evaluationBehavior.flagLeader$.subscribe((data) => {
+        console.log(data);
+        this.leaderFlag = data;
+      });
     }
   }
 
-
-  onClick(){
+  onClick() {
     this.emitNavigate.emit(this.infoComponent?.componentId || 0);
   }
 
-  enableStage(stageId : number){
-    if(ConstantsGeneral.stages.evaluation === stageId)
-      return this.leaderFlag .isLeaderStageEvaluation;
-    if(ConstantsGeneral.stages.calibration === stageId)
-      return this.leaderFlag .isLeaderStageCalibration;
+  enableStage(stageId: number) {
+    if (ConstantsGeneral.stages.evaluation === stageId)
+      return this.leaderFlag.isLeaderStageEvaluation;
+    if (ConstantsGeneral.stages.calibration === stageId)
+      return this.leaderFlag.isLeaderStageCalibration;
     return true;
   }
 }

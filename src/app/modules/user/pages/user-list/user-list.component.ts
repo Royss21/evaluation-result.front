@@ -13,10 +13,9 @@ import { UserModalComponent } from '@modules/user/components/user-modal/user-mod
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent {
-
   public title = UserHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
 
@@ -27,10 +26,7 @@ export class UserListComponent {
   columnsTable: IElementRowTable[];
   paginatedFilterCurrent: IPaginatedFilter;
 
-  constructor(
-    public _dialog: MatDialog,
-    private _userService: UserService,
-  ) {
+  constructor(public _dialog: MatDialog, private _userService: UserService) {
     this.userPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
     this.userPaginated$ = this.userPaginatedBehavior.asObservable();
@@ -43,34 +39,33 @@ export class UserListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._userService.getPaginated(paginatedFilter)
-            .subscribe(paginated => this.userPaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._userService
+          .getPaginated(paginatedFilter)
+          .subscribe((paginated) => this.userPaginatedBehavior.next(paginated));
+      }
+    });
   }
 
   private openModal(user?: IUser): void {
     const modalUser = this._dialog.open(UserModalComponent, {
       data: user,
       disableClose: true,
-      width: ConstantsGeneral.xlModal
+      width: ConstantsGeneral.xlModal,
     });
 
-    modalUser.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    modalUser.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
-  createUser(): void{
+  createUser(): void {
     this.openModal();
   }
 
-  updateUser(user: IUser): void{
+  updateUser(user: IUser): void {
     this.openModal(user);
   }
 
@@ -85,18 +80,15 @@ export class UserListComponent {
     });
   }
 
-  private delete(id: string): void{
-    this._userService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
+  private delete(id: string): void {
+    this._userService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

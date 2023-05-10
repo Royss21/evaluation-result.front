@@ -1,8 +1,8 @@
-import { TypeImportLeader } from "@shared/constants/enums-general";
+import { TypeImportLeader } from '@shared/constants/enums-general';
 
-export interface ILeaderImport{  
-  file: any; 
+export interface ILeaderImport {
+  file: any;
   evaluationId: string;
   isToReprocess: boolean;
-  typeImportLeaders: TypeImportLeader 
+  typeImportLeaders: TypeImportLeader;
 }

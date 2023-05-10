@@ -1,7 +1,6 @@
-import { IPaginatedFilter } from "@components/table/interfaces/paginated-filter.interface";
+import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 
-export interface IEvaluationCollaboratorReviewFilter extends IPaginatedFilter{
-
+export interface IEvaluationCollaboratorReviewFilter extends IPaginatedFilter {
   stageId: number;
   evaluationId: string;
   evaluationCollaboratorId: string | null;

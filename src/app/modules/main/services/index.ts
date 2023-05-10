@@ -1,1 +1,1 @@
-export *  from './main-behaviors.service'
+export * from './main-behaviors.service';

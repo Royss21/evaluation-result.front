@@ -5,11 +5,10 @@ import { CustomValidations } from '@shared/helpers/custom-validations';
 import { IGerency } from '@modules/gerency/interfaces/gerency.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GerencyBuilderService {
-
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) {}
 
   public buildGerencyForm(gerency: IGerency): FormGroup {
     return this._fb.group({
@@ -19,9 +18,9 @@ export class GerencyBuilderService {
         [
           Validators.required,
           CustomValidations.NotEmpty,
-          Validators.maxLength(100)
-        ]
+          Validators.maxLength(100),
+        ],
       ],
-    })
+    });
   }
 }

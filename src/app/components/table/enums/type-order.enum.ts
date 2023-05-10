@@ -1,4 +1,4 @@
-export enum TypeOrderEnum{
+export enum TypeOrderEnum {
   Ascendant,
-  Descendant
+  Descendant,
 }

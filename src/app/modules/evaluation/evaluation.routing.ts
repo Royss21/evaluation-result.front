@@ -15,51 +15,60 @@ const routes: Routes = [
     children: [
       {
         path: 'section',
-        component: EvaluationSectionComponent
+        component: EvaluationSectionComponent,
       },
       {
         path: 'create',
-        component: EvaluationAddComponent
+        component: EvaluationAddComponent,
       },
       {
         path: ':id/edit',
-        component: EvaluationAddComponent
+        component: EvaluationAddComponent,
       },
       {
         path: 'history',
-        component: EvaluationHistoryComponent
+        component: EvaluationHistoryComponent,
       },
       {
         path: ':evaluationId/detail',
-        component: EvaluationDetailComponent
+        component: EvaluationDetailComponent,
       },
       {
         path: ':evaluationId/review-stage/:stageId',
-        component: ReviewStageListComponent
+        component: ReviewStageListComponent,
       },
       {
-        path:':evaluationId/leader',
-        loadChildren: () => import('../evaluation-leader/leader.module').then( m => m.LeaderModule )
+        path: ':evaluationId/leader',
+        loadChildren: () =>
+          import('../evaluation-leader/leader.module').then(
+            (m) => m.LeaderModule
+          ),
       },
       {
-        path:':evaluationId/collaborator',
-        loadChildren: () => import('../evaluation-collaborator/evaluation-collaborator.module').then( m => m.EvaluationCollaboratorModule )
+        path: ':evaluationId/collaborator',
+        loadChildren: () =>
+          import(
+            '../evaluation-collaborator/evaluation-collaborator.module'
+          ).then((m) => m.EvaluationCollaboratorModule),
       },
       {
-        path:':evaluationId/evaluate-component/:componentId',
-        loadChildren: () => import('../evaluate-component/evaluate.module').then( m => m.EvaluateComponentModule )
+        path: ':evaluationId/evaluate-component/:componentId',
+        loadChildren: () =>
+          import('../evaluate-component/evaluate.module').then(
+            (m) => m.EvaluateComponentModule
+          ),
       },
       {
-        path:'',
-        redirectTo:'section',
-        pathMatch: 'full'
+        path: '',
+        redirectTo: 'section',
+        pathMatch: 'full',
       },
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class EvaluationRouting { }
+export class EvaluationRouting {}

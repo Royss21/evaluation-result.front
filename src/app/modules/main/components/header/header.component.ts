@@ -5,28 +5,27 @@ import { MainBehaviorsService } from '../../services';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-
-  userName : string = '';
+  userName = '';
 
   constructor(
     private _router: Router,
-    private _mainBehaviorService: MainBehaviorsService,
-  ) { }
+    private _mainBehaviorService: MainBehaviorsService
+  ) {}
 
   ngOnInit(): void {
     this.userName = localStorage.getItem('name') || '';
   }
 
   toggleSideBar() {
-    let sidebar = document.querySelector(".sidebar");
-    sidebar?.classList.toggle("close");
+    const sidebar = document.querySelector('.sidebar');
+    sidebar?.classList.toggle('close');
     this._mainBehaviorService.emitSiderbarToggle();
   }
 
-  logout(){
+  logout() {
     localStorage.clear();
     this._router.navigateByUrl(`/auth`);
   }

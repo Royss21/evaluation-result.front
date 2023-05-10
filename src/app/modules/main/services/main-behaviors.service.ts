@@ -3,11 +3,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { IMenu } from '../interfaces/menu.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MainBehaviorsService {
-
-  private sidebarToggleBehavior: BehaviorSubject<any> = new BehaviorSubject(null);
+  private sidebarToggleBehavior: BehaviorSubject<any> = new BehaviorSubject(
+    null
+  );
   sidebarToggle$: Observable<any>;
 
   private menuBehavior: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -26,19 +27,19 @@ export class MainBehaviorsService {
     this.name$ = this.nameBehavior.asObservable();
   }
 
-  emitSiderbarToggle(){
-    this.sidebarToggleBehavior.next("");
+  emitSiderbarToggle() {
+    this.sidebarToggleBehavior.next('');
   }
 
-  emitMenu(menus: IMenu[]){
+  emitMenu(menus: IMenu[]) {
     this.menuBehavior.next(menus);
   }
 
-  emitRoleName(roleName: string){
+  emitRoleName(roleName: string) {
     this.roleNameBehavior.next(roleName);
   }
 
-  emitName(name: string){
+  emitName(name: string) {
     this.nameBehavior.next(name);
   }
 }

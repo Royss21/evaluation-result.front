@@ -7,11 +7,10 @@ import { ISubcomponent } from '@shared/interfaces/subcomponent.interface';
 import { ISubcomponentValue } from '@shared/interfaces/subcomponent-value.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CorporateObjectivesBuilderService {
-
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) {}
 
   public buildCorporateObjectivesForm(subcomponent?: ISubcomponent): FormGroup {
     return this._fb.group({
@@ -21,56 +20,60 @@ export class CorporateObjectivesBuilderService {
         [
           Validators.required,
           CustomValidations.NotEmpty,
-          Validators.maxLength(100)
-        ]
+          Validators.maxLength(100),
+        ],
       ],
       description: [
         subcomponent?.description || '',
-        [Validators.maxLength(250)]
+        [Validators.maxLength(250)],
       ],
-      areaId:[
-        subcomponent?.areaId || null,
-        [ Validators.required ]
-      ],
-      formulaId:[
-        subcomponent?.formulaId || null,
-        [ Validators.required ]
-      ],
-      componentId: [
-       ConstantsGeneral.components.corporateObjectives
-      ]
+      areaId: [subcomponent?.areaId || null, [Validators.required]],
+      formulaId: [subcomponent?.formulaId || null, [Validators.required]],
+      componentId: [ConstantsGeneral.components.corporateObjectives],
     });
   }
 
   public buildSubComponentValueForm(): FormGroup {
     return this._fb.group({
-      itemSubcomponents: this._fb.array([])
+      itemSubcomponents: this._fb.array([]),
     });
   }
 
-  public buildItemsSubComponentValueForm(subcomponentValue?: ISubcomponentValue, idSubcomponent?: string): FormGroup {
+  public buildItemsSubComponentValueForm(
+    subcomponentValue?: ISubcomponentValue,
+    idSubcomponent?: string
+  ): FormGroup {
     return this._fb.group({
-      id: [ subcomponentValue?.id || null ],
-      subcomponentId: [ idSubcomponent || null ],
-      chargeId: [
-        subcomponentValue?.chargeId || null,
-        [ Validators.required ]
-      ],
-      chargeName: [
-        subcomponentValue?.chargeName || null,
-      ],
+      id: [subcomponentValue?.id || null],
+      subcomponentId: [idSubcomponent || null],
+      chargeId: [subcomponentValue?.chargeId || null, [Validators.required]],
+      chargeName: [subcomponentValue?.chargeName || null],
       relativeWeight: [
-        [(subcomponentValue && (subcomponentValue?.relativeWeight|| 0) * 100)?.toFixed(0)],
-        [ Validators.required, Validators.max(100) ]
+        [
+          (
+            subcomponentValue && (subcomponentValue?.relativeWeight || 0) * 100
+          )?.toFixed(0),
+        ],
+        [Validators.required, Validators.max(100)],
       ],
       minimunPercentage: [
-        [(subcomponentValue && (subcomponentValue?.minimunPercentage|| 0) * 100)?.toFixed(0)],
-        [ Validators.required, Validators.max(100) ]
+        [
+          (
+            subcomponentValue &&
+            (subcomponentValue?.minimunPercentage || 0) * 100
+          )?.toFixed(0),
+        ],
+        [Validators.required, Validators.max(100)],
       ],
       maximunPercentage: [
-        [(subcomponentValue && (subcomponentValue?.maximunPercentage|| 0) * 100)?.toFixed(0)],
-        [ Validators.required, Validators.max(100) ]
-      ]
+        [
+          (
+            subcomponentValue &&
+            (subcomponentValue?.maximunPercentage || 0) * 100
+          )?.toFixed(0),
+        ],
+        [Validators.required, Validators.max(100)],
+      ],
     });
   }
 }

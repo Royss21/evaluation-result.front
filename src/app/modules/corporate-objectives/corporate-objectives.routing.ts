@@ -1,8 +1,8 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import { CorporateObjectivesComponent } from "./corporate-objectives.component";
-import { CorporateObjectivesListComponent } from "./pages/corporate-objectives-list/corporate-objectives-list.component";
+import { CorporateObjectivesComponent } from './corporate-objectives.component';
+import { CorporateObjectivesListComponent } from './pages/corporate-objectives-list/corporate-objectives-list.component';
 
 export const roots: Routes = [
   {
@@ -10,20 +10,20 @@ export const roots: Routes = [
     component: CorporateObjectivesComponent,
     children: [
       {
-        path:'',
-        component: CorporateObjectivesListComponent
+        path: '',
+        component: CorporateObjectivesListComponent,
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
-  imports:[ RouterModule.forChild( roots ) ],
-  exports:[ RouterModule ]
+  imports: [RouterModule.forChild(roots)],
+  exports: [RouterModule],
 })
-export class CorporateObjectivesRoutingModule { }
+export class CorporateObjectivesRoutingModule {}

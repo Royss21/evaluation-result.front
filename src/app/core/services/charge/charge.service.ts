@@ -7,15 +7,12 @@ import { ICharge } from '@modules/charge/interfaces/charge.interface';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChargeService {
+  private _url = `${environment.serverUriApi}/charge`;
 
-  private _url = `${environment.serverUriApi}/charge`
-
-  constructor(
-    private _apiService: ApiService
-  ) { }
+  constructor(private _apiService: ApiService) {}
 
   getAll(): Observable<ICharge[]> {
     return this._apiService.get<ICharge[]>(this._url);
@@ -40,12 +37,13 @@ export class ChargeService {
   }
 
   delete(id: number): Observable<boolean> {
-    return this._apiService
-        .delete<boolean>(`${this._url}/${id}`);
+    return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
 
   getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<ICharge>> {
-     return this._apiService
-         .get<IPaginatedResponse<ICharge>>(`${this._url}/paging`, paginatedFilter);
+    return this._apiService.get<IPaginatedResponse<ICharge>>(
+      `${this._url}/paging`,
+      paginatedFilter
+    );
   }
 }

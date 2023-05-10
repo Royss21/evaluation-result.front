@@ -14,21 +14,20 @@ import { CheckRoleComponent } from '@auth/components/check-role/check-role.compo
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   private _code: string | null;
   private rolesList: IRole[] = [];
 
-  public showUsername: boolean = true;
-  public showPassword: boolean = false;
-  public isViewCode: boolean = false;
-  public isViewLogin: boolean = true;
+  public showUsername = true;
+  public showPassword = false;
+  public isViewCode = false;
+  public isViewLogin = true;
 
   public loginForm: FormGroup;
   public codeForm: FormGroup;
-  private _loginFrom : ILogin;
+  private _loginFrom: ILogin;
 
   constructor(
     public _dialog: MatDialog,
@@ -44,90 +43,99 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
     if (this._code) {
       this.isViewLogin = false;
       this.isViewCode = true;
-      this._authService.loginSessionCollaborator(this._code)
-      .subscribe(token => {
+      this._authService
+        .loginSessionCollaborator(this._code)
+        .subscribe((token) => {
+          localStorage.setItem('token', token.token);
+          localStorage.setItem('refreshToken', token.refreshToken);
+          localStorage.setItem('name', token.name);
+          localStorage.setItem('evaluationId', token.evaluationId);
+          localStorage.setItem('logingCollaborator', '1');
+          localStorage.setItem(
+            'typeViewCollaborator',
+            token.typeViewCollaborator.toString()
+          );
+          localStorage.setItem(
+            'collaboratorId',
+            token.evaluationCollaboratorId
+          );
 
-        localStorage.setItem('token', token.token);
-        localStorage.setItem('refreshToken', token.refreshToken);
-        localStorage.setItem('name', token.name);
-        localStorage.setItem('evaluationId', token.evaluationId);
-        localStorage.setItem('logingCollaborator', "1");
-        localStorage.setItem('typeViewCollaborator', token.typeViewCollaborator.toString());
-        localStorage.setItem('collaboratorId', token.evaluationCollaboratorId);
-
-        this._mainBehaviorService.emitName(token.name);
-          console.log(token)
-        if(ConstantsGeneral.ViewCollaborator.leader == token.typeViewCollaborator)
-        {
-          localStorage.setItem('isLeaderAreaObjetive', token.isLeaderAreaObjetive+"");
-          localStorage.setItem('isLeaderCompetence', token.isLeaderCompetence+"");
-          console.log('aaaaa')
-          this._router.navigateByUrl(`/evaluation/${token.evaluationId}/detail`);
-        }
-        else
-          this._router.navigateByUrl(`/evaluation/${token.evaluationId}/collaborator/${ token.evaluationCollaboratorId}/review`);
-      })
+          this._mainBehaviorService.emitName(token.name);
+          console.log(token);
+          if (
+            ConstantsGeneral.ViewCollaborator.leader ==
+            token.typeViewCollaborator
+          ) {
+            localStorage.setItem(
+              'isLeaderAreaObjetive',
+              String(token.isLeaderAreaObjetive)
+            );
+            localStorage.setItem(
+              'isLeaderCompetence',
+              String(token.isLeaderCompetence)
+            );
+            console.log('aaaaa');
+            this._router.navigateByUrl(
+              `/evaluation/${token.evaluationId}/detail`
+            );
+          } else
+            this._router.navigateByUrl(
+              `/evaluation/${token.evaluationId}/collaborator/${token.evaluationCollaboratorId}/review`
+            );
+        });
     }
   }
 
   public validUser(): void {
+    console.log(this.loginForm);
+    if (this.loginForm.invalid) return;
 
-    console.log(this.loginForm)
-    if(this.loginForm.invalid)
-      return;
-
-    this._authService.validateUser(this.controlsLoginForm['username'].value)
-      .subscribe(resp => {
+    this._authService
+      .validateUser(this.controlsLoginForm['username'].value)
+      .subscribe((resp) => {
         this.rolesList = resp.roles;
 
-        if(this.rolesList.length == 1){
+        if (this.rolesList.length == 1) {
           this.showUsername = false;
           this.showPassword = true;
           this.loginForm.get('roleId')?.setValue(this.rolesList[0].id);
           this.loginForm.get('password')?.setValidators(Validators.required);
           this.loginForm.get('password')?.updateValueAndValidity();
-        }
-        else{
+        } else {
           this._openModal();
         }
-      })
+      });
   }
 
   public login(): void {
+    if (this.loginForm.invalid) return;
 
-    if(this.loginForm.invalid)
-      return;
+    const login = this.loginForm.getRawValue();
+    this._authService.loginSession(login).subscribe((s) => {
+      localStorage.setItem('token', s.token);
+      localStorage.setItem('refreshToken', s.refreshToken);
+      localStorage.setItem('name', s.name);
+      localStorage.setItem('roleName', s.roleName);
+      localStorage.setItem('menus', JSON.stringify(s.menus));
+      localStorage.setItem('logingCollaborator', '0');
 
-    var login = this.loginForm.getRawValue();
-    this._authService.loginSession(login)
-      .subscribe(s => {
+      this._mainBehaviorService.emitMenu(s.menus);
+      this._mainBehaviorService.emitRoleName(s.roleName);
+      this._mainBehaviorService.emitName(s.name);
 
-        localStorage.setItem('token', s.token);
-        localStorage.setItem('refreshToken', s.refreshToken);
-        localStorage.setItem('name', s.name);
-        localStorage.setItem('roleName', s.roleName);
-        localStorage.setItem('menus', JSON.stringify(s.menus));
-        localStorage.setItem('logingCollaborator', "0");
-
-        this._mainBehaviorService.emitMenu(s.menus);
-        this._mainBehaviorService.emitRoleName(s.roleName);
-        this._mainBehaviorService.emitName(s.name);
-
-        this._router.navigateByUrl(`/`);
-      })
+      this._router.navigateByUrl(`/`);
+    });
   }
 
   public loginCode(): void {
-    console.log(this.codeForm)
-    console.log(this.codeForm.getRawValue())
+    console.log(this.codeForm);
+    console.log(this.codeForm.getRawValue());
   }
 
-  return(){
+  return() {
     this.showUsername = true;
     this.showPassword = false;
     this.loginForm.get('roleId')?.setValue(null);
@@ -144,14 +152,13 @@ export class LoginComponent implements OnInit {
       data: this.rolesList,
     });
 
-    modalCheckRol.afterClosed()
-      .subscribe((idRol) => {
-        this.showUsername = false;
-        this.showPassword = true;
-        this.loginForm.get('roleId')?.setValue(idRol);
-        this.loginForm.get('password')?.setValidators(Validators.required);
-        this.loginForm.get('password')?.updateValueAndValidity();
-      });
+    modalCheckRol.afterClosed().subscribe((idRol) => {
+      this.showUsername = false;
+      this.showPassword = true;
+      this.loginForm.get('roleId')?.setValue(idRol);
+      this.loginForm.get('password')?.setValidators(Validators.required);
+      this.loginForm.get('password')?.updateValueAndValidity();
+    });
   }
 
   public get controlsCodeForm(): { [key: string]: AbstractControl } {

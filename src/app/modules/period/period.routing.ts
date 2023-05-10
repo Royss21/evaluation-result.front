@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { PeriodListComponent } from '@modules/period/page/period-list/period-list.component';
 import { PeriodComponent } from './period.component';
 
-
 const routes: Routes = [
   {
     path: '',
@@ -11,19 +10,19 @@ const routes: Routes = [
     children: [
       {
         path: 'list',
-        component: PeriodListComponent
+        component: PeriodListComponent,
       },
       {
-        path:'',
-        redirectTo:'list',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: 'list',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PeriodRouting { }
+export class PeriodRouting {}

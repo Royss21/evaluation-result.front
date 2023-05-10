@@ -1,24 +1,20 @@
-import { IComponentCollaboratorConduct } from "./component-collaborator.interface";
+import { IComponentCollaboratorConduct } from './component-collaborator.interface';
 
-
-
-export interface IComponentCollaboratorEvaluate{
-
+export interface IComponentCollaboratorEvaluate {
   id: string;
-  evaluationComponentId: number,
-  evaluationComponentStageId: number,
-  stageId: number
-  componentId: number,
+  evaluationComponentId: number;
+  evaluationComponentStageId: number;
+  stageId: number;
+  componentId: number;
   comment: string;
-  componentCollaboratorDetailsEvaluate: IComponentCollaboratorDetailEvaluate[]
+  componentCollaboratorDetailsEvaluate: IComponentCollaboratorDetailEvaluate[];
 }
 
-export interface IComponentCollaboratorDetailEvaluate{
-
+export interface IComponentCollaboratorDetailEvaluate {
   id: number;
-  subcomponentName: string,
-  valueResult: number,
-  minimunPercentage: number,
-  maximunPercentage: number,
-  componentCollaboratorConductsEvaluate: IComponentCollaboratorConduct[]
+  subcomponentName: string;
+  valueResult: number;
+  minimunPercentage: number;
+  maximunPercentage: number;
+  componentCollaboratorConductsEvaluate: IComponentCollaboratorConduct[];
 }

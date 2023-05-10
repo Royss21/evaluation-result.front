@@ -9,19 +9,18 @@ import { WeightPerComponentComponent } from './weight-per-component.component';
 import { WeightPerComponentListComponent } from './pages/weight-per-component-list/weight-per-component-list.component';
 import { WeightPerComponentModalComponent } from './components/weight-per-component-modal/weight-per-component-modal.component';
 
-
 @NgModule({
   declarations: [
     WeightPerComponentComponent,
     WeightPerComponentListComponent,
-    WeightPerComponentModalComponent
+    WeightPerComponentModalComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     RouterModule,
     ComponentsModule,
-    WeightPerComponentRouting
-  ]
+    WeightPerComponentRouting,
+  ],
 })
-export class WeightPerComponentModule { }
+export class WeightPerComponentModule {}

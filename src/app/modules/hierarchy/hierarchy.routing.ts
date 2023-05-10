@@ -10,20 +10,20 @@ const routes: Routes = [
     component: HierarchyComponent,
     children: [
       {
-        path:'',
-        component: HierarchyListComponent
+        path: '',
+        component: HierarchyListComponent,
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class HierarchyRoutingModule { }
+export class HierarchyRoutingModule {}

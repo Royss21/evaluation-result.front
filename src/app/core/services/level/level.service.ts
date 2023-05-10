@@ -7,14 +7,11 @@ import { ILevel } from '@modules/level/interfaces/level.interface';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LevelService {
-
   private _url = `${environment.serverUriApi}/level`;
-  constructor(
-    private _apiService: ApiService
-  ) { }
+  constructor(private _apiService: ApiService) {}
 
   getById(id: number): Observable<ILevel> {
     const url = `${this._url}/${id}`;
@@ -34,12 +31,13 @@ export class LevelService {
   }
 
   delete(id: number): Observable<boolean> {
-    return this._apiService
-        .delete<boolean>(`${this._url}/${id}`);
+    return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
 
   getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<ILevel>> {
-     return this._apiService
-         .get<IPaginatedResponse<ILevel>>(`${this._url}/paging`, paginatedFilter);
+    return this._apiService.get<IPaginatedResponse<ILevel>>(
+      `${this._url}/paging`,
+      paginatedFilter
+    );
   }
 }

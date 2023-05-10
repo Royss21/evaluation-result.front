@@ -14,10 +14,9 @@ import { GerencyModalComponent } from '@modules/gerency/components/gerency-modal
 @Component({
   selector: 'app-gerency-list',
   templateUrl: './gerency-list.component.html',
-  styleUrls: ['./gerency-list.component.scss']
+  styleUrls: ['./gerency-list.component.scss'],
 })
 export class GerencyListComponent {
-
   public title = GerencyHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
 
@@ -30,7 +29,7 @@ export class GerencyListComponent {
 
   constructor(
     public _dialog: MatDialog,
-    private _gerencyService: GerencyService,
+    private _gerencyService: GerencyService
   ) {
     this.gerencyPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
@@ -44,35 +43,35 @@ export class GerencyListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._gerencyService.getPaginated(paginatedFilter)
-            .subscribe(paginated => this.gerencyPaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._gerencyService
+          .getPaginated(paginatedFilter)
+          .subscribe((paginated) =>
+            this.gerencyPaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
   private openModal(gerency?: IGerency): void {
-
     const modalGerency = this._dialog.open(GerencyModalComponent, {
       data: gerency,
       disableClose: true,
-      width: ConstantsGeneral.mdModal
+      width: ConstantsGeneral.mdModal,
     });
 
-    modalGerency.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    modalGerency.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
-  createGerency(): void{
+  createGerency(): void {
     this.openModal();
   }
 
-  updateGerency(gerency: IGerency): void{
+  updateGerency(gerency: IGerency): void {
     this.openModal(gerency);
   }
 
@@ -87,18 +86,15 @@ export class GerencyListComponent {
     });
   }
 
-  private delete(id: number): void{
-    this._gerencyService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
+  private delete(id: number): void {
+    this._gerencyService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

@@ -10,28 +10,34 @@ const routes: Routes = [
     component: SecurityComponent,
     children: [
       {
-        path:'',
-        component: SecurityOptionComponent
+        path: '',
+        component: SecurityOptionComponent,
       },
       {
-        path:'audit',
-        loadChildren: () => import('../audit-entity/audit-entity.module').then( m => m.AuditEntityModule )
+        path: 'audit',
+        loadChildren: () =>
+          import('../audit-entity/audit-entity.module').then(
+            (m) => m.AuditEntityModule
+          ),
       },
       {
-        path:'logs-system',
-        loadChildren: () => import('../logs-system/logs-system.module').then( m => m.LogsSystemModule )
+        path: 'logs-system',
+        loadChildren: () =>
+          import('../logs-system/logs-system.module').then(
+            (m) => m.LogsSystemModule
+          ),
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SecurityRouting { }
+export class SecurityRouting {}

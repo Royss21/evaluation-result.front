@@ -10,20 +10,20 @@ const routes: Routes = [
     component: AreaObjectivesComponent,
     children: [
       {
-        path:'',
-        component: AreaObjectivesListComponent
+        path: '',
+        component: AreaObjectivesListComponent,
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AreaObjectivesRouting { }
+export class AreaObjectivesRouting {}

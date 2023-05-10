@@ -14,10 +14,9 @@ import { RoleModalComponent } from '@modules/role/components/role-modal/role-mod
 @Component({
   selector: 'app-role-list',
   templateUrl: './role-list.component.html',
-  styleUrls: ['./role-list.component.scss']
+  styleUrls: ['./role-list.component.scss'],
 })
 export class RoleListComponent {
-
   public title = RoleHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
 
@@ -28,10 +27,7 @@ export class RoleListComponent {
   columnsTable: IElementRowTable[];
   paginatedFilterCurrent: IPaginatedFilter;
 
-  constructor(
-    public _dialog: MatDialog,
-    private _roleService: RoleService,
-  ) {
+  constructor(public _dialog: MatDialog, private _roleService: RoleService) {
     this.rolePaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
     this.rolePaginated$ = this.rolePaginatedBehavior.asObservable();
@@ -44,35 +40,33 @@ export class RoleListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._roleService.getPaginated(paginatedFilter)
-            .subscribe(paginated => this.rolePaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._roleService
+          .getPaginated(paginatedFilter)
+          .subscribe((paginated) => this.rolePaginatedBehavior.next(paginated));
+      }
+    });
   }
 
   private openModal(role?: IRole): void {
-
     const modalRef = this._dialog.open(RoleModalComponent, {
       data: role,
       disableClose: true,
-      width: ConstantsGeneral.mdModal
+      width: ConstantsGeneral.mdModal,
     });
 
-    modalRef.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    modalRef.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
-  createRole(): void{
+  createRole(): void {
     this.openModal();
   }
 
-  updateRole(role: IRole): void{
+  updateRole(role: IRole): void {
     this.openModal(role);
   }
 
@@ -87,18 +81,15 @@ export class RoleListComponent {
     });
   }
 
-  private delete(id: number): void{
-    this._roleService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
+  private delete(id: number): void {
+    this._roleService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

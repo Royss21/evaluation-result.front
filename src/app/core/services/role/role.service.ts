@@ -7,21 +7,24 @@ import { IRole } from '@modules/role/interfaces/role.interface';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
 import { IPaginatedFilter } from '@components/table/interfaces/paginated-filter.interface';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RoleService {
-
   private _url = `${environment.serverUriApi}/role`;
 
-  constructor(private _apiService: ApiService) { }
+  constructor(private _apiService: ApiService) {}
 
   getAll(): Observable<IRole[]> {
     return this._apiService.get<IRole[]>(`${this._url}`);
   }
 
-  getPaginated(paginatedFilter: IPaginatedFilter): Observable<IPaginatedResponse<IRole>> {
-    return this._apiService
-      .get<IPaginatedResponse<IRole>>(`${this._url}/paging`, paginatedFilter);
+  getPaginated(
+    paginatedFilter: IPaginatedFilter
+  ): Observable<IPaginatedResponse<IRole>> {
+    return this._apiService.get<IPaginatedResponse<IRole>>(
+      `${this._url}/paging`,
+      paginatedFilter
+    );
   }
 
   create(request: IRole): Observable<IRole> {
@@ -33,7 +36,6 @@ export class RoleService {
   }
 
   delete(id: number): Observable<boolean> {
-    return this._apiService
-        .delete<boolean>(`${this._url}/${id}`);
+    return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
 }

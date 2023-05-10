@@ -10,7 +10,6 @@ import { AssignedCollaboratorsModalComponent } from './components/assigned-colla
 import { SharedModule } from '@shared/shared.module';
 import { ComponentsModule } from '@components/components.module';
 
-
 @NgModule({
   declarations: [
     LeaderComponent,
@@ -23,7 +22,7 @@ import { ComponentsModule } from '@components/components.module';
     RouterModule,
     LeaderRoutingModule,
     SharedModule,
-    ComponentsModule
-  ]
+    ComponentsModule,
+  ],
 })
-export class LeaderModule { }
+export class LeaderModule {}

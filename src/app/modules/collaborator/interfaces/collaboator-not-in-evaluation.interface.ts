@@ -20,7 +20,7 @@ export interface ICollaborator {
   documentNumber: string;
 }
 
-export interface ICollaboratorNotInEvaluation{
+export interface ICollaboratorNotInEvaluation {
   id: string;
   name: string;
   lastName: string;

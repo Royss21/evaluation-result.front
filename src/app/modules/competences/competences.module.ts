@@ -15,14 +15,14 @@ import { BehaviorsByLevelComponent } from './pages/behaviors-by-level/behaviors-
     CompetencesComponent,
     CompetencesListComponent,
     CompetencesModalComponent,
-    BehaviorsByLevelComponent
+    BehaviorsByLevelComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     SharedModule,
     ComponentsModule,
-    CompetencesRouting
-  ]
+    CompetencesRouting,
+  ],
 })
-export class CompetencesModule { }
+export class CompetencesModule {}

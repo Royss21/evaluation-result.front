@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-charge',
   templateUrl: './charge.component.html',
-  styleUrls: ['./charge.component.scss']
+  styleUrls: ['./charge.component.scss'],
 })
-export class ChargeComponent {
-
-}
+export class ChargeComponent {}

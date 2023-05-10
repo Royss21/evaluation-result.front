@@ -8,15 +8,12 @@ import { IPaginatedResponse } from '@core/interfaces/paginated-response.interfac
 import { ISubcomponentFilter } from '@shared/interfaces/subcomponent-filter.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SubcomponentService {
-
   private _url = `${environment.serverUriApi}/subcomponent`;
 
-  constructor(
-    private _apiService: ApiService
-  ) { }
+  constructor(private _apiService: ApiService) {}
 
   getById(id: number): Observable<ISubcomponent> {
     const url = `${this._url}/${id}`;
@@ -36,12 +33,15 @@ export class SubcomponentService {
   }
 
   delete(id: number): Observable<boolean> {
-    return this._apiService
-        .delete<boolean>(`${this._url}/${id}`);
+    return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
 
-  getPaginated(paginatedFilter: ISubcomponentFilter): Observable<IPaginatedResponse<ISubcomponent>> {
-     return this._apiService
-         .get<IPaginatedResponse<ISubcomponent>>(`${this._url}/paging`, paginatedFilter);
+  getPaginated(
+    paginatedFilter: ISubcomponentFilter
+  ): Observable<IPaginatedResponse<ISubcomponent>> {
+    return this._apiService.get<IPaginatedResponse<ISubcomponent>>(
+      `${this._url}/paging`,
+      paginatedFilter
+    );
   }
 }

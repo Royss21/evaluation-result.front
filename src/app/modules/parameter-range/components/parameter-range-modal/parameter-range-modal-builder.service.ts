@@ -4,11 +4,10 @@ import { IParameterRange } from '@modules/parameter-range/interfaces/parameter-r
 import { CustomValidations } from '@shared/helpers/custom-validations';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ParameterRangeModalBuilderService {
-
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) {}
 
   public buildParameterRangeForm(parameterRange?: IParameterRange): FormGroup {
     return this._fb.group({
@@ -18,13 +17,13 @@ export class ParameterRangeModalBuilderService {
         [
           Validators.required,
           CustomValidations.NotEmpty,
-          Validators.maxLength(100)
-        ]
+          Validators.maxLength(100),
+        ],
       ],
-      description: [ 
-        parameterRange?.description || '', 
-        [Validators.maxLength(200)]
-      ]
+      description: [
+        parameterRange?.description || '',
+        [Validators.maxLength(200)],
+      ],
     });
   }
 }

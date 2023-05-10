@@ -1,6 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { RoleService } from '@core/services/role/role.service';
@@ -14,11 +18,10 @@ import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.c
 @Component({
   selector: 'app-role-modal',
   templateUrl: './role-modal.component.html',
-  styleUrls: ['./role-modal.component.scss']
+  styleUrls: ['./role-modal.component.scss'],
 })
 export class RoleModalComponent {
-
-  private isCloseAfterSave: boolean = false;
+  private isCloseAfterSave = false;
 
   roleFormGroup: FormGroup;
   modalTitle: string = RoleHelper.titleActionText.modalCreate;
@@ -39,24 +42,21 @@ export class RoleModalComponent {
   }
 
   private save(role: IRole): void {
-    if(!role.id)
-      this._roleService.create(role).subscribe(() => this.showConfirmMessage())
+    if (!role.id)
+      this._roleService.create(role).subscribe(() => this.showConfirmMessage());
     else
-      this._roleService.update(role).subscribe(() => this.showConfirmMessage())
+      this._roleService.update(role).subscribe(() => this.showConfirmMessage());
   }
 
-  private closeOrReset(): void{
-
-    if(this.isCloseAfterSave)
-      this.closeModal();
-    else
-      this.roleFormGroup.reset();
+  private closeOrReset(): void {
+    if (this.isCloseAfterSave) this.closeModal();
+    else this.roleFormGroup.reset();
   }
 
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -68,25 +68,22 @@ export class RoleModalComponent {
     this._modalRef.close();
   }
 
-  confirmSave(isClose: boolean = true){
-
+  confirmSave(isClose = true) {
     CustomValidations.marcarFormGroupTouched(this.roleFormGroup);
 
-    if(this.roleFormGroup.invalid)
-      return;
+    if (this.roleFormGroup.invalid) return;
 
     this.isCloseAfterSave = isClose;
 
-    const role: IRole = { ...this.roleFormGroup.getRawValue() } ;
+    const role: IRole = { ...this.roleFormGroup.getRawValue() };
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(role);
+      if (result) this.save(role);
     });
   }
 }

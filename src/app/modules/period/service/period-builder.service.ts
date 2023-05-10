@@ -6,8 +6,7 @@ import { CustomValidations } from '@shared/helpers/custom-validations';
 
 @Injectable({ providedIn: 'root' })
 export class PeriodBuilderService {
-
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) {}
 
   public buildPeriodForm(period?: IPeriod): FormGroup {
     return this._fb.group({
@@ -17,17 +16,11 @@ export class PeriodBuilderService {
         [
           Validators.required,
           CustomValidations.NotEmpty,
-          Validators.maxLength(70)
-        ]
+          Validators.maxLength(70),
+        ],
       ],
-      startDate: [
-        (period?.startDate || null),
-        [Validators.required]
-      ],
-      endDate: [
-        (period?.endDate || null),
-        [Validators.required]
-      ]
+      startDate: [period?.startDate || null, [Validators.required]],
+      endDate: [period?.endDate || null, [Validators.required]],
     });
   }
 }

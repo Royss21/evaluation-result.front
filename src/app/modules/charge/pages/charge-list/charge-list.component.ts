@@ -14,10 +14,9 @@ import { ChargeModalComponent } from '@modules/charge/components/charge-modal/ch
 @Component({
   selector: 'app-charge-list',
   templateUrl: './charge-list.component.html',
-  styleUrls: ['./charge-list.component.scss']
+  styleUrls: ['./charge-list.component.scss'],
 })
 export class ChargeListComponent {
-
   public title: string = ChargeHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
 
@@ -30,8 +29,8 @@ export class ChargeListComponent {
 
   constructor(
     public _dialog: MatDialog,
-    private _chargeService: ChargeService,
-  ){
+    private _chargeService: ChargeService
+  ) {
     this.chargePaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
     this.chargePaginated$ = this.chargePaginatedBehavior.asObservable();
@@ -44,43 +43,42 @@ export class ChargeListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._chargeService.getPaginated(paginatedFilter)
-            .subscribe(paginated => this.chargePaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._chargeService
+          .getPaginated(paginatedFilter)
+          .subscribe((paginated) =>
+            this.chargePaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
   private openModal(charge?: ICharge): void {
     const modalLevel = this._dialog.open(ChargeModalComponent, {
       width: ConstantsGeneral.mdModal,
       disableClose: true,
-      data: charge
+      data: charge,
     });
 
-    modalLevel.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    modalLevel.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
-  private _delete(id:number): void{
-    this._chargeService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
+  private _delete(id: number): void {
+    this._chargeService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
-  create(): void{
+  create(): void {
     this.openModal();
   }
 
-  update(charge: ICharge): void{
+  update(charge: ICharge): void {
     this.openModal(charge);
   }
 
@@ -99,5 +97,4 @@ export class ChargeListComponent {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

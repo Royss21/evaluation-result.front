@@ -3,15 +3,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { CustomValidations } from '@shared/helpers/custom-validations';
-import { IConductByLevel, IConductBySubcomponent } from '@shared/interfaces/conduct.interface';
+import {
+  IConductByLevel,
+  IConductBySubcomponent,
+} from '@shared/interfaces/conduct.interface';
 import { ISubcomponent } from '@shared/interfaces/subcomponent.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CompetencesBuilderService {
-
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) {}
 
   public buildCompetencesForm(subcomponent?: ISubcomponent): FormGroup {
     return this._fb.group({
@@ -21,31 +23,29 @@ export class CompetencesBuilderService {
         [
           Validators.required,
           CustomValidations.NotEmpty,
-          Validators.maxLength(100)
-        ]
+          Validators.maxLength(100),
+        ],
       ],
       description: [
         subcomponent?.description || '',
-        [Validators.maxLength(250)]
+        [Validators.maxLength(250)],
       ],
-      componentId: [
-        ConstantsGeneral.components.competencies
-      ]
+      componentId: [ConstantsGeneral.components.competencies],
     });
   }
 
   public buildConductForm(): FormGroup {
     return this._fb.group({
-      itemsConduct: this._fb.array([])
+      itemsConduct: this._fb.array([]),
     });
   }
 
   public buildItemsConductForm(conduct?: IConductBySubcomponent): FormGroup {
     return this._fb.group({
-      id: [ conduct?.id || null ],
-      levelId: [ conduct?.levelId || null ],
-      description: [ conduct?.description || null, [ Validators.required ] ],
-      subcomponentId: [ conduct?.subcomponentId || null ],
+      id: [conduct?.id || null],
+      levelId: [conduct?.levelId || null],
+      description: [conduct?.description || null, [Validators.required]],
+      subcomponentId: [conduct?.subcomponentId || null],
     });
   }
 }

@@ -1,5 +1,9 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-objective-card',
@@ -9,41 +13,36 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => ObjectiveCardComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class ObjectiveCardComponent implements OnInit, ControlValueAccessor {
-
   @Input() subcomponentName: string;
   @Input() minimunPercentage: number;
   @Input() maximunPercentage: number;
-  @Input() valueCurrent: number = 0;
+  @Input() valueCurrent = 0;
   @Input() isCompleted: boolean;
 
-  objective: { valueInput: number | string | null } = { valueInput: null }
+  objective: { valueInput: number | string | null } = { valueInput: null };
   valueResult: number | string = 0;
 
-  private _onChanged: Function = ( valueResult: number) => {}
-  private _onTouched: Function = () => {}
+  private _onChanged: Function = (valueResult: number) => {};
+  private _onTouched: Function = () => {};
 
-  constructor() {
-
-  }
+  constructor() {}
 
   onChange(value: any) {
-
-    if(value && value.startsWith('.'))
-      value = `0${value}`;
+    if (value && value.startsWith('.')) value = `0${value}`;
 
     this.objective.valueInput = value;
     this._onTouched();
-    this._onChanged?.(!value?  null  : Number(value.toString().replace(',', "")));
+    this._onChanged?.(
+      !value ? null : Number(value.toString().replace(',', ''))
+    );
   }
 
-  writeValue(value: number): void {
-
-  }
+  writeValue(value: number): void {}
 
   registerOnChange(fn: any): void {
     this._onChanged = fn;
@@ -56,5 +55,4 @@ export class ObjectiveCardComponent implements OnInit, ControlValueAccessor {
   ngOnInit(): void {
     this.objective.valueInput = ((this.valueCurrent || 0) * 100).toString();
   }
-
 }

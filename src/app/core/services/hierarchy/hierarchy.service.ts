@@ -7,23 +7,24 @@ import { IHierarchy } from '@modules/hierarchy/interfaces/hierarchy.interface';
 import { IPaginatedResponse } from '@core/interfaces/paginated-response.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HierarchyService {
+  private _url = `${environment.serverUriApi}/hierarchy`;
 
-  private _url = `${environment.serverUriApi}/hierarchy`
-
-  constructor(
-    private _apiService: ApiService
-  ) { }
+  constructor(private _apiService: ApiService) {}
 
   getAll(): Observable<IHierarchy[]> {
     return this._apiService.get<IHierarchy[]>(this._url);
   }
 
-  getPaginated(paginatedFilter: any): Observable<IPaginatedResponse<IHierarchy>> {
-    return this._apiService
-        .get<IPaginatedResponse<IHierarchy>>(`${this._url}/paging`, paginatedFilter);
+  getPaginated(
+    paginatedFilter: any
+  ): Observable<IPaginatedResponse<IHierarchy>> {
+    return this._apiService.get<IPaginatedResponse<IHierarchy>>(
+      `${this._url}/paging`,
+      paginatedFilter
+    );
   }
 
   create(request: IHierarchy): Observable<IHierarchy> {
@@ -35,8 +36,7 @@ export class HierarchyService {
   }
 
   delete(id: number): Observable<boolean> {
-    return this._apiService
-        .delete<boolean>(`${this._url}/${id}`);
+    return this._apiService.delete<boolean>(`${this._url}/${id}`);
   }
 
   getById(id: number): Observable<IHierarchy> {

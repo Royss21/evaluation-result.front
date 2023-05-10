@@ -1,6 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { ConstantsGeneral } from '@shared/constants';
 import { LevelText } from '@modules/level/helpers/level.helper';
@@ -14,14 +18,13 @@ import { PopupConfirmComponent } from '@components/popup-confirm/popup-confirm.c
 @Component({
   selector: 'app-level-modal',
   templateUrl: './level-modal.component.html',
-  styleUrls: ['./level-modal.component.scss']
+  styleUrls: ['./level-modal.component.scss'],
 })
 export class LevelModalComponent {
-
-  private isCloseAfterSave: boolean = false;
+  private isCloseAfterSave = false;
 
   levelFormGroup: FormGroup;
-  modalTitle: string = '';
+  modalTitle = '';
 
   constructor(
     private _levelBuilderService: LevelModalBuilderService,
@@ -30,7 +33,6 @@ export class LevelModalComponent {
     public _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: ILevel
   ) {
-
     this.modalTitle = data ? LevelText.modalUdpate : LevelText.modalCreate;
     this.levelFormGroup = _levelBuilderService.buildLevelForm(data);
   }
@@ -40,17 +42,19 @@ export class LevelModalComponent {
   }
 
   private save(level: ILevel): void {
-    if(!level.id)
-      this._levelService.create(level).subscribe(() => this.showConfirmMessage())
+    if (!level.id)
+      this._levelService
+        .create(level)
+        .subscribe(() => this.showConfirmMessage());
     else
-      this._levelService.update(level).subscribe(() => this.showConfirmMessage())
+      this._levelService
+        .update(level)
+        .subscribe(() => this.showConfirmMessage());
   }
 
-  private closeOrReset(): void{
-
-    if(this.isCloseAfterSave)
-      this.closeModal();
-    else{
+  private closeOrReset(): void {
+    if (this.isCloseAfterSave) this.closeModal();
+    else {
       this.levelFormGroup.reset();
       this.levelFormGroup = this._levelBuilderService.buildLevelForm();
     }
@@ -59,7 +63,7 @@ export class LevelModalComponent {
   private showConfirmMessage(): void {
     const dialogRefConfirm = this._dialog.open(PopupConfirmComponent, {
       data: ConstantsGeneral.confirmCreatePopup,
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRefConfirm.afterClosed().subscribe(() => {
@@ -71,25 +75,22 @@ export class LevelModalComponent {
     this._modalRef.close();
   }
 
-  confirmSave(isClose: boolean = true){
-
+  confirmSave(isClose = true) {
     CustomValidations.marcarFormGroupTouched(this.levelFormGroup);
 
-    if(this.levelFormGroup.invalid)
-      return;
+    if (this.levelFormGroup.invalid) return;
 
     this.isCloseAfterSave = isClose;
 
-    const level: ILevel = { ...this.levelFormGroup.getRawValue() } ;
+    const level: ILevel = { ...this.levelFormGroup.getRawValue() };
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: ConstantsGeneral.chooseData,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        this.save(level);
+      if (result) this.save(level);
     });
   }
 }

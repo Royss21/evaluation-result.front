@@ -5,11 +5,10 @@ import { ILevel } from '@modules/level/interfaces/level.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LevelModalBuilderService {
-
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) {}
 
   public buildLevelForm(level?: ILevel): FormGroup {
     return this._fb.group({
@@ -19,10 +18,10 @@ export class LevelModalBuilderService {
         [
           Validators.required,
           CustomValidations.NotEmpty,
-          Validators.maxLength(100)
-        ]
+          Validators.maxLength(100),
+        ],
       ],
-      description: [ level?.description || '']
+      description: [level?.description || ''],
     });
   }
 }

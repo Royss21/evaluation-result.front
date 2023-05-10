@@ -4,11 +4,10 @@ import { IArea } from '@modules/area/interfaces/area.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AreaBuilderService {
-
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) {}
 
   public buildAreaForm(area?: IArea): FormGroup {
     return this._fb.group({
@@ -18,13 +17,10 @@ export class AreaBuilderService {
         [
           Validators.required,
           CustomValidations.NotEmpty,
-          Validators.maxLength(100)
-        ]
+          Validators.maxLength(100),
+        ],
       ],
-      gerencyId: [
-        area?.gerencyId || null,
-        [Validators.required]
-      ]
-    })
+      gerencyId: [area?.gerencyId || null, [Validators.required]],
+    });
   }
 }

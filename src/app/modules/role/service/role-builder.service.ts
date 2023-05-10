@@ -4,11 +4,10 @@ import { IRole } from '@modules/role/interfaces/role.interface';
 import { CustomValidations } from '@shared/helpers/custom-validations';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RoleBuilderService {
-
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) {}
 
   public buildRoleForm(role?: IRole): FormGroup {
     return this._fb.group({
@@ -18,14 +17,10 @@ export class RoleBuilderService {
         [
           Validators.required,
           CustomValidations.NotEmpty,
-          Validators.maxLength(100)
-        ]
+          Validators.maxLength(100),
+        ],
       ],
-      description: [
-        role?.description || null,
-        Validators.maxLength(400)
-      ]
-    })
+      description: [role?.description || null, Validators.maxLength(400)],
+    });
   }
-
 }

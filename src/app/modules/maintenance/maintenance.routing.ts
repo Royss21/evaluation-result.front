@@ -11,47 +11,58 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: OptionComponent
+        component: OptionComponent,
       },
       {
         path: 'collaborator',
-        loadChildren: () => import('../collaborator/collaborator.module').then(m => m.CollaboratorModule)
+        loadChildren: () =>
+          import('../collaborator/collaborator.module').then(
+            (m) => m.CollaboratorModule
+          ),
       },
       {
         path: 'gerency',
-        loadChildren: () => import('../gerency/gerency.module').then(m => m.GerencyModule)
+        loadChildren: () =>
+          import('../gerency/gerency.module').then((m) => m.GerencyModule),
       },
       {
         path: 'hierarchy',
-        loadChildren: () => import('../hierarchy/hierarchy.module').then(m => m.HierarchyModule)
+        loadChildren: () =>
+          import('../hierarchy/hierarchy.module').then(
+            (m) => m.HierarchyModule
+          ),
       },
       {
         path: 'charge',
-        loadChildren: () => import('../charge/charge.module').then(m => m.ChargeModule)
+        loadChildren: () =>
+          import('../charge/charge.module').then((m) => m.ChargeModule),
       },
       {
         path: 'area',
-        loadChildren: () => import('../area/area.module').then(m => m.AreaModule)
+        loadChildren: () =>
+          import('../area/area.module').then((m) => m.AreaModule),
       },
       {
         path: 'user',
-        loadChildren: () => import('../user/user.module').then(m => m.UserModule)
+        loadChildren: () =>
+          import('../user/user.module').then((m) => m.UserModule),
       },
       {
         path: 'role',
-        loadChildren: () => import('../role/role.module').then(m => m.RoleModule)
+        loadChildren: () =>
+          import('../role/role.module').then((m) => m.RoleModule),
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class MaintenanceRoutingModule { }
+export class MaintenanceRoutingModule {}

@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 // import { Workbook } from 'exceljs/dist/exceljs.min.js';
 import * as FileSaver from 'file-saver';
 
-declare var ExcelJS: any ;
-declare var saveAs: any;
+declare let ExcelJS: any;
+declare let saveAs: any;
 
-const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_TYPE =
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExcelReportService {
-
   alg_deft_c = { vertical: 'middle', horizontal: 'center', wrapText: true };
   alg_deft_v = { vertical: 'middle', horizontal: 'center', wrapText: true };
   fill_deft = {
@@ -29,10 +29,13 @@ export class ExcelReportService {
   workbook: any;
   worksheet: any;
 
-  async downloadExcelReport(nameDoc: any, prmHeader: any, prmKeys: any, values: any[]) {
-
+  async downloadExcelReport(
+    nameDoc: any,
+    prmHeader: any,
+    prmKeys: any,
+    values: any[]
+  ) {
     try {
-
       const cabecera = JSON.parse(JSON.stringify(prmHeader));
       const keys = JSON.parse(JSON.stringify(prmKeys));
       this.workbook = new ExcelJS.Workbook();
@@ -54,7 +57,10 @@ export class ExcelReportService {
         underline: false,
         bold: true,
       };
-      this.worksheet.getCell('A2:D2').alignment = { vertical: 'top', horizontal: 'left' };
+      this.worksheet.getCell('A2:D2').alignment = {
+        vertical: 'top',
+        horizontal: 'left',
+      };
 
       //insertar la columna # => para el correlativo de rows
       keys.unshift({
@@ -70,18 +76,17 @@ export class ExcelReportService {
       const lastCell = this.worksheet.lastRow;
 
       for (const b in cabecera.data) {
-
-        const index = +b + 1;
+        const index = Number(b) + 1;
 
         lastCell.getCell(index).border = cabecera.bor_deft
-                                            ? cabecera.bor_deft
-                                            : this.bor_deft_t;
+          ? cabecera.bor_deft
+          : this.bor_deft_t;
         lastCell.getCell(index).alignment = cabecera.alignment
-                                            ? cabecera.alignment
-                                            : this.alg_deft_c;
+          ? cabecera.alignment
+          : this.alg_deft_c;
         lastCell.getCell(index).fill = cabecera.fill
-                                            ? cabecera.fill
-                                            : this.fill_deft;
+          ? cabecera.fill
+          : this.fill_deft;
         lastCell.getCell(index).height = cabecera.height ? cabecera.height : 40;
         lastCell.getCell(index).font = {
           name: 'Calibri',
@@ -95,21 +100,19 @@ export class ExcelReportService {
       // Agregar el cuerpo con la información enviada
       let count = 1;
       for (const i of values) {
-
         i.number = count;
         this.worksheet.addRow(i);
         const row = this.worksheet.lastRow;
 
         for (const a of keys) {
-
           const hasStyle = i.custom_style ? i.custom_style[a.key] : null;
-          row.getCell(a.key).alignment = a.alignment ? a.alignment : this.alg_deft_v;
+          row.getCell(a.key).alignment = a.alignment
+            ? a.alignment
+            : this.alg_deft_v;
           row.getCell(a.key).border = a.border ? a.border : this.bor_deft_t;
 
-          if (a.fill)
-            row.getCell(a.key).fill = a.fill
-          else
-            row.getCell(a.key).fill = hasStyle ? hasStyle.fill : null;
+          if (a.fill) row.getCell(a.key).fill = a.fill;
+          else row.getCell(a.key).fill = hasStyle ? hasStyle.fill : null;
 
           row.getCell(a.key).numFmt = a.numFmt ? a.numFmt : null;
           row.getCell(a.key).font = {
@@ -143,9 +146,6 @@ export class ExcelReportService {
         .catch((err: any) => {
           console.log(err);
         });
-
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 }

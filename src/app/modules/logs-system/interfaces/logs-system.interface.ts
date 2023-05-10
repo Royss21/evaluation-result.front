@@ -1,11 +1,11 @@
 export interface ILogsSystem {
   id: number;
-  editDate: Date,
+  editDate: Date;
   message: string;
   editUser: string;
   createDate: Date;
   createUser: string;
-  isDeleted: boolean,
+  isDeleted: boolean;
   stackTrace: string;
   typeException: string;
   fullNameService: string;

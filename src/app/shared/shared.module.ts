@@ -1,9 +1,8 @@
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import {MatRadioModule} from '@angular/material/radio';
-import { FlexLayoutModule } from "@angular/flex-layout";
+import { MatRadioModule } from '@angular/material/radio';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -19,7 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -29,7 +28,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  MatRippleModule,
+  MatNativeDateModule,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -73,7 +76,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     SharedDirectivesModule,
     MatButtonToggleModule,
     MatTabsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
   exports: [
     MatButtonModule,
@@ -109,11 +112,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     SharedDirectivesModule,
     MatButtonToggleModule,
     MatTabsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
   providers: [
     MatDatepickerModule,
-    { provide: MAT_DATE_LOCALE, useValue: 'es-PE' }
-  ]
+    { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -11,13 +11,12 @@ import { ComponentsModule } from '@components/components.module';
 import { ParameterValueModalComponent } from './components/parameter-value-modal/parameter-value-modal.component';
 import { NgxMaskModule } from 'ngx-mask';
 
-
 @NgModule({
   declarations: [
     ParameterRangeComponent,
     ParameterRangeListComponent,
     ParameterRangeModalComponent,
-    ParameterValueModalComponent
+    ParameterValueModalComponent,
   ],
   imports: [
     CommonModule,
@@ -25,11 +24,8 @@ import { NgxMaskModule } from 'ngx-mask';
     RouterModule,
     SharedModule,
     ComponentsModule,
-    NgxMaskModule.forChild()
+    NgxMaskModule.forChild(),
   ],
-  exports: [
-    ParameterRangeComponent,
-    ParameterRangeListComponent
-  ]
+  exports: [ParameterRangeComponent, ParameterRangeListComponent],
 })
-export class ParameterRangeModule { }
+export class ParameterRangeModule {}

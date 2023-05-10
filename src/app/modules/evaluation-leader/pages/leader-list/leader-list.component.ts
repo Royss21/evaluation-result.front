@@ -14,12 +14,11 @@ import { AssignedCollaboratorsModalComponent } from '@modules/evaluation-leader/
 @Component({
   selector: 'app-leader-list',
   templateUrl: './leader-list.component.html',
-  styleUrls: ['./leader-list.component.scss']
+  styleUrls: ['./leader-list.component.scss'],
 })
 export class LeaderListComponent implements OnInit {
-
   private unsubscribe$ = new Subject<any>();
-  private _evaluationId: string = '';
+  private _evaluationId = '';
 
   leaderPaginated$: Observable<any>;
   paginated$: Observable<any>;
@@ -32,7 +31,7 @@ export class LeaderListComponent implements OnInit {
     public _dialog: MatDialog,
     private _leaderService: LeaderService,
     private _route: ActivatedRoute
-  ){
+  ) {
     this.leaderPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
     this.leaderPaginated$ = this.leaderPaginatedBehavior.asObservable();
@@ -41,7 +40,9 @@ export class LeaderListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._route.params.subscribe(params => this._evaluationId = params['evaluationId']);
+    this._route.params.subscribe(
+      (params) => (this._evaluationId = params['evaluationId'])
+    );
   }
 
   ngAfterContentInit() {
@@ -49,53 +50,53 @@ export class LeaderListComponent implements OnInit {
   }
 
   private _callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._leaderService.getPaginated(paginatedFilter)
-            .subscribe(paginated => this.leaderPaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._leaderService
+          .getPaginated(paginatedFilter)
+          .subscribe((paginated) =>
+            this.leaderPaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
-  openModalViewAssignedCollaborators(leader: ILeaderPaged){
-
-      const modalLeaderImport = this._dialog.open(AssignedCollaboratorsModalComponent, {
+  openModalViewAssignedCollaborators(leader: ILeaderPaged) {
+    const modalLeaderImport = this._dialog.open(
+      AssignedCollaboratorsModalComponent,
+      {
         disableClose: true,
         data: {
           evaluationLeaderId: leader.id,
-          componentId: leader.componentId
+          componentId: leader.componentId,
         },
         autoFocus: false,
-        restoreFocus: false
-      });
+        restoreFocus: false,
+      }
+    );
 
-      modalLeaderImport.afterClosed()
-        .subscribe(() => {
-          this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        });
+    modalLeaderImport.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
   openModalImport(): void {
-
     const modalLeaderImport = this._dialog.open(LeaderImportModalComponent, {
-    //const modalLeaderImport = this._dialog.open(AssignedCollaboratorsModalComponent, {
+      //const modalLeaderImport = this._dialog.open(AssignedCollaboratorsModalComponent, {
       disableClose: true,
       data: this._evaluationId,
       autoFocus: false,
-      restoreFocus: false
+      restoreFocus: false,
     });
 
-    modalLeaderImport.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    modalLeaderImport.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }

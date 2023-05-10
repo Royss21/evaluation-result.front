@@ -1,31 +1,27 @@
-import { ICollaboratorInformation } from "../../../core/interfaces/collaborator-information.interface";
+import { ICollaboratorInformation } from '../../../core/interfaces/collaborator-information.interface';
 
-export interface IComponentCollaborator extends ICollaboratorInformation{
-
+export interface IComponentCollaborator extends ICollaboratorInformation {
   id: string;
-  evaluationComponentId: number,
-  evaluationComponentStageId: number,
-  stageId: number
-  componentId: number,
+  evaluationComponentId: number;
+  evaluationComponentStageId: number;
+  stageId: number;
+  componentId: number;
   comment: string;
   statusName: string;
   statusId: number;
-  componentCollaboratorDetails: IComponentCollaboratorDetail[]
+  componentCollaboratorDetails: IComponentCollaboratorDetail[];
 }
 
-export interface IComponentCollaboratorDetail{
-
+export interface IComponentCollaboratorDetail {
   id: number;
-  subcomponentName: string,
-  valueResult: number,
-  minimunPercentage: number,
-  maximunPercentage: number,
-  componentCollaboratorConducts: IComponentCollaboratorConduct[]
+  subcomponentName: string;
+  valueResult: number;
+  minimunPercentage: number;
+  maximunPercentage: number;
+  componentCollaboratorConducts: IComponentCollaboratorConduct[];
 }
 
-
-export interface IComponentCollaboratorConduct{
-
+export interface IComponentCollaboratorConduct {
   id: number;
   pointValue: 0;
   pointValueCalibrated: 0;

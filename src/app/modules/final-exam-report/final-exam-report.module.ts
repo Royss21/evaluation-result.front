@@ -9,16 +9,13 @@ import { FinalExamReportComponent } from './final-exam-report.component';
 import { FinalExamReportListComponent } from './views/final-exam-report-list/final-exam-report-list.component';
 
 @NgModule({
-  declarations: [
-    FinalExamReportComponent,
-    FinalExamReportListComponent
-  ],
+  declarations: [FinalExamReportComponent, FinalExamReportListComponent],
   imports: [
     CommonModule,
     SharedModule,
     RouterModule,
     ComponentsModule,
-    FinalExamReportRouting
-  ]
+    FinalExamReportRouting,
+  ],
 })
-export class FinalExamReportModule { }
+export class FinalExamReportModule {}

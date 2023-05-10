@@ -9,16 +9,7 @@ import { AreaListComponent } from '@modules/area/pages/area-list/area-list.compo
 import { AreaModalComponent } from './components/area-modal/area-modal.component';
 
 @NgModule({
-  declarations: [
-    AreaComponent,
-    AreaListComponent,
-    AreaModalComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ComponentsModule,
-    AreaRoutingModule
-  ]
+  declarations: [AreaComponent, AreaListComponent, AreaModalComponent],
+  imports: [CommonModule, SharedModule, ComponentsModule, AreaRoutingModule],
 })
-export class AreaModule { }
+export class AreaModule {}

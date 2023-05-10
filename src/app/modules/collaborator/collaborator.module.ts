@@ -13,14 +13,14 @@ import { CollaboratorModalComponent } from './components/collaborator-modal/coll
   declarations: [
     CollaboratorComponent,
     CollaboratorListComponent,
-    CollaboratorModalComponent
+    CollaboratorModalComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     RouterModule,
     ComponentsModule,
-    CollaboratorRoutingModule
-  ]
+    CollaboratorRoutingModule,
+  ],
 })
-export class CollaboratorModule { }
+export class CollaboratorModule {}

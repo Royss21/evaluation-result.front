@@ -14,10 +14,9 @@ import { AreaModalComponent } from '@modules/area/components/area-modal/area-mod
 @Component({
   selector: 'app-area-list',
   templateUrl: './area-list.component.html',
-  styleUrls: ['./area-list.component.scss']
+  styleUrls: ['./area-list.component.scss'],
 })
 export class AreaListComponent {
-
   public title: string = AreaHelper.titleActionText.list;
   private unsubscribe$ = new Subject<any>();
 
@@ -28,10 +27,7 @@ export class AreaListComponent {
   columnsTable: IElementRowTable[];
   paginatedFilterCurrent: IPaginatedFilter;
 
-  constructor(
-    public _dialog: MatDialog,
-    private _areaService: AreaService,
-  ){
+  constructor(public _dialog: MatDialog, private _areaService: AreaService) {
     this.areaPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
     this.areaPaginated$ = this.areaPaginatedBehavior.asObservable();
@@ -44,43 +40,40 @@ export class AreaListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._areaService.getPaginated(paginatedFilter)
-            .subscribe(paginated => this.areaPaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._areaService
+          .getPaginated(paginatedFilter)
+          .subscribe((paginated) => this.areaPaginatedBehavior.next(paginated));
+      }
+    });
   }
 
   private openModal(area?: IArea): void {
     const modalLevel = this._dialog.open(AreaModalComponent, {
       width: ConstantsGeneral.mdModal,
       disableClose: true,
-      data: area
+      data: area,
     });
 
-    modalLevel.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    modalLevel.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
-  private delete(id:number): void{
-    this._areaService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
+  private delete(id: number): void {
+    this._areaService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
-  create(): void{
+  create(): void {
     this.openModal();
   }
 
-  update(area: IArea): void{
+  update(area: IArea): void {
     this.openModal(area);
   }
 

@@ -6,14 +6,12 @@ import { startWithLetter } from '@modules/parameter-range/validators/start-with.
 import { CustomValidations } from '@shared/helpers/custom-validations';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ParameterValueModalBuilderService {
-
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) {}
 
   public buildParameterValueForm(parameterValue?: IParameterValue): FormGroup {
-
     return this._fb.group({
       id: [parameterValue?.id || null],
       name: [
@@ -23,14 +21,11 @@ export class ParameterValueModalBuilderService {
           CustomValidations.NotEmpty,
           Validators.maxLength(100),
           startWithLetter('@'),
-          containSpaces()
+          containSpaces(),
           //Validators.minLength(4)
-        ]
+        ],
       ],
-      value: [
-        parameterValue?.value || 0,
-        [Validators.required]
-      ]
+      value: [parameterValue?.value || 0, [Validators.required]],
     });
   }
 }

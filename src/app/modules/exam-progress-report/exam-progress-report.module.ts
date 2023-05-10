@@ -8,18 +8,14 @@ import { ExamProgressReportRouting } from './exam-progress-report.routing';
 import { ExamProgressReportComponent } from '@modules/exam-progress-report/exam-progress-report.component';
 import { ExamProgressReportListComponent } from '@modules/exam-progress-report/views/exam-progress-report-list/exam-progress-report-list.component';
 
-
 @NgModule({
-  declarations: [
-    ExamProgressReportComponent,
-    ExamProgressReportListComponent
-  ],
+  declarations: [ExamProgressReportComponent, ExamProgressReportListComponent],
   imports: [
     CommonModule,
     SharedModule,
     RouterModule,
     ComponentsModule,
-    ExamProgressReportRouting
-  ]
+    ExamProgressReportRouting,
+  ],
 })
-export class ExamProgressReportModule { }
+export class ExamProgressReportModule {}

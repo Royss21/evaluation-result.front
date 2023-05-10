@@ -9,20 +9,20 @@ const routes: Routes = [
     component: LeaderComponent,
     children: [
       {
-        path:'',
-        component: LeaderListComponent
+        path: '',
+        component: LeaderListComponent,
       },
       {
-        path:'',
-        redirectTo:'',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class LeaderRoutingModule { }
+export class LeaderRoutingModule {}

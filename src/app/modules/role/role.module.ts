@@ -8,18 +8,8 @@ import { ComponentsModule } from '@components/components.module';
 import { RoleListComponent } from './pages/role-list/role-list.component';
 import { RoleModalComponent } from './components/role-modal/role-modal.component';
 
-
 @NgModule({
-  declarations: [
-    RoleComponent,
-    RoleListComponent,
-    RoleModalComponent
-  ],
-  imports: [
-    RoleRouting,
-    CommonModule,
-    SharedModule,
-    ComponentsModule,
-  ]
+  declarations: [RoleComponent, RoleListComponent, RoleModalComponent],
+  imports: [RoleRouting, CommonModule, SharedModule, ComponentsModule],
 })
-export class RoleModule { }
+export class RoleModule {}

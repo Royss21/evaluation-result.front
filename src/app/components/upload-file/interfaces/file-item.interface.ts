@@ -1,4 +1,4 @@
-export interface IFileItem{
+export interface IFileItem {
   file: any;
   name: string;
   extension: string;

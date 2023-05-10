@@ -1,5 +1,4 @@
-
 export interface ICommentEvaluation {
-  componentCollaboratorCommentId : number;
+  componentCollaboratorCommentId: number;
   comment: string;
 }

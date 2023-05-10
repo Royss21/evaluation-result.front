@@ -1,5 +1,12 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import { IComponentCollaboratorConduct } from '@modules/evaluate-component/interfaces/component-collaborator.interface';
 import { ComponentCollaboratorEvaluateBuilderService } from '@modules/evaluate-component/services/component-collaborator-evaluate-builder.service';
 import { ConstantsGeneral } from '@shared/constants';
@@ -12,46 +19,47 @@ import { ConstantsGeneral } from '@shared/constants';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CompetencyCardComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class CompetencyCardComponent implements OnInit, ControlValueAccessor {
-
-  @Input() id: number = 0;
-  @Input() stageId:number = 0;
-  @Input() subcomponentName:string =  '';
+  @Input() id = 0;
+  @Input() stageId = 0;
+  @Input() subcomponentName = '';
   @Input() isCompleted: boolean;
-  @Input() conducts:IComponentCollaboratorConduct[] =[];
+  @Input() conducts: IComponentCollaboratorConduct[] = [];
 
   formGroupDetail: FormGroup = this._fb.group({
-      componentCollaboratorConductsEvaluate: this._fb.array([])
+    componentCollaboratorConductsEvaluate: this._fb.array([]),
   });
 
-
-  private _onChanged: Function = ( detail: any) => {}
-  private _onTouched: Function = () => {}
+  private _onChanged: Function = (detail: any) => {};
+  private _onTouched: Function = () => {};
 
   constructor(
     private _fb: FormBuilder,
-    private _formBuilder: ComponentCollaboratorEvaluateBuilderService,
+    private _formBuilder: ComponentCollaboratorEvaluateBuilderService
   ) {
-    this.formGroupDetail.valueChanges.subscribe(value => {
-      const{ componentCollaboratorConductsEvaluate } = value;
+    this.formGroupDetail.valueChanges.subscribe((value) => {
+      const { componentCollaboratorConductsEvaluate } = value;
 
-      componentCollaboratorConductsEvaluate.forEach((cc: any) => cc.isSelected = cc.pointValue > 0)
+      componentCollaboratorConductsEvaluate.forEach(
+        (cc: any) => (cc.isSelected = cc.pointValue > 0)
+      );
 
       this._onTouched();
       this._onChanged?.(componentCollaboratorConductsEvaluate);
-    })
+    });
   }
 
   get conductsEvaluate() {
-    return this.formGroupDetail.controls["componentCollaboratorConductsEvaluate"] as FormArray;
+    return this.formGroupDetail.controls[
+      'componentCollaboratorConductsEvaluate'
+    ] as FormArray;
   }
 
-
-  get isStageEvaluation(){
+  get isStageEvaluation() {
     return this.stageId == ConstantsGeneral.stages.evaluation;
   }
 
@@ -64,9 +72,11 @@ export class CompetencyCardComponent implements OnInit, ControlValueAccessor {
   writeValue(conducts: any): void {
     //console.log(obj);
 
-    if(conducts)
+    if (conducts)
       conducts.forEach((con: any) => {
-        this.conductsEvaluate.push(this._formBuilder.buildComponentCollaboratorConductEvaluateForm(con));
+        this.conductsEvaluate.push(
+          this._formBuilder.buildComponentCollaboratorConductEvaluateForm(con)
+        );
       });
     //obj && this.formGroupDetail.setValue(obj);
   }
@@ -79,10 +89,5 @@ export class CompetencyCardComponent implements OnInit, ControlValueAccessor {
     this._onTouched = fn;
   }
 
-  setDisabledState?(isDisabled: boolean): void {
-
-  }
-
-
-
+  setDisabledState?(isDisabled: boolean): void {}
 }

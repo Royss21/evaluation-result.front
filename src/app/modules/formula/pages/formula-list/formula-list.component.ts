@@ -14,10 +14,9 @@ import { FormulaModalComponent } from '@modules/formula/components/formula-modal
 @Component({
   selector: 'app-formula-list',
   templateUrl: './formula-list.component.html',
-  styleUrls: ['./formula-list.component.scss']
+  styleUrls: ['./formula-list.component.scss'],
 })
 export class FormulaListComponent {
-
   private unsubscribe$ = new Subject<any>();
 
   formulaPaginated$: Observable<any>;
@@ -29,8 +28,8 @@ export class FormulaListComponent {
 
   constructor(
     public _dialog: MatDialog,
-    private _formulaService: FormulaService,
-  ){
+    private _formulaService: FormulaService
+  ) {
     this.formulaPaginatedBehavior = new BehaviorSubject(null);
     this.paginatedBehavior = new BehaviorSubject(null);
     this.formulaPaginated$ = this.formulaPaginatedBehavior.asObservable();
@@ -43,36 +42,34 @@ export class FormulaListComponent {
   }
 
   private callPaginated(): void {
-    this.paginated$
-      .subscribe((paginatedFilter: IPaginatedFilter) => {
-        if(paginatedFilter){
-          this.paginatedFilterCurrent = paginatedFilter;
-          this._formulaService.getPaginated(paginatedFilter)
-            .subscribe(paginated => this.formulaPaginatedBehavior.next(paginated));
-        }
-      });
+    this.paginated$.subscribe((paginatedFilter: IPaginatedFilter) => {
+      if (paginatedFilter) {
+        this.paginatedFilterCurrent = paginatedFilter;
+        this._formulaService
+          .getPaginated(paginatedFilter)
+          .subscribe((paginated) =>
+            this.formulaPaginatedBehavior.next(paginated)
+          );
+      }
+    });
   }
 
   private openModal(formula?: IFormula): void {
-
     const modalformula = this._dialog.open(FormulaModalComponent, {
       disableClose: true,
-      data: formula
+      data: formula,
     });
 
-    modalformula.afterClosed()
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-      });
+    modalformula.afterClosed().subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+    });
   }
 
   private delete(id: string): void {
-    this._formulaService
-      .delete(id)
-      .subscribe(() => {
-        this.paginatedBehavior.next(this.paginatedFilterCurrent);
-        this._dialog.closeAll();
-      });
+    this._formulaService.delete(id).subscribe(() => {
+      this.paginatedBehavior.next(this.paginatedFilterCurrent);
+      this._dialog.closeAll();
+    });
   }
 
   createFormula(): void {
@@ -84,18 +81,18 @@ export class FormulaListComponent {
   }
 
   confirmDeleted(id: string): void {
+    const message = ConstantsGeneral.chooseDelete;
 
-    let message = ConstantsGeneral.chooseDelete;
-
-    this._formulaService.validAssigned(id).subscribe(isAssigned => {
+    this._formulaService.validAssigned(id).subscribe((isAssigned) => {
       if (isAssigned)
-        message.text = "La fórmula está asignada a uno o mas Objetivos Corporativos \n"
-        + "¿Estás seguro de eliminar el registro?"
+        message.text =
+          'La fórmula está asignada a uno o mas Objetivos Corporativos \n' +
+          '¿Estás seguro de eliminar el registro?';
     });
 
     const dialogRef = this._dialog.open(PopupChooseComponent, {
       data: message,
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -107,5 +104,4 @@ export class FormulaListComponent {
     this.unsubscribe$.next(1);
     this.unsubscribe$.complete();
   }
-
 }
